@@ -1,0 +1,4 @@
+[gd_scene format=3 uid="uid://bno3iriedun4j"]
+
+[node name="BaseCharacterSprite" type="Sprite2D"]
+scale = Vector2(0.798, 0.6)

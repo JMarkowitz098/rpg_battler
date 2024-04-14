@@ -1,0 +1,18 @@
+[gd_scene load_steps=3 format=3 uid="uid://cir0hf6b30mxx"]
+
+[ext_resource type="Script" path="res://characters/enemy_group.gd" id="1_khrov"]
+[ext_resource type="PackedScene" uid="uid://dyh62iv2a0t70" path="res://characters/King/king.tscn" id="2_emget"]
+
+[node name="EnemyGroup" type="Node2D"]
+script = ExtResource("1_khrov")
+
+[node name="King" parent="." instance=ExtResource("2_emget")]
+
+[node name="King2" parent="." instance=ExtResource("2_emget")]
+position = Vector2(2.08165e-12, 35)
+
+[node name="King3" parent="." instance=ExtResource("2_emget")]
+position = Vector2(0, 71)
+
+[node name="King4" parent="." instance=ExtResource("2_emget")]
+position = Vector2(2.08165e-12, 108)

@@ -1,0 +1,28 @@
+[gd_scene load_steps=8 format=3 uid="uid://dyh62iv2a0t70"]
+
+[ext_resource type="Script" path="res://characters/King/king.gd" id="1_v00pa"]
+[ext_resource type="PackedScene" uid="uid://bno3iriedun4j" path="res://characters/base_character_sprite.tscn" id="2_1i5sr"]
+[ext_resource type="Texture2D" uid="uid://bbfdcpk8vw50x" path="res://characters/King/NoBkgColor/spr_KingIdle_strip_no_bkg.png" id="3_ahsxo"]
+[ext_resource type="PackedScene" uid="uid://cwg8luvh25667" path="res://characters/default_progress_bar.tscn" id="4_dxep3"]
+[ext_resource type="PackedScene" uid="uid://2evhn0npdxi4" path="res://characters/focus_default.tscn" id="5_oo81d"]
+[ext_resource type="PackedScene" uid="uid://cxduxu5owj8u8" path="res://characters/animation_creator.tscn" id="6_nyj8s"]
+[ext_resource type="PackedScene" uid="uid://dsvlp0cv1dvk0" path="res://characters/King/king_animations.tscn" id="7_b7wkj"]
+
+[node name="King" type="Node2D"]
+script = ExtResource("1_v00pa")
+
+[node name="BaseCharacterSprite" parent="." instance=ExtResource("2_1i5sr")]
+texture = ExtResource("3_ahsxo")
+hframes = 18
+
+[node name="ProgressBar" parent="." instance=ExtResource("4_dxep3")]
+offset_left = -6.0
+offset_top = -24.0
+offset_right = 68.0
+offset_bottom = 3.0
+
+[node name="Focus" parent="." instance=ExtResource("5_oo81d")]
+position = Vector2(6, 8)
+
+[node name="AnimationsCreator" parent="." instance=ExtResource("6_nyj8s")]
+ANIMATIONS_SCENE = ExtResource("7_b7wkj")

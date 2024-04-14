@@ -1,0 +1,63 @@
+[gd_scene load_steps=5 format=3 uid="uid://bolui7l1oisu1"]
+
+[ext_resource type="Texture2D" uid="uid://bquypxhjqqxa0" path="res://world/battle_background.png" id="1_i0o4p"]
+[ext_resource type="Texture2D" uid="uid://cfxkdlm6ydlv7" path="res://mockups/Battle UI Mockup.png" id="2_2y8pj"]
+[ext_resource type="PackedScene" uid="uid://cir0hf6b30mxx" path="res://characters/enemy_group.tscn" id="3_dc2lk"]
+[ext_resource type="PackedScene" uid="uid://bv8dkjaf6yr17" path="res://characters/player_group.tscn" id="4_rbeni"]
+
+[node name="BattleScene" type="Node2D"]
+
+[node name="TextureRect" type="TextureRect" parent="."]
+self_modulate = Color(0.823529, 0.823529, 0.823529, 1)
+offset_right = 320.0
+offset_bottom = 180.0
+texture = ExtResource("1_i0o4p")
+expand_mode = 1
+metadata/_edit_lock_ = true
+
+[node name="Mockup" type="Sprite2D" parent="."]
+visible = false
+position = Vector2(226, 90)
+scale = Vector2(0.221786, 0.194805)
+texture = ExtResource("2_2y8pj")
+metadata/_edit_lock_ = true
+
+[node name="EnemyGroup" parent="." instance=ExtResource("3_dc2lk")]
+position = Vector2(61, 57)
+
+[node name="PlayerGroup" parent="." instance=ExtResource("4_rbeni")]
+position = Vector2(227, 65)
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="choice" type="VBoxContainer" parent="CanvasLayer"]
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -39.0
+offset_top = -60.0
+offset_right = 26.0
+offset_bottom = 41.0
+grow_horizontal = 0
+grow_vertical = 0
+scale = Vector2(0.59032, 0.59032)
+
+[node name="Attack" type="Button" parent="CanvasLayer/choice"]
+layout_mode = 2
+text = "Attack"
+
+[node name="Defend" type="Button" parent="CanvasLayer/choice"]
+layout_mode = 2
+disabled = true
+text = "Defend"
+
+[node name="Run" type="Button" parent="CanvasLayer/choice"]
+layout_mode = 2
+disabled = true
+text = "Run
+"
+
+[connection signal="next_player" from="EnemyGroup" to="PlayerGroup" method="_on_enemy_group_next_player"]
+[connection signal="pressed" from="CanvasLayer/choice/Attack" to="EnemyGroup" method="_on_attack_pressed"]
