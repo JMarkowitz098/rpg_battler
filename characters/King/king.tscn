@@ -22,6 +22,7 @@ offset_right = 68.0
 offset_bottom = 3.0
 
 [node name="Focus" parent="." instance=ExtResource("5_oo81d")]
+visible = false
 position = Vector2(6, 8)
 
 [node name="AnimationsCreator" parent="." instance=ExtResource("6_nyj8s")]

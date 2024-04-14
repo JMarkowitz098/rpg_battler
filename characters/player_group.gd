@@ -5,9 +5,7 @@ var index: int = 0
 
 func _ready():
 	players = get_children()
-	for i in players.size():
-		players[i].position = Vector2(0, i * 32)
-
+	players[0].action.focus()
 
 func _on_enemy_group_next_player():
 	if index < players.size() - 1:
