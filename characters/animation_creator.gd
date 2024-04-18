@@ -10,7 +10,6 @@ func create_animations():
 	animations = ANIMATIONS_SCENE.instantiate()
 	world.add_child.call_deferred(animations)
 	animations.global_position = global_position
-	animations.hide()
 	return animations
 
 func get_animations_node():

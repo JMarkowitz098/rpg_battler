@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://dyh62iv2a0t70"]
+[gd_scene load_steps=9 format=3 uid="uid://dyh62iv2a0t70"]
 
 [ext_resource type="Script" path="res://characters/King/king.gd" id="1_v00pa"]
 [ext_resource type="PackedScene" uid="uid://bno3iriedun4j" path="res://characters/base_character_sprite.tscn" id="2_1i5sr"]
@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://2evhn0npdxi4" path="res://characters/focus_default.tscn" id="5_oo81d"]
 [ext_resource type="PackedScene" uid="uid://cxduxu5owj8u8" path="res://characters/animation_creator.tscn" id="6_nyj8s"]
 [ext_resource type="PackedScene" uid="uid://dsvlp0cv1dvk0" path="res://characters/King/king_animations.tscn" id="7_b7wkj"]
+[ext_resource type="PackedScene" uid="uid://cyi2g62l2egia" path="res://characters/character_stats.tscn" id="8_7w2xa"]
 
 [node name="King" type="Node2D"]
 script = ExtResource("1_v00pa")
@@ -23,7 +24,16 @@ offset_bottom = 3.0
 
 [node name="Focus" parent="." instance=ExtResource("5_oo81d")]
 visible = false
+z_index = 5
 position = Vector2(6, 8)
 
 [node name="AnimationsCreator" parent="." instance=ExtResource("6_nyj8s")]
 ANIMATIONS_SCENE = ExtResource("7_b7wkj")
+
+[node name="CharacterStats" parent="." instance=ExtResource("8_7w2xa")]
+max_health = 10.0
+label = "King"
+id = "king_XX"
+current_health = 10.0
+
+[connection signal="took_damage" from="CharacterStats" to="." method="_on_character_stats_took_damage"]

@@ -8,11 +8,32 @@ script = ExtResource("1_khrov")
 
 [node name="King" parent="." instance=ExtResource("2_emget")]
 
+[node name="CharacterStats" parent="King" index="4"]
+label = "King 1"
+id = "king_00"
+
 [node name="King2" parent="." instance=ExtResource("2_emget")]
 position = Vector2(2.08165e-12, 35)
+
+[node name="CharacterStats" parent="King2" index="4"]
+label = "King 2"
+id = "king_01"
 
 [node name="King3" parent="." instance=ExtResource("2_emget")]
 position = Vector2(0, 71)
 
+[node name="CharacterStats" parent="King3" index="4"]
+label = "King 3"
+id = "king_02"
+
 [node name="King4" parent="." instance=ExtResource("2_emget")]
 position = Vector2(2.08165e-12, 108)
+
+[node name="CharacterStats" parent="King4" index="4"]
+label = "King 4"
+id = "king_03"
+
+[editable path="King"]
+[editable path="King2"]
+[editable path="King3"]
+[editable path="King4"]

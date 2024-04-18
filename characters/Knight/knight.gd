@@ -1,18 +1,19 @@
 extends Node2D
 
-const CharacterBase := preload("res://characters/base_character.gd")
-
 @onready var progress_bar = $ProgressBar
 @onready var focus = $Focus
 @onready var knight_animations_creator = $KnightAnimationsCreator
+@onready var base_sprite = $BaseSprite
+@onready var stats = $CharacterStats
 
 @export var MAX_HEALTH: float = 10
 
-var action: CharacterBase
+var animation_player: AnimationPlayer
 
 func _ready():
-	var animations: Node2D = knight_animations_creator.create_animations()
-	action = CharacterBase.new(MAX_HEALTH, progress_bar, animations, focus)
+	base_sprite.hide()
+	animation_player = knight_animations_creator.create_animations().get_node("AnimationPlayer")
+	animation_player.play("idle")
 
 
 	

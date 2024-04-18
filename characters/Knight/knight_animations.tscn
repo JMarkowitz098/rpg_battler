@@ -1,37 +1,26 @@
-[gd_scene load_steps=5 format=3 uid="uid://ciecc1l3ywqv"]
+[gd_scene load_steps=6 format=3 uid="uid://ciecc1l3ywqv"]
 
 [ext_resource type="Texture2D" uid="uid://df7pcvc8u0ug1" path="res://characters/Knight/sprite_sheets/noBKG_KnightIdle_strip.png" id="1_j6gfe"]
+[ext_resource type="PackedScene" uid="uid://bno3iriedun4j" path="res://characters/base_character_sprite.tscn" id="1_twt5q"]
 
 [sub_resource type="Animation" id="Animation_ocj0f"]
 length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("IdleSprite:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [0]
-}
 
 [sub_resource type="Animation" id="Animation_uog71"]
 resource_name = "idle"
-length = 1.1
+length = 1.2
 loop_mode = 1
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("IdleSprite:frame")
+tracks/0/path = NodePath("BaseCharacterSprite:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1, 1.1),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
 "update": 1,
-"values": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 13]
+"values": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 13]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_47vnb"]
@@ -41,9 +30,9 @@ _data = {
 }
 
 [node name="KnightAnimations" type="Node2D"]
-
-[node name="IdleSprite" type="Sprite2D" parent="."]
 scale = Vector2(-1, 1)
+
+[node name="BaseCharacterSprite" parent="." instance=ExtResource("1_twt5q")]
 texture = ExtResource("1_j6gfe")
 hframes = 15
 

@@ -1,32 +1,69 @@
-[gd_scene load_steps=5 format=3 uid="uid://bolui7l1oisu1"]
+[gd_scene load_steps=8 format=3 uid="uid://bolui7l1oisu1"]
 
 [ext_resource type="Texture2D" uid="uid://bquypxhjqqxa0" path="res://world/battle_background.png" id="1_i0o4p"]
+[ext_resource type="Script" path="res://world/battle_scene.gd" id="1_r5piu"]
 [ext_resource type="Texture2D" uid="uid://cfxkdlm6ydlv7" path="res://mockups/Battle UI Mockup.png" id="2_2y8pj"]
 [ext_resource type="PackedScene" uid="uid://cir0hf6b30mxx" path="res://characters/enemy_group.tscn" id="3_dc2lk"]
 [ext_resource type="PackedScene" uid="uid://bv8dkjaf6yr17" path="res://characters/player_group.tscn" id="4_rbeni"]
 
+[sub_resource type="FontFile" id="FontFile_10lyr"]
+cache/0/16/0/ascent = 0.0
+cache/0/16/0/descent = 0.0
+cache/0/16/0/underline_position = 0.0
+cache/0/16/0/underline_thickness = 0.0
+cache/0/16/0/scale = 1.0
+cache/0/16/0/kerning_overrides/16/0 = Vector2(0, 0)
+cache/0/16/0/kerning_overrides/4/0 = Vector2(0, 0)
+cache/0/16/0/kerning_overrides/2/0 = Vector2(0, 0)
+cache/0/16/0/kerning_overrides/1/0 = Vector2(0, 0)
+cache/0/16/0/kerning_overrides/3/0 = Vector2(0, 0)
+cache/0/4/0/ascent = 0.0
+cache/0/4/0/descent = 0.0
+cache/0/4/0/underline_position = 0.0
+cache/0/4/0/underline_thickness = 0.0
+cache/0/4/0/scale = 1.0
+cache/0/4/0/kerning_overrides/16/0 = Vector2(0, 0)
+cache/0/4/0/kerning_overrides/4/0 = Vector2(0, 0)
+cache/0/4/0/kerning_overrides/2/0 = Vector2(0, 0)
+cache/0/4/0/kerning_overrides/1/0 = Vector2(0, 0)
+cache/0/4/0/kerning_overrides/3/0 = Vector2(0, 0)
+cache/0/2/0/ascent = 0.0
+cache/0/2/0/descent = 0.0
+cache/0/2/0/underline_position = 0.0
+cache/0/2/0/underline_thickness = 0.0
+cache/0/2/0/scale = 1.0
+cache/0/2/0/kerning_overrides/16/0 = Vector2(0, 0)
+cache/0/2/0/kerning_overrides/4/0 = Vector2(0, 0)
+cache/0/2/0/kerning_overrides/2/0 = Vector2(0, 0)
+cache/0/2/0/kerning_overrides/1/0 = Vector2(0, 0)
+cache/0/2/0/kerning_overrides/3/0 = Vector2(0, 0)
+cache/0/1/0/ascent = 0.0
+cache/0/1/0/descent = 0.0
+cache/0/1/0/underline_position = 0.0
+cache/0/1/0/underline_thickness = 0.0
+cache/0/1/0/scale = 1.0
+cache/0/1/0/kerning_overrides/16/0 = Vector2(0, 0)
+cache/0/1/0/kerning_overrides/4/0 = Vector2(0, 0)
+cache/0/1/0/kerning_overrides/2/0 = Vector2(0, 0)
+cache/0/1/0/kerning_overrides/1/0 = Vector2(0, 0)
+cache/0/1/0/kerning_overrides/3/0 = Vector2(0, 0)
+cache/0/3/0/ascent = 0.0
+cache/0/3/0/descent = 0.0
+cache/0/3/0/underline_position = 0.0
+cache/0/3/0/underline_thickness = 0.0
+cache/0/3/0/scale = 1.0
+cache/0/3/0/kerning_overrides/16/0 = Vector2(0, 0)
+cache/0/3/0/kerning_overrides/4/0 = Vector2(0, 0)
+cache/0/3/0/kerning_overrides/2/0 = Vector2(0, 0)
+cache/0/3/0/kerning_overrides/1/0 = Vector2(0, 0)
+cache/0/3/0/kerning_overrides/3/0 = Vector2(0, 0)
+
+[sub_resource type="Theme" id="Theme_pbj66"]
+default_font = SubResource("FontFile_10lyr")
+default_font_size = 3
+
 [node name="BattleScene" type="Node2D"]
-
-[node name="TextureRect" type="TextureRect" parent="."]
-self_modulate = Color(0.823529, 0.823529, 0.823529, 1)
-offset_right = 320.0
-offset_bottom = 180.0
-texture = ExtResource("1_i0o4p")
-expand_mode = 1
-metadata/_edit_lock_ = true
-
-[node name="Mockup" type="Sprite2D" parent="."]
-visible = false
-position = Vector2(226, 90)
-scale = Vector2(0.221786, 0.194805)
-texture = ExtResource("2_2y8pj")
-metadata/_edit_lock_ = true
-
-[node name="EnemyGroup" parent="." instance=ExtResource("3_dc2lk")]
-position = Vector2(61, 57)
-
-[node name="PlayerGroup" parent="." instance=ExtResource("4_rbeni")]
-position = Vector2(227, 65)
+script = ExtResource("1_r5piu")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
@@ -59,5 +96,49 @@ disabled = true
 text = "Run
 "
 
-[connection signal="next_player" from="EnemyGroup" to="PlayerGroup" method="_on_enemy_group_next_player"]
-[connection signal="pressed" from="CanvasLayer/choice/Attack" to="EnemyGroup" method="_on_attack_pressed"]
+[node name="ItemList" type="ItemList" parent="CanvasLayer"]
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -76.0
+offset_right = -36.0
+offset_bottom = 40.0
+grow_horizontal = 0
+scale = Vector2(1.88, 2.99285)
+theme = SubResource("Theme_pbj66")
+allow_search = false
+item_count = 2
+item_0/text = "fdsffdf"
+item_1/text = "fdsfsfds"
+
+[node name="TextureRect" type="TextureRect" parent="."]
+self_modulate = Color(0.823529, 0.823529, 0.823529, 1)
+offset_right = 320.0
+offset_bottom = 180.0
+texture = ExtResource("1_i0o4p")
+expand_mode = 1
+metadata/_edit_lock_ = true
+
+[node name="Mockup" type="Sprite2D" parent="."]
+visible = false
+position = Vector2(226, 90)
+scale = Vector2(0.221786, 0.194805)
+texture = ExtResource("2_2y8pj")
+metadata/_edit_lock_ = true
+
+[node name="EnemyGroup" parent="." instance=ExtResource("3_dc2lk")]
+position = Vector2(61, 57)
+
+[node name="PlayerGroup" parent="." instance=ExtResource("4_rbeni")]
+position = Vector2(196, 51)
+
+[node name="ColorRect" type="ColorRect" parent="."]
+offset_left = 244.0
+offset_right = 274.0
+offset_bottom = 73.0
+scale = Vector2(2.53748, 1.62802)
+size_flags_vertical = 3
+color = Color(0.678431, 0.678431, 0.678431, 1)
+
+[connection signal="next_player" from="." to="PlayerGroup" method="_on_battle_scene_next_player"]
+[connection signal="pressed" from="CanvasLayer/choice/Attack" to="." method="_on_attack_pressed"]
