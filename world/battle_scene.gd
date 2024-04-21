@@ -28,12 +28,16 @@ func _process(_delta):
 	if not choice.visible:
 		_handle_input()
 		
-	if action_queue.size() == players.size():
+	if _count_player_actions() == players.size():
 		_process_turn()
 		
 func _process_action_queue(stack):
 	for action in stack:
-		enemies[action.enemy_index].stats.take_damage(1)
+		match action.action:
+			"player_action":
+				enemies[action.enemy_index].stats.take_damage(1)
+			"enemy_action":
+				players[action.player_index].stats.take_damage(1)
 		await get_tree().create_timer(2).timeout
 	action_queue.clear()
 	is_battling = false
@@ -46,6 +50,7 @@ func show_choice():
 func _start_choosing():
 	enemy_group.reset_focus()
 	enemies[0].focus.focus()
+	_queue_enemy_actions()
 
 func _on_attack_pressed():
 	choice.hide()
@@ -55,7 +60,14 @@ func _draw_action_queue():
 	item_list.clear()
 		
 	for action in action_queue:
-		item_list.add_item(action.player_label + "-> Atk " + action.enemy_label)
+		var message: String
+		match action.action:
+			"player_action":
+				message = action.player_label + "-> Atk " + action.enemy_label
+			"enemy_action":
+				message = action.enemy_label + "-> Atk " + action.player_label
+				
+		item_list.add_item(message)
 		
 func _handle_input():
 	if Input.is_action_just_pressed("ui_up"):
@@ -75,31 +87,44 @@ func _handle_input():
 			enemy_group.switch_focus(enemy_index, enemy_index - 1)
 		
 	if Input.is_action_just_pressed("ui_accept"):
-		var action = _create_action()
+		var action = _create_action(enemy_index, player_index, "player_action")
 		action_queue.push_back(action)
 		player_index += 1
 		emit_signal("next_player")
 		
-func _create_action():
+func _create_action(enemy_i: int, player_i: int, action: String):
 	return {
-		"enemy_index": enemy_index,
-		"enemy_label": enemies[enemy_index].stats.label,
-		"enemy_id": enemies[enemy_index].stats.id,
-		"player_index": player_index,
-		"player_label": players[player_index].stats.label,
-		"player_id": players[player_index].stats.id,
+		"enemy_index": enemy_i,
+		"enemy_label": enemies[enemy_i].stats.label,
+		"enemy_id": enemies[enemy_i].stats.id,
+		"player_index": player_i,
+		"player_label": players[player_i].stats.label,
+		"player_id": players[player_i].stats.id,
+		"action": action
 	}
 		
 func _process_turn():
 	is_battling = true
-	_reset_groups()
+	_reset_groups_and_indexes()
 	await get_tree().create_timer(1).timeout
 	await _process_action_queue(action_queue)
 	show_choice()
 	players[0].focus.focus()
 	
-func _reset_groups():
+func _reset_groups_and_indexes():
 	player_group.reset_focus()
 	enemy_group.reset_focus()
 	enemy_index = 0
 	player_index = 0
+
+func _queue_enemy_actions():
+	for i in enemies.size():
+		var rand_player_i = randi() % players.size()
+		print(rand_player_i)
+		var enemy_action = _create_action(i, rand_player_i, "enemy_action")
+		action_queue.push_back(enemy_action)
+		
+func _count_player_actions():
+	return action_queue.filter(
+		func(action): return action.action == "player_action").size()
+

@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://bolui7l1oisu1"]
+[gd_scene load_steps=15 format=3 uid="uid://bolui7l1oisu1"]
 
 [ext_resource type="Texture2D" uid="uid://bquypxhjqqxa0" path="res://world/battle_background.png" id="1_i0o4p"]
 [ext_resource type="Script" path="res://world/battle_scene.gd" id="1_r5piu"]
@@ -6,61 +6,109 @@
 [ext_resource type="PackedScene" uid="uid://cir0hf6b30mxx" path="res://characters/enemy_group.tscn" id="3_dc2lk"]
 [ext_resource type="PackedScene" uid="uid://bv8dkjaf6yr17" path="res://characters/player_group.tscn" id="4_rbeni"]
 
-[sub_resource type="FontFile" id="FontFile_10lyr"]
+[sub_resource type="ImageTexture" id="ImageTexture_utcdy"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_01xoi"]
+content_margin_left = 4.0
+content_margin_top = 4.0
+content_margin_right = 4.0
+content_margin_bottom = 4.0
+bg_color = Color(1, 1, 1, 0.4)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+corner_detail = 6
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qnrew"]
+content_margin_left = 4.0
+content_margin_top = 4.0
+content_margin_right = 4.0
+content_margin_bottom = 4.0
+bg_color = Color(1, 1, 1, 0.75)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+corner_detail = 6
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_nx0nm"]
+content_margin_left = 4.0
+content_margin_top = 4.0
+content_margin_right = 4.0
+content_margin_bottom = 4.0
+bg_color = Color(0.75, 0.75, 0.75, 0.75)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+corner_detail = 6
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_c16qv"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_r0g4s"]
+content_margin_left = 4.0
+content_margin_top = 4.0
+content_margin_right = 4.0
+content_margin_bottom = 4.0
+bg_color = Color(1, 1, 1, 0.75)
+draw_center = false
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+corner_detail = 5
+expand_margin_left = 2.0
+expand_margin_top = 2.0
+expand_margin_right = 2.0
+expand_margin_bottom = 2.0
+
+[sub_resource type="Theme" id="Theme_pahtg"]
+VScrollBar/icons/decrement = SubResource("ImageTexture_utcdy")
+VScrollBar/icons/decrement_highlight = SubResource("ImageTexture_utcdy")
+VScrollBar/icons/decrement_pressed = SubResource("ImageTexture_utcdy")
+VScrollBar/icons/increment = SubResource("ImageTexture_utcdy")
+VScrollBar/icons/increment_highlight = SubResource("ImageTexture_utcdy")
+VScrollBar/icons/increment_pressed = SubResource("ImageTexture_utcdy")
+VScrollBar/styles/grabber = SubResource("StyleBoxFlat_01xoi")
+VScrollBar/styles/grabber_highlight = SubResource("StyleBoxFlat_qnrew")
+VScrollBar/styles/grabber_pressed = SubResource("StyleBoxFlat_nx0nm")
+VScrollBar/styles/scroll = SubResource("StyleBoxFlat_c16qv")
+VScrollBar/styles/scroll_focus = SubResource("StyleBoxFlat_r0g4s")
+
+[sub_resource type="FontFile" id="FontFile_tfrde"]
+cache/0/6/0/ascent = 0.0
+cache/0/6/0/descent = 0.0
+cache/0/6/0/underline_position = 0.0
+cache/0/6/0/underline_thickness = 0.0
+cache/0/6/0/scale = 1.0
+cache/0/6/0/kerning_overrides/6/0 = Vector2(0, 0)
+cache/0/6/0/kerning_overrides/16/0 = Vector2(0, 0)
+cache/0/6/0/kerning_overrides/20/0 = Vector2(0, 0)
 cache/0/16/0/ascent = 0.0
 cache/0/16/0/descent = 0.0
 cache/0/16/0/underline_position = 0.0
 cache/0/16/0/underline_thickness = 0.0
 cache/0/16/0/scale = 1.0
+cache/0/16/0/kerning_overrides/6/0 = Vector2(0, 0)
 cache/0/16/0/kerning_overrides/16/0 = Vector2(0, 0)
-cache/0/16/0/kerning_overrides/4/0 = Vector2(0, 0)
-cache/0/16/0/kerning_overrides/2/0 = Vector2(0, 0)
-cache/0/16/0/kerning_overrides/1/0 = Vector2(0, 0)
-cache/0/16/0/kerning_overrides/3/0 = Vector2(0, 0)
-cache/0/4/0/ascent = 0.0
-cache/0/4/0/descent = 0.0
-cache/0/4/0/underline_position = 0.0
-cache/0/4/0/underline_thickness = 0.0
-cache/0/4/0/scale = 1.0
-cache/0/4/0/kerning_overrides/16/0 = Vector2(0, 0)
-cache/0/4/0/kerning_overrides/4/0 = Vector2(0, 0)
-cache/0/4/0/kerning_overrides/2/0 = Vector2(0, 0)
-cache/0/4/0/kerning_overrides/1/0 = Vector2(0, 0)
-cache/0/4/0/kerning_overrides/3/0 = Vector2(0, 0)
-cache/0/2/0/ascent = 0.0
-cache/0/2/0/descent = 0.0
-cache/0/2/0/underline_position = 0.0
-cache/0/2/0/underline_thickness = 0.0
-cache/0/2/0/scale = 1.0
-cache/0/2/0/kerning_overrides/16/0 = Vector2(0, 0)
-cache/0/2/0/kerning_overrides/4/0 = Vector2(0, 0)
-cache/0/2/0/kerning_overrides/2/0 = Vector2(0, 0)
-cache/0/2/0/kerning_overrides/1/0 = Vector2(0, 0)
-cache/0/2/0/kerning_overrides/3/0 = Vector2(0, 0)
-cache/0/1/0/ascent = 0.0
-cache/0/1/0/descent = 0.0
-cache/0/1/0/underline_position = 0.0
-cache/0/1/0/underline_thickness = 0.0
-cache/0/1/0/scale = 1.0
-cache/0/1/0/kerning_overrides/16/0 = Vector2(0, 0)
-cache/0/1/0/kerning_overrides/4/0 = Vector2(0, 0)
-cache/0/1/0/kerning_overrides/2/0 = Vector2(0, 0)
-cache/0/1/0/kerning_overrides/1/0 = Vector2(0, 0)
-cache/0/1/0/kerning_overrides/3/0 = Vector2(0, 0)
-cache/0/3/0/ascent = 0.0
-cache/0/3/0/descent = 0.0
-cache/0/3/0/underline_position = 0.0
-cache/0/3/0/underline_thickness = 0.0
-cache/0/3/0/scale = 1.0
-cache/0/3/0/kerning_overrides/16/0 = Vector2(0, 0)
-cache/0/3/0/kerning_overrides/4/0 = Vector2(0, 0)
-cache/0/3/0/kerning_overrides/2/0 = Vector2(0, 0)
-cache/0/3/0/kerning_overrides/1/0 = Vector2(0, 0)
-cache/0/3/0/kerning_overrides/3/0 = Vector2(0, 0)
+cache/0/16/0/kerning_overrides/20/0 = Vector2(0, 0)
+cache/0/20/0/ascent = 0.0
+cache/0/20/0/descent = 0.0
+cache/0/20/0/underline_position = 0.0
+cache/0/20/0/underline_thickness = 0.0
+cache/0/20/0/scale = 1.0
+cache/0/20/0/kerning_overrides/6/0 = Vector2(0, 0)
+cache/0/20/0/kerning_overrides/16/0 = Vector2(0, 0)
+cache/0/20/0/kerning_overrides/20/0 = Vector2(0, 0)
 
-[sub_resource type="Theme" id="Theme_pbj66"]
-default_font = SubResource("FontFile_10lyr")
-default_font_size = 3
+[sub_resource type="Theme" id="Theme_phv0q"]
+default_font = SubResource("FontFile_tfrde")
+default_font_size = 20
 
 [node name="BattleScene" type="Node2D"]
 script = ExtResource("1_r5piu")
@@ -105,7 +153,8 @@ offset_right = -36.0
 offset_bottom = 40.0
 grow_horizontal = 0
 scale = Vector2(1.88, 2.99285)
-theme = SubResource("Theme_pbj66")
+theme = SubResource("Theme_pahtg")
+theme_override_font_sizes/font_size = 3
 allow_search = false
 item_count = 2
 item_0/text = "fdsffdf"
@@ -138,6 +187,7 @@ offset_right = 274.0
 offset_bottom = 73.0
 scale = Vector2(2.53748, 1.62802)
 size_flags_vertical = 3
+theme = SubResource("Theme_phv0q")
 color = Color(0.678431, 0.678431, 0.678431, 1)
 
 [connection signal="next_player" from="." to="PlayerGroup" method="_on_battle_scene_next_player"]

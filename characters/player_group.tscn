@@ -8,5 +8,10 @@ script = ExtResource("1_2sfnr")
 
 [node name="Knight" parent="." instance=ExtResource("2_tva68")]
 
+[node name="CharacterStats" parent="Knight" index="4"]
+current_health = 10.0
+
 [node name="Knight2" parent="." instance=ExtResource("2_tva68")]
 position = Vector2(1, 32)
+
+[editable path="Knight"]

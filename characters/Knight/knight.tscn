@@ -34,6 +34,9 @@ position = Vector2(5, 7)
 ANIMATIONS_SCENE = ExtResource("2_0bxmi")
 
 [node name="CharacterStats" parent="." instance=ExtResource("7_d0o7f")]
-max_health = 20.0
+max_health = 10.0
 label = "Knight"
 id = "knight_xx"
+current_health = 10.0
+
+[connection signal="took_damage" from="CharacterStats" to="." method="_on_character_stats_took_damage"]
