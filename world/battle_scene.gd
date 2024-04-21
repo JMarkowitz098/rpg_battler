@@ -1,6 +1,6 @@
 extends Node2D
 
-var action_queue: Array = []
+var action_queue: Array[Dictionary] = []
 var is_battling: bool = false
 var enemy_index: int = 0
 var player_index: int = 0
@@ -9,6 +9,7 @@ var player_index: int = 0
 @onready var enemy_group = $EnemyGroup
 @onready var item_list = $CanvasLayer/ItemList
 @onready var player_group = $PlayerGroup
+@onready var action_focus = $CanvasLayer/ActionFocus
 
 var enemies: Array[Node]
 var players: Array[Node]
@@ -18,7 +19,7 @@ signal next_player
 func _ready():
 	show_choice()
 	
-func _process(_delta):
+func _process(_delta: float):
 	players = player_group.players
 	enemies = enemy_group.enemies
 	_draw_action_queue()
@@ -31,7 +32,7 @@ func _process(_delta):
 	if _count_player_actions() == players.size():
 		_process_turn()
 		
-func _process_action_queue(stack):
+func _process_action_queue(stack: Array[Dictionary]):
 	for action in stack:
 		match action.action:
 			"player_action":
@@ -87,12 +88,17 @@ func _handle_input():
 			enemy_group.switch_focus(enemy_index, enemy_index - 1)
 		
 	if Input.is_action_just_pressed("ui_accept"):
+		action_focus.focus()
 		var action = _create_action(enemy_index, player_index, "player_action")
 		action_queue.push_back(action)
 		player_index += 1
 		emit_signal("next_player")
 		
-func _create_action(enemy_i: int, player_i: int, action: String):
+func _create_action(
+	enemy_i: int, 
+	player_i: int, 
+	action: String
+) -> Dictionary:
 	return {
 		"enemy_index": enemy_i,
 		"enemy_label": enemies[enemy_i].stats.label,
@@ -120,11 +126,10 @@ func _reset_groups_and_indexes():
 func _queue_enemy_actions():
 	for i in enemies.size():
 		var rand_player_i = randi() % players.size()
-		print(rand_player_i)
 		var enemy_action = _create_action(i, rand_player_i, "enemy_action")
 		action_queue.push_back(enemy_action)
 		
-func _count_player_actions():
+func _count_player_actions() -> int:
 	return action_queue.filter(
 		func(action): return action.action == "player_action").size()
 

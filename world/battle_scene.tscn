@@ -1,7 +1,8 @@
-[gd_scene load_steps=15 format=3 uid="uid://bolui7l1oisu1"]
+[gd_scene load_steps=16 format=3 uid="uid://bolui7l1oisu1"]
 
 [ext_resource type="Texture2D" uid="uid://bquypxhjqqxa0" path="res://world/battle_background.png" id="1_i0o4p"]
 [ext_resource type="Script" path="res://world/battle_scene.gd" id="1_r5piu"]
+[ext_resource type="PackedScene" uid="uid://2evhn0npdxi4" path="res://characters/focus_default.tscn" id="2_0jmft"]
 [ext_resource type="Texture2D" uid="uid://cfxkdlm6ydlv7" path="res://mockups/Battle UI Mockup.png" id="2_2y8pj"]
 [ext_resource type="PackedScene" uid="uid://cir0hf6b30mxx" path="res://characters/enemy_group.tscn" id="3_dc2lk"]
 [ext_resource type="PackedScene" uid="uid://bv8dkjaf6yr17" path="res://characters/player_group.tscn" id="4_rbeni"]
@@ -159,6 +160,10 @@ allow_search = false
 item_count = 2
 item_0/text = "fdsffdf"
 item_1/text = "fdsfsfds"
+
+[node name="ActionFocus" parent="CanvasLayer" instance=ExtResource("2_0jmft")]
+visible = false
+position = Vector2(315, 22)
 
 [node name="TextureRect" type="TextureRect" parent="."]
 self_modulate = Color(0.823529, 0.823529, 0.823529, 1)
