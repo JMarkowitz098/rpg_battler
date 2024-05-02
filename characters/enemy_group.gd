@@ -5,8 +5,6 @@ var action_queue: Array = []
 var is_battling: bool = false
 var index: int = 0
 
-@onready var choice = $"../CanvasLayer/choice"
-
 func _ready():
 	enemies = get_children()
 

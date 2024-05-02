@@ -12,8 +12,6 @@
 script = ExtResource("1_g42g0")
 
 [node name="BaseSprite" parent="." instance=ExtResource("5_ei5uc")]
-rotation = 3.14159
-scale = Vector2(0.798, -0.6)
 texture = ExtResource("1_0nicr")
 hframes = 15
 

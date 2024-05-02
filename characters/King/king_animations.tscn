@@ -46,6 +46,7 @@ _data = {
 }
 
 [node name="KingAnimations" type="Node2D"]
+scale = Vector2(-1, 1)
 
 [node name="BaseCharacterSprite" parent="." instance=ExtResource("1_s3bek")]
 texture = ExtResource("2_irq5f")

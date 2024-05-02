@@ -6,6 +6,22 @@
 [sub_resource type="Animation" id="Animation_ocj0f"]
 length = 0.001
 
+[sub_resource type="Animation" id="Animation_73k1q"]
+resource_name = "hurt"
+length = 0.6
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("BaseCharacterSprite:self_modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4, 0.6),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Color(100, 100, 100, 1), Color(1, 1, 1, 1), Color(100, 100, 100, 1), Color(1, 1, 1, 1)]
+}
+
 [sub_resource type="Animation" id="Animation_uog71"]
 resource_name = "idle"
 length = 1.2
@@ -23,22 +39,6 @@ tracks/0/keys = {
 "values": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 13]
 }
 
-[sub_resource type="Animation" id="Animation_73k1q"]
-resource_name = "hurt"
-length = 0.6
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("BaseCharacterSprite:self_modulate")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.2, 0.4, 0.6),
-"transitions": PackedFloat32Array(1, 1, 1, 1),
-"update": 0,
-"values": [Color(100, 100, 100, 1), Color(1, 1, 1, 1), Color(100, 100, 100, 1), Color(1, 1, 1, 1)]
-}
-
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_47vnb"]
 _data = {
 "RESET": SubResource("Animation_ocj0f"),
@@ -47,7 +47,6 @@ _data = {
 }
 
 [node name="KnightAnimations" type="Node2D"]
-scale = Vector2(-1, 1)
 
 [node name="BaseCharacterSprite" parent="." instance=ExtResource("1_twt5q")]
 texture = ExtResource("1_j6gfe")
