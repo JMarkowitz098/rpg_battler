@@ -4,8 +4,8 @@
 [ext_resource type="Script" path="res://characters/Knight/knight.gd" id="1_g42g0"]
 [ext_resource type="PackedScene" uid="uid://ciecc1l3ywqv" path="res://characters/Knight/knight_animations.tscn" id="2_0bxmi"]
 [ext_resource type="PackedScene" uid="uid://cxduxu5owj8u8" path="res://characters/animation_creator.tscn" id="4_3ltbb"]
+[ext_resource type="PackedScene" uid="uid://2evhn0npdxi4" path="res://ui/focus_default.tscn" id="4_mrfi8"]
 [ext_resource type="PackedScene" uid="uid://bno3iriedun4j" path="res://characters/base_character_sprite.tscn" id="5_ei5uc"]
-[ext_resource type="PackedScene" uid="uid://2evhn0npdxi4" path="res://characters/focus_default.tscn" id="6_x6el6"]
 [ext_resource type="PackedScene" uid="uid://cyi2g62l2egia" path="res://characters/character_stats.tscn" id="7_d0o7f"]
 
 [node name="Knight" type="Node2D"]
@@ -23,7 +23,7 @@ offset_bottom = 8.0
 scale = Vector2(0.2, 0.2)
 value = 100.0
 
-[node name="Focus" parent="." instance=ExtResource("6_x6el6")]
+[node name="Focus" parent="." instance=ExtResource("4_mrfi8")]
 visible = false
 z_index = 5
 position = Vector2(5, 7)
@@ -33,8 +33,10 @@ ANIMATIONS_SCENE = ExtResource("2_0bxmi")
 
 [node name="CharacterStats" parent="." instance=ExtResource("7_d0o7f")]
 max_health = 10.0
+current_health = 10.0
+attack = 4
 label = "Knight"
 id = "knight_xx"
-current_health = 10.0
+icon_type = "player"
 
 [connection signal="took_damage" from="CharacterStats" to="." method="_on_character_stats_took_damage"]

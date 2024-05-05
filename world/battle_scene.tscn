@@ -1,11 +1,14 @@
-[gd_scene load_steps=7 format=3 uid="uid://bolui7l1oisu1"]
+[gd_scene load_steps=8 format=3 uid="uid://bolui7l1oisu1"]
 
 [ext_resource type="Texture2D" uid="uid://bquypxhjqqxa0" path="res://world/battle_background.png" id="1_i0o4p"]
 [ext_resource type="Script" path="res://world/battle_scene.gd" id="1_r5piu"]
 [ext_resource type="Texture2D" uid="uid://cfxkdlm6ydlv7" path="res://mockups/Battle UI Mockup.png" id="2_2y8pj"]
 [ext_resource type="PackedScene" uid="uid://cir0hf6b30mxx" path="res://characters/enemy_group.tscn" id="3_dc2lk"]
-[ext_resource type="PackedScene" uid="uid://o7b5jel0np5b" path="res://action_list_item.tscn" id="3_g7a13"]
+[ext_resource type="PackedScene" uid="uid://o7b5jel0np5b" path="res://ui/action_list_item.tscn" id="3_g7a13"]
 [ext_resource type="PackedScene" uid="uid://bv8dkjaf6yr17" path="res://characters/player_group.tscn" id="4_rbeni"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_p0inw"]
+font_size = 12
 
 [node name="BattleScene" type="Node2D"]
 script = ExtResource("1_r5piu")
@@ -37,8 +40,10 @@ color = Color(0.721569, 0.721569, 0.721569, 1)
 
 [node name="InfoLabel" type="Label" parent="CanvasLayer/InfoBackground"]
 layout_mode = 0
-offset_right = 40.0
-offset_bottom = 23.0
+offset_right = 185.0
+offset_bottom = 71.0
+label_settings = SubResource("LabelSettings_p0inw")
+autowrap_mode = 2
 
 [node name="ActionChoice" type="GridContainer" parent="CanvasLayer"]
 custom_minimum_size = Vector2(125, 2.08165e-12)
@@ -99,7 +104,6 @@ metadata/_edit_lock_ = true
 
 [node name="EnemyGroup" parent="." instance=ExtResource("3_dc2lk")]
 position = Vector2(232, 56)
-scale = Vector2(-1, 1)
 
 [node name="PlayerGroup" parent="." instance=ExtResource("4_rbeni")]
 position = Vector2(45, 54)

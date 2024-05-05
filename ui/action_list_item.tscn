@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://o7b5jel0np5b"]
 
-[ext_resource type="PackedScene" uid="uid://2evhn0npdxi4" path="res://characters/focus_default.tscn" id="1_00nd0"]
-[ext_resource type="Script" path="res://action_list_item.gd" id="1_udnlg"]
+[ext_resource type="Script" path="res://ui/action_list_item.gd" id="1_breoi"]
+[ext_resource type="PackedScene" uid="uid://2evhn0npdxi4" path="res://ui/focus_default.tscn" id="2_xqbw6"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_ygme4"]
 font_size = 12
@@ -9,13 +9,13 @@ font_size = 12
 [node name="ActionListItem" type="HBoxContainer"]
 custom_minimum_size = Vector2(10, 2.08165e-12)
 alignment = 1
-script = ExtResource("1_udnlg")
+script = ExtResource("1_breoi")
 
 [node name="Label" type="Label" parent="."]
 layout_mode = 2
 text = "X"
 label_settings = SubResource("LabelSettings_ygme4")
 
-[node name="Focus" parent="." instance=ExtResource("1_00nd0")]
+[node name="Focus" parent="." instance=ExtResource("2_xqbw6")]
 visible = false
 position = Vector2(3, 9)
