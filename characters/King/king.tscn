@@ -39,4 +39,5 @@ label = "King"
 id = "king_XX"
 icon_type = "enemy"
 
+[connection signal="no_health" from="CharacterStats" to="." method="_on_character_stats_no_health"]
 [connection signal="took_damage" from="CharacterStats" to="." method="_on_character_stats_took_damage"]

@@ -1,7 +1,7 @@
 class_name CharacterStats
 extends Node2D
 
-signal no_health
+signal no_health(id)
 signal took_damage
 
 @export var max_health: float : set = set_max_health
@@ -11,14 +11,16 @@ signal took_damage
 @export var label: String
 @export var id: String
 @export var icon_type: String
+var is_defending := false
 
 func set_max_health(value):
 	max_health = value
 
 func set_health(value):
 	current_health = clamp(value, 0, max_health)
-	if current_health <= 0: no_health.emit()
+	if current_health <= 0: 
+		no_health.emit(id)
 
 func take_damage(value):
 	current_health -= value
-	emit_signal("took_damage")
+	took_damage.emit()

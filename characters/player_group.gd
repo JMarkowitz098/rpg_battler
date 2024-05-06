@@ -15,6 +15,10 @@ func reset_focus():
 	index = 0
 	for player in players:
 		player.focus.unfocus()
+		
+func reset_defense():
+	for player in players:
+		player.stats.is_defending = false
 	
 func _on_battle_scene_next_player():
 	if index < players.size() - 1:

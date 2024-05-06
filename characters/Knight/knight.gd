@@ -20,3 +20,7 @@ func _on_character_stats_took_damage():
 	animation_player.play("hurt")
 	await get_tree().create_timer(1.4).timeout
 	animation_player.play("idle")
+
+
+func _on_character_stats_no_health():
+	queue_free()

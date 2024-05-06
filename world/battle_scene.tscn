@@ -71,7 +71,6 @@ text = "Skill
 
 [node name="Defend" type="Button" parent="CanvasLayer/ActionChoice"]
 layout_mode = 2
-disabled = true
 text = "Defend"
 
 [node name="ActionList" type="HBoxContainer" parent="CanvasLayer"]
@@ -110,3 +109,4 @@ position = Vector2(45, 54)
 
 [connection signal="next_player" from="." to="PlayerGroup" method="_on_battle_scene_next_player"]
 [connection signal="pressed" from="CanvasLayer/ActionChoice/Attack" to="." method="_on_attack_pressed"]
+[connection signal="pressed" from="CanvasLayer/ActionChoice/Defend" to="." method="_on_defend_pressed"]

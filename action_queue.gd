@@ -19,6 +19,8 @@ func draw_action_queue(action_list):
 				message = "O"
 			"enemy":
 				message = "X"
+			_:
+				message = "_"
 				
 		var list_item = ActionListItemScene.instantiate()
 		list_item.get_node("Label").text = message
@@ -30,9 +32,13 @@ func process_action_queue(tree):
 		match action.action:
 			"attack":
 				var damage = Utils.calucluate_attack_damage(action.actor_stats, action.target_stats)
+				if action.target_stats.is_defending: damage /= 2.0
 				action.target_stats.take_damage(damage)
-		await tree.create_timer(2).timeout
+				await tree.create_timer(2).timeout
+			"defend":
+				action.actor_stats.is_defending = true
 	queue.clear()
+	
 
 func queue_enemy_actions(enemies, players):
 	for i in enemies.size():
@@ -52,6 +58,12 @@ func reset_indexes():
 func size():
 	return queue.size()
 	
+func push_back(action: Action):
+	queue.push_back(action)
+	
+func push_front(action: Action):
+	queue.push_front(action)
+	
 func insert(index: int, action: Action):
 	queue.insert(index, action)
 	
@@ -60,3 +72,15 @@ func get_current_action():
 
 func set_focus(index: int, value: bool):
 	queue[index].is_focused = value
+	
+func queue_player_attack_action(players, enemies):
+	var new_action = Action.new(players[player_index], enemies[enemy_index], "attack")
+	queue.insert(action_index, new_action)
+	
+func queue_player_defend_action(players):
+	var new_action = Action.new(players[player_index], players[player_index], "defend")
+	queue.push_front(new_action)
+	
+func next_player():
+	player_index += 1
+	action_index = 0

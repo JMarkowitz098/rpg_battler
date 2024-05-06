@@ -19,8 +19,12 @@ enum State { CHOOSING_ENEMY, CHOOSING_ACTION_POS, IS_BATTLING, CHOOSING_ACTION }
 signal next_player
 
 func _ready():
+	for enemy in enemy_group.enemies:
+		enemy.stats.no_health.connect(_on_enemy_no_health)
+		
 	state = State.CHOOSING_ACTION
 	show_action_choice()
+	action_queue.queue_enemy_actions(enemy_group.enemies, player_group.players)
 	
 func _process(_delta: float):
 	players = player_group.players
@@ -43,16 +47,23 @@ func _process(_delta: float):
 func show_action_choice():
 	action_choice.show()
 	action_choice.find_child("Attack").grab_focus()
-
+	
+func _on_attack_pressed():
+	action_choice.hide()
+	_start_choosing_enemy()
+	
 func _start_choosing_enemy():
 	state = State.CHOOSING_ENEMY
 	enemy_group.reset_focus()
 	enemies[0].focus.focus()
-	action_queue.queue_enemy_actions(enemies, players)
 
-func _on_attack_pressed():
-	action_choice.hide()
-	_start_choosing_enemy()
+func _on_defend_pressed():
+	#TODO refactor with choose_action_pos
+	action_queue.queue_player_defend_action(players)
+	action_queue.next_player()
+	emit_signal("next_player")
+	state = State.CHOOSING_ACTION
+	show_action_choice()
 		
 func _handle_choose_enemy_input():
 	if Input.is_action_just_pressed("ui_left"):
@@ -71,9 +82,14 @@ func _handle_choose_enemy_input():
 		
 func _start_choosing_action_pos():
 	state = State.CHOOSING_ACTION_POS
-	action_queue.set_focus(0, true)
+	if action_queue.size() > 0:
+		action_queue.set_focus(0, true)
 	
 func _handle_choose_action_input():
+	if action_queue.size() == 0:
+		_handle_choose_action_pos()
+		return
+		
 	action_queue.set_focus(action_queue.action_index, false)
 	
 	if Input.is_action_just_pressed("ui_right"):
@@ -84,12 +100,7 @@ func _handle_choose_action_input():
 		else:
 			action_queue.action_index = action_queue.action_index - 1
 	if Input.is_action_just_pressed("ui_accept"):
-		var new_action = Action.new(players[action_queue.player_index], enemies[action_queue.enemy_index], "attack")
-		action_queue.insert(action_queue.action_index, new_action)
-		action_queue.player_index += 1
-		emit_signal("next_player")
-		action_queue.action_index = 0
-		state = State.CHOOSING_ENEMY
+		_handle_choose_action_pos()
 		return
 	
 	var action = action_queue.get_current_action()
@@ -101,18 +112,35 @@ func _handle_choose_action_input():
 		action.target_stats.label
 	])
 	info_label.text = message + "\n" + str(action_queue.action_index)
-		
+
+func _handle_choose_action_pos():
+	action_queue.queue_player_attack_action(players, enemies)
+	action_queue.next_player()
+	emit_signal("next_player")
+	state = State.CHOOSING_ACTION
+	show_action_choice()
+
 func _process_turn():
 	state = State.IS_BATTLING
 	_reset_groups_and_indexes()
 	await get_tree().create_timer(1).timeout
 	await action_queue.process_action_queue(get_tree())
+	player_group.reset_defense()
+	
+	# For next turn
 	show_action_choice()
 	players[0].focus.focus()
+	action_queue.queue_enemy_actions(enemies, players)
 	state = State.CHOOSING_ACTION
 	
 func _reset_groups_and_indexes():
 	player_group.reset_focus()
 	enemy_group.reset_focus()
 	action_queue.reset_indexes()
-
+	
+func _on_enemy_no_health(enemy_id):
+	action_queue.queue = action_queue.queue.filter(
+		func(action): 
+			return action.actor_stats.id != enemy_id and action.target_stats.id != enemy_id)
+	
+	
