@@ -16,5 +16,5 @@ func _on_character_stats_took_damage():
 	animation_player.play("idle")
 
 
-func _on_character_stats_no_health(id):
+func _on_character_stats_no_health(_id):
 	queue_free()

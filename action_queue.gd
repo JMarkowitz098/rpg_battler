@@ -6,9 +6,9 @@ var enemy_index := 0
 var player_index := 0
 var action_index := 0
 
-const ActionListItemScene = preload("res://ui/action_list_item.tscn")
+const ActionListItemScene := preload("res://ui/action_list_item.tscn")
 
-func draw_action_queue(action_list):
+func draw_action_queue(action_list: HBoxContainer):
 	for child in action_list.get_children():
 		child.queue_free()
 		
@@ -27,21 +27,21 @@ func draw_action_queue(action_list):
 		if(action.is_focused): list_item.get_node("Focus").focus()
 		action_list.add_child(list_item)
 
-func process_action_queue(tree):
-	#for action in queue:
+func process_action_queue(tree: SceneTree):
 	while queue.size() > 0:
 		var action = queue.pop_front()
 		match action.action:
 			"attack":
-				var damage = Utils.calucluate_attack_damage(action.actor_stats, action.target_stats)
-				if action.target_stats.is_defending: damage /= 2.0
-				action.target_stats.take_damage(damage)
-				await tree.create_timer(2).timeout
+				await _process_attack(action, tree)
 			"defend":
 				action.actor_stats.is_defending = true
-	#queue.clear()
-	
 
+func _process_attack(action: Action, tree: SceneTree):
+	var damage = Utils.calucluate_attack_damage(action.actor_stats, action.target_stats)
+	if action.target_stats.is_defending: damage /= 2.0
+	action.target_stats.take_damage(damage)
+	await tree.create_timer(2).timeout
+	
 func queue_enemy_actions(enemies, players):
 	for i in enemies.size():
 		var rand_player_i = randi() % players.size()
@@ -57,7 +57,7 @@ func reset_indexes():
 	player_index = 0
 	action_index = 0
 	
-func size():
+func size() -> int:
 	return queue.size()
 	
 func push_back(action: Action):
@@ -69,7 +69,7 @@ func push_front(action: Action):
 func insert(index: int, action: Action):
 	queue.insert(index, action)
 	
-func get_current_action():
+func get_current_action() -> Action:
 	return queue[action_index]
 
 func set_focus(index: int, value: bool):
