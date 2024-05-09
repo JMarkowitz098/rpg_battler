@@ -10,7 +10,7 @@ var state: State
 
 enum State { CHOOSING_ENEMY, CHOOSING_ACTION_POS, IS_BATTLING, CHOOSING_ACTION }
 
-@onready var action_list = $CanvasLayer/ActionList
+@onready var action_list := $CanvasLayer/ActionList
 @onready var action_choice = $CanvasLayer/ActionChoice
 @onready var enemy_group = $EnemyGroup
 @onready var player_group = $PlayerGroup
@@ -42,7 +42,7 @@ func _process(_delta: float):
 			_handle_choose_action_input()
 		
 	if action_queue.count_player_actions() == players.size():
-		_process_turn()
+		await _process_turn()
 		
 func show_action_choice():
 	action_choice.show()
@@ -121,17 +121,19 @@ func _handle_choose_action_pos():
 	show_action_choice()
 
 func _process_turn():
+	action_choice.hide()
+	info_label.text = ""
 	state = State.IS_BATTLING
 	_reset_groups_and_indexes()
 	await get_tree().create_timer(1).timeout
 	await action_queue.process_action_queue(get_tree())
-	player_group.reset_defense()
 	
 	# For next turn
-	show_action_choice()
+	state = State.CHOOSING_ACTION
+	player_group.reset_defense()
 	players[0].focus.focus()
 	action_queue.queue_enemy_actions(enemies, players)
-	state = State.CHOOSING_ACTION
+	show_action_choice()
 	
 func _reset_groups_and_indexes():
 	player_group.reset_focus()
@@ -142,5 +144,8 @@ func _on_enemy_no_health(enemy_id):
 	action_queue.queue = action_queue.queue.filter(
 		func(action): 
 			return action.actor_stats.id != enemy_id and action.target_stats.id != enemy_id)
+	enemy_group.enemies = enemy_group.enemies.filter(
+		func(enemy): 
+			return enemy.stats.id != enemy_id)
 	
 	

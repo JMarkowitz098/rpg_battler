@@ -2,13 +2,10 @@ extends Node2D
 
 @onready var progress_bar = $ProgressBar
 @onready var focus = $Focus
-@onready var king_animations_creator = $AnimationsCreator
 @onready var stats = $CharacterStats
-
-var animation_player: AnimationPlayer
+@onready var animation_player = $AnimationPlayer
 
 func _ready():
-	animation_player = king_animations_creator.create_animations().get_node("AnimationPlayer")
 	animation_player.play("idle")
 
 func _on_character_stats_took_damage():
@@ -18,5 +15,4 @@ func _on_character_stats_took_damage():
 	animation_player.play("idle")
 	
 func _on_character_stats_no_health(id):
-	print ("I should queue free")
 	queue_free()

@@ -28,7 +28,9 @@ func draw_action_queue(action_list):
 		action_list.add_child(list_item)
 
 func process_action_queue(tree):
-	for action in queue:
+	#for action in queue:
+	while queue.size() > 0:
+		var action = queue.pop_front()
 		match action.action:
 			"attack":
 				var damage = Utils.calucluate_attack_damage(action.actor_stats, action.target_stats)
@@ -37,7 +39,7 @@ func process_action_queue(tree):
 				await tree.create_timer(2).timeout
 			"defend":
 				action.actor_stats.is_defending = true
-	queue.clear()
+	#queue.clear()
 	
 
 func queue_enemy_actions(enemies, players):

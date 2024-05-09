@@ -34,7 +34,7 @@ ANIMATIONS_SCENE = ExtResource("2_0bxmi")
 [node name="CharacterStats" parent="." instance=ExtResource("7_d0o7f")]
 max_health = 10.0
 current_health = 10.0
-attack = 12
+attack = 4
 label = "Knight"
 id = "knight_xx"
 icon_type = "player"

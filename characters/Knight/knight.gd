@@ -6,8 +6,6 @@ extends Node2D
 @onready var base_sprite = $BaseSprite
 @onready var stats = $CharacterStats
 
-@export var MAX_HEALTH: float = 10
-
 var animation_player: AnimationPlayer
 
 func _ready():
