@@ -16,3 +16,7 @@ func reset_focus():
 	index = 0
 	for enemy in enemies:
 		enemy.focus.unfocus()
+
+func remove_enemy_by_id(id):
+	enemies = enemies.filter(func(enemy): return enemy.stats.id != id)
+	

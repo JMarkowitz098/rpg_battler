@@ -86,3 +86,8 @@ func queue_player_defend_action(players):
 func next_player():
 	player_index += 1
 	action_index = 0
+	
+func remove_action_by_character_id(id):
+	queue = queue.filter(
+		func(action): 
+			return action.actor_stats.id != id and action.target_stats.id != id)

@@ -19,11 +19,9 @@ enum State { CHOOSING_ENEMY, CHOOSING_ACTION_POS, IS_BATTLING, CHOOSING_ACTION }
 signal next_player
 
 func _ready():
-	for enemy in enemy_group.enemies:
-		enemy.stats.no_health.connect(_on_enemy_no_health)
-		
+	_connect_signals()
 	state = State.CHOOSING_ACTION
-	show_action_choice()
+	_show_action_choice()
 	action_queue.queue_enemy_actions(enemy_group.enemies, player_group.players)
 	
 func _process(_delta: float):
@@ -43,8 +41,15 @@ func _process(_delta: float):
 		
 	if action_queue.count_player_actions() == players.size():
 		await _process_turn()
+		_reset_turn()
 		
-func show_action_choice():
+func _connect_signals():
+	for enemy in enemy_group.enemies:
+		enemy.stats.no_health.connect(_on_enemy_no_health)
+	for player in player_group.players:
+		player.stats.no_health.connect(_on_player_no_health)
+
+func _show_action_choice():
 	action_choice.show()
 	action_choice.find_child("Attack").grab_focus()
 	
@@ -63,7 +68,7 @@ func _on_defend_pressed():
 	action_queue.next_player()
 	emit_signal("next_player")
 	state = State.CHOOSING_ACTION
-	show_action_choice()
+	_show_action_choice()
 		
 func _handle_choose_enemy_input():
 	if Input.is_action_just_pressed("ui_left"):
@@ -118,7 +123,8 @@ func _handle_choose_action_pos():
 	action_queue.next_player()
 	emit_signal("next_player")
 	state = State.CHOOSING_ACTION
-	show_action_choice()
+	_show_action_choice()
+	enemy_group.reset_focus()
 
 func _process_turn():
 	action_choice.hide()
@@ -127,13 +133,13 @@ func _process_turn():
 	_reset_groups_and_indexes()
 	await get_tree().create_timer(1).timeout
 	await action_queue.process_action_queue(get_tree())
-	
-	# For next turn
+
+func _reset_turn():
 	state = State.CHOOSING_ACTION
 	player_group.reset_defense()
 	players[0].focus.focus()
 	action_queue.queue_enemy_actions(enemies, players)
-	show_action_choice()
+	_show_action_choice()
 	
 func _reset_groups_and_indexes():
 	player_group.reset_focus()
@@ -141,11 +147,9 @@ func _reset_groups_and_indexes():
 	action_queue.reset_indexes()
 	
 func _on_enemy_no_health(enemy_id):
-	action_queue.queue = action_queue.queue.filter(
-		func(action): 
-			return action.actor_stats.id != enemy_id and action.target_stats.id != enemy_id)
-	enemy_group.enemies = enemy_group.enemies.filter(
-		func(enemy): 
-			return enemy.stats.id != enemy_id)
+	action_queue.remove_action_by_character_id(enemy_id)
+	enemy_group.remove_enemy_by_id(enemy_id)
 	
-	
+func _on_player_no_health(player_id):
+	action_queue.remove_action_by_character_id(player_id)
+	player_group.remove_player_by_id(player_id)

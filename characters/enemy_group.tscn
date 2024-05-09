@@ -9,7 +9,7 @@ script = ExtResource("1_khrov")
 [node name="King" parent="." instance=ExtResource("2_emget")]
 metadata/_edit_group_ = true
 
-[node name="CharacterStats" parent="King" index="4"]
+[node name="CharacterStats" parent="King" index="3"]
 label = "King 1"
 id = "king_00"
 
@@ -17,7 +17,7 @@ id = "king_00"
 position = Vector2(23, 0)
 metadata/_edit_group_ = true
 
-[node name="CharacterStats" parent="King2" index="4"]
+[node name="CharacterStats" parent="King2" index="3"]
 label = "King 2"
 id = "king_01"
 
@@ -25,7 +25,7 @@ id = "king_01"
 position = Vector2(45, 0)
 metadata/_edit_group_ = true
 
-[node name="CharacterStats" parent="King3" index="4"]
+[node name="CharacterStats" parent="King3" index="3"]
 label = "King 3"
 id = "king_02"
 
@@ -33,7 +33,7 @@ id = "king_02"
 position = Vector2(66, 0)
 metadata/_edit_group_ = true
 
-[node name="CharacterStats" parent="King4" index="4"]
+[node name="CharacterStats" parent="King4" index="3"]
 label = "King 4"
 id = "king_03"
 
