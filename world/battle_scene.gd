@@ -5,16 +5,24 @@ var players: Array[Node]
 
 var action_queue := ActionQueue.new()
 var is_battling := false
+var skill_index := 0
 
 var state: State
 
-enum State { CHOOSING_ENEMY, CHOOSING_ACTION_POS, IS_BATTLING, CHOOSING_ACTION }
+enum State { 
+	CHOOSING_ENEMY, 
+	CHOOSING_ACTION_POS, 
+	IS_BATTLING, 
+	CHOOSING_ACTION,
+	CHOOSING_SKILL
+}
 
 @onready var action_list := $CanvasLayer/ActionList
 @onready var action_choice := $CanvasLayer/ActionChoice
 @onready var enemy_group := $EnemyGroup
 @onready var player_group := $PlayerGroup
 @onready var info_label := $CanvasLayer/InfoBackground/InfoLabel
+@onready var skill_choice = $CanvasLayer/SkillChoice
 
 signal next_player
 
@@ -38,6 +46,8 @@ func _process(_delta: float) -> void:
 			pass
 		State.CHOOSING_ACTION_POS:
 			_handle_choose_action_input()
+		State.CHOOSING_SKILL:
+			_handle_choose_skill_input()
 		
 	if action_queue.count_player_actions() == players.size():
 		await _process_turn()
@@ -108,7 +118,7 @@ func _handle_choose_action_input() -> void:
 	action.is_focused = true
 	info_label.text = _create_action_message(action)
 	
-func _create_action_message(action) -> String:
+func _create_action_message(action: Action) -> String:
 	return "{0} -> {1} -> {2}".format([
 		action.actor_stats.label, 
 		action.action, 
@@ -149,10 +159,44 @@ func _reset_groups_and_indexes() -> void:
 	enemy_group.reset_focus()
 	action_queue.reset_indexes()
 	
-func _on_enemy_no_health(enemy_id) -> void:
+func _on_enemy_no_health(enemy_id: String) -> void:
 	action_queue.remove_action_by_character_id(enemy_id)
 	enemy_group.remove_enemy_by_id(enemy_id)
 	
-func _on_player_no_health(player_id) -> void:
+func _on_player_no_health(player_id: String) -> void:
 	action_queue.remove_action_by_character_id(player_id)
 	player_group.remove_player_by_id(player_id)
+	
+func _fill_skill_list(player):
+	for child in skill_choice.get_children():
+		child.queue_free()
+		
+	for skill in player.skills.get_children():
+		var button = Button.new()
+		button.text = skill.label
+		skill_choice.add_child(button)
+		
+	var button = Button.new()
+	button.text = "Back"
+	skill_choice.add_child(button)
+
+func _on_skill_pressed():
+	_fill_skill_list(players[action_queue.player_index])
+	action_choice.hide()
+	skill_choice.show()
+	print(skill_choice.get_children()[0])
+	skill_choice.get_children()[0].grab_focus()
+	state = State.CHOOSING_SKILL
+	
+func _handle_choose_skill_input():
+	if Input.is_action_just_pressed("ui_right"):
+		skill_index = (skill_index + 1) % action_queue.size()
+	if Input.is_action_just_pressed("ui_left"):
+		if skill_index == 0:
+			skill_index = action_queue.size() - 1
+		else:
+			skill_index = skill_index - 1
+	if Input.is_action_just_pressed("ui_accept"):
+		_handle_choose_action_pos()
+		return
+	

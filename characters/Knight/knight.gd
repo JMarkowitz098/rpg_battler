@@ -5,6 +5,7 @@ extends Node2D
 @onready var animation_player := $AnimationPlayer
 @onready var base_sprite := $BaseSprite
 @onready var stats := $CharacterStats
+@onready var skills = $Skills
 
 func _ready():
 	animation_player.play("idle")
