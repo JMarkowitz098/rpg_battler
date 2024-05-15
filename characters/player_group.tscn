@@ -15,8 +15,6 @@ id = "knight_00"
 position = Vector2(22, 0)
 
 [node name="CharacterStats" parent="Knight2" index="3"]
-max_health = 10.0
-current_health = 10.0
 id = "knight_01"
 
 [editable path="Knight"]

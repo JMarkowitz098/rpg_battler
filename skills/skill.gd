@@ -23,8 +23,7 @@ static func fill_skill_choice_list(player, skill_choice_list):
 		_create_button_choice(skill_choice_list, skill.label)
 
 
-
-static func _create_button_choice(skill_choice_list,label):
+static func _create_button_choice(skill_choice_list, button_text):
 	var button = Button.new()
-	button.text = label
+	button.text = button_text
 	skill_choice_list.add_child(button)

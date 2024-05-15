@@ -16,7 +16,8 @@ enum State {
 	CHOOSING_ACTION_POS, 
 	IS_BATTLING, 
 	CHOOSING_ACTION,
-	CHOOSING_SKILL
+	CHOOSING_SKILL,
+	GAME_OVER
 }
 
 @onready var action_list := $CanvasLayer/ActionList
@@ -51,9 +52,14 @@ func _process(_delta: float) -> void:
 		State.CHOOSING_SKILL:
 			_handle_choose_skill_input()
 			pass
+		State.GAME_OVER:
+			print("GAME OVER")
 		
 	if action_queue.count_player_actions() == players.size():
 		await _process_turn()
+		if _is_game_over():
+			state = State.GAME_OVER
+			return
 		_reset_turn()
 		
 func _connect_signals() -> void:
@@ -239,6 +245,7 @@ func _clear_ui_for_battle() -> void:
 	info_label.text = ""
 
 func _reset_turn() -> void:
+	#if (players.size() > 0):
 	state = State.CHOOSING_ACTION
 	player_group.reset_defense()
 	players[0].focus.focus()
@@ -256,6 +263,9 @@ func _return_to_action_choice() -> void:
 	enemy_group.reset_focus()
 	action_queue.enemy_index = 0
 	current_action_type = Action.Type.NONE
+	
+func _is_game_over():
+	return player_group.players.size() == 0
 	
 # ----------------------
 # Signals
