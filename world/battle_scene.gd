@@ -49,6 +49,7 @@ func _process(_delta: float) -> void:
 		State.CHOOSING_ACTION_POS:
 			_handle_choose_action_pos_input()
 		State.CHOOSING_SKILL:
+			_handle_choose_skill_input()
 			pass
 		
 	if action_queue.count_player_actions() == players.size():
@@ -101,8 +102,7 @@ func _on_skill_pressed():
 func _connect_skill_button_signals():
 	var skills = players[action_queue.player_index].get_skills()
 	var skill_buttons := skill_choice_list.get_children()
-	print(skill_buttons.size())
-	for i in skill_buttons.size() - 1:
+	for i in skill_buttons.size():
 		var skill = skills[i]
 		var skill_button = skill_buttons[i]
 		skill_button.pressed.connect(_handle_choose_skill.bind(skill))
@@ -115,6 +115,26 @@ func _handle_choose_skill(skill):
 		child.release_focus()
 	_start_choosing_enemy()
 	
+func _handle_choose_skill_input():
+	if Input.is_action_just_pressed("menu_left"):
+		pass
+			
+	if Input.is_action_just_pressed("menu_right"):
+		pass
+		
+	if Input.is_action_just_pressed("menu_accept"):
+		pass
+		
+	if Input.is_action_just_pressed("menu_back"):
+		_return_to_action_choice()
+		skill_choice_list.hide()
+		
+func _return_to_choose_skill():
+	enemy_group.reset_focus()
+	action_queue.enemy_index = 0
+	skill_choice_list.get_children()[0].grab_focus()
+	state = State.CHOOSING_SKILL
+	
 # ------------------------
 # Choosing Enemy Functions
 # ------------------------
@@ -125,18 +145,28 @@ func _start_choosing_enemy() -> void:
 	enemies[0].focus.focus()
 		
 func _handle_choose_enemy_input() -> void:
-	if Input.is_action_just_pressed("ui_left"):
+	if Input.is_action_just_pressed("menu_left"):
 		var new_enemy_index = (action_queue.enemy_index - 1) % enemies.size()
 		enemy_group.switch_focus(new_enemy_index, action_queue.enemy_index)
 		action_queue.enemy_index = new_enemy_index
 			
-	if Input.is_action_just_pressed("ui_right"):
+	if Input.is_action_just_pressed("menu_right"):
 		var new_enemy_index = (action_queue.enemy_index + 1) % enemies.size()
 		enemy_group.switch_focus(new_enemy_index, action_queue.enemy_index)
 		action_queue.enemy_index = new_enemy_index
 		
-	if Input.is_action_just_pressed("ui_accept"):
+	if Input.is_action_just_pressed("menu_accept"):
 		_start_choosing_action_pos()
+		
+	if Input.is_action_just_pressed("menu_back"):
+		if current_action_type == Action.Type.SKILL:
+			_return_to_choose_skill()
+		else:
+			_return_to_action_choice()
+			
+func _return_to_enemy_choice():
+	_start_choosing_enemy()
+	action_queue.action_index = 0
 		
 # -----------------------------
 # Choosing Action Pos Functions
@@ -154,15 +184,21 @@ func _handle_choose_action_pos_input() -> void:
 		
 	action_queue.set_focus(action_queue.action_index, false)
 	
-	if Input.is_action_just_pressed("ui_right"):
+	if Input.is_action_just_pressed("menu_right"):
 		action_queue.action_index = (action_queue.action_index + 1) % action_queue.size()
-	if Input.is_action_just_pressed("ui_left"):
+		
+	if Input.is_action_just_pressed("menu_left"):
 		if action_queue.action_index == 0:
 			action_queue.action_index = action_queue.size() - 1
 		else:
 			action_queue.action_index = action_queue.action_index - 1
-	if Input.is_action_just_pressed("ui_accept"):
+			
+	if Input.is_action_just_pressed("menu_accept"):
 		_handle_choose_action_pos()
+		return
+	
+	if Input.is_action_just_pressed("menu_back"):
+		_return_to_enemy_choice()
 		return
 	
 	var action = action_queue.get_current_action()
@@ -213,6 +249,13 @@ func _reset_groups_and_indexes() -> void:
 	player_group.reset_focus()
 	enemy_group.reset_focus()
 	action_queue.reset_indexes()
+	
+func _return_to_action_choice() -> void:
+	state = State.CHOOSING_ACTION
+	_show_action_type()
+	enemy_group.reset_focus()
+	action_queue.enemy_index = 0
+	current_action_type = Action.Type.NONE
 	
 # ----------------------
 # Signals
