@@ -47,7 +47,7 @@ offset_bottom = 71.0
 label_settings = SubResource("LabelSettings_p0inw")
 autowrap_mode = 2
 
-[node name="ActionChoice" parent="CanvasLayer" instance=ExtResource("2_f1npq")]
+[node name="ActionType" parent="CanvasLayer" instance=ExtResource("2_f1npq")]
 
 [node name="ActionList" type="HBoxContainer" parent="CanvasLayer"]
 anchors_preset = 5
@@ -62,7 +62,7 @@ grow_horizontal = 2
 [node name="ActionListItem" parent="CanvasLayer/ActionList" instance=ExtResource("3_g7a13")]
 layout_mode = 2
 
-[node name="SkillChoice" parent="CanvasLayer" instance=ExtResource("4_166j1")]
+[node name="SkillChoiceList" parent="CanvasLayer" instance=ExtResource("4_166j1")]
 visible = false
 offset_left = 7.0
 offset_top = -66.0
@@ -91,8 +91,9 @@ position = Vector2(232, 56)
 position = Vector2(45, 54)
 
 [connection signal="next_player" from="." to="PlayerGroup" method="_on_battle_scene_next_player"]
-[connection signal="pressed" from="CanvasLayer/ActionChoice/Attack" to="." method="_on_attack_pressed"]
-[connection signal="pressed" from="CanvasLayer/ActionChoice/Skill" to="." method="_on_skill_pressed"]
-[connection signal="pressed" from="CanvasLayer/ActionChoice/Defend" to="." method="_on_defend_pressed"]
+[connection signal="pressed" from="CanvasLayer/ActionType/Attack" to="." method="_on_attack_pressed"]
+[connection signal="pressed" from="CanvasLayer/ActionType/Skill" to="." method="_on_skill_pressed"]
+[connection signal="pressed" from="CanvasLayer/ActionType/Defend" to="." method="_on_defend_pressed"]
 
-[editable path="CanvasLayer/ActionChoice"]
+[editable path="CanvasLayer/ActionType"]
+[editable path="CanvasLayer/SkillChoiceList"]

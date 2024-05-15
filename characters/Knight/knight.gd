@@ -19,3 +19,6 @@ func _on_character_stats_took_damage():
 
 func _on_character_stats_no_health(_id):
 	queue_free()
+	
+func get_skills():
+	return skills.get_children()

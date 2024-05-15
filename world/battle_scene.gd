@@ -7,6 +7,8 @@ var action_queue := ActionQueue.new()
 var is_battling := false
 var skill_index := 0
 
+var current_action_type: Action.Type
+var current_skill: Skill
 var state: State
 
 enum State { 
@@ -18,18 +20,18 @@ enum State {
 }
 
 @onready var action_list := $CanvasLayer/ActionList
-@onready var action_choice := $CanvasLayer/ActionChoice
+@onready var action_type := $CanvasLayer/ActionType
 @onready var enemy_group := $EnemyGroup
 @onready var player_group := $PlayerGroup
 @onready var info_label := $CanvasLayer/InfoBackground/InfoLabel
-@onready var skill_choice = $CanvasLayer/SkillChoice
+@onready var skill_choice_list = $CanvasLayer/SkillChoiceList
 
 signal next_player
 
 func _ready() -> void:
 	_connect_signals()
 	state = State.CHOOSING_ACTION
-	_show_action_choice()
+	_show_action_type()
 	action_queue.queue_enemy_actions(enemy_group.enemies, player_group.players)
 	
 func _process(_delta: float) -> void:
@@ -45,9 +47,9 @@ func _process(_delta: float) -> void:
 		State.CHOOSING_ACTION:
 			pass
 		State.CHOOSING_ACTION_POS:
-			_handle_choose_action_input()
+			_handle_choose_action_pos_input()
 		State.CHOOSING_SKILL:
-			_handle_choose_skill_input()
+			pass
 		
 	if action_queue.count_player_actions() == players.size():
 		await _process_turn()
@@ -59,22 +61,68 @@ func _connect_signals() -> void:
 	for player in player_group.players:
 		player.stats.no_health.connect(_on_player_no_health)
 
-func _show_action_choice() -> void:
-	action_choice.show()
-	action_choice.find_child("Attack").grab_focus()
+func _show_action_type() -> void:
+	action_type.show()
+	action_type.find_child("Attack").grab_focus()
+
+# ----------------
+# Attack Functions
+# ----------------
 	
 func _on_attack_pressed() -> void:
-	action_choice.hide()
+	current_action_type = Action.Type.ATTACK
+	action_type.hide()
 	_start_choosing_enemy()
+	
+# -----------------
+# Defense Functions
+# -----------------
+
+func _on_defend_pressed() -> void:
+	action_queue.queue_player_defend_action(players)
+	_process_next_player()
+	
+# ---------------
+# Skill Functions
+# ---------------
+
+func _on_skill_pressed():
+	# Possibly move to on next player setup
+	Skill.fill_skill_choice_list(
+		players[action_queue.player_index], 
+		skill_choice_list
+	)
+	_connect_skill_button_signals()
+	action_type.hide()
+	skill_choice_list.show()
+	skill_choice_list.get_children()[0].grab_focus()
+	state = State.CHOOSING_SKILL
+
+func _connect_skill_button_signals():
+	var skills = players[action_queue.player_index].get_skills()
+	var skill_buttons := skill_choice_list.get_children()
+	print(skill_buttons.size())
+	for i in skill_buttons.size() - 1:
+		var skill = skills[i]
+		var skill_button = skill_buttons[i]
+		skill_button.pressed.connect(_handle_choose_skill.bind(skill))
+	
+func _handle_choose_skill(skill):
+	current_action_type = Action.Type.SKILL
+	current_skill = skill
+	#TODO: Can probably get the focused child directly from signal
+	for child in skill_choice_list.get_children():
+		child.release_focus()
+	_start_choosing_enemy()
+	
+# ------------------------
+# Choosing Enemy Functions
+# ------------------------
 	
 func _start_choosing_enemy() -> void:
 	state = State.CHOOSING_ENEMY
 	enemy_group.reset_focus()
 	enemies[0].focus.focus()
-
-func _on_defend_pressed() -> void:
-	action_queue.queue_player_defend_action(players)
-	_process_next_player()
 		
 func _handle_choose_enemy_input() -> void:
 	if Input.is_action_just_pressed("ui_left"):
@@ -89,14 +137,17 @@ func _handle_choose_enemy_input() -> void:
 		
 	if Input.is_action_just_pressed("ui_accept"):
 		_start_choosing_action_pos()
-	
 		
+# -----------------------------
+# Choosing Action Pos Functions
+# -----------------------------
+	
 func _start_choosing_action_pos() -> void:
 	state = State.CHOOSING_ACTION_POS
 	if action_queue.size() > 0:
 		action_queue.set_focus(0, true)
 	
-func _handle_choose_action_input() -> void:
+func _handle_choose_action_pos_input() -> void:
 	if action_queue.size() == 0:
 		_handle_choose_action_pos()
 		return
@@ -116,26 +167,24 @@ func _handle_choose_action_input() -> void:
 	
 	var action = action_queue.get_current_action()
 	action.is_focused = true
-	info_label.text = _create_action_message(action)
-	
-func _create_action_message(action: Action) -> String:
-	return "{0} -> {1} -> {2}".format([
-		action.actor_stats.label, 
-		action.action, 
-		action.target_stats.label
-	])
+	info_label.text = action_queue.create_action_message(action)
 
 func _handle_choose_action_pos() -> void:
-	action_queue.queue_player_attack_action(players, enemies)
+	match current_action_type:
+		Action.Type.ATTACK:
+			action_queue.queue_player_attack_action(players, enemies)
+		Action.Type.SKILL:
+			skill_choice_list.hide()
+			action_queue.queue_player_skill_action(players, enemies, current_skill)
+			
 	_process_next_player()
 	enemy_group.reset_focus()
+	current_action_type = Action.Type.NONE
 	
-func _process_next_player() -> void:
-	action_queue.next_player()
-	emit_signal("next_player")
-	state = State.CHOOSING_ACTION
-	_show_action_choice()
-
+# ----------------------
+# Process Turn Functions
+# ----------------------
+	
 func _process_turn() -> void:
 	_clear_ui_for_battle()
 	state = State.IS_BATTLING
@@ -143,8 +192,14 @@ func _process_turn() -> void:
 	await get_tree().create_timer(1).timeout
 	await action_queue.process_action_queue(get_tree())
 
+func _process_next_player() -> void:
+	action_queue.next_player()
+	emit_signal("next_player")
+	state = State.CHOOSING_ACTION
+	_show_action_type()
+
 func _clear_ui_for_battle() -> void:
-	action_choice.hide()
+	action_type.hide()
 	info_label.text = ""
 
 func _reset_turn() -> void:
@@ -152,12 +207,16 @@ func _reset_turn() -> void:
 	player_group.reset_defense()
 	players[0].focus.focus()
 	action_queue.queue_enemy_actions(enemies, players)
-	_show_action_choice()
+	_show_action_type()
 	
 func _reset_groups_and_indexes() -> void:
 	player_group.reset_focus()
 	enemy_group.reset_focus()
 	action_queue.reset_indexes()
+	
+# ----------------------
+# Signals
+# ----------------------
 	
 func _on_enemy_no_health(enemy_id: String) -> void:
 	action_queue.remove_action_by_character_id(enemy_id)
@@ -166,37 +225,7 @@ func _on_enemy_no_health(enemy_id: String) -> void:
 func _on_player_no_health(player_id: String) -> void:
 	action_queue.remove_action_by_character_id(player_id)
 	player_group.remove_player_by_id(player_id)
-	
-func _fill_skill_list(player):
-	for child in skill_choice.get_children():
-		child.queue_free()
-		
-	for skill in player.skills.get_children():
-		var button = Button.new()
-		button.text = skill.label
-		skill_choice.add_child(button)
-		
-	var button = Button.new()
-	button.text = "Back"
-	skill_choice.add_child(button)
 
-func _on_skill_pressed():
-	_fill_skill_list(players[action_queue.player_index])
-	action_choice.hide()
-	skill_choice.show()
-	print(skill_choice.get_children()[0])
-	skill_choice.get_children()[0].grab_focus()
-	state = State.CHOOSING_SKILL
+
 	
-func _handle_choose_skill_input():
-	if Input.is_action_just_pressed("ui_right"):
-		skill_index = (skill_index + 1) % action_queue.size()
-	if Input.is_action_just_pressed("ui_left"):
-		if skill_index == 0:
-			skill_index = action_queue.size() - 1
-		else:
-			skill_index = skill_index - 1
-	if Input.is_action_just_pressed("ui_accept"):
-		_handle_choose_action_pos()
-		return
 	

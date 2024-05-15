@@ -85,13 +85,12 @@ libraries = {
 [node name="Skills" type="Node" parent="."]
 
 [node name="DoubleSlash" parent="Skills" instance=ExtResource("6_jmp5k")]
-id = "double_slash"
 label = "Double Slash"
 type = "Damage"
 description = "Two hits for twice the damage!"
 
 [node name="TripleSlash" parent="Skills" instance=ExtResource("6_jmp5k")]
-id = "triple_slash"
+id = 1
 label = "Triple Slash"
 type = "Damage"
 description = "Three hits for thrice the damage!"
