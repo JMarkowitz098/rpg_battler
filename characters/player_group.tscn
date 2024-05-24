@@ -9,12 +9,16 @@ script = ExtResource("1_2sfnr")
 [node name="Knight" parent="." instance=ExtResource("2_tva68")]
 
 [node name="CharacterStats" parent="Knight" index="3"]
+max_health = 10.0
+current_health = 10.0
 id = "knight_00"
 
 [node name="Knight2" parent="." instance=ExtResource("2_tva68")]
 position = Vector2(22, 0)
 
 [node name="CharacterStats" parent="Knight2" index="3"]
+max_health = 10.0
+current_health = 10.0
 id = "knight_01"
 
 [editable path="Knight"]
