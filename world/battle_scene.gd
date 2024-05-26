@@ -26,10 +26,13 @@ enum State {
 @onready var player_group := $PlayerGroup
 @onready var info_label := $CanvasLayer/InfoBackground/InfoLabel
 @onready var skill_choice_list = $CanvasLayer/SkillChoiceList
+@onready var audio_stream_player_2d = $AudioStreamPlayer2D
+
 
 signal next_player
 
 func _ready() -> void:
+	audio_stream_player_2d.play()
 	_connect_signals()
 	state = State.CHOOSING_ACTION
 	_show_action_type()

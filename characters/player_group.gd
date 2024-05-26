@@ -12,7 +12,6 @@ var index: int = 0
 
 func _ready():
 	_instantiate_players()
-	print(players[0].stats)
 	players[0].focus.focus()
 	
 func switch_focus(x, y):
