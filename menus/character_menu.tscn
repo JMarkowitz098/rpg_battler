@@ -13,10 +13,13 @@ script = ExtResource("1_tcw72")
 
 [node name="HBoxContainer" type="HBoxContainer" parent="."]
 layout_mode = 1
-anchors_preset = 10
+anchors_preset = 15
 anchor_right = 1.0
-offset_bottom = 148.0
+anchor_bottom = 1.0
+offset_left = 1.0
+offset_bottom = -42.0
 grow_horizontal = 2
+grow_vertical = 2
 alignment = 1
 
 [node name="CharacterOneButton" type="Button" parent="HBoxContainer"]
@@ -25,17 +28,27 @@ text = "Char 1"
 
 [node name="CharacterTwoButton" type="Button" parent="HBoxContainer"]
 layout_mode = 2
-disabled = true
 text = "Char 2"
 
 [node name="CharacterThreeButton" type="Button" parent="HBoxContainer"]
 layout_mode = 2
-disabled = true
 text = "Char 3"
 
-[node name="CharacterThreeButton2" type="Button" parent="HBoxContainer"]
+[node name="CharacterFourButton" type="Button" parent="HBoxContainer"]
 layout_mode = 2
-disabled = true
 text = "Char 4"
 
+[node name="StartBattleButton" type="Button" parent="."]
+layout_mode = 0
+offset_left = 112.0
+offset_top = 145.0
+offset_right = 208.0
+offset_bottom = 176.0
+text = "Start Game"
+
 [connection signal="pressed" from="HBoxContainer/CharacterOneButton" to="." method="_on_character_one_button_pressed"]
+[connection signal="pressed" from="HBoxContainer/CharacterTwoButton" to="." method="_on_character_two_button_pressed"]
+[connection signal="pressed" from="HBoxContainer/CharacterThreeButton" to="." method="_on_character_three_button_pressed"]
+[connection signal="pressed" from="HBoxContainer/CharacterFourButton" to="." method="_on_character_four_button_pressed"]
+[connection signal="pressed" from="StartBattleButton" to="." method="_on_button_pressed"]
+[connection signal="pressed" from="StartBattleButton" to="." method="_on_start_battle_button_pressed"]
