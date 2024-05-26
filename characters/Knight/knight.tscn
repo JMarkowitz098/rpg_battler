@@ -70,12 +70,12 @@ z_index = 5
 position = Vector2(5, 7)
 
 [node name="CharacterStats" parent="." instance=ExtResource("7_d0o7f")]
-max_health = 1.0
-current_health = 1.0
-attack = 4
+max_health = 10.0
+current_health = 10.0
+attack = 3
+defense = 3
 label = "Knight"
 id = "knight_xx"
-icon_type = "player"
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {

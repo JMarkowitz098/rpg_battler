@@ -27,7 +27,9 @@ func _create_and_save_knight():
 		"defense": new_knight.stats.defense,
 		"id": "knight_" + str(player_slot),
 		"label": "Knight",
-		"icon_type": new_knight.stats.label
+		"icon_type": CharacterStats.IconTypes.PLAYER,
+		"slot": player_slot,
+		"character_type": CharacterStats.CharacterTypes.KNIGHT
 	}
 	
 	SaveAndLoadPlayer.save_player(player_slot, stats)

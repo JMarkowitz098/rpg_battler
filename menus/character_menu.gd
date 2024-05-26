@@ -46,4 +46,4 @@ func _change_to_character_creation(slot):
 
 
 func _on_start_battle_button_pressed():
-	pass # Replace with function body.
+	get_tree().change_scene_to_file("res://world/battle_scene.tscn")

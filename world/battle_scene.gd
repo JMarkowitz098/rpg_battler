@@ -1,7 +1,7 @@
 extends Node2D
 
 var enemies: Array[Node]
-var players: Array[Node]
+var players: Array[Node2D]
 
 var action_queue := ActionQueue.new()
 var is_battling := false

@@ -1,25 +1,17 @@
-[gd_scene load_steps=3 format=3 uid="uid://bv8dkjaf6yr17"]
+[gd_scene load_steps=2 format=3 uid="uid://bv8dkjaf6yr17"]
 
 [ext_resource type="Script" path="res://characters/player_group.gd" id="1_2sfnr"]
-[ext_resource type="PackedScene" uid="uid://sgl44boffmsf" path="res://characters/Knight/knight.tscn" id="2_tva68"]
 
 [node name="PlayerGroup" type="Node2D"]
 script = ExtResource("1_2sfnr")
 
-[node name="Knight" parent="." instance=ExtResource("2_tva68")]
+[node name="SlotOneLocation" type="Marker2D" parent="."]
+position = Vector2(72, 0)
 
-[node name="CharacterStats" parent="Knight" index="3"]
-max_health = 10.0
-current_health = 10.0
-id = "knight_00"
+[node name="SlotTwoLocation" type="Marker2D" parent="."]
+position = Vector2(48, 0)
 
-[node name="Knight2" parent="." instance=ExtResource("2_tva68")]
-position = Vector2(22, 0)
+[node name="SlotThreeLocation" type="Marker2D" parent="."]
+position = Vector2(24, 0)
 
-[node name="CharacterStats" parent="Knight2" index="3"]
-max_health = 10.0
-current_health = 10.0
-id = "knight_01"
-
-[editable path="Knight"]
-[editable path="Knight2"]
+[node name="SlotFourLocation" type="Marker2D" parent="."]
