@@ -7,6 +7,7 @@ enum Id {
 }
 @export var id: Id
 @export var label: String
+@export var mp_cost: int
 @export_enum("Damage") var type: String
 @export_multiline var description: String
 

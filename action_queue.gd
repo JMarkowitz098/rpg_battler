@@ -45,8 +45,8 @@ func _process_attack(action: Action, tree: SceneTree):
 	await tree.create_timer(2).timeout
 
 func _process_skill(action: Action, tree: SceneTree):
+	action.actor_stats.use_mp(action.skill.mp_cost)
 	var damage = Utils.calucluate_skill_damage(action)
-	print(damage)
 	
 	if action.target_stats.is_defending: damage /= 2.0
 	action.target_stats.take_damage(damage)

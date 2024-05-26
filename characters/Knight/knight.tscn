@@ -56,7 +56,17 @@ script = ExtResource("1_g42g0")
 texture = ExtResource("1_0nicr")
 hframes = 15
 
-[node name="ProgressBar" type="ProgressBar" parent="."]
+[node name="HealthBar" type="ProgressBar" parent="."]
+self_modulate = Color(0.0313726, 1, 0.0352941, 1)
+offset_left = -8.0
+offset_top = -25.0
+offset_right = 66.0
+offset_bottom = 2.0
+scale = Vector2(0.2, 0.2)
+value = 100.0
+
+[node name="MpBar" type="ProgressBar" parent="."]
+self_modulate = Color(0.0313726, 0.196078, 1, 1)
 offset_left = -8.0
 offset_top = -19.0
 offset_right = 66.0
@@ -71,7 +81,9 @@ position = Vector2(5, 7)
 
 [node name="CharacterStats" parent="." instance=ExtResource("7_d0o7f")]
 max_health = 10.0
+max_mp = 10.0
 current_health = 10.0
+current_mp = 10.0
 attack = 3
 defense = 3
 label = "Knight"
@@ -86,14 +98,17 @@ libraries = {
 
 [node name="DoubleSlash" parent="Skills" instance=ExtResource("6_jmp5k")]
 label = "Double Slash"
+mp_cost = 2
 type = "Damage"
 description = "Two hits for twice the damage!"
 
 [node name="TripleSlash" parent="Skills" instance=ExtResource("6_jmp5k")]
 id = 1
 label = "Triple Slash"
+mp_cost = 4
 type = "Damage"
 description = "Three hits for thrice the damage!"
 
 [connection signal="no_health" from="CharacterStats" to="." method="_on_character_stats_no_health"]
 [connection signal="took_damage" from="CharacterStats" to="." method="_on_character_stats_took_damage"]
+[connection signal="used_skill" from="CharacterStats" to="." method="_on_character_stats_used_skill"]

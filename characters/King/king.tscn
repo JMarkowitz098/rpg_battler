@@ -72,7 +72,7 @@ position = Vector2(6, 8)
 [node name="CharacterStats" parent="." instance=ExtResource("8_7w2xa")]
 max_health = 10.0
 current_health = 10.0
-attack = 2
+attack = 4
 label = "King"
 id = "king_XX"
 icon_type = 1
