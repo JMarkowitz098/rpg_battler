@@ -46,10 +46,16 @@ func _process_attack(action: Action, tree: SceneTree):
 
 func _process_skill(action: Action, tree: SceneTree):
 	action.actor_stats.use_mp(action.skill.mp_cost)
-	var damage = Utils.calucluate_skill_damage(action)
 	
-	if action.target_stats.is_defending: damage /= 2.0
-	action.target_stats.take_damage(damage)
+	match action.skill.type:
+		Skill.Type.DAMAGE:
+			var damage = Utils.calucluate_skill_damage(action)
+			if action.target_stats.is_defending: damage /= 2.0
+			action.target_stats.take_damage(damage)
+		Skill.Type.BUFF:
+			Utils.process_buff(action)
+			action.actor_stats.take_damage(0) # Hack to show character hurt animation
+	
 	await tree.create_timer(2).timeout
 	
 func queue_enemy_actions(enemies, players):

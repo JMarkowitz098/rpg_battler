@@ -3,12 +3,19 @@ extends Node
 
 enum Id {
 	DOUBLE_SLASH,
-	TRIPLE_SLASH
+	TRIPLE_SLASH,
+	FLEX,
+	COY
+}
+enum Type {
+	DAMAGE,
+	BUFF
 }
 @export var id: Id
 @export var label: String
 @export var mp_cost: int
-@export_enum("Damage") var type: String
+@export var type: Type
+#@export_enum ("Damage", "Buff") var type: String
 @export_multiline var description: String
 
 signal pressed()

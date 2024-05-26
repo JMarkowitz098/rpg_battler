@@ -122,9 +122,23 @@ func _handle_choose_skill(skill):
 	#TODO: Can probably get the focused child directly from signal
 	for child in skill_choice_list.get_children():
 		child.release_focus()
-	_start_choosing_enemy()
+		
+	match current_skill.type:
+		Skill.Type.DAMAGE:
+			_start_choosing_enemy()
+		Skill.Type.BUFF:
+			action_queue.queue_player_skill_action(players, enemies, skill)
+			skill_choice_list.hide()
+			_process_next_player()
 	
 func _handle_choose_skill_input():
+	var skills = players[action_queue.player_index].get_skills()
+	var skill_buttons := skill_choice_list.get_children()
+	for i in skill_buttons.size():
+		if(skill_buttons[i].has_focus()):
+			_draw_skill_desciption(skills[i].description)
+
+
 	if Input.is_action_just_pressed("menu_left"):
 		pass
 			
@@ -137,12 +151,21 @@ func _handle_choose_skill_input():
 	if Input.is_action_just_pressed("menu_back"):
 		_return_to_action_choice()
 		skill_choice_list.hide()
+		_clear_info_label()
+		
+func _handle_buff_skill():
+	action_queue.queue_player_skill_action(players, enemies, current_skill)
+	skill_choice_list.hide()
+	_process_next_player()
 		
 func _return_to_choose_skill():
 	enemy_group.reset_focus()
 	action_queue.enemy_index = 0
 	skill_choice_list.get_children()[0].grab_focus()
 	state = State.CHOOSING_SKILL
+	
+func _draw_skill_desciption(description):
+	info_label.text = description
 	
 # ------------------------
 # Choosing Enemy Functions
@@ -221,6 +244,7 @@ func _handle_choose_action_pos() -> void:
 		Action.Type.SKILL:
 			skill_choice_list.hide()
 			action_queue.queue_player_skill_action(players, enemies, current_skill)
+			_clear_info_label()
 			
 	_process_next_player()
 	enemy_group.reset_focus()
@@ -245,7 +269,7 @@ func _process_next_player() -> void:
 
 func _clear_ui_for_battle() -> void:
 	action_type.hide()
-	info_label.text = ""
+	_clear_info_label()
 
 func _reset_turn() -> void:
 	#if (players.size() > 0):
@@ -269,6 +293,9 @@ func _return_to_action_choice() -> void:
 	
 func _is_game_over():
 	return player_group.players.size() == 0
+	
+func _clear_info_label():
+	info_label.text = ""
 	
 # ----------------------
 # Signals
