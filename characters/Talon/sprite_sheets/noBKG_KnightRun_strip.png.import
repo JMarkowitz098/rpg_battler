@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://df7pcvc8u0ug1"
-path="res://.godot/imported/noBKG_KnightIdle_strip.png-93d5664e822bc6778df128e29f323e69.ctex"
+uid="uid://drew4qma2brwp"
+path="res://.godot/imported/noBKG_KnightRun_strip.png-941fb1682ccb550dd25fbc9a350ca9f7.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://characters/Knight/sprite_sheets/noBKG_KnightIdle_strip.png"
-dest_files=["res://.godot/imported/noBKG_KnightIdle_strip.png-93d5664e822bc6778df128e29f323e69.ctex"]
+source_file="res://characters/Talon/sprite_sheets/noBKG_KnightRun_strip.png"
+dest_files=["res://.godot/imported/noBKG_KnightRun_strip.png-941fb1682ccb550dd25fbc9a350ca9f7.ctex"]
 
 [params]
 

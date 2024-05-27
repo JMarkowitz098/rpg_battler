@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cpuavc6ihf85m"
-path="res://.godot/imported/noBKG_KnightShield_strip.png-616bc2027bca8c73424e2dfe9dd8e0c3.ctex"
+uid="uid://b3eiyyx4skdd2"
+path="res://.godot/imported/noBKG_KnightAttack_strip.png-b76bcf99d58718c21ad9c98bda5e085a.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://characters/Knight/sprite_sheets/noBKG_KnightShield_strip.png"
-dest_files=["res://.godot/imported/noBKG_KnightShield_strip.png-616bc2027bca8c73424e2dfe9dd8e0c3.ctex"]
+source_file="res://characters/Talon/sprite_sheets/noBKG_KnightAttack_strip.png"
+dest_files=["res://.godot/imported/noBKG_KnightAttack_strip.png-b76bcf99d58718c21ad9c98bda5e085a.ctex"]
 
 [params]
 

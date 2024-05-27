@@ -15,9 +15,9 @@ func draw_action_queue(action_list: HBoxContainer):
 	for action in queue:
 		var message: String
 		match action.actor_stats.icon_type:
-			CharacterStats.IconTypes.PLAYER:
+			CharacterStats.IconType.PLAYER:
 				message = "O"
-			CharacterStats.IconTypes.ENEMY:
+			CharacterStats.IconType.ENEMY:
 				message = "X"
 			_:
 				message = "_"
@@ -66,7 +66,7 @@ func queue_enemy_actions(enemies, players):
 		
 func count_player_actions() -> int:
 	return queue.filter(
-		func(action): return action.actor_stats.icon_type == CharacterStats.IconTypes.PLAYER).size()
+		func(action): return action.actor_stats.icon_type == CharacterStats.IconType.PLAYER).size()
 		
 func reset_indexes():
 	enemy_index = 0

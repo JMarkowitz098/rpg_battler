@@ -1,6 +1,6 @@
 extends ColorRect
 
-const KNIGHT := preload("res://characters/Knight/knight.tscn")
+const TALON := preload("res://characters/Talon/talon.tscn")
 
 @onready var knight_button = $VBoxContainer/KnightButton
 
@@ -16,21 +16,21 @@ func _on_knight_button_pressed():
 	get_tree().change_scene_to_file("res://menus/character_menu.tscn")
 
 func _create_and_save_knight():
-	var new_knight = KNIGHT.instantiate()
-	# Have to add knight to scene before it will fully initialize for some reason
-	get_tree().current_scene.add_child(new_knight)
+	var new_talon = TALON.instantiate()
+	# Have to add Talon to scene before it will fully initialize for some reason
+	get_tree().current_scene.add_child(new_talon)
 	
 	var stats = {
-		"max_health": new_knight.stats.max_health,
-		"current_health": new_knight.stats.current_health,
-		"attack": new_knight.stats.attack,
-		"defense": new_knight.stats.defense,
-		"id": "knight_" + str(player_slot),
-		"label": "Knight",
-		"icon_type": CharacterStats.IconTypes.PLAYER,
+		"id": CharacterStats.PlayerId.TALON,
+		"label": "Talon",
+		"icon_type": CharacterStats.IconType.PLAYER,
+		"elements": [CharacterStats.Elements.ETH, CharacterStats.Elements.SHOR],
+		"max_ingress_energy": new_talon.stats.max_ingress_energy,
+		"current_ingress_energy": new_talon.stats.current_ingress_energy,
+		"incursion_power": new_talon.stats.incursion_power,
+		"refrain_power": new_talon.stats.refrain_power,
 		"slot": player_slot,
-		"character_type": CharacterStats.CharacterTypes.KNIGHT
 	}
 	
 	SaveAndLoadPlayer.save_player(player_slot, stats)
-	new_knight.queue_free()
+	new_talon.queue_free()

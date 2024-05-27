@@ -1,70 +1,70 @@
 extends Node2D
 
-@onready var slot_one_location = $SlotOneLocation
-@onready var slot_two_location = $SlotTwoLocation
-@onready var slot_three_location = $SlotThreeLocation
-@onready var slot_four_location = $SlotFourLocation
+@onready var slot_one_location := $SlotOneLocation
+@onready var slot_two_location := $SlotTwoLocation
+@onready var slot_three_location := $SlotThreeLocation
+@onready var slot_four_location := $SlotFourLocation
 
-const KNIGHT := preload("res://characters/Knight/knight.tscn")
+const TALON := preload("res://characters/Talon/talon.tscn")
 
 var players: Array[Node2D] = []
 var index: int = 0
 
-func _ready():
+func _ready() -> void:
 	_instantiate_players()
 	players[0].focus.focus()
 	
-func switch_focus(x, y):
+func switch_focus(x: int, y: int) -> void:
 	players[x].focus.focus()
 	players[y].focus.unfocus()
 	
-func reset_focus():
+func reset_focus() -> void:
 	index = 0
 	for player in players:
 		player.focus.unfocus()
 		
-func reset_defense():
+func reset_defense() -> void:
 	for player in players:
 		player.stats.is_defending = false
 		
-func remove_player_by_id(id):
+func remove_player_by_id(id: int) -> void:
 	players = players.filter(func(player): return player.stats.id != id)
 	
-func _instantiate_players():
+func _instantiate_players() -> void:
 	var players_stats := SaveAndLoadPlayer.load_all_players()
 	
-	var slot_index = 0
+	var slot_index := 0
 	for loaded_stats in players_stats:
 		if(loaded_stats):
 			_instantiate_player(loaded_stats)
 			_set_location(slot_index, players[slot_index])
 			slot_index += 1
 		
-func _instantiate_player(loaded_stats):
-	match loaded_stats.character_type:
-		CharacterStats.CharacterTypes.KNIGHT:
-			var new_knight = KNIGHT.instantiate()
-			add_child(new_knight)
-			_set_stats_on_loaded_player(new_knight, loaded_stats)
-			players.append(new_knight)
+func _instantiate_player(loaded_stats: Dictionary) -> void:
+	match loaded_stats.id:
+		CharacterStats.PlayerId.TALON:
+			var new_talon := TALON.instantiate()
+			add_child(new_talon)
+			_set_stats_on_loaded_player(new_talon, loaded_stats)
+			players.append(new_talon)
 			
-func _set_stats_on_loaded_player(player, loaded_stats):
-	var stat_keys = [
-		"max_health",
-		"current_health",
-		"attack",
-		"defense",
-		"label",
+func _set_stats_on_loaded_player(player: Node2D, loaded_stats: Dictionary) -> void:
+	var stat_keys := [
 		"id",
+		"label",
 		"icon_type",
-		"character_type",
+		"elements",
+		"max_ingress_energy",
+		"current_ingress_energy",
+		"incursion_power",
+		"refrain_power",
 		"slot"
 	]
 	for key in stat_keys:
 		player.stats[key] = loaded_stats[key]
 
-func _set_location(index: int, player: Node2D):
-	match index:
+func _set_location(slot_index: int, player: Node2D) -> void:
+	match slot_index:
 		0:
 			player.global_position = slot_one_location.global_position
 		1:
@@ -76,7 +76,7 @@ func _set_location(index: int, player: Node2D):
 			
 	
 	
-func _on_battle_scene_next_player():
+func _on_battle_scene_next_player() -> void:
 	if index < players.size() - 1:
 		index += 1
 		switch_focus(index, index - 1)

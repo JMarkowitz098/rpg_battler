@@ -67,9 +67,9 @@ func _process(_delta: float) -> void:
 		
 func _connect_signals() -> void:
 	for enemy in enemy_group.enemies:
-		enemy.stats.no_health.connect(_on_enemy_no_health)
+		enemy.stats.no_ingress_energy.connect(_on_enemy_no_health)
 	for player in player_group.players:
-		player.stats.no_health.connect(_on_player_no_health)
+		player.stats.no_ingress_energy.connect(_on_player_no_ingress_energy)
 
 func _show_action_type() -> void:
 	action_type.show()
@@ -301,11 +301,11 @@ func _clear_info_label():
 # Signals
 # ----------------------
 	
-func _on_enemy_no_health(enemy_id: String) -> void:
+func _on_enemy_no_health(enemy_id: int) -> void:
 	action_queue.remove_action_by_character_id(enemy_id)
 	enemy_group.remove_enemy_by_id(enemy_id)
 	
-func _on_player_no_health(player_id: String) -> void:
+func _on_player_no_ingress_energy(player_id: int) -> void:
 	action_queue.remove_action_by_character_id(player_id)
 	player_group.remove_player_by_id(player_id)
 

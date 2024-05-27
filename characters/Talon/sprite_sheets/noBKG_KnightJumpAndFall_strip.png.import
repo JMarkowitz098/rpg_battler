@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://biqt3mr6t324x"
-path="res://.godot/imported/noBKG_KnightJumpAndFall_strip.png-56b5d72f98358dd764d073e788efe503.ctex"
+path="res://.godot/imported/noBKG_KnightJumpAndFall_strip.png-6489a37a2ef0e40a7e0d2b6e07546139.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://characters/Knight/sprite_sheets/noBKG_KnightJumpAndFall_strip.png"
-dest_files=["res://.godot/imported/noBKG_KnightJumpAndFall_strip.png-56b5d72f98358dd764d073e788efe503.ctex"]
+source_file="res://characters/Talon/sprite_sheets/noBKG_KnightJumpAndFall_strip.png"
+dest_files=["res://.godot/imported/noBKG_KnightJumpAndFall_strip.png-6489a37a2ef0e40a7e0d2b6e07546139.ctex"]
 
 [params]
 

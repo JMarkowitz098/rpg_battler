@@ -1,48 +1,37 @@
 class_name CharacterStats
 extends Node2D
 
-signal no_health(id)
+signal no_ingress_energy(id)
 signal took_damage
 signal used_skill
 
-enum CharacterTypes { KNIGHT }
-enum IconTypes { PLAYER, ENEMY }
+enum IconType { PLAYER, ENEMY }
+enum Elements { ENH, ETH, SHOR, SCOR }
+enum PlayerId { TALON }
 
-@export_enum("CharacterTypes") var type: String
-
-@export var max_health: float : set = set_max_health
-@export var max_mp: float : set = set_max_mp
-@export var current_health: float = max_health : set = set_health
-@export var current_mp: float = max_mp : set = set_mp
-@export var attack : int = 1
-@export var defense : int = 1
+@export var id: PlayerId
 @export var label: String
-@export var id: String
-@export var icon_type: IconTypes
-@export var character_type: CharacterTypes
+@export var icon_type: IconType
+@export var elements: Array
+@export var max_ingress_energy: float
+@export var current_ingress_energy: float = max_ingress_energy : set = set_ingress_energy
+@export var incursion_power : int = 1
+@export var refrain_power : int = 1
 
 var is_defending := false
+
 var slot: int
 
-func set_max_health(value):
-	max_health = value
-	
-func set_max_mp(value):
-	max_mp = value
+func set_ingress_energy(value: float) -> void:
+	current_ingress_energy = clamp(value, 0, max_ingress_energy)
+	if current_ingress_energy <= 0: 
+		no_ingress_energy.emit(id)
 
-func set_health(value):
-	current_health = clamp(value, 0, max_health)
-	if current_health <= 0: 
-		no_health.emit(id)
-
-func set_mp(value):
-	current_mp = clamp(value, 0, max_mp)
-
-func take_damage(value):
-	current_health -= value
+func take_damage(value: float) -> void:
+	current_ingress_energy -= value
 	took_damage.emit()
 	
-func use_mp(value):
-	current_mp -= value
+func use_ingress_energy(value: float) -> void:
+	current_ingress_energy -= value
 	used_skill.emit()
 	

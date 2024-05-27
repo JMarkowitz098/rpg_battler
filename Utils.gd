@@ -3,14 +3,14 @@ extends Node
 var _params = null
 
 func calucluate_attack_damage(actor_stats: CharacterStats, target_stats: CharacterStats) -> int:
-	return _clamped_damage(actor_stats.attack - target_stats.defense)
+	return _clamped_damage(actor_stats.incursion_power - target_stats.refrain_power)
 	
 func calucluate_skill_damage(action: Action) -> int:
 	match action.skill.id:
 		Skill.Id.DOUBLE_SLASH:
-			return _clamped_damage((action.actor_stats.attack - action.target_stats.defense) * 2)
+			return _clamped_damage((action.actor_stats.incursion_power - action.target_stats.defense) * 2)
 		Skill.Id.TRIPLE_SLASH:
-			return _clamped_damage((action.actor_stats.attack - action.target_stats.defense) * 3)
+			return _clamped_damage((action.actor_stats.incursion_power - action.target_stats.defense) * 3)
 		_:
 			return 0
 			
@@ -25,9 +25,9 @@ func change_scene(next_scene, params=null):
 	_params = params
 	get_tree().change_scene_to_file(next_scene)
 
-func get_param(name):
-	if _params != null and _params.has(name):
-		return _params[name]
+func get_param(key):
+	if _params != null and _params.has(key):
+		return _params[key]
 	return null
 	
 func _clamped_damage(value):

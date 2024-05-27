@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://drew4qma2brwp"
-path="res://.godot/imported/noBKG_KnightRun_strip.png-2b4e359939a0801259ee90036344e790.ctex"
+uid="uid://dl5arto02aha8"
+path="res://.godot/imported/noBKG_KnightDeath_strip.png-da31072a2474820efd659feac048b752.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://characters/Knight/sprite_sheets/noBKG_KnightRun_strip.png"
-dest_files=["res://.godot/imported/noBKG_KnightRun_strip.png-2b4e359939a0801259ee90036344e790.ctex"]
+source_file="res://characters/Talon/sprite_sheets/noBKG_KnightDeath_strip.png"
+dest_files=["res://.godot/imported/noBKG_KnightDeath_strip.png-da31072a2474820efd659feac048b752.ctex"]
 
 [params]
 
