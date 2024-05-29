@@ -7,6 +7,7 @@ extends Node2D
 
 func _ready():
 	animation_player.play("idle")
+	stats.unique_id = CharacterStats.create_unique_id(CharacterStats.PlayerId.KING)
 
 func _on_character_stats_took_damage():
 	progress_bar.value = (stats.current_ingress_energy / stats.max_ingress_energy) * 100

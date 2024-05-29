@@ -83,30 +83,19 @@ libraries = {
 
 [node name="Skills" type="Node" parent="."]
 
-[node name="DoubleSlash" parent="Skills" instance=ExtResource("6_jmp5k")]
-label = "Double Slash"
-mp_cost = 2
-description = "Two hits for twice the damage!"
+[node name="EthIncursionSmall" parent="Skills" instance=ExtResource("6_jmp5k")]
+label = "Eth Incursion (small)"
+ingress_energy_cost = 1
+element = 1
+description = "Open a small Eth incursion and damage one foe"
 
-[node name="TripleSlash" parent="Skills" instance=ExtResource("6_jmp5k")]
+[node name="EthRefrainSmall" parent="Skills" instance=ExtResource("6_jmp5k")]
 id = 1
-label = "Triple Slash"
-mp_cost = 4
-description = "Three hits for thrice the damage!"
-
-[node name="Flex" parent="Skills" instance=ExtResource("6_jmp5k")]
-id = 2
-label = "Flex"
-mp_cost = 2
+label = "Eth Refrain (small)"
+ingress_energy_cost = 1
+element = 1
 type = 1
-description = "Double your attack"
-
-[node name="Coy" parent="Skills" instance=ExtResource("6_jmp5k")]
-id = 3
-label = "Coy"
-mp_cost = 2
-type = 1
-description = "Double your defense"
+description = "Block a single small attack"
 
 [connection signal="no_ingress_energy" from="CharacterStats" to="." method="_on_character_stats_no_ingress_energy"]
 [connection signal="took_damage" from="CharacterStats" to="." method="_on_character_stats_took_damage"]

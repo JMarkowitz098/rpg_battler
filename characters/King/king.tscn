@@ -75,6 +75,7 @@ icon_type = 1
 max_ingress_energy = 10.0
 current_ingress_energy = 10.0
 incursion_power = 3
+agility = 2
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {

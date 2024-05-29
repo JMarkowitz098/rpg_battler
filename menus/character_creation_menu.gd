@@ -21,7 +21,8 @@ func _create_and_save_knight():
 	get_tree().current_scene.add_child(new_talon)
 	
 	var stats = {
-		"id": CharacterStats.PlayerId.TALON,
+		"unique_id": CharacterStats.create_unique_id(CharacterStats.PlayerId.TALON),
+		"player_id": CharacterStats.PlayerId.TALON,
 		"label": "Talon",
 		"icon_type": CharacterStats.IconType.PLAYER,
 		"elements": [CharacterStats.Elements.ETH, CharacterStats.Elements.SHOR],
@@ -29,6 +30,7 @@ func _create_and_save_knight():
 		"current_ingress_energy": new_talon.stats.current_ingress_energy,
 		"incursion_power": new_talon.stats.incursion_power,
 		"refrain_power": new_talon.stats.refrain_power,
+		"agility": new_talon.stats.agility,
 		"slot": player_slot,
 	}
 	

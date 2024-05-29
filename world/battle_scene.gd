@@ -1,14 +1,14 @@
 extends Node2D
 
-var enemies: Array[Node]
+var enemies: Array[Node2D]
 var players: Array[Node2D]
 
 var action_queue := ActionQueue.new()
-var is_battling := false
 var skill_index := 0
 
 var current_action_type: Action.Type
 var current_skill: Skill
+var current_skill_type: Skill.Type
 var state: State
 
 enum State { 
@@ -28,6 +28,8 @@ enum State {
 @onready var skill_choice_list = $CanvasLayer/SkillChoiceList
 @onready var audio_stream_player_2d = $AudioStreamPlayer2D
 
+@onready var skill_ui = SkillMenuUi.new(skill_choice_list)
+
 
 signal next_player
 
@@ -36,7 +38,7 @@ func _ready() -> void:
 	_connect_signals()
 	state = State.CHOOSING_ACTION
 	_show_action_type()
-	action_queue.queue_enemy_actions(enemy_group.enemies, player_group.players)
+	action_queue.queue_initial_turn_actions(player_group.players, enemy_group.enemies)
 	
 func _process(_delta: float) -> void:
 	players = player_group.players
@@ -58,7 +60,7 @@ func _process(_delta: float) -> void:
 		State.GAME_OVER:
 			print("GAME OVER")
 		
-	if action_queue.count_player_actions() == players.size():
+	if action_queue.is_turn_over():
 		await _process_turn()
 		if _is_game_over():
 			state = State.GAME_OVER
@@ -73,48 +75,32 @@ func _connect_signals() -> void:
 
 func _show_action_type() -> void:
 	action_type.show()
-	action_type.find_child("Attack").grab_focus()
+	action_type.find_child("Incursion").grab_focus()
 
-# ----------------
-# Attack Functions
-# ----------------
+# -------------------
+# Incursion Functions
+# -------------------
 	
-func _on_attack_pressed() -> void:
-	current_action_type = Action.Type.ATTACK
-	action_type.hide()
-	_start_choosing_enemy()
-	
-# -----------------
-# Defense Functions
-# -----------------
-
-func _on_defend_pressed() -> void:
-	action_queue.queue_player_defend_action(players)
-	_process_next_player()
-	
-# ---------------
-# Skill Functions
-# ---------------
-
-func _on_skill_pressed():
-	# Possibly move to on next player setup
-	Skill.fill_skill_choice_list(
-		players[action_queue.player_index], 
-		skill_choice_list
-	)
-	_connect_skill_button_signals()
-	action_type.hide()
-	skill_choice_list.show()
-	skill_choice_list.get_children()[0].grab_focus()
+func _on_incursion_pressed():
+	skill_ui.set_current_skills(players[action_queue.player_index], Skill.Type.INCURSION)
+	skill_ui.prepare_skill_menu(_handle_choose_skill, action_type)
 	state = State.CHOOSING_SKILL
+	current_skill_type = Skill.Type.INCURSION
 
-func _connect_skill_button_signals():
-	var skills = players[action_queue.player_index].get_skills()
-	var skill_buttons := skill_choice_list.get_children()
-	for i in skill_buttons.size():
-		var skill = skills[i]
-		var skill_button = skill_buttons[i]
-		skill_button.pressed.connect(_handle_choose_skill.bind(skill))
+# -----------------
+# Refrain Functions
+# -----------------
+
+func _on_refrain_pressed():
+	skill_ui.set_current_skills(players[action_queue.player_index], Skill.Type.REFRAIN)
+	skill_ui.prepare_skill_menu(_handle_choose_skill, action_type)
+	state = State.CHOOSING_SKILL
+	current_skill_type = Skill.Type.REFRAIN
+	
+	
+# ----------------
+# Shared Functions
+# ----------------
 	
 func _handle_choose_skill(skill):
 	current_action_type = Action.Type.SKILL
@@ -124,20 +110,20 @@ func _handle_choose_skill(skill):
 		child.release_focus()
 		
 	match current_skill.type:
-		Skill.Type.DAMAGE:
+		Skill.Type.INCURSION:
 			_start_choosing_enemy()
-		Skill.Type.BUFF:
+		Skill.Type.REFRAIN:
 			action_queue.queue_player_skill_action(players, enemies, skill)
 			skill_choice_list.hide()
 			_process_next_player()
 	
 func _handle_choose_skill_input():
-	var skills = players[action_queue.player_index].get_skills()
-	var skill_buttons := skill_choice_list.get_children()
+	var skills = skill_ui.current_skills
+	var skill_buttons = skill_ui.skill_menu.get_children()
+
 	for i in skill_buttons.size():
 		if(skill_buttons[i].has_focus()):
 			_draw_skill_desciption(skills[i].description)
-
 
 	if Input.is_action_just_pressed("menu_left"):
 		pass
@@ -243,7 +229,7 @@ func _handle_choose_action_pos() -> void:
 			action_queue.queue_player_attack_action(players, enemies)
 		Action.Type.SKILL:
 			skill_choice_list.hide()
-			action_queue.queue_player_skill_action(players, enemies, current_skill)
+			action_queue.update_player_action_with_skill(players, enemies, current_skill)
 			_clear_info_label()
 			
 	_process_next_player()
@@ -276,7 +262,7 @@ func _reset_turn() -> void:
 	state = State.CHOOSING_ACTION
 	player_group.reset_defense()
 	players[0].focus.focus()
-	action_queue.queue_enemy_actions(enemies, players)
+	action_queue.queue_initial_turn_actions(player_group.players, enemy_group.enemies)
 	_show_action_type()
 	
 func _reset_groups_and_indexes() -> void:
@@ -308,7 +294,3 @@ func _on_enemy_no_health(enemy_id: int) -> void:
 func _on_player_no_ingress_energy(player_id: int) -> void:
 	action_queue.remove_action_by_character_id(player_id)
 	player_group.remove_player_by_id(player_id)
-
-
-	
-	

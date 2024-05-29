@@ -16,8 +16,8 @@ func _on_character_stats_took_damage():
 	await get_tree().create_timer(1.4).timeout
 	animation_player.play("idle")
 
-func get_skills():
-	return skills.get_children()
+func get_skills(skill_type: Skill.Type):
+	return skills.get_children().filter(func(skill): return skill.type == skill_type)
 
 func _on_character_stats_used_skill():
 	ingress_energy_bar.value = (stats.current_ingress_energy / stats.max_ingress_energy) * 100

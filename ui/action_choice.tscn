@@ -13,16 +13,17 @@ grow_vertical = 0
 scale = Vector2(0.59032, 0.59032)
 columns = 2
 
-[node name="Attack" type="Button" parent="."]
+[node name="Incursion" type="Button" parent="."]
 layout_mode = 2
-text = "Attack"
+text = "Incursion"
 
-[node name="Skill" type="Button" parent="."]
+[node name="Refrain" type="Button" parent="."]
 custom_minimum_size = Vector2(65, 2.08165e-12)
 layout_mode = 2
-text = "Skill
+text = "Refrain
 "
 
-[node name="Defend" type="Button" parent="."]
+[node name="Recover" type="Button" parent="."]
 layout_mode = 2
-text = "Defend"
+disabled = true
+text = "Recover"

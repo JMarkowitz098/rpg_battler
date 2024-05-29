@@ -1,12 +1,14 @@
 extends Node2D
 
-var enemies: Array[Node] = []
+var enemies: Array[Node2D] = []
 var action_queue: Array = []
 var is_battling: bool = false
 var index: int = 0
 
 func _ready():
-	enemies = get_children()
+	print(get_children())
+	for enemy in get_children():
+		enemies.append(enemy)
 
 func switch_focus(x, y):
 	enemies[x].focus.focus()

@@ -7,25 +7,26 @@ signal used_skill
 
 enum IconType { PLAYER, ENEMY }
 enum Elements { ENH, ETH, SHOR, SCOR }
-enum PlayerId { TALON }
+enum PlayerId { TALON, KING }
 
-@export var id: PlayerId
+@export var player_id: PlayerId 
 @export var label: String
 @export var icon_type: IconType
 @export var elements: Array
 @export var max_ingress_energy: float
 @export var current_ingress_energy: float = max_ingress_energy : set = set_ingress_energy
-@export var incursion_power : int = 1
-@export var refrain_power : int = 1
+@export var incursion_power := 1
+@export var refrain_power := 1
+@export var agility := 1
 
 var is_defending := false
-
 var slot: int
+var unique_id: String
 
 func set_ingress_energy(value: float) -> void:
 	current_ingress_energy = clamp(value, 0, max_ingress_energy)
 	if current_ingress_energy <= 0: 
-		no_ingress_energy.emit(id)
+		no_ingress_energy.emit(unique_id)
 
 func take_damage(value: float) -> void:
 	current_ingress_energy -= value
@@ -34,4 +35,7 @@ func take_damage(value: float) -> void:
 func use_ingress_energy(value: float) -> void:
 	current_ingress_energy -= value
 	used_skill.emit()
-	
+
+static func create_unique_id(new_player_id):
+	var rand_player_i = randi() % 1000
+	return str(new_player_id) + "_" + str(rand_player_i)

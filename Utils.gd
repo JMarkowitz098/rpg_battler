@@ -7,19 +7,15 @@ func calucluate_attack_damage(actor_stats: CharacterStats, target_stats: Charact
 	
 func calucluate_skill_damage(action: Action) -> int:
 	match action.skill.id:
-		Skill.Id.DOUBLE_SLASH:
-			return _clamped_damage((action.actor_stats.incursion_power - action.target_stats.defense) * 2)
-		Skill.Id.TRIPLE_SLASH:
-			return _clamped_damage((action.actor_stats.incursion_power - action.target_stats.defense) * 3)
+		Skill.Id.ETH_INCURSION_SMALL:
+			return _clamped_damage((action.actor_stats.incursion_power - action.target_stats.refrain_power) * 2)
 		_:
 			return 0
 			
 func process_buff(action: Action) -> void:
 	match action.skill.id:
-		Skill.Id.FLEX:
-			action.actor_stats.attack *= 2
-		Skill.Id.COY:
-			action.actor_stats.defense *= 2
+		Skill.Id.ETH_REFRAIN_SMALL:
+			action.actor_stats.refrain_power *= 2
 
 func change_scene(next_scene, params=null):
 	_params = params

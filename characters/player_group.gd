@@ -41,7 +41,7 @@ func _instantiate_players() -> void:
 			slot_index += 1
 		
 func _instantiate_player(loaded_stats: Dictionary) -> void:
-	match loaded_stats.id:
+	match loaded_stats.player_id:
 		CharacterStats.PlayerId.TALON:
 			var new_talon := TALON.instantiate()
 			add_child(new_talon)
@@ -50,7 +50,8 @@ func _instantiate_player(loaded_stats: Dictionary) -> void:
 			
 func _set_stats_on_loaded_player(player: Node2D, loaded_stats: Dictionary) -> void:
 	var stat_keys := [
-		"id",
+		"unique_id",
+		"player_id",
 		"label",
 		"icon_type",
 		"elements",
@@ -58,6 +59,7 @@ func _set_stats_on_loaded_player(player: Node2D, loaded_stats: Dictionary) -> vo
 		"current_ingress_energy",
 		"incursion_power",
 		"refrain_power",
+		"agility",
 		"slot"
 	]
 	for key in stat_keys:
