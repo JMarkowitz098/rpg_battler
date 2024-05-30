@@ -6,7 +6,6 @@ var players: Array[Node2D]
 var action_queue := ActionQueue.new()
 var skill_index := 0
 
-var current_action_type: Action.Type
 var current_skill: Skill
 var current_skill_type: Skill.Type
 var state: State
@@ -53,7 +52,8 @@ func _process(_delta: float) -> void:
 		State.CHOOSING_ACTION:
 			pass
 		State.CHOOSING_ACTION_POS:
-			_handle_choose_action_pos_input()
+			pass
+			# _handle_choose_action_pos_input()
 		State.CHOOSING_SKILL:
 			_handle_choose_skill_input()
 			pass
@@ -103,19 +103,20 @@ func _on_refrain_pressed():
 # ----------------
 	
 func _handle_choose_skill(skill):
-	current_action_type = Action.Type.SKILL
 	current_skill = skill
 	#TODO: Can probably get the focused child directly from signal
 	for child in skill_choice_list.get_children():
 		child.release_focus()
 		
-	match current_skill.type:
-		Skill.Type.INCURSION:
+	match current_skill.target:
+		Skill.Target.ENEMY:
 			_start_choosing_enemy()
-		Skill.Type.REFRAIN:
-			action_queue.queue_player_skill_action(players, enemies, skill)
+		Skill.Target.SELF:
 			skill_choice_list.hide()
+			action_queue.update_player_action_with_skill(players, enemies, current_skill)
+			_clear_info_label()
 			_process_next_player()
+			enemy_group.reset_focus()
 	
 func _handle_choose_skill_input():
 	var skills = skill_ui.current_skills
@@ -174,67 +175,19 @@ func _handle_choose_enemy_input() -> void:
 		action_queue.enemy_index = new_enemy_index
 		
 	if Input.is_action_just_pressed("menu_accept"):
-		_start_choosing_action_pos()
+		skill_choice_list.hide()
+		action_queue.update_player_action_with_skill(players, enemies, current_skill)
+		_clear_info_label()
+		_process_next_player()
+		enemy_group.reset_focus()
 		
 	if Input.is_action_just_pressed("menu_back"):
-		if current_action_type == Action.Type.SKILL:
-			_return_to_choose_skill()
-		else:
-			_return_to_action_choice()
+		_return_to_choose_skill()
+		
 			
 func _return_to_enemy_choice():
 	_start_choosing_enemy()
 	action_queue.action_index = 0
-		
-# -----------------------------
-# Choosing Action Pos Functions
-# -----------------------------
-	
-func _start_choosing_action_pos() -> void:
-	state = State.CHOOSING_ACTION_POS
-	if action_queue.size() > 0:
-		action_queue.set_focus(0, true)
-	
-func _handle_choose_action_pos_input() -> void:
-	if action_queue.size() == 0:
-		_handle_choose_action_pos()
-		return
-		
-	action_queue.set_focus(action_queue.action_index, false)
-	
-	if Input.is_action_just_pressed("menu_right"):
-		action_queue.action_index = (action_queue.action_index + 1) % action_queue.size()
-		
-	if Input.is_action_just_pressed("menu_left"):
-		if action_queue.action_index == 0:
-			action_queue.action_index = action_queue.size() - 1
-		else:
-			action_queue.action_index = action_queue.action_index - 1
-			
-	if Input.is_action_just_pressed("menu_accept"):
-		_handle_choose_action_pos()
-		return
-	
-	if Input.is_action_just_pressed("menu_back"):
-		_return_to_enemy_choice()
-		return
-	
-	var action = action_queue.get_current_action()
-	action.is_focused = true
-	info_label.text = action_queue.create_action_message(action)
-
-func _handle_choose_action_pos() -> void:
-	match current_action_type:
-		Action.Type.ATTACK:
-			action_queue.queue_player_attack_action(players, enemies)
-		Action.Type.SKILL:
-			skill_choice_list.hide()
-			action_queue.update_player_action_with_skill(players, enemies, current_skill)
-			_clear_info_label()
-			
-	_process_next_player()
-	enemy_group.reset_focus()
-	current_action_type = Action.Type.NONE
 	
 # ----------------------
 # Process Turn Functions
@@ -258,7 +211,6 @@ func _clear_ui_for_battle() -> void:
 	_clear_info_label()
 
 func _reset_turn() -> void:
-	#if (players.size() > 0):
 	state = State.CHOOSING_ACTION
 	player_group.reset_defense()
 	players[0].focus.focus()
@@ -275,7 +227,6 @@ func _return_to_action_choice() -> void:
 	_show_action_type()
 	enemy_group.reset_focus()
 	action_queue.enemy_index = 0
-	current_action_type = Action.Type.NONE
 	
 func _is_game_over():
 	return player_group.players.size() == 0
@@ -294,3 +245,55 @@ func _on_enemy_no_health(enemy_id: int) -> void:
 func _on_player_no_ingress_energy(player_id: int) -> void:
 	action_queue.remove_action_by_character_id(player_id)
 	player_group.remove_player_by_id(player_id)
+
+# -----------------------------
+# Choosing Action Pos Functions
+# -----------------------------
+
+#TODO: Redesign so you can just view at any time by pressing a button
+
+# func _start_choosing_action_pos() -> void:
+# 	state = State.CHOOSING_ACTION_POS
+# 	if action_queue.size() > 0:
+# 		action_queue.set_focus(0, true)
+	
+# func _handle_choose_action_pos_input() -> void:
+# 	if action_queue.size() == 0:
+# 		_handle_choose_action_pos()
+# 		return
+		
+# 	action_queue.set_focus(action_queue.action_index, false)
+	
+# 	if Input.is_action_just_pressed("menu_right"):
+# 		action_queue.action_index = (action_queue.action_index + 1) % action_queue.size()
+		
+# 	if Input.is_action_just_pressed("menu_left"):
+# 		if action_queue.action_index == 0:
+# 			action_queue.action_index = action_queue.size() - 1
+# 		else:
+# 			action_queue.action_index = action_queue.action_index - 1
+			
+# 	if Input.is_action_just_pressed("menu_accept"):
+# 		_handle_choose_action_pos()
+# 		return
+	
+# 	if Input.is_action_just_pressed("menu_back"):
+# 		_return_to_enemy_choice()
+# 		return
+	
+# 	var action = action_queue.get_current_action()
+# 	action.is_focused = true
+# 	info_label.text = action_queue.create_action_message(action)
+
+# func _handle_choose_action_pos() -> void:
+# 	match current_action_type:
+# 		Action.Type.ATTACK:
+# 			action_queue.queue_player_attack_action(players, enemies)
+# 		Action.Type.SKILL:
+# 			skill_choice_list.hide()
+# 			action_queue.update_player_action_with_skill(players, enemies, current_skill)
+# 			_clear_info_label()
+			
+# 	_process_next_player()
+# 	enemy_group.reset_focus()
+# 	current_action_type = Action.Type.NONE

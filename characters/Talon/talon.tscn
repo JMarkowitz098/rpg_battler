@@ -87,6 +87,7 @@ libraries = {
 label = "Eth Incursion (small)"
 ingress_energy_cost = 1
 element = 1
+target = 1
 description = "Open a small Eth incursion and damage one foe"
 
 [node name="EthRefrainSmall" parent="Skills" instance=ExtResource("6_jmp5k")]

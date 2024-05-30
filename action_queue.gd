@@ -30,35 +30,25 @@ func draw_action_queue(action_list: HBoxContainer) -> void:
 func process_action_queue(tree: SceneTree) -> void:
 	while queue.size() > 0:
 		var action = queue.pop_front()
-		match action.type:
-			Action.Type.ATTACK:
-				await _process_attack(action, tree)
-			Action.Type.DEFEND:
-				action.actor_stats.is_defending = true
-			Action.Type.SKILL:
-				print("made it")
-				await _process_skill(action, tree)
+		await _process_skill(action, tree)
 
 func queue_initial_turn_actions(players: Array[Node2D], enemies: Array[Node2D]):
 	_queue_empty_actions(players)
 	_queue_empty_actions(enemies)
 	_sort_queue_by_agility()
-	_fill_enemy_actions(players)
+	_fill_enemy_actions(players, enemies)
 
 func _queue_empty_actions(characters: Array[Node2D]):
 	for character in characters:
 		var new_action = Action.new(character)
 		queue.push_back(new_action)
 
-func _fill_enemy_actions(players: Array[Node2D]):
+func _fill_enemy_actions(players: Array[Node2D], enemies: Array[Node2D]):
 	for action in queue:
 		if(action.actor_stats.icon_type == CharacterStats.IconType.ENEMY):
 			var rand_player_i = randi() % players.size()
-			action.set_attack(players[rand_player_i], Action.Type.ATTACK)
-		
-func count_player_actions() -> int:
-	return queue.filter(
-		func(action): return action.actor_stats.icon_type == CharacterStats.IconType.PLAYER).size()
+			var enh_incursion = enemies[0].skills.get_children()[0] # TODO: Create better system to pass around enemies and their skills
+			action.set_attack(players[rand_player_i], enh_incursion)
 
 func is_turn_over():
 	return queue.all(func(action): return action.action_chosen)
@@ -89,10 +79,9 @@ func set_focus(index: int, value: bool) -> void:
 
 func update_player_action_with_skill(players, enemies, skill):
 	var current_player_id = players[player_index].stats.unique_id
-	print("current_player_id ", current_player_id)
 	var action_to_update = queue.filter(func(action): 
 		return action.actor_stats.unique_id == current_player_id)[0]
-	action_to_update.set_attack(enemies[enemy_index], Action.Type.SKILL, skill)
+	action_to_update.set_attack(enemies[enemy_index], skill)
 	
 func next_player() -> void:
 	player_index += 1
@@ -111,23 +100,17 @@ func create_action_message(action: Action) -> String:
 		#action.target_stats.label
 	#])
 
-func _process_attack(action: Action, tree: SceneTree) -> void:
-	var damage = Utils.calucluate_attack_damage(action.actor_stats, action.target_stats)
-	if action.target_stats.is_defending: damage /= 2.0
-	action.target_stats.take_damage(damage)
-	await tree.create_timer(2).timeout
-
 func _process_skill(action: Action, tree: SceneTree) -> void:
 	action.actor_stats.use_ingress_energy(action.skill.ingress_energy_cost)
-	
-	match action.skill.type:
-		Skill.Type.INCURSION:
+
+	match action.skill.id:
+		Skill.Id.ETH_INCURSION_SMALL, Skill.Id.ENH_INCURSION_SMALL:
 			var damage = Utils.calucluate_skill_damage(action)
 			if action.target_stats.is_defending: damage /= 2.0
 			action.target_stats.take_damage(damage)
-		Skill.Type.REFRAIN:
-			Utils.process_buff(action)
-			action.actor_stats.take_damage(0) # Hack to show character hurt animation
+
+		Skill.Id.ETH_REFRAIN_SMALL:
+			action.actor_stats.is_defending = true
 	
 	await tree.create_timer(2).timeout
 
