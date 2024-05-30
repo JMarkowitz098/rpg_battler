@@ -92,5 +92,6 @@ ingress_energy_cost = 1
 target = 1
 description = "Open a small Enh incursion and damage one foe"
 
+[connection signal="no_ingress_energy" from="CharacterStats" to="." method="_on_character_stats_no_ingress_energy"]
 [connection signal="took_damage" from="CharacterStats" to="." method="_on_character_stats_took_damage"]
 [connection signal="used_skill" from="CharacterStats" to="." method="_on_character_stats_used_skill"]

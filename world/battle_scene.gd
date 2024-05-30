@@ -21,14 +21,12 @@ enum State {
 
 @onready var action_list := $CanvasLayer/ActionList
 @onready var action_type := $CanvasLayer/ActionType
-@onready var enemy_group := $EnemyGroup
-@onready var player_group := $PlayerGroup
-@onready var info_label := $CanvasLayer/InfoBackground/InfoLabel
-@onready var skill_choice_list = $CanvasLayer/SkillChoiceList
 @onready var audio_stream_player_2d = $AudioStreamPlayer2D
-
+@onready var enemy_group := $EnemyGroup
+@onready var info_label := $CanvasLayer/InfoBackground/InfoLabel
+@onready var player_group := $PlayerGroup
+@onready var skill_choice_list = $CanvasLayer/SkillChoiceList
 @onready var skill_ui = SkillMenuUi.new(skill_choice_list)
-
 
 signal next_player
 

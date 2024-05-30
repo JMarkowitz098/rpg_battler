@@ -8,14 +8,14 @@ func calucluate_attack_damage(actor_stats: CharacterStats, target_stats: Charact
 func calucluate_skill_damage(action: Action) -> int:
 	match action.skill.id:
 		Skill.Id.ETH_INCURSION_SMALL, Skill.Id.ENH_INCURSION_SMALL:
-			return _clamped_damage((action.actor_stats.incursion_power - action.target_stats.refrain_power) * 2)
+			return _clamped_damage((action.actor.stats.incursion_power - action.target.stats.refrain_power) * 2)
 		_:
 			return 0
 			
 func process_buff(action: Action) -> void:
 	match action.skill.id:
 		Skill.Id.ETH_REFRAIN_SMALL:
-			action.actor_stats.refrain_power *= 2
+			action.actor.stats.refrain_power *= 2
 
 func change_scene(next_scene, params=null):
 	_params = params
