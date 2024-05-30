@@ -81,12 +81,12 @@ func remove_action_by_character_id(id: CharacterStats.PlayerId) -> void:
 			return action.actor.stats.id != id and action.target.stats.id != id)
 			
 func create_action_message(action: Action) -> String:
-	return action.actor.stats.label
-	#return "{0} -> {1} -> {2}".format([
-		#action.actor.stats.label, 
-		#Action.Type.keys()[action.type], 
-		#action.target.stats.label
-	#])
+	var message = action.actor.stats.label
+	if action.skill:
+		message += "\n" + action.skill.label
+	if action.target:
+		message += "\n-> " + action.target.stats.label
+	return message
 
 func _queue_empty_actions(characters: Array[Node2D]):
 	for character in characters:

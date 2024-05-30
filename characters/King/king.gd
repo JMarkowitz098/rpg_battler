@@ -15,14 +15,10 @@ func _on_character_stats_took_damage():
 	animation_player.play("hurt")
 	await get_tree().create_timer(1.4).timeout
 	animation_player.play("idle")
-	
-func _on_character_stats_no_health(_id):
-	queue_free()
-
 
 func _on_character_stats_used_skill():
 	ingress_energy_bar.value = (stats.current_ingress_energy / stats.max_ingress_energy) * 100
 
 
-func _on_character_stats_no_ingress_energy(id):
-	pass # Replace with function body.
+func _on_character_stats_no_ingress_energy(_id):
+	queue_free()
