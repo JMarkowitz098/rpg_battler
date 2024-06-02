@@ -109,10 +109,11 @@ func _process_skill(action: Action, tree: SceneTree) -> void:
 
 	match action.skill.id:
 		Skill.Id.ETH_INCURSION_SMALL, Skill.Id.ENH_INCURSION_SMALL:
+			# This takes more work then I thought
+			#action.actor.base_sprite.hide()
+			#action.actor.attack_sprite.show()
+			#action.actor.animation_player.play("attack")
 			var damage = Utils.calucluate_skill_damage(action)
-			#if action.target.stats.is_defending: 
-				#damage /= 2.0
-				#action.target.stats.is_defending = false
 			action.target.stats.take_damage(damage)
 
 		Skill.Id.ETH_REFRAIN_SMALL:

@@ -7,6 +7,7 @@ extends Node2D
 @onready var skills = $Skills
 @onready var ingress_energy = $IngressEnergy
 @onready var player_name = $PlayerName
+@onready var attack_sprite = $AttackSprite
 
 func _ready():
 	animation_player.play("idle")
