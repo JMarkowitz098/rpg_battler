@@ -20,6 +20,7 @@ enum PlayerId { TALON, KING }
 @export var agility := 1
 
 var has_small_refrain_open := false
+var is_dodging := false
 
 var current_refrain_element: Element
 var slot: int

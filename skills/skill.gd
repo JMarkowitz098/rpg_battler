@@ -4,11 +4,13 @@ extends Node
 enum Id {
 	ETH_INCURSION_SMALL,
 	ETH_REFRAIN_SMALL,
-	ENH_INCURSION_SMALL
+	ENH_INCURSION_SMALL,
+	DODGE
 }
 enum Type {
 	INCURSION,
 	REFRAIN,
+	DODGE
 }
 
 enum Target {
@@ -39,6 +41,15 @@ static func fill_skill_choice_list(player: Node2D, skill_choice_list: GridContai
 	for skill in player.get_skills(filter_type):
 		_create_button_choice(skill_choice_list, skill.label)
 
+static func create_dodge():
+	var dodge = new()
+	dodge.id = Id.DODGE
+	dodge.label  = "Dodge"
+	dodge.ingress_energy_cost = 0
+	dodge.type = Type.DODGE
+	dodge.target = Target.SELF
+	return dodge
+	
 
 static func _create_button_choice(skill_choice_list, button_text):
 	var button = Button.new()

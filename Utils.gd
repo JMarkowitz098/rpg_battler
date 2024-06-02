@@ -10,6 +10,11 @@ func calucluate_skill_damage(action: Action) -> int:
 		Skill.Id.ETH_INCURSION_SMALL, Skill.Id.ENH_INCURSION_SMALL:
 			var actor_power = action.actor.stats.incursion_power + action.skill.ingress_energy_cost
 			var target_power = action.target.stats.refrain_power
+			
+			if action.target.stats.is_dodging:
+				var dodged =  randi() % 2 == 1
+				if(dodged): return 0
+				
 			if action.target.stats.has_small_refrain_open:
 				target_power += Skill.SMALL_REFRAIN_POWER
 				action.target.stats.has_small_refrain_open = false

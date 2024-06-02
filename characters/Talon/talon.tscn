@@ -102,7 +102,7 @@ label = "Eth Refrain (small)"
 ingress_energy_cost = 1
 element = 1
 type = 1
-description = "Block a single small attack"
+description = "Block a single small attack. Absorby energy if the elements match."
 
 [connection signal="no_ingress_energy" from="CharacterStats" to="." method="_on_character_stats_no_ingress_energy"]
 [connection signal="took_damage" from="CharacterStats" to="." method="_on_character_stats_took_damage"]

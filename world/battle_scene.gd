@@ -41,7 +41,9 @@ func _ready() -> void:
 func _process(_delta: float) -> void:
 	players = player_group.players
 	enemies = enemy_group.enemies
-	action_queue.draw_action_queue(action_list)
+	
+	if state != State.IS_BATTLING:
+		action_queue.draw_action_queue(action_list)
 	
 	match state:
 		State.IS_BATTLING:
@@ -83,7 +85,7 @@ func _handle_choosing_action() -> void:
 		_start_choosing_action_pos()
 
 # -------------------
-# Incursion Functions
+# Action Buttons
 # -------------------
 	
 func _on_incursion_pressed():
@@ -92,16 +94,15 @@ func _on_incursion_pressed():
 	state = State.CHOOSING_SKILL
 	current_skill_type = Skill.Type.INCURSION
 
-# -----------------
-# Refrain Functions
-# -----------------
-
 func _on_refrain_pressed():
 	skill_ui.set_current_skills(players[action_queue.player_index], Skill.Type.REFRAIN)
 	skill_ui.prepare_skill_menu(_handle_choose_skill, action_type)
 	state = State.CHOOSING_SKILL
 	current_skill_type = Skill.Type.REFRAIN
 	
+func _on_dodge_pressed():
+	players[action_queue.player_index].stats.is_dodging = true
+	_handle_choose_skill(Skill.create_dodge())
 	
 # ----------------
 # Shared Functions
@@ -223,6 +224,7 @@ func _clear_ui_for_battle() -> void:
 func _reset_turn() -> void:
 	state = State.CHOOSING_ACTION
 	players[0].focus.focus()
+	_reset_dodges()
 	action_queue.queue_initial_turn_actions(player_group.players, enemy_group.enemies)
 	_show_action_type()
 	
@@ -230,6 +232,12 @@ func _reset_groups_and_indexes() -> void:
 	player_group.reset_focus()
 	enemy_group.reset_focus()
 	action_queue.reset_indexes()
+	
+func _reset_dodges():
+	for player in players:
+		player.stats.is_dodging = false
+	for enemy in enemies:
+		enemy.stats.is_dodging = false
 	
 func _return_to_action_choice() -> void:
 	state = State.CHOOSING_ACTION
@@ -302,3 +310,6 @@ func _handle_choose_action_pos_input() -> void:
 	var action = action_queue.get_current_action()
 	action.is_focused = true
 	info_label.text = action_queue.create_action_message(action)
+
+
+

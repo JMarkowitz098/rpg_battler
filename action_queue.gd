@@ -69,7 +69,11 @@ func update_player_action_with_skill(players, enemies, skill):
 	var current_player_id = players[player_index].stats.unique_id
 	var action_to_update = queue.filter(func(action): 
 		return action.actor.stats.unique_id == current_player_id)[0]
-	action_to_update.set_attack(enemies[enemy_index], skill)
+	if skill.target == Skill.Target.SELF:
+		action_to_update.set_attack(null, skill)
+	else:
+		action_to_update.set_attack(enemies[enemy_index], skill)
+		
 	
 func next_player() -> void:
 	player_index += 1
@@ -114,8 +118,9 @@ func _process_skill(action: Action, tree: SceneTree) -> void:
 		Skill.Id.ETH_REFRAIN_SMALL:
 			action.actor.stats.has_small_refrain_open = true
 			action.actor.stats.current_refrain_element = CharacterStats.Element.ETH
-	
-	await tree.create_timer(2).timeout
+			
+	if action.skill.id != Skill.Id.DODGE:
+		await tree.create_timer(2).timeout
 
 func _sort_queue_by_agility():
 	queue.sort_custom(func(a, b): 
