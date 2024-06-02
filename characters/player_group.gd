@@ -23,12 +23,8 @@ func reset_focus() -> void:
 	for player in players:
 		player.focus.unfocus()
 		
-func reset_defense() -> void:
-	for player in players:
-		player.stats.is_defending = false
-		
-func remove_player_by_id(id: int) -> void:
-	players = players.filter(func(player): return player.stats.id != id)
+func remove_player_by_id(id: String) -> void:
+	players = players.filter(func(player): return player.stats.unique_id != id)
 	
 func _instantiate_players() -> void:
 	var players_stats := SaveAndLoadPlayer.load_all_players()
@@ -46,6 +42,7 @@ func _instantiate_player(loaded_stats: Dictionary) -> void:
 			var new_talon := TALON.instantiate()
 			add_child(new_talon)
 			_set_stats_on_loaded_player(new_talon, loaded_stats)
+			_set_name_on_loaded_player(new_talon)
 			players.append(new_talon)
 			
 func _set_stats_on_loaded_player(player: Node2D, loaded_stats: Dictionary) -> void:
@@ -64,6 +61,10 @@ func _set_stats_on_loaded_player(player: Node2D, loaded_stats: Dictionary) -> vo
 	]
 	for key in stat_keys:
 		player.stats[key] = loaded_stats[key]
+		
+func _set_name_on_loaded_player(player: Node2D):
+	player.player_name.text = player.stats.label + " " + str(player.stats.slot)
+	
 
 func _set_location(slot_index: int, player: Node2D) -> void:
 	match slot_index:

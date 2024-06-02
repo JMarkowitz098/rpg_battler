@@ -6,12 +6,12 @@
 script = ExtResource("1_2sfnr")
 
 [node name="SlotOneLocation" type="Marker2D" parent="."]
-position = Vector2(72, 0)
+position = Vector2(96, 0)
 
 [node name="SlotTwoLocation" type="Marker2D" parent="."]
-position = Vector2(48, 0)
+position = Vector2(64, 0)
 
 [node name="SlotThreeLocation" type="Marker2D" parent="."]
-position = Vector2(24, 0)
+position = Vector2(32, 0)
 
 [node name="SlotFourLocation" type="Marker2D" parent="."]

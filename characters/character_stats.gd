@@ -6,7 +6,7 @@ signal took_damage
 signal used_skill
 
 enum IconType { PLAYER, ENEMY }
-enum Elements { ENH, ETH, SHOR, SCOR }
+enum Element { ENH, ETH, SHOR, SCOR }
 enum PlayerId { TALON, KING }
 
 @export var player_id: PlayerId 
@@ -19,7 +19,9 @@ enum PlayerId { TALON, KING }
 @export var refrain_power := 1
 @export var agility := 1
 
-var is_defending := false
+var has_small_refrain_open := false
+
+var current_refrain_element: Element
 var slot: int
 var unique_id: String
 

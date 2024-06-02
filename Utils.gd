@@ -8,7 +8,17 @@ func calucluate_attack_damage(actor_stats: CharacterStats, target_stats: Charact
 func calucluate_skill_damage(action: Action) -> int:
 	match action.skill.id:
 		Skill.Id.ETH_INCURSION_SMALL, Skill.Id.ENH_INCURSION_SMALL:
-			return _clamped_damage((action.actor.stats.incursion_power - action.target.stats.refrain_power) * 2)
+			var actor_power = action.actor.stats.incursion_power + action.skill.ingress_energy_cost
+			var target_power = action.target.stats.refrain_power
+			if action.target.stats.has_small_refrain_open:
+				target_power += Skill.SMALL_REFRAIN_POWER
+				action.target.stats.has_small_refrain_open = false
+				if action.skill.element == action.target.stats.current_refrain_element:
+					return target_power * -1
+				else:
+					return 0
+				
+			return _clamped_damage(actor_power - target_power)
 		_:
 			return 0
 			
@@ -27,4 +37,4 @@ func get_param(key):
 	return null
 	
 func _clamped_damage(value):
-	return clamp(value, 1, INF)
+	return clamp(value, 0, INF)

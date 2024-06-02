@@ -1,11 +1,15 @@
-[gd_scene load_steps=11 format=3 uid="uid://sgl44boffmsf"]
+[gd_scene load_steps=13 format=3 uid="uid://sgl44boffmsf"]
 
 [ext_resource type="Texture2D" uid="uid://df7pcvc8u0ug1" path="res://characters/Talon/sprite_sheets/noBKG_KnightIdle_strip.png" id="1_0nicr"]
 [ext_resource type="Script" path="res://characters/Talon/talon.gd" id="1_duwv8"]
 [ext_resource type="PackedScene" uid="uid://2evhn0npdxi4" path="res://ui/focus_default.tscn" id="4_mrfi8"]
+[ext_resource type="PackedScene" uid="uid://d17rqlb1hgubs" path="res://characters/player_name.tscn" id="4_sqtyk"]
 [ext_resource type="PackedScene" uid="uid://bno3iriedun4j" path="res://characters/base_character_sprite.tscn" id="5_ei5uc"]
 [ext_resource type="PackedScene" uid="uid://bdecc7cdnjbaj" path="res://skills/skill.tscn" id="6_jmp5k"]
 [ext_resource type="PackedScene" uid="uid://cyi2g62l2egia" path="res://characters/character_stats.tscn" id="7_d0o7f"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_27frv"]
+font_size = 8
 
 [sub_resource type="Animation" id="Animation_x6vl1"]
 length = 0.001
@@ -56,14 +60,16 @@ script = ExtResource("1_duwv8")
 texture = ExtResource("1_0nicr")
 hframes = 15
 
-[node name="IngressEnergy" type="ProgressBar" parent="."]
-self_modulate = Color(0.0313726, 1, 0.0352941, 1)
-offset_left = -8.0
-offset_top = -25.0
-offset_right = 66.0
-offset_bottom = 2.0
-scale = Vector2(0.2, 0.2)
-value = 100.0
+[node name="IngressEnergy" type="Label" parent="."]
+offset_left = -11.0
+offset_top = -24.0
+offset_right = 16.0
+offset_bottom = -12.0
+text = "X / X"
+label_settings = SubResource("LabelSettings_27frv")
+horizontal_alignment = 1
+
+[node name="PlayerName" parent="." instance=ExtResource("4_sqtyk")]
 
 [node name="Focus" parent="." instance=ExtResource("4_mrfi8")]
 visible = false

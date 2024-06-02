@@ -1,12 +1,15 @@
-[gd_scene load_steps=12 format=3 uid="uid://dyh62iv2a0t70"]
+[gd_scene load_steps=13 format=3 uid="uid://dyh62iv2a0t70"]
 
 [ext_resource type="Script" path="res://characters/King/king.gd" id="1_v00pa"]
 [ext_resource type="PackedScene" uid="uid://bno3iriedun4j" path="res://characters/base_character_sprite.tscn" id="2_1i5sr"]
 [ext_resource type="Texture2D" uid="uid://bbfdcpk8vw50x" path="res://characters/King/NoBkgColor/spr_KingIdle_strip_no_bkg.png" id="3_ahsxo"]
-[ext_resource type="PackedScene" uid="uid://cwg8luvh25667" path="res://characters/default_progress_bar.tscn" id="4_dxep3"]
 [ext_resource type="PackedScene" uid="uid://2evhn0npdxi4" path="res://ui/focus_default.tscn" id="5_5ae7p"]
+[ext_resource type="PackedScene" uid="uid://d17rqlb1hgubs" path="res://characters/player_name.tscn" id="7_3gryu"]
 [ext_resource type="PackedScene" uid="uid://bdecc7cdnjbaj" path="res://skills/skill.tscn" id="7_c1nag"]
 [ext_resource type="PackedScene" uid="uid://cyi2g62l2egia" path="res://characters/character_stats.tscn" id="8_7w2xa"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_ejh4l"]
+font_size = 8
 
 [sub_resource type="Animation" id="Animation_k6on2"]
 length = 0.001
@@ -59,11 +62,13 @@ texture = ExtResource("3_ahsxo")
 hframes = 18
 frame = 6
 
-[node name="IngressEnergyBar" parent="." instance=ExtResource("4_dxep3")]
-offset_left = -6.0
-offset_top = -24.0
-offset_right = 68.0
-offset_bottom = 3.0
+[node name="IngressEnergy" type="Label" parent="."]
+offset_left = -10.0
+offset_top = -30.0
+offset_right = 8.0
+offset_bottom = -18.0
+text = "X / X"
+label_settings = SubResource("LabelSettings_ejh4l")
 
 [node name="Focus" parent="." instance=ExtResource("5_5ae7p")]
 visible = false
@@ -71,11 +76,12 @@ z_index = 5
 position = Vector2(6, 8)
 
 [node name="CharacterStats" parent="." instance=ExtResource("8_7w2xa")]
+player_id = 1
 label = "King"
 icon_type = 1
 max_ingress_energy = 10.0
 current_ingress_energy = 10.0
-incursion_power = 3
+incursion_power = 2
 agility = 2
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
@@ -91,6 +97,8 @@ label = "Enh Incursion (small)"
 ingress_energy_cost = 1
 target = 1
 description = "Open a small Enh incursion and damage one foe"
+
+[node name="PlayerName" parent="." instance=ExtResource("7_3gryu")]
 
 [connection signal="no_ingress_energy" from="CharacterStats" to="." method="_on_character_stats_no_ingress_energy"]
 [connection signal="took_damage" from="CharacterStats" to="." method="_on_character_stats_took_damage"]

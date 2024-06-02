@@ -55,7 +55,9 @@ func _process(_delta: float) -> void:
 		State.CHOOSING_SKILL:
 			_handle_choose_skill_input()
 		State.GAME_OVER:
-			print("GAME OVER")
+			#get_tree().change_scene_to_file("res://menus/start_menu.tscn")
+			get_tree().change_scene_to_file("res://world/battle_scene.tscn")
+			return
 		
 	if action_queue.is_turn_over():
 		await _process_turn()
@@ -66,7 +68,7 @@ func _process(_delta: float) -> void:
 		
 func _connect_signals() -> void:
 	for enemy in enemy_group.enemies:
-		enemy.stats.no_ingress_energy.connect(_on_enemy_no_health)
+		enemy.stats.no_ingress_energy.connect(_on_enemy_no_ingress_energy)
 	for player in player_group.players:
 		player.stats.no_ingress_energy.connect(_on_player_no_ingress_energy)
 
@@ -220,7 +222,6 @@ func _clear_ui_for_battle() -> void:
 
 func _reset_turn() -> void:
 	state = State.CHOOSING_ACTION
-	player_group.reset_defense()
 	players[0].focus.focus()
 	action_queue.queue_initial_turn_actions(player_group.players, enemy_group.enemies)
 	_show_action_type()
@@ -237,7 +238,7 @@ func _return_to_action_choice() -> void:
 	action_queue.enemy_index = 0
 	
 func _is_game_over():
-	return player_group.players.size() == 0
+	return player_group.players.size() == 0 or enemy_group.enemies.size() == 0
 	
 func _clear_info_label():
 	info_label.text = ""
@@ -246,11 +247,11 @@ func _clear_info_label():
 # Signals
 # ----------------------
 	
-func _on_enemy_no_health(enemy_id: int) -> void:
+func _on_enemy_no_ingress_energy(enemy_id: String) -> void:
 	action_queue.remove_action_by_character_id(enemy_id)
 	enemy_group.remove_enemy_by_id(enemy_id)
 	
-func _on_player_no_ingress_energy(player_id: int) -> void:
+func _on_player_no_ingress_energy(player_id: String) -> void:
 	action_queue.remove_action_by_character_id(player_id)
 	player_group.remove_player_by_id(player_id)
 

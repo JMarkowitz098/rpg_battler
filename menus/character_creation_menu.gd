@@ -25,7 +25,7 @@ func _create_and_save_knight():
 		"player_id": CharacterStats.PlayerId.TALON,
 		"label": "Talon",
 		"icon_type": CharacterStats.IconType.PLAYER,
-		"elements": [CharacterStats.Elements.ETH, CharacterStats.Elements.SHOR],
+		"elements": [CharacterStats.Element.ETH, CharacterStats.Element.SHOR],
 		"max_ingress_energy": new_talon.stats.max_ingress_energy,
 		"current_ingress_energy": new_talon.stats.current_ingress_energy,
 		"incursion_power": new_talon.stats.incursion_power,

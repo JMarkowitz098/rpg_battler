@@ -75,17 +75,17 @@ func next_player() -> void:
 	player_index += 1
 	action_index = 0
 	
-func remove_action_by_character_id(id: CharacterStats.PlayerId) -> void:
+func remove_action_by_character_id(id: String) -> void:
 	queue = queue.filter(
 		func(action): 
-			return action.actor.stats.id != id and action.target.stats.id != id)
+			return action.actor.stats.unique_id != id and action.target.stats.unique_id != id)
 			
 func create_action_message(action: Action) -> String:
-	var message = action.actor.stats.label
+	var message = action.actor.player_name.text
 	if action.skill:
 		message += "\n" + action.skill.label
 	if action.target:
-		message += "\n-> " + action.target.stats.label
+		message += "\n-> " + action.target.player_name.text
 	return message
 
 func _queue_empty_actions(characters: Array[Node2D]):
@@ -106,11 +106,14 @@ func _process_skill(action: Action, tree: SceneTree) -> void:
 	match action.skill.id:
 		Skill.Id.ETH_INCURSION_SMALL, Skill.Id.ENH_INCURSION_SMALL:
 			var damage = Utils.calucluate_skill_damage(action)
-			if action.target.stats.is_defending: damage /= 2.0
+			#if action.target.stats.is_defending: 
+				#damage /= 2.0
+				#action.target.stats.is_defending = false
 			action.target.stats.take_damage(damage)
 
 		Skill.Id.ETH_REFRAIN_SMALL:
-			action.actor.stats.is_defending = true
+			action.actor.stats.has_small_refrain_open = true
+			action.actor.stats.current_refrain_element = CharacterStats.Element.ETH
 	
 	await tree.create_timer(2).timeout
 
