@@ -4,8 +4,8 @@
 [ext_resource type="PackedScene" uid="uid://bno3iriedun4j" path="res://characters/base_character_sprite.tscn" id="2_1i5sr"]
 [ext_resource type="Texture2D" uid="uid://bbfdcpk8vw50x" path="res://characters/King/NoBkgColor/spr_KingIdle_strip_no_bkg.png" id="3_ahsxo"]
 [ext_resource type="PackedScene" uid="uid://2evhn0npdxi4" path="res://ui/focus_default.tscn" id="5_5ae7p"]
+[ext_resource type="PackedScene" uid="uid://df2kq50gwwqmk" path="res://skills/enh_incursion_small.tscn" id="6_wp5pf"]
 [ext_resource type="PackedScene" uid="uid://d17rqlb1hgubs" path="res://characters/player_name.tscn" id="7_3gryu"]
-[ext_resource type="PackedScene" uid="uid://bdecc7cdnjbaj" path="res://skills/skill.tscn" id="7_c1nag"]
 [ext_resource type="PackedScene" uid="uid://cyi2g62l2egia" path="res://characters/character_stats.tscn" id="8_7w2xa"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_ejh4l"]
@@ -91,12 +91,7 @@ libraries = {
 
 [node name="Skills" type="Node" parent="."]
 
-[node name="Enh Incursion" parent="Skills" instance=ExtResource("7_c1nag")]
-id = 2
-label = "Enh Incursion (small)"
-ingress_energy_cost = 1
-target = 1
-description = "Open a small Enh incursion and damage one foe"
+[node name="EnhIncursionSmall" parent="Skills" instance=ExtResource("6_wp5pf")]
 
 [node name="PlayerName" parent="." instance=ExtResource("7_3gryu")]
 

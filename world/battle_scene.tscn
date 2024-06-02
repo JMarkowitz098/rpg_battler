@@ -11,7 +11,7 @@
 [ext_resource type="AudioStream" uid="uid://dy4h0826wa26i" path="res://audio/kim-lightyear-just-a-dream-wake-up-153991.mp3" id="9_6o17c"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_p0inw"]
-font_size = 12
+font_size = 10
 
 [node name="BattleScene" type="Node2D"]
 script = ExtResource("1_r5piu")

@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=3 uid="uid://df2kq50gwwqmk"]
+
+[ext_resource type="PackedScene" uid="uid://bdecc7cdnjbaj" path="res://skills/skill.tscn" id="1_mhx40"]
+
+[node name="EnhIncursionSmall" instance=ExtResource("1_mhx40")]
+id = 2
+label = "Enh Incursion (small)"
+ingress_energy_cost = 1
+target = 1
+description = "Open a small Enh incursion and damage one foe"

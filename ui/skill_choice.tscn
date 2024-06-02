@@ -11,3 +11,7 @@ offset_bottom = -79.0
 grow_vertical = 0
 scale = Vector2(0.59032, 0.59032)
 columns = 2
+
+[node name="Button" type="Button" parent="."]
+layout_mode = 2
+text = "I AM A REALLY REALLY BIG BUTTON"

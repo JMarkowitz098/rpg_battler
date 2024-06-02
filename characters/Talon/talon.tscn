@@ -1,12 +1,15 @@
-[gd_scene load_steps=13 format=3 uid="uid://sgl44boffmsf"]
+[gd_scene load_steps=16 format=3 uid="uid://sgl44boffmsf"]
 
 [ext_resource type="Texture2D" uid="uid://df7pcvc8u0ug1" path="res://characters/Talon/sprite_sheets/noBKG_KnightIdle_strip.png" id="1_0nicr"]
 [ext_resource type="Script" path="res://characters/Talon/talon.gd" id="1_duwv8"]
 [ext_resource type="PackedScene" uid="uid://2evhn0npdxi4" path="res://ui/focus_default.tscn" id="4_mrfi8"]
 [ext_resource type="PackedScene" uid="uid://d17rqlb1hgubs" path="res://characters/player_name.tscn" id="4_sqtyk"]
 [ext_resource type="PackedScene" uid="uid://bno3iriedun4j" path="res://characters/base_character_sprite.tscn" id="5_ei5uc"]
-[ext_resource type="PackedScene" uid="uid://bdecc7cdnjbaj" path="res://skills/skill.tscn" id="6_jmp5k"]
 [ext_resource type="PackedScene" uid="uid://cyi2g62l2egia" path="res://characters/character_stats.tscn" id="7_d0o7f"]
+[ext_resource type="PackedScene" uid="uid://cv3dnw5j7loal" path="res://skills/eth_incursion_small.tscn" id="8_fontn"]
+[ext_resource type="PackedScene" uid="uid://b058j0x0cprh1" path="res://skills/eth_refrain_small.tscn" id="8_qt8s3"]
+[ext_resource type="PackedScene" uid="uid://df2kq50gwwqmk" path="res://skills/enh_incursion_small.tscn" id="9_ibbwj"]
+[ext_resource type="PackedScene" uid="uid://bqrd4vbmtv2u2" path="res://skills/enh_refrain_small.tscn" id="10_1gdgy"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_27frv"]
 font_size = 8
@@ -89,20 +92,13 @@ libraries = {
 
 [node name="Skills" type="Node" parent="."]
 
-[node name="EthIncursionSmall" parent="Skills" instance=ExtResource("6_jmp5k")]
-label = "Eth Incursion (small)"
-ingress_energy_cost = 1
-element = 1
-target = 1
-description = "Open a small Eth incursion and damage one foe"
+[node name="EthIncursionSmall" parent="Skills" instance=ExtResource("8_fontn")]
 
-[node name="EthRefrainSmall" parent="Skills" instance=ExtResource("6_jmp5k")]
-id = 1
-label = "Eth Refrain (small)"
-ingress_energy_cost = 1
-element = 1
-type = 1
-description = "Block a single small attack. Absorby energy if the elements match."
+[node name="EthRefrainSmall" parent="Skills" instance=ExtResource("8_qt8s3")]
+
+[node name="EnhIncursionSmall" parent="Skills" instance=ExtResource("9_ibbwj")]
+
+[node name="EnhRefrainSmall" parent="Skills" instance=ExtResource("10_1gdgy")]
 
 [connection signal="no_ingress_energy" from="CharacterStats" to="." method="_on_character_stats_no_ingress_energy"]
 [connection signal="took_damage" from="CharacterStats" to="." method="_on_character_stats_took_damage"]

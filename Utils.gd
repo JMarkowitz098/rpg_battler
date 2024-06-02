@@ -16,10 +16,9 @@ func calucluate_skill_damage(action: Action) -> int:
 				if(dodged): return 0
 				
 			if action.target.stats.has_small_refrain_open:
-				target_power += Skill.SMALL_REFRAIN_POWER
 				action.target.stats.has_small_refrain_open = false
 				if action.skill.element == action.target.stats.current_refrain_element:
-					return target_power * -1
+					return actor_power * -1
 				else:
 					return 0
 				
@@ -29,7 +28,7 @@ func calucluate_skill_damage(action: Action) -> int:
 			
 func process_buff(action: Action) -> void:
 	match action.skill.id:
-		Skill.Id.ETH_REFRAIN_SMALL:
+		Skill.Id.ETH_REFRAIN_SMALL, Skill.Id.ENH_REFRAIN_SMALL:
 			action.actor.stats.refrain_power *= 2
 
 func change_scene(next_scene, params=null):

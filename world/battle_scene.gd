@@ -79,6 +79,10 @@ func _show_action_type() -> void:
 	action_type.find_child("Incursion").grab_focus()
 
 func _handle_choosing_action() -> void:
+	for i in action_type.get_children().size():
+		if(action_type.get_children()[i].has_focus()):
+			_draw_action_button_description(i)
+	
 	if Input.is_action_just_pressed("to_action_queue"):
 		for child in action_type.get_children():
 			child.release_focus()
@@ -104,6 +108,15 @@ func _on_dodge_pressed():
 	players[action_queue.player_index].stats.is_dodging = true
 	_handle_choose_skill(Skill.create_dodge())
 	
+func _draw_action_button_description(action_type_index: int):
+	match action_type_index:
+		0:
+			info_label.text = "Use an incursion"
+		1: 
+			info_label.text = "Use a refrain"
+		2: 
+			info_label.text = "Attempt to dodge an attack"
+	
 # ----------------
 # Shared Functions
 # ----------------
@@ -125,12 +138,12 @@ func _handle_choose_skill(skill):
 			enemy_group.reset_focus()
 	
 func _handle_choose_skill_input():
-	var skills = skill_ui.current_skills
+	var skills := skill_ui.current_skills as Array[Node]
 	var skill_buttons = skill_ui.skill_menu.get_children()
 
 	for i in skill_buttons.size():
 		if(skill_buttons[i].has_focus()):
-			_draw_skill_desciption(skills[i].description)
+			_draw_skill_desciption(skills[i])
 
 	if Input.is_action_just_pressed("menu_left"):
 		pass
@@ -160,8 +173,12 @@ func _return_to_choose_skill():
 	skill_choice_list.get_children()[0].grab_focus()
 	state = State.CHOOSING_SKILL
 	
-func _draw_skill_desciption(description):
-	info_label.text = description
+func _draw_skill_desciption(skill: Skill):
+	info_label.text  = "Ingress Energy Cost: {0}\nElement: {1}\n{2}".format([
+		skill.ingress_energy_cost,
+		CharacterStats.get_element_label(skill.element),
+		skill.description
+	])
 	
 # ------------------------
 # Choosing Enemy Functions

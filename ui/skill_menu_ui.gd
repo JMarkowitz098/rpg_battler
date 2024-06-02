@@ -1,5 +1,7 @@
 class_name SkillMenuUi
 
+const SKILL_BUTTON = preload("res://menus/skill_button.tscn")
+
 var skill_menu: GridContainer
 var current_skills: Array[Node]
 
@@ -25,7 +27,7 @@ func _fill_skill_menu_with_current_skills() -> void:
 		_create_button_choice(skill.label)
 
 func _create_button_choice(button_text: String) -> void:
-	var button = Button.new()
+	var button = SKILL_BUTTON.instantiate()
 	button.text = button_text
 	skill_menu.add_child(button)
 

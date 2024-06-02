@@ -1,0 +1,7 @@
+[gd_scene format=3 uid="uid://ch51mvl5giece"]
+
+[node name="SkillButton" type="Button"]
+offset_right = 8.0
+offset_bottom = 8.0
+theme_override_font_sizes/font_size = 8
+text = "Lorem Ipsum"

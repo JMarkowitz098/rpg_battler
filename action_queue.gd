@@ -118,6 +118,9 @@ func _process_skill(action: Action, tree: SceneTree) -> void:
 		Skill.Id.ETH_REFRAIN_SMALL:
 			action.actor.stats.has_small_refrain_open = true
 			action.actor.stats.current_refrain_element = CharacterStats.Element.ETH
+		Skill.Id.ENH_REFRAIN_SMALL:
+			action.actor.stats.has_small_refrain_open = true
+			action.actor.stats.current_refrain_element = CharacterStats.Element.ENH
 			
 	if action.skill.id != Skill.Id.DODGE:
 		await tree.create_timer(2).timeout
