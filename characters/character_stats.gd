@@ -24,6 +24,7 @@ var is_dodging := false
 
 var current_refrain_element: Element
 var slot: int
+var rand_agi: int
 var unique_id: String
 
 func set_ingress_energy(value: float) -> void:

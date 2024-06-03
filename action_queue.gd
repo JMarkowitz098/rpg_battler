@@ -127,5 +127,13 @@ func _process_skill(action: Action, tree: SceneTree) -> void:
 		await tree.create_timer(2).timeout
 
 func _sort_queue_by_agility():
+	for action in queue:
+		action.actor.stats.rand_agi = action.actor.stats.agility + randi() % 10 
+	
 	queue.sort_custom(func(a, b): 
-		return a.actor.stats.agility < b.actor.stats.agility)
+		var a_rand = a.actor.stats.rand_agi 
+		var b_rand = b.actor.stats.rand_agi 
+		return a_rand < b_rand
+	)
+	
+		
