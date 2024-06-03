@@ -4,6 +4,7 @@ var actor: Node2D
 var target: Node2D
 var skill: Skill
 var is_focused:= false
+var is_choosing := false
 var action_chosen := false
 
 func _init(

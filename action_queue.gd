@@ -25,6 +25,7 @@ func draw_action_queue(action_list: HBoxContainer) -> void:
 		var list_item = ActionListItemScene.instantiate()
 		list_item.get_node("Label").text = message
 		if(action.is_focused): list_item.get_node("Focus").focus()
+		if(action.is_choosing): list_item.get_node("Turn").show()
 		action_list.add_child(list_item)
 
 func process_action_queue(tree: SceneTree) -> void:
@@ -37,6 +38,15 @@ func queue_initial_turn_actions(players: Array[Node2D], enemies: Array[Node2D]):
 	_queue_empty_actions(enemies)
 	_sort_queue_by_agility()
 	_fill_enemy_actions(players)
+	_set_is_choosing(true)
+	
+
+func _set_is_choosing(state: bool):
+	var is_set = 0
+	for action in queue:
+		if action.actor.stats.icon_type == CharacterStats.IconType.PLAYER:
+			if is_set == player_index: action.is_choosing = state
+			is_set += 1
 
 func is_turn_over():
 	return queue.all(func(action): return action.action_chosen)
@@ -76,7 +86,9 @@ func update_player_action_with_skill(players, enemies, skill):
 		
 	
 func next_player() -> void:
+	_set_is_choosing(false)
 	player_index += 1
+	_set_is_choosing(true)
 	action_index = 0
 	
 func remove_action_by_character_id(id: String) -> void:
@@ -129,11 +141,6 @@ func _process_skill(action: Action, tree: SceneTree) -> void:
 func _sort_queue_by_agility():
 	for action in queue:
 		action.actor.stats.rand_agi = action.actor.stats.agility + randi() % 10 
-	
-	queue.sort_custom(func(a, b): 
-		var a_rand = a.actor.stats.rand_agi 
-		var b_rand = b.actor.stats.rand_agi 
-		return a_rand < b_rand
-	)
+	queue.sort_custom(func(a, b): return a.actor.stats.rand_agi  < b.actor.stats.rand_agi )
 	
 		

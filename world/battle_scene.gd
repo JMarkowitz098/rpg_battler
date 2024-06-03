@@ -237,6 +237,11 @@ func _process_next_player() -> void:
 func _clear_ui_for_battle() -> void:
 	action_type.hide()
 	_clear_info_label()
+	_clear_action_queue()
+	
+func _clear_action_queue():
+	for child in action_list.get_children():
+		child.turn.hide()
 
 func _reset_turn() -> void:
 	state = State.CHOOSING_ACTION
