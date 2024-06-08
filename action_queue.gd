@@ -94,7 +94,12 @@ func next_player() -> void:
 func remove_action_by_character_id(id: String) -> void:
 	queue = queue.filter(
 		func(action): 
-			return action.actor.stats.unique_id != id and action.target.stats.unique_id != id)
+			var action_matches = false
+			if action.target and action.target.stats.unique_id == id:
+				action_matches = true
+			if action.actor.stats.unique_id == id:
+				action_matches = true
+			return !action_matches)
 			
 func create_action_message(action: Action) -> String:
 	var message = action.actor.player_name.text

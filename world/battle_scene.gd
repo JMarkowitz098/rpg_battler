@@ -2,6 +2,7 @@ extends Node2D
 
 var enemies: Array[Node2D]
 var players: Array[Node2D]
+var defeated: Array[String]
 
 var action_queue := ActionQueue.new()
 var skill_index := 0
@@ -17,7 +18,8 @@ enum State {
 	IS_BATTLING, 
 	CHOOSING_ACTION,
 	CHOOSING_SKILL,
-	GAME_OVER
+	GAME_OVER,
+	VICTORY
 }
 
 @onready var action_list := $CanvasLayer/ActionList
@@ -56,17 +58,17 @@ func _process(_delta: float) -> void:
 			_handle_choose_action_pos_input()
 		State.CHOOSING_SKILL:
 			_handle_choose_skill_input()
-		State.GAME_OVER:
-			#get_tree().change_scene_to_file("res://menus/start_menu.tscn")
-			get_tree().change_scene_to_file("res://world/battle_scene.tscn")
-			return
 		
 	if action_queue.is_turn_over():
 		await _process_turn()
 		if _is_game_over():
-			state = State.GAME_OVER
-			return
-		_reset_turn()
+			#get_tree().change_scene_to_file("res://menus/start_menu.tscn")
+			get_tree().change_scene_to_file("res://world/battle_scene.tscn")
+		elif _is_victory():
+			get_tree().change_scene_to_file("res://menus/victory_screen.tscn")
+			Utils.change_scene("res://menus/victory_screen.tscn", { "defeated": defeated })
+		else:
+			_reset_turn()
 		
 func _connect_signals() -> void:
 	for enemy in enemy_group.enemies:
@@ -117,9 +119,9 @@ func _draw_action_button_description(action_type_index: int):
 		2: 
 			info_label.text = "Attempt to dodge an attack"
 	
-# ----------------
-# Shared Functions
-# ----------------
+# ----------------------
+# Shared Skill Functions
+# ----------------------
 	
 func _handle_choose_skill(skill):
 	current_skill = skill
@@ -268,16 +270,20 @@ func _return_to_action_choice() -> void:
 	action_queue.enemy_index = 0
 	
 func _is_game_over():
-	return player_group.players.size() == 0 or enemy_group.enemies.size() == 0
+	return player_group.players.size() == 0
 	
 func _clear_info_label():
 	info_label.text = ""
+	
+func _is_victory():
+	return enemy_group.enemies.size() == 0
 	
 # ----------------------
 # Signals
 # ----------------------
 	
 func _on_enemy_no_ingress_energy(enemy_id: String) -> void:
+	defeated.append(enemy_id)
 	action_queue.remove_action_by_character_id(enemy_id)
 	enemy_group.remove_enemy_by_id(enemy_id)
 	

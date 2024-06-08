@@ -26,7 +26,6 @@ func get_skills(skill_type: Skill.Type):
 func _on_character_stats_used_skill():
 	_update_energy_bar()
 
-
 func _on_character_stats_no_ingress_energy(_id):
 	queue_free()
 	

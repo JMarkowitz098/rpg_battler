@@ -44,6 +44,7 @@ func _instantiate_player(loaded_stats: Dictionary) -> void:
 			_set_stats_on_loaded_player(new_talon, loaded_stats)
 			_set_name_on_loaded_player(new_talon)
 			players.append(new_talon)
+			new_talon._update_energy_bar()
 			
 func _set_stats_on_loaded_player(player: Node2D, loaded_stats: Dictionary) -> void:
 	var stat_keys := [

@@ -56,3 +56,12 @@ static func get_element_label(element_id: int) -> String:
 			return "Scor"
 		_:
 			return ""
+
+static func get_player_label(incoming_player_id: int) -> String:
+	match incoming_player_id:
+		0:
+			return "Talon"
+		1:
+			return "King"
+		_:
+			return "No match"

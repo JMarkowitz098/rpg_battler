@@ -2,20 +2,16 @@ extends ColorRect
 
 const TALON := preload("res://characters/Talon/talon.tscn")
 
-@onready var knight_button = $VBoxContainer/KnightButton
+@onready var talon_button = $VBoxContainer/TalonButton
 
 var player_slot: int
 
 func _ready():
 	player_slot = Utils.get_param("slot")
-	knight_button.grab_focus()
+	talon_button.grab_focus()
 	
 
-func _on_knight_button_pressed():
-	_create_and_save_knight()
-	get_tree().change_scene_to_file("res://menus/character_menu.tscn")
-
-func _create_and_save_knight():
+func _create_and_save_talon():
 	var new_talon = TALON.instantiate()
 	# Have to add Talon to scene before it will fully initialize for some reason
 	get_tree().current_scene.add_child(new_talon)
@@ -32,7 +28,13 @@ func _create_and_save_knight():
 		"refrain_power": new_talon.stats.refrain_power,
 		"agility": new_talon.stats.agility,
 		"slot": player_slot,
+		"skills": new_talon.skills.get_children().map(func(skill): return skill.id)
 	}
 	
 	SaveAndLoadPlayer.save_player(player_slot, stats)
 	new_talon.queue_free()
+
+
+func _on_talon_button_pressed():
+	_create_and_save_talon()
+	get_tree().change_scene_to_file("res://menus/character_menu.tscn")

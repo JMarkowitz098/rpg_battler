@@ -24,18 +24,19 @@ layout_mode = 2
 text = "Choose Class"
 horizontal_alignment = 1
 
-[node name="KnightButton" type="Button" parent="VBoxContainer"]
+[node name="TalonButton" type="Button" parent="VBoxContainer"]
 layout_mode = 2
-text = "Knight"
+text = "Talon"
 
 [node name="ThiefButton" type="Button" parent="VBoxContainer"]
 layout_mode = 2
 disabled = true
-text = "Thief"
+text = "Nash"
 
 [node name="MageButton" type="Button" parent="VBoxContainer"]
 layout_mode = 2
 disabled = true
 text = "Mage"
 
-[connection signal="pressed" from="VBoxContainer/KnightButton" to="." method="_on_knight_button_pressed"]
+[connection signal="pressed" from="VBoxContainer/TalonButton" to="." method="_on_talon_button_pressed"]
+[connection signal="pressed" from="VBoxContainer/TalonButton" to="." method="_on_knight_button_pressed"]

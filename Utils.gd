@@ -36,6 +36,7 @@ func change_scene(next_scene, params=null):
 	get_tree().change_scene_to_file(next_scene)
 
 func get_param(key):
+	#var _params = {"defeated": ["0_88", "0_213"]}
 	if _params != null and _params.has(key):
 		return _params[key]
 	return null
