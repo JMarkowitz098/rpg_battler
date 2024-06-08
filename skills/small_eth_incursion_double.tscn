@@ -4,7 +4,7 @@
 
 [node name="SmallEthIncursionDouble" instance=ExtResource("1_n88ws")]
 id = 1
-label = "Small Eth Incursion (double)"
+label = "Eth Incursion (small, double)"
 ingress_energy_cost = 3
 element = 1
 target = 1

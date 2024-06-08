@@ -4,7 +4,8 @@
 
 [node name="EthRefrainSmallGroup" instance=ExtResource("1_3kn4j")]
 id = 3
-label = "Eth Refrain (small group)"
+label = "Eth Refrain (small, group)"
 ingress_energy_cost = 3
 element = 1
+type = 1
 description = "Cover every member in the party with a single, small Eth Refrain."

@@ -42,6 +42,7 @@ func _instantiate_player(loaded_stats: Dictionary) -> void:
 			var new_talon := TALON.instantiate()
 			add_child(new_talon)
 			_set_stats_on_loaded_player(new_talon, loaded_stats)
+			_set_skills_on_loaded_player(new_talon, loaded_stats.skills)
 			_set_name_on_loaded_player(new_talon)
 			players.append(new_talon)
 			new_talon._update_energy_bar()
@@ -62,6 +63,14 @@ func _set_stats_on_loaded_player(player: Node2D, loaded_stats: Dictionary) -> vo
 	]
 	for key in stat_keys:
 		player.stats[key] = loaded_stats[key]
+
+func _set_skills_on_loaded_player(player: Node2D, skills: Array):
+	for skill in player.skills.get_children():
+		skill.queue_free()
+		
+	for skill_id in skills:
+		var skill = Skill.create_skill_instance(skill_id).instantiate()
+		player.skills.add_child(skill)
 		
 func _set_name_on_loaded_player(player: Node2D):
 	player.player_name.text = player.stats.label + " " + str(player.stats.slot)

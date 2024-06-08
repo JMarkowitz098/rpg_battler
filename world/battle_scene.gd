@@ -228,7 +228,7 @@ func _process_turn() -> void:
 	state = State.IS_BATTLING
 	_reset_groups_and_indexes()
 	await get_tree().create_timer(1).timeout
-	await action_queue.process_action_queue(get_tree())
+	await action_queue.process_action_queue(get_tree(), players)
 
 func _process_next_player() -> void:
 	action_queue.next_player()

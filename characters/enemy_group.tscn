@@ -16,8 +16,6 @@ scale = Vector2(-0.798, 0.6)
 
 [node name="CharacterStats" parent="Talon" index="5"]
 icon_type = 1
-max_ingress_energy = 1.0
-current_ingress_energy = 1.0
 incursion_power = 4
 
 [node name="Talon2" parent="." instance=ExtResource("3_8pgww")]
@@ -27,8 +25,6 @@ scale = Vector2(-0.798, 0.6)
 
 [node name="CharacterStats" parent="Talon2" index="5"]
 icon_type = 1
-max_ingress_energy = 1.0
-current_ingress_energy = 1.0
 incursion_power = 4
 
 [node name="Node" type="Node" parent="."]

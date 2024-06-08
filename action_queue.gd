@@ -28,10 +28,10 @@ func draw_action_queue(action_list: HBoxContainer) -> void:
 		if(action.is_choosing): list_item.get_node("Turn").show()
 		action_list.add_child(list_item)
 
-func process_action_queue(tree: SceneTree) -> void:
+func process_action_queue(tree: SceneTree, players = null) -> void:
 	while queue.size() > 0:
 		var action = queue.pop_front()
-		await _process_skill(action, tree)
+		await _process_skill(action, tree, players)
 
 func queue_initial_turn_actions(players: Array[Node2D], enemies: Array[Node2D]):
 	_queue_empty_actions(players)
@@ -121,7 +121,7 @@ func _fill_enemy_actions(players: Array[Node2D]):
 			var enh_incursion = action.actor.skills.get_children()[0]
 			action.set_attack(players[rand_player_i], enh_incursion)
 
-func _process_skill(action: Action, tree: SceneTree) -> void:
+func _process_skill(action: Action, tree: SceneTree, players = null) -> void:
 	action.actor.stats.use_ingress_energy(action.skill.ingress_energy_cost)
 
 	match action.skill.id:
@@ -132,20 +132,32 @@ func _process_skill(action: Action, tree: SceneTree) -> void:
 			#action.actor.animation_player.play("attack")
 			var damage = Utils.calucluate_skill_damage(action)
 			action.target.stats.take_damage(damage)
+		Skill.Id.ETH_INCURSION_DOUBLE:
+			var damage = Utils.calucluate_skill_damage(action)
+			action.target.stats.take_damage(damage)
+			await tree.create_timer(2).timeout
+			if action.target != null:
+				action.target.stats.take_damage(damage)
 
 		Skill.Id.ETH_REFRAIN_SMALL:
 			action.actor.stats.has_small_refrain_open = true
 			action.actor.stats.current_refrain_element = CharacterStats.Element.ETH
+		Skill.Id.ETH_REFRAIN_SMALL_GROUP:
+			for player in players:
+				_set_refrain(player, action.skill.element)
 		Skill.Id.ENH_REFRAIN_SMALL:
-			action.actor.stats.has_small_refrain_open = true
-			action.actor.stats.current_refrain_element = CharacterStats.Element.ENH
+			_set_refrain(action.actor, action.skill.element)
 			
 	if action.skill.id != Skill.Id.DODGE:
 		await tree.create_timer(2).timeout
+		
+func _set_refrain(player: Node2D, skill_element):
+	player.stats.has_small_refrain_open = true
+	player.stats.current_refrain_element = skill_element
 
 func _sort_queue_by_agility():
 	for action in queue:
 		action.actor.stats.rand_agi = action.actor.stats.agility + randi() % 10 
-	queue.sort_custom(func(a, b): return a.actor.stats.rand_agi  < b.actor.stats.rand_agi )
+	queue.sort_custom(func(a, b): return a.actor.stats.rand_agi  > b.actor.stats.rand_agi )
 	
 		

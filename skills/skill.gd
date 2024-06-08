@@ -58,3 +58,18 @@ static func _create_button_choice(skill_choice_list, button_text):
 	var button = Button.new()
 	button.text = button_text
 	skill_choice_list.add_child(button)
+
+static func create_skill_instance(skill_id: int):
+	match skill_id:
+		Id.ETH_INCURSION_SMALL:
+			return load("res://skills/eth_incursion_small.tscn")
+		Id.ETH_INCURSION_DOUBLE:
+			return load("res://skills/small_eth_incursion_double.tscn")
+		Id.ETH_REFRAIN_SMALL:
+			return load("res://skills/eth_refrain_small.tscn")
+		Id.ETH_REFRAIN_SMALL_GROUP:
+			return load("res://skills/eth_refrain_small_group.tscn")
+		Id.ENH_INCURSION_SMALL:
+			return load("res://skills/enh_incursion_small.tscn")
+		Id.ENH_REFRAIN_SMALL:
+			return load("res://skills/enh_refrain_small.tscn")
