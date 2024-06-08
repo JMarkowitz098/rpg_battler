@@ -14,7 +14,10 @@ position = Vector2(27, -3)
 position = Vector2(0, 3)
 scale = Vector2(-0.798, 0.6)
 
-[node name="CharacterStats" parent="Talon" index="5"]
+[node name="AttackSprite" parent="Talon" index="1"]
+scale = Vector2(-0.798, 0.6)
+
+[node name="CharacterStats" parent="Talon" index="6"]
 icon_type = 1
 incursion_power = 4
 
@@ -23,7 +26,10 @@ incursion_power = 4
 [node name="BaseSprite" parent="Talon2" index="0"]
 scale = Vector2(-0.798, 0.6)
 
-[node name="CharacterStats" parent="Talon2" index="5"]
+[node name="AttackSprite" parent="Talon2" index="1"]
+scale = Vector2(-0.798, 0.6)
+
+[node name="CharacterStats" parent="Talon2" index="6"]
 icon_type = 1
 incursion_power = 4
 

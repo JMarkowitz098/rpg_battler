@@ -130,13 +130,11 @@ func _process_skill(action: Action, tree: SceneTree, players = null) -> void:
 
 	match action.skill.id:
 		Skill.Id.ETH_INCURSION_SMALL, Skill.Id.ENH_INCURSION_SMALL:
-			# This takes more work then I thought
-			#action.actor.base_sprite.hide()
-			#action.actor.attack_sprite.show()
-			#action.actor.animation_player.play("attack")
+			await _play_attack_animation(action, tree)
 			var damage = Utils.calucluate_skill_damage(action)
 			action.target.stats.take_damage(damage)
 		Skill.Id.ETH_INCURSION_DOUBLE:
+			await _play_attack_animation(action, tree)
 			var damage = Utils.calucluate_skill_damage(action)
 			action.target.stats.take_damage(damage)
 			await tree.create_timer(2).timeout
@@ -144,9 +142,11 @@ func _process_skill(action: Action, tree: SceneTree, players = null) -> void:
 				action.target.stats.take_damage(damage)
 
 		Skill.Id.ETH_REFRAIN_SMALL:
+			await _play_refrain_animation(action, tree)
 			action.actor.stats.has_small_refrain_open = true
 			action.actor.stats.current_refrain_element = CharacterStats.Element.ETH
 		Skill.Id.ETH_REFRAIN_SMALL_GROUP:
+			await _play_refrain_animation(action, tree)
 			for player in players:
 				_set_refrain(player, action.skill.element)
 		Skill.Id.ENH_REFRAIN_SMALL:
@@ -154,6 +154,21 @@ func _process_skill(action: Action, tree: SceneTree, players = null) -> void:
 			
 	if action.skill.id != Skill.Id.DODGE:
 		await tree.create_timer(2).timeout
+		
+func _play_attack_animation(action: Action, tree: SceneTree) -> void:
+	action.actor.base_sprite.hide()
+	action.actor.attack_sprite.show()
+	action.actor.animation_player.play("attack")
+	await tree.create_timer(2.2).timeout
+	if(action.actor):
+		action.actor.base_sprite.show()
+		action.actor.attack_sprite.hide()
+		action.actor.animation_player.play("idle")
+
+func _play_refrain_animation(action: Action, tree: SceneTree):
+	action.actor.animation_player.play("refrain")
+	await tree.create_timer(1).timeout
+	action.actor.animation_player.play("idle")
 		
 func _set_refrain(player: Node2D, skill_element):
 	player.stats.has_small_refrain_open = true

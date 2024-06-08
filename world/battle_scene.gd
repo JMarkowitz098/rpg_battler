@@ -382,9 +382,9 @@ func _set_action_focuses(action: Action):
 func _remove_action_focuses(action: Action):
 	action.actor.find_child("Turn").unfocus()
 	action_queue.set_focus(action_queue.action_index, false)
-	action.actor.find_child("Turn").self_modulate = Color(1,1,1,1)
+	action.actor.find_child("Turn").self_modulate = Color("White")
 	if action.target:
-		action.target.find_child("Turn").self_modulate = Color(1,1,1,1)
+		action.target.find_child("Turn").self_modulate = Color("White")
 		action.target.find_child("Turn").unfocus()
 
 
