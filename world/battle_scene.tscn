@@ -100,4 +100,5 @@ stream = ExtResource("9_6o17c")
 [connection signal="pressed" from="CanvasLayer/ActionType/Dodge" to="." method="_on_dodge_pressed"]
 
 [editable path="CanvasLayer/ActionType"]
+[editable path="CanvasLayer/ActionType/Refrain"]
 [editable path="CanvasLayer/SkillChoiceList"]

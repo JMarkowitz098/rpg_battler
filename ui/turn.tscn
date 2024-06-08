@@ -1,0 +1,11 @@
+[gd_scene load_steps=3 format=3 uid="uid://bqyh4pkeog5r5"]
+
+[ext_resource type="Texture2D" uid="uid://dvv7tmkmcd4rv" path="res://ui/Screenshot 2024-06-03 at 2.26.06 PM.png" id="1_tg7ls"]
+[ext_resource type="Script" path="res://ui/focus_default.gd" id="2_sdry4"]
+
+[node name="Turn" type="Sprite2D"]
+visible = false
+position = Vector2(5, 3)
+scale = Vector2(0.0106952, 0.0106952)
+texture = ExtResource("1_tg7ls")
+script = ExtResource("2_sdry4")

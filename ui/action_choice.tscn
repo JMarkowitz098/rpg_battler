@@ -1,4 +1,6 @@
-[gd_scene format=3 uid="uid://bl476pa5ernx5"]
+[gd_scene load_steps=2 format=3 uid="uid://bl476pa5ernx5"]
+
+[ext_resource type="PackedScene" uid="uid://c2iuvbvw80h22" path="res://ui/action_choice_button.tscn" id="1_6gi7h"]
 
 [node name="ActionChoice" type="GridContainer"]
 custom_minimum_size = Vector2(125, 2.08165e-12)
@@ -13,16 +15,19 @@ grow_vertical = 0
 scale = Vector2(0.59032, 0.59032)
 columns = 2
 
-[node name="Incursion" type="Button" parent="."]
+[node name="Incursion" parent="." instance=ExtResource("1_6gi7h")]
 layout_mode = 2
 text = "Incursion"
 
-[node name="Refrain" type="Button" parent="."]
-custom_minimum_size = Vector2(65, 2.08165e-12)
+[node name="Refrain" parent="." instance=ExtResource("1_6gi7h")]
 layout_mode = 2
-text = "Refrain
-"
+text = "Refrain"
 
-[node name="Dodge" type="Button" parent="."]
+[node name="Focus" parent="Refrain" index="0"]
+position = Vector2(67.4597, 32.1859)
+
+[node name="Dodge" parent="." instance=ExtResource("1_6gi7h")]
 layout_mode = 2
 text = "Dodge"
+
+[editable path="Refrain"]

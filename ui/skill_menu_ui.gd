@@ -15,6 +15,10 @@ func prepare_skill_menu(_handle_choose_skill, action_type: GridContainer) -> voi
 	_fill_skill_menu_with_current_skills()
 	_connect_skill_button_signals(_handle_choose_skill)
 	_show_skill_choice_list(action_type)
+	
+func release_focus_from_all_buttons():
+	for child in skill_menu.get_children():
+		child.release_focus()
 
 func _fill_skill_menu_with_current_skills() -> void:
 	for child in skill_menu.get_children():

@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://ui/action_list_item.gd" id="1_breoi"]
 [ext_resource type="PackedScene" uid="uid://2evhn0npdxi4" path="res://ui/focus_default.tscn" id="2_xqbw6"]
-[ext_resource type="Texture2D" uid="uid://dvv7tmkmcd4rv" path="res://ui/Screenshot 2024-06-03 at 2.26.06 PM.png" id="3_sm1qr"]
+[ext_resource type="PackedScene" uid="uid://bqyh4pkeog5r5" path="res://ui/turn.tscn" id="3_hloil"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_ygme4"]
 font_size = 12
@@ -21,8 +21,4 @@ label_settings = SubResource("LabelSettings_ygme4")
 visible = false
 position = Vector2(9, 15)
 
-[node name="Turn" type="Sprite2D" parent="."]
-visible = false
-position = Vector2(5, 3)
-scale = Vector2(0.0106952, 0.0106952)
-texture = ExtResource("3_sm1qr")
+[node name="Turn" parent="." instance=ExtResource("3_hloil")]

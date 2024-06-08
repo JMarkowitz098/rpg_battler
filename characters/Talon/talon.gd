@@ -1,5 +1,6 @@
 extends Node2D
 
+@onready var turn = $Turn
 @onready var focus := $Focus
 @onready var animation_player := $AnimationPlayer
 @onready var base_sprite := $BaseSprite

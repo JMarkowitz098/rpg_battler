@@ -32,6 +32,10 @@ func process_action_queue(tree: SceneTree, players = null) -> void:
 	while queue.size() > 0:
 		var action = queue.pop_front()
 		await _process_skill(action, tree, players)
+		
+func clear_is_choosing():
+	for action in queue:
+		action.is_choosing = false
 
 func queue_initial_turn_actions(players: Array[Node2D], enemies: Array[Node2D]):
 	_queue_empty_actions(players)

@@ -12,7 +12,7 @@ var index: int = 0
 
 func _ready() -> void:
 	_instantiate_players()
-	players[0].focus.focus()
+	players[0].turn.focus()
 	
 func switch_focus(x: int, y: int) -> void:
 	players[x].focus.focus()
@@ -22,6 +22,10 @@ func reset_focus() -> void:
 	index = 0
 	for player in players:
 		player.focus.unfocus()
+		
+func clear_turn_focus() -> void:
+	for player in players:
+		player.turn.unfocus()
 		
 func remove_player_by_id(id: String) -> void:
 	players = players.filter(func(player): return player.stats.unique_id != id)
