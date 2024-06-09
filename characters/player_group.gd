@@ -6,6 +6,7 @@ extends Node2D
 @onready var slot_four_location := $SlotFourLocation
 
 const TALON := preload("res://characters/Talon/talon.tscn")
+const NASH := preload("res://characters/Nash/nash.tscn")
 
 var players: Array[Node2D] = []
 var index: int = 0
@@ -41,15 +42,19 @@ func _instantiate_players() -> void:
 			slot_index += 1
 		
 func _instantiate_player(loaded_stats: Dictionary) -> void:
+	var new_player: Node2D
 	match loaded_stats.player_id:
 		CharacterStats.PlayerId.TALON:
-			var new_talon := TALON.instantiate()
-			add_child(new_talon)
-			_set_stats_on_loaded_player(new_talon, loaded_stats)
-			_set_skills_on_loaded_player(new_talon, loaded_stats.skills)
-			_set_name_on_loaded_player(new_talon)
-			players.append(new_talon)
-			new_talon._update_energy_bar()
+			new_player = TALON.instantiate()
+		CharacterStats.PlayerId.NASH:
+			new_player = NASH.instantiate()
+			
+	add_child(new_player)
+	_set_stats_on_loaded_player(new_player, loaded_stats)
+	_set_skills_on_loaded_player(new_player, loaded_stats.skills)
+	_set_name_on_loaded_player(new_player)
+	players.append(new_player)
+	new_player._update_energy_bar()
 			
 func _set_stats_on_loaded_player(player: Node2D, loaded_stats: Dictionary) -> void:
 	var stat_keys := [
@@ -66,7 +71,13 @@ func _set_stats_on_loaded_player(player: Node2D, loaded_stats: Dictionary) -> vo
 		"slot"
 	]
 	for key in stat_keys:
-		player.stats[key] = loaded_stats[key]
+		# Because elements is a typed array, it won't let us directly assign
+		if key == "elements":
+			player.stats[key].clear()
+			for element in loaded_stats[key]:
+				player.stats[key].append(element)
+		else:
+			player.stats[key] = loaded_stats[key]
 
 func _set_skills_on_loaded_player(player: Node2D, skills: Array):
 	for skill in player.skills.get_children():

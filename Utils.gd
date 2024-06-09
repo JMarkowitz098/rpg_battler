@@ -17,6 +17,7 @@ func calucluate_skill_damage(action: Action) -> int:
 				
 			if action.target.stats.has_small_refrain_open:
 				action.target.stats.has_small_refrain_open = false
+				action.target.refrain_aura.hide()
 				if action.skill.element == action.target.stats.current_refrain_element:
 					return actor_power * -1
 				else:

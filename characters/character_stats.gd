@@ -7,12 +7,12 @@ signal used_skill
 
 enum IconType { PLAYER, ENEMY }
 enum Element { ENH, ETH, SHOR, SCOR }
-enum PlayerId { TALON, KING }
+enum PlayerId { TALON, NASH }
 
 @export var player_id: PlayerId 
 @export var label: String
 @export var icon_type: IconType
-@export var elements: Array
+@export var elements: Array[Element]
 @export var max_ingress_energy: float
 @export var current_ingress_energy: float = max_ingress_energy : set = set_ingress_energy
 @export var incursion_power := 1
@@ -62,6 +62,6 @@ static func get_player_label(incoming_player_id: int) -> String:
 		0:
 			return "Talon"
 		1:
-			return "King"
+			return "Nash"
 		_:
 			return "No match"

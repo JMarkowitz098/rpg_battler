@@ -1,20 +1,19 @@
-[gd_scene load_steps=20 format=3 uid="uid://sgl44boffmsf"]
+[gd_scene load_steps=21 format=3 uid="uid://sgl44boffmsf"]
 
 [ext_resource type="Texture2D" uid="uid://df7pcvc8u0ug1" path="res://characters/Talon/sprite_sheets/noBKG_KnightIdle_strip.png" id="1_0nicr"]
 [ext_resource type="Script" path="res://characters/Talon/talon.gd" id="1_duwv8"]
 [ext_resource type="Texture2D" uid="uid://b3eiyyx4skdd2" path="res://characters/Talon/sprite_sheets/noBKG_KnightAttack_strip.png" id="4_1tosp"]
 [ext_resource type="PackedScene" uid="uid://2evhn0npdxi4" path="res://ui/focus_default.tscn" id="4_mrfi8"]
 [ext_resource type="PackedScene" uid="uid://d17rqlb1hgubs" path="res://characters/player_name.tscn" id="4_sqtyk"]
+[ext_resource type="PackedScene" uid="uid://dl4d2stn4lshh" path="res://characters/refrain_aura.tscn" id="5_8ct6f"]
 [ext_resource type="PackedScene" uid="uid://bno3iriedun4j" path="res://characters/base_character_sprite.tscn" id="5_ei5uc"]
 [ext_resource type="PackedScene" uid="uid://bqyh4pkeog5r5" path="res://ui/turn.tscn" id="6_emu5t"]
+[ext_resource type="PackedScene" uid="uid://cypb6tqhjigxc" path="res://characters/ingress_energy.tscn" id="6_k2wm0"]
 [ext_resource type="PackedScene" uid="uid://cyi2g62l2egia" path="res://characters/character_stats.tscn" id="7_d0o7f"]
 [ext_resource type="PackedScene" uid="uid://cv3dnw5j7loal" path="res://skills/eth_incursion_small.tscn" id="8_fontn"]
 [ext_resource type="PackedScene" uid="uid://b058j0x0cprh1" path="res://skills/eth_refrain_small.tscn" id="8_qt8s3"]
 [ext_resource type="PackedScene" uid="uid://df2kq50gwwqmk" path="res://skills/enh_incursion_small.tscn" id="9_ibbwj"]
 [ext_resource type="PackedScene" uid="uid://bqrd4vbmtv2u2" path="res://skills/enh_refrain_small.tscn" id="10_1gdgy"]
-
-[sub_resource type="LabelSettings" id="LabelSettings_27frv"]
-font_size = 8
 
 [sub_resource type="Animation" id="Animation_x6vl1"]
 length = 0.001
@@ -122,7 +121,7 @@ script = ExtResource("1_duwv8")
 [node name="BaseSprite" parent="." instance=ExtResource("5_ei5uc")]
 texture = ExtResource("1_0nicr")
 hframes = 15
-frame = 14
+frame = 2
 
 [node name="AttackSprite" type="Sprite2D" parent="."]
 visible = false
@@ -131,14 +130,9 @@ scale = Vector2(0.798, 0.6)
 texture = ExtResource("4_1tosp")
 hframes = 22
 
-[node name="IngressEnergy" type="Label" parent="."]
-offset_left = -11.0
-offset_top = -24.0
-offset_right = 16.0
-offset_bottom = -12.0
-text = "X / X"
-label_settings = SubResource("LabelSettings_27frv")
-horizontal_alignment = 1
+[node name="RefrainAura" parent="." instance=ExtResource("5_8ct6f")]
+
+[node name="IngressEnergy" parent="." instance=ExtResource("6_k2wm0")]
 
 [node name="PlayerName" parent="." instance=ExtResource("4_sqtyk")]
 
@@ -150,10 +144,12 @@ visible = false
 position = Vector2(8, 8)
 
 [node name="CharacterStats" parent="." instance=ExtResource("7_d0o7f")]
-label = "Knight"
+label = "Talon"
+elements = Array[int]([1, 2])
 max_ingress_energy = 10.0
 current_ingress_energy = 10.0
 incursion_power = 3
+agility = 2
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {

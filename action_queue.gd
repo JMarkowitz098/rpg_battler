@@ -145,6 +145,7 @@ func _process_skill(action: Action, tree: SceneTree, players = null) -> void:
 			await _play_refrain_animation(action, tree)
 			action.actor.stats.has_small_refrain_open = true
 			action.actor.stats.current_refrain_element = CharacterStats.Element.ETH
+			action.actor.refrain_aura.show()
 		Skill.Id.ETH_REFRAIN_SMALL_GROUP:
 			await _play_refrain_animation(action, tree)
 			for player in players:
@@ -173,6 +174,7 @@ func _play_refrain_animation(action: Action, tree: SceneTree):
 func _set_refrain(player: Node2D, skill_element):
 	player.stats.has_small_refrain_open = true
 	player.stats.current_refrain_element = skill_element
+	player.refrain_aura.show()
 
 func _sort_queue_by_agility():
 	for action in queue:
