@@ -1,6 +1,18 @@
 class_name Skill
 extends Node
 
+const ENH_INCURSION_SMALL = preload("res://skills/enh_incursion_small.tscn")
+const ENH_REFRAIN_SMALL = preload("res://skills/enh_refrain_small.tscn")
+const ETH_INCURSION_SMALL = preload("res://skills/eth_incursion_small.tscn")
+const ETH_REFRAIN_SMALL = preload("res://skills/eth_refrain_small.tscn")
+const ETH_REFRAIN_SMALL_GROUP = preload("res://skills/eth_refrain_small_group.tscn")
+const SCOR_INCURSION_SMALL = preload("res://skills/scor_incursion_small.tscn")
+const SCOR_REFRAIN_SMALL = preload("res://skills/scor_refrain_small.tscn")
+const SHOR_INCURSION_SMALL = preload("res://skills/shor_incursion_small.tscn")
+const SHOR_REFRAIN_SMALL = preload("res://skills/shor_refrain_small.tscn")
+const SMALL_ETH_INCURSION_DOUBLE = preload("res://skills/small_eth_incursion_double.tscn")
+const SKILL = preload("res://skills/skill.tscn")
+
 enum Id {
 	ETH_INCURSION_SMALL,
 	ETH_INCURSION_DOUBLE,
@@ -8,6 +20,14 @@ enum Id {
 	ETH_REFRAIN_SMALL_GROUP,
 	ENH_INCURSION_SMALL,
 	ENH_REFRAIN_SMALL,
+	SHOR_INCURSION_SMALL,
+	SHOR_INCURSION_DOUBLE,
+	SHOR_REFRAIN_SMALL,
+	SHOR_REFRAIN_GROUP,
+	SCOR_INCURSION_SMALL,
+	SCOR_INCURSION_DOUBLE,
+	SCOR_REFRAIN_SMALL,
+	SCOR_REFRAIN_GROUP,
 	DODGE
 }
 enum Type {
@@ -44,7 +64,7 @@ static func fill_skill_choice_list(player: Node2D, skill_choice_list: GridContai
 	for skill in player.get_skills(filter_type):
 		_create_button_choice(skill_choice_list, skill.label)
 
-static func create_dodge():
+static func create_dodge() -> Skill:
 	var dodge = new()
 	dodge.id = Id.DODGE
 	dodge.label  = "Dodge"
@@ -53,23 +73,33 @@ static func create_dodge():
 	dodge.target = Target.SELF
 	return dodge
 	
-
-static func _create_button_choice(skill_choice_list, button_text):
+static func _create_button_choice(skill_choice_list, button_text) -> void:
 	var button = Button.new()
 	button.text = button_text
 	skill_choice_list.add_child(button)
 
-static func create_skill_instance(skill_id: int):
+static func create_skill_instance(skill_id: int) -> PackedScene:
 	match skill_id:
 		Id.ETH_INCURSION_SMALL:
-			return load("res://skills/eth_incursion_small.tscn")
+			return ETH_INCURSION_SMALL
 		Id.ETH_INCURSION_DOUBLE:
-			return load("res://skills/small_eth_incursion_double.tscn")
+			return SMALL_ETH_INCURSION_DOUBLE
 		Id.ETH_REFRAIN_SMALL:
-			return load("res://skills/eth_refrain_small.tscn")
+			return ETH_REFRAIN_SMALL
 		Id.ETH_REFRAIN_SMALL_GROUP:
-			return load("res://skills/eth_refrain_small_group.tscn")
+			return ETH_REFRAIN_SMALL_GROUP
 		Id.ENH_INCURSION_SMALL:
-			return load("res://skills/enh_incursion_small.tscn")
+			return ETH_INCURSION_SMALL
 		Id.ENH_REFRAIN_SMALL:
-			return load("res://skills/enh_refrain_small.tscn")
+			return ENH_REFRAIN_SMALL
+		Id.SHOR_INCURSION_SMALL:
+			return SHOR_INCURSION_SMALL
+		Id.SHOR_REFRAIN_SMALL:
+			return SHOR_REFRAIN_SMALL
+		Id.SCOR_INCURSION_SMALL:
+			return SCOR_INCURSION_SMALL
+		Id.SCOR_REFRAIN_SMALL:
+			return SCOR_REFRAIN_SMALL
+		_:
+			return SKILL
+			

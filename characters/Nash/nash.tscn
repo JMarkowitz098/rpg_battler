@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://dp1n7oj67su8m"]
+[gd_scene load_steps=20 format=3 uid="uid://dp1n7oj67su8m"]
 
 [ext_resource type="Script" path="res://characters/Talon/talon.gd" id="1_qyhfd"]
 [ext_resource type="Texture2D" uid="uid://h0h5kd48hvh1" path="res://characters/Nash/Nash attack.png" id="1_uxuf7"]
@@ -9,25 +9,10 @@
 [ext_resource type="PackedScene" uid="uid://bqyh4pkeog5r5" path="res://ui/turn.tscn" id="6_hxg7a"]
 [ext_resource type="PackedScene" uid="uid://2evhn0npdxi4" path="res://ui/focus_default.tscn" id="7_apc44"]
 [ext_resource type="PackedScene" uid="uid://cyi2g62l2egia" path="res://characters/character_stats.tscn" id="8_h4na0"]
-[ext_resource type="PackedScene" uid="uid://cv3dnw5j7loal" path="res://skills/eth_incursion_small.tscn" id="9_j3tds"]
-[ext_resource type="PackedScene" uid="uid://b058j0x0cprh1" path="res://skills/eth_refrain_small.tscn" id="10_dsabo"]
-
-[sub_resource type="Animation" id="Animation_ax0jp"]
-resource_name = "idle"
-length = 0.4
-loop_mode = 1
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("BaseSprite:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.2),
-"transitions": PackedFloat32Array(1, 1),
-"update": 1,
-"values": [0, 1]
-}
+[ext_resource type="PackedScene" uid="uid://d4hjrosak0ki7" path="res://skills/shor_incursion_small.tscn" id="9_ir4q1"]
+[ext_resource type="PackedScene" uid="uid://nyp15hkdw2xc" path="res://skills/shor_refrain_small.tscn" id="10_273t4"]
+[ext_resource type="PackedScene" uid="uid://cxmgtml3k8jpt" path="res://skills/scor_incursion_small.tscn" id="11_b085p"]
+[ext_resource type="PackedScene" uid="uid://byir3ffqh8qth" path="res://skills/scor_refrain_small.tscn" id="12_3kc4e"]
 
 [sub_resource type="Animation" id="Animation_dgrtl"]
 length = 0.001
@@ -86,6 +71,23 @@ tracks/0/keys = {
 "transitions": PackedFloat32Array(1, 1, 1, 1),
 "update": 0,
 "values": [Color(100, 1, 1, 1), Color(1, 1, 1, 1), Color(100, 1, 1, 1), Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_ax0jp"]
+resource_name = "idle"
+length = 0.4
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("BaseSprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [0, 1]
 }
 
 [sub_resource type="Animation" id="Animation_qqygh"]
@@ -162,9 +164,13 @@ agility = 2
 
 [node name="Skills" type="Node" parent="."]
 
-[node name="EthIncursionSmall" parent="Skills" instance=ExtResource("9_j3tds")]
+[node name="ShorIncursionSmall" parent="Skills" instance=ExtResource("9_ir4q1")]
 
-[node name="EthRefrainSmall" parent="Skills" instance=ExtResource("10_dsabo")]
+[node name="ShorRefrainSmall" parent="Skills" instance=ExtResource("10_273t4")]
+
+[node name="ScorIncursionSmall" parent="Skills" instance=ExtResource("11_b085p")]
+
+[node name="ScorRefrainSmall" parent="Skills" instance=ExtResource("12_3kc4e")]
 
 [node name="PlayerName" parent="." instance=ExtResource("5_yfakl")]
 offset_left = -12.0

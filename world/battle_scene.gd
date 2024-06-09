@@ -155,11 +155,11 @@ func _handle_choose_skill_input():
 
 	for i in skill_buttons.size():
 		var skill_button = skill_buttons[i]
-		if(skill_button.has_focus()):
+		if(skill_button.skill_button.has_focus()):
 			_draw_skill_desciption(skills[i])
-			skill_button.find_child("Focus").focus()
+			skill_button.focus()
 		else:
-			skill_button.find_child("Focus").unfocus()
+			skill_button.unfocus()
 
 	if Input.is_action_just_pressed("menu_left"):
 		pass

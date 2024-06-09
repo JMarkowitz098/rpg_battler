@@ -1,9 +1,8 @@
 [gd_scene load_steps=2 format=3 uid="uid://dl4d2stn4lshh"]
 
-[ext_resource type="Texture2D" uid="uid://dtey10l3mwlt0" path="res://world/Refrain Aura-1.png.png" id="1_net1j"]
+[ext_resource type="Texture2D" uid="uid://c3l1dioc443ry" path="res://world/Refrain Aura White.png" id="1_vecw8"]
 
 [node name="RefrainAura" type="Sprite2D"]
-visible = false
 position = Vector2(2, -1)
 scale = Vector2(1.28125, 1.09375)
-texture = ExtResource("1_net1j")
+texture = ExtResource("1_vecw8")

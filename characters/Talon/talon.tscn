@@ -12,8 +12,8 @@
 [ext_resource type="PackedScene" uid="uid://cyi2g62l2egia" path="res://characters/character_stats.tscn" id="7_d0o7f"]
 [ext_resource type="PackedScene" uid="uid://cv3dnw5j7loal" path="res://skills/eth_incursion_small.tscn" id="8_fontn"]
 [ext_resource type="PackedScene" uid="uid://b058j0x0cprh1" path="res://skills/eth_refrain_small.tscn" id="8_qt8s3"]
-[ext_resource type="PackedScene" uid="uid://df2kq50gwwqmk" path="res://skills/enh_incursion_small.tscn" id="9_ibbwj"]
-[ext_resource type="PackedScene" uid="uid://bqrd4vbmtv2u2" path="res://skills/enh_refrain_small.tscn" id="10_1gdgy"]
+[ext_resource type="PackedScene" uid="uid://d4hjrosak0ki7" path="res://skills/shor_incursion_small.tscn" id="13_btsru"]
+[ext_resource type="PackedScene" uid="uid://nyp15hkdw2xc" path="res://skills/shor_refrain_small.tscn" id="14_yxjla"]
 
 [sub_resource type="Animation" id="Animation_x6vl1"]
 length = 0.001
@@ -162,9 +162,9 @@ libraries = {
 
 [node name="EthRefrainSmall" parent="Skills" instance=ExtResource("8_qt8s3")]
 
-[node name="EnhIncursionSmall" parent="Skills" instance=ExtResource("9_ibbwj")]
+[node name="ShorIncursionSmall" parent="Skills" instance=ExtResource("13_btsru")]
 
-[node name="EnhRefrainSmall" parent="Skills" instance=ExtResource("10_1gdgy")]
+[node name="ShorRefrainSmall" parent="Skills" instance=ExtResource("14_yxjla")]
 
 [connection signal="no_ingress_energy" from="CharacterStats" to="." method="_on_character_stats_no_ingress_energy"]
 [connection signal="took_damage" from="CharacterStats" to="." method="_on_character_stats_took_damage"]

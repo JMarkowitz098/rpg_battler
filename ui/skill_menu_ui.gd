@@ -32,17 +32,17 @@ func _fill_skill_menu_with_current_skills() -> void:
 
 func _create_button_choice(button_text: String) -> void:
 	var button = SKILL_BUTTON.instantiate()
-	button.text = button_text
 	skill_menu.add_child(button)
+	button.text = button_text
 
 func _connect_skill_button_signals(_handle_choose_skill) -> void:
 	var skill_buttons := skill_menu.get_children()
 	for i in skill_buttons.size():
 		var skill = current_skills[i]
 		var skill_button = skill_buttons[i]
-		skill_button.pressed.connect(_handle_choose_skill.bind(skill))
+		skill_button.skill_button.pressed.connect(_handle_choose_skill.bind(skill))
 
 func _show_skill_choice_list(action_type: GridContainer):
 	action_type.hide()
 	skill_menu.show()
-	skill_menu.get_children()[0].grab_focus()
+	skill_menu.get_children()[0].skill_button.grab_focus()

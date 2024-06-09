@@ -1,0 +1,11 @@
+[gd_scene load_steps=2 format=3 uid="uid://d4hjrosak0ki7"]
+
+[ext_resource type="PackedScene" uid="uid://bdecc7cdnjbaj" path="res://skills/skill.tscn" id="1_06vko"]
+
+[node name="ShorIncursionSmall" instance=ExtResource("1_06vko")]
+id = 6
+label = "Shor Incursion (small)"
+ingress_energy_cost = 1
+element = 2
+target = 1
+description = "Open a small Shor incursion and damage one foe"

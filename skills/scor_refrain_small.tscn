@@ -1,0 +1,11 @@
+[gd_scene load_steps=2 format=3 uid="uid://byir3ffqh8qth"]
+
+[ext_resource type="PackedScene" uid="uid://bdecc7cdnjbaj" path="res://skills/skill.tscn" id="1_5a3vi"]
+
+[node name="ScorRefrainSmall" instance=ExtResource("1_5a3vi")]
+id = 12
+label = "Scor refrain (small)"
+ingress_energy_cost = 1
+element = 3
+type = 1
+description = "Block a single small attack. Absorb energy if the elements match."

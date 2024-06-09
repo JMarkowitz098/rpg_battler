@@ -129,32 +129,31 @@ func _process_skill(action: Action, tree: SceneTree, players = null) -> void:
 	action.actor.stats.use_ingress_energy(action.skill.ingress_energy_cost)
 
 	match action.skill.id:
-		Skill.Id.ETH_INCURSION_SMALL, Skill.Id.ENH_INCURSION_SMALL:
-			await _play_attack_animation(action, tree)
-			var damage = Utils.calucluate_skill_damage(action)
-			action.target.stats.take_damage(damage)
+		Skill.Id.ETH_INCURSION_SMALL, Skill.Id.ENH_INCURSION_SMALL, Skill.Id.SCOR_INCURSION_SMALL, Skill.Id.SHOR_INCURSION_SMALL:
+			await _use_incursion(action, tree)
+			
 		Skill.Id.ETH_INCURSION_DOUBLE:
-			await _play_attack_animation(action, tree)
-			var damage = Utils.calucluate_skill_damage(action)
-			action.target.stats.take_damage(damage)
+			await _use_incursion(action, tree)
 			await tree.create_timer(2).timeout
 			if action.target != null:
-				action.target.stats.take_damage(damage)
+				_use_incursion(action, tree)
 
-		Skill.Id.ETH_REFRAIN_SMALL:
+		Skill.Id.ETH_REFRAIN_SMALL, Skill.Id.ENH_REFRAIN_SMALL, Skill.Id.SHOR_REFRAIN_SMALL, Skill.Id.SCOR_REFRAIN_SMALL:
 			await _play_refrain_animation(action, tree)
-			action.actor.stats.has_small_refrain_open = true
-			action.actor.stats.current_refrain_element = CharacterStats.Element.ETH
-			action.actor.refrain_aura.show()
+			_set_refrain(action.actor, action.skill.element)
+			
 		Skill.Id.ETH_REFRAIN_SMALL_GROUP:
 			await _play_refrain_animation(action, tree)
 			for player in players:
 				_set_refrain(player, action.skill.element)
-		Skill.Id.ENH_REFRAIN_SMALL:
-			_set_refrain(action.actor, action.skill.element)
 			
 	if action.skill.id != Skill.Id.DODGE:
 		await tree.create_timer(2).timeout
+		
+func _use_incursion(action: Action, tree: SceneTree):
+	await _play_attack_animation(action, tree)
+	var damage = Utils.calucluate_skill_damage(action)
+	action.target.stats.take_damage(damage)
 		
 func _play_attack_animation(action: Action, tree: SceneTree) -> void:
 	action.actor.base_sprite.hide()
@@ -175,6 +174,15 @@ func _set_refrain(player: Node2D, skill_element):
 	player.stats.has_small_refrain_open = true
 	player.stats.current_refrain_element = skill_element
 	player.refrain_aura.show()
+	match skill_element:
+		CharacterStats.Element.ETH:
+			player.refrain_aura.modulate = Color("Green")
+		CharacterStats.Element.ENH:
+			player.refrain_aura.modulate = Color("Orange")
+		CharacterStats.Element.SCOR:
+			player.refrain_aura.modulate = Color("Red")
+		CharacterStats.Element.SHOR:
+			player.refrain_aura.modulate = Color("Blue")
 
 func _sort_queue_by_agility():
 	for action in queue:
