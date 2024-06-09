@@ -30,11 +30,12 @@ enum State {
 @onready var player_group := $PlayerGroup
 @onready var skill_choice_list = $CanvasLayer/SkillChoiceList
 @onready var skill_ui = SkillMenuUi.new(skill_choice_list)
-
+@onready var enemy_group_location = $EnemyGroupLocation
 signal next_player
 
 func _ready() -> void:
 	audio_stream_player_2d.play()
+	_load_enemy_group()
 	_connect_signals()
 	state = State.CHOOSING_ACTION
 	_show_action_type()
@@ -66,9 +67,21 @@ func _process(_delta: float) -> void:
 			get_tree().change_scene_to_file("res://world/battle_scene.tscn")
 		elif _is_victory():
 			get_tree().change_scene_to_file("res://menus/victory_screen.tscn")
+			Utils.round += 1
 			Utils.change_scene("res://menus/victory_screen.tscn", { "defeated": defeated })
 		else:
 			_reset_turn()
+			
+func _load_enemy_group() -> void:
+	var old_enemy_group = enemy_group
+	match Utils.round:
+		0:
+			return
+		1:
+			enemy_group = load("res://characters/enemy_group_round_two.tscn").instantiate()
+			enemy_group.global_position = enemy_group_location.global_position
+			add_child(enemy_group)
+	old_enemy_group.queue_free()
 		
 func _connect_signals() -> void:
 	for enemy in enemy_group.enemies:

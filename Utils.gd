@@ -1,6 +1,7 @@
 extends Node
 
 var _params = null
+var round := 0
 
 func calucluate_attack_damage(actor_stats: CharacterStats, target_stats: CharacterStats) -> int:
 	return _clamped_damage(actor_stats.incursion_power - target_stats.refrain_power)
@@ -44,3 +45,5 @@ func get_param(key):
 	
 func _clamped_damage(value):
 	return clamp(value, 0, INF)
+	
+

@@ -127,6 +127,8 @@ func _fill_enemy_actions(players: Array[Node2D]):
 
 func _process_skill(action: Action, tree: SceneTree, players = null) -> void:
 	action.actor.stats.use_ingress_energy(action.skill.ingress_energy_cost)
+	if action.actor.stats.current_ingress_energy <= 0:
+		return
 
 	match action.skill.id:
 		Skill.Id.ETH_INCURSION_SMALL, Skill.Id.ENH_INCURSION_SMALL, Skill.Id.SCOR_INCURSION_SMALL, Skill.Id.SHOR_INCURSION_SMALL:
@@ -137,6 +139,7 @@ func _process_skill(action: Action, tree: SceneTree, players = null) -> void:
 			await tree.create_timer(2).timeout
 			if action.target != null:
 				_use_incursion(action, tree)
+				
 
 		Skill.Id.ETH_REFRAIN_SMALL, Skill.Id.ENH_REFRAIN_SMALL, Skill.Id.SHOR_REFRAIN_SMALL, Skill.Id.SCOR_REFRAIN_SMALL:
 			await _play_refrain_animation(action, tree)
@@ -160,7 +163,7 @@ func _play_attack_animation(action: Action, tree: SceneTree) -> void:
 	action.actor.attack_sprite.show()
 	action.actor.animation_player.play("attack")
 	await tree.create_timer(2.2).timeout
-	if(action.actor):
+	if(action.actor != null):
 		action.actor.base_sprite.show()
 		action.actor.attack_sprite.hide()
 		action.actor.animation_player.play("idle")

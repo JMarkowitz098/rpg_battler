@@ -94,6 +94,9 @@ position = Vector2(35, 55)
 [node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("9_6o17c")
 
+[node name="EnemyGroupLocation" type="Marker2D" parent="."]
+position = Vector2(217, 53)
+
 [connection signal="next_player" from="." to="PlayerGroup" method="_on_battle_scene_next_player"]
 [connection signal="pressed" from="CanvasLayer/ActionType/Incursion" to="." method="_on_incursion_pressed"]
 [connection signal="pressed" from="CanvasLayer/ActionType/Refrain" to="." method="_on_refrain_pressed"]

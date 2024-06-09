@@ -7,7 +7,7 @@
 script = ExtResource("1_khrov")
 
 [node name="Talon" parent="." instance=ExtResource("3_8pgww")]
-position = Vector2(27, -3)
+metadata/_edit_group_ = true
 
 [node name="BaseSprite" parent="Talon" index="0"]
 position = Vector2(0, 3)
@@ -18,9 +18,13 @@ scale = Vector2(-0.798, 0.6)
 
 [node name="CharacterStats" parent="Talon" index="7"]
 icon_type = 1
-incursion_power = 4
+max_ingress_energy = 5.0
+current_ingress_energy = 5.0
+incursion_power = 2
 
 [node name="Talon2" parent="." instance=ExtResource("3_8pgww")]
+position = Vector2(32, 0)
+metadata/_edit_group_ = true
 
 [node name="BaseSprite" parent="Talon2" index="0"]
 scale = Vector2(-0.798, 0.6)
@@ -30,7 +34,8 @@ scale = Vector2(-0.798, 0.6)
 
 [node name="CharacterStats" parent="Talon2" index="7"]
 icon_type = 1
-incursion_power = 4
+max_ingress_energy = 5.0
+current_ingress_energy = 5.0
 
 [node name="Node" type="Node" parent="."]
 
