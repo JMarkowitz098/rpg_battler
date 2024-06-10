@@ -121,10 +121,26 @@ func _queue_empty_actions(characters: Array[Node2D]):
 func _fill_enemy_actions(players: Array[Node2D]):
 	for action in queue:
 		if(action.actor.stats.icon_type == CharacterStats.IconType.ENEMY):
-			var rand_player_i = randi() % players.size()
-			var enh_incursion = action.actor.skills.get_children()[0]
-			action.set_attack(players[rand_player_i], enh_incursion)
+			if action.actor.stats.current_ingress_energy == 1:
+				_set_dodge(action)
+			else:
+				_set_skill(action, players)
+				
+func _set_dodge(action: Action):
+	action.actor.stats.is_dodging = true
+	action.set_attack(null, Skill.create_dodge())
+	
+func _set_skill(action: Action, players: Array[Node2D]):
+	var target = null
+	var selected_skill = _select_enemy_skill(action.actor.skills.get_children())
+	if selected_skill.target == Skill.Target.ENEMY:
+		target = players[randi() % players.size()]
+	action.set_attack(target, selected_skill)
 
+func _select_enemy_skill(skills: Array) -> Skill:
+	var rand_skill_i = randi() % skills.size()
+	return skills[rand_skill_i]
+				
 func _process_skill(action: Action, tree: SceneTree, players = null) -> void:
 	action.actor.stats.use_ingress_energy(action.skill.ingress_energy_cost)
 	if action.actor.stats.current_ingress_energy <= 0:

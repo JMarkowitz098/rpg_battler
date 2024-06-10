@@ -26,6 +26,7 @@ var current_refrain_element: Element
 var slot: int
 var rand_agi: int
 var unique_id: String
+var level: int
 
 func set_ingress_energy(value: float) -> void:
 	current_ingress_energy = clamp(value, 0, max_ingress_energy)

@@ -68,7 +68,8 @@ func _set_stats_on_loaded_player(player: Node2D, loaded_stats: Dictionary) -> vo
 		"incursion_power",
 		"refrain_power",
 		"agility",
-		"slot"
+		"slot",
+		"level"
 	]
 	for key in stat_keys:
 		# Because elements is a typed array, it won't let us directly assign

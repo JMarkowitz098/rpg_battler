@@ -13,30 +13,33 @@ func _ready() -> void:
 	talon_button.grab_focus()
 
 func _create_and_save_new_player(Player: PackedScene) -> void:
-	var new_player = Player.instantiate()
+	var new_player := Player.instantiate()
 	# Have to add Player to scene before it will fully initialize for some reason
 	get_tree().current_scene.add_child(new_player)
 	
-	var stats = _create_stats_dict(new_player)
+	var stats_loader = SaveAndLoadLevel.new()
+	var loaded_stats = stats_loader.get_data(new_player.stats.player_id, 1)
+	var stats = _create_stats_dict(new_player, loaded_stats)
 	
 	SaveAndLoadPlayer.save_player(player_slot, stats)
 	new_player.queue_free()
 	
 	
-func _create_stats_dict(new_player: Node2D) -> Dictionary:
+func _create_stats_dict(new_player: Node2D, loaded_stats: Dictionary) -> Dictionary:
 	return {
 		"unique_id": CharacterStats.create_unique_id(new_player.stats.player_id),
 		"player_id": new_player.stats.player_id,
 		"label": new_player.stats.label,
 		"icon_type": CharacterStats.IconType.PLAYER,
 		"elements": [CharacterStats.Element.ETH, CharacterStats.Element.SHOR],
-		"max_ingress_energy": new_player.stats.max_ingress_energy,
-		"current_ingress_energy": new_player.stats.current_ingress_energy,
-		"incursion_power": new_player.stats.incursion_power,
-		"refrain_power": new_player.stats.refrain_power,
-		"agility": new_player.stats.agility,
+		"max_ingress_energy": loaded_stats.max_ingress_energy,
+		"current_ingress_energy": loaded_stats.max_ingress_energy,
+		"incursion_power": loaded_stats.incursion_power,
+		"refrain_power": loaded_stats.refrain_power,
+		"agility": loaded_stats.agility,
 		"slot": player_slot,
-		"skills": new_player.skills.get_children().map(func(skill): return skill.id)
+		"skills": loaded_stats.skills,
+		"level": 1
 	}
 
 

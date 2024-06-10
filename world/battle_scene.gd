@@ -67,14 +67,14 @@ func _process(_delta: float) -> void:
 			get_tree().change_scene_to_file("res://world/battle_scene.tscn")
 		elif _is_victory():
 			get_tree().change_scene_to_file("res://menus/victory_screen.tscn")
-			Utils.round += 1
+			Utils.round_number += 1
 			Utils.change_scene("res://menus/victory_screen.tscn", { "defeated": defeated })
 		else:
 			_reset_turn()
 			
 func _load_enemy_group() -> void:
 	var old_enemy_group = enemy_group
-	match Utils.round:
+	match Utils.round_number:
 		0:
 			return
 		1:
@@ -149,8 +149,8 @@ func _handle_choose_skill(skill):
 	current_skill = skill
 	#TODO: Can probably get the focused child directly from signal
 	for child in skill_choice_list.get_children():
-		child.release_focus()
-		child.find_child("Focus").unfocus()
+		child.skill_button.release_focus()
+		child.unfocus()
 		
 	match current_skill.target:
 		Skill.Target.ENEMY:
@@ -200,7 +200,7 @@ func _handle_buff_skill():
 func _return_to_choose_skill():
 	enemy_group.reset_focus()
 	action_queue.enemy_index = 0
-	skill_choice_list.get_children()[0].grab_focus()
+	skill_choice_list.get_children()[0].skill_button.grab_focus()
 	state = State.CHOOSING_SKILL
 	
 func _draw_skill_desciption(skill: Skill):

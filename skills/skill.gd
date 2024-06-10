@@ -1,18 +1,6 @@
 class_name Skill
 extends Node
 
-const ENH_INCURSION_SMALL = preload("res://skills/enh_incursion_small.tscn")
-const ENH_REFRAIN_SMALL = preload("res://skills/enh_refrain_small.tscn")
-const ETH_INCURSION_SMALL = preload("res://skills/eth_incursion_small.tscn")
-const ETH_REFRAIN_SMALL = preload("res://skills/eth_refrain_small.tscn")
-const ETH_REFRAIN_SMALL_GROUP = preload("res://skills/eth_refrain_small_group.tscn")
-const SCOR_INCURSION_SMALL = preload("res://skills/scor_incursion_small.tscn")
-const SCOR_REFRAIN_SMALL = preload("res://skills/scor_refrain_small.tscn")
-const SHOR_INCURSION_SMALL = preload("res://skills/shor_incursion_small.tscn")
-const SHOR_REFRAIN_SMALL = preload("res://skills/shor_refrain_small.tscn")
-const SMALL_ETH_INCURSION_DOUBLE = preload("res://skills/small_eth_incursion_double.tscn")
-const SKILL = preload("res://skills/skill.tscn")
-
 enum Id {
 	ETH_INCURSION_SMALL,
 	ETH_INCURSION_DOUBLE,
@@ -81,25 +69,30 @@ static func _create_button_choice(skill_choice_list, button_text) -> void:
 static func create_skill_instance(skill_id: int) -> PackedScene:
 	match skill_id:
 		Id.ETH_INCURSION_SMALL:
-			return ETH_INCURSION_SMALL
+			return load("res://skills/eth_incursion_small.tscn")
 		Id.ETH_INCURSION_DOUBLE:
-			return SMALL_ETH_INCURSION_DOUBLE
+			return load("res://skills/small_eth_incursion_double.tscn")
 		Id.ETH_REFRAIN_SMALL:
-			return ETH_REFRAIN_SMALL
+			return load("res://skills/eth_refrain_small.tscn")
 		Id.ETH_REFRAIN_SMALL_GROUP:
-			return ETH_REFRAIN_SMALL_GROUP
+			return load("res://skills/eth_refrain_small_group.tscn")
 		Id.ENH_INCURSION_SMALL:
-			return ETH_INCURSION_SMALL
+			return load("res://skills/enh_incursion_small.tscn")
 		Id.ENH_REFRAIN_SMALL:
-			return ENH_REFRAIN_SMALL
+			return load("res://skills/enh_refrain_small.tscn")
 		Id.SHOR_INCURSION_SMALL:
-			return SHOR_INCURSION_SMALL
+			return load("res://skills/shor_incursion_small.tscn")
 		Id.SHOR_REFRAIN_SMALL:
-			return SHOR_REFRAIN_SMALL
+			return load("res://skills/shor_refrain_small.tscn")
 		Id.SCOR_INCURSION_SMALL:
-			return SCOR_INCURSION_SMALL
+			return load("res://skills/scor_incursion_small.tscn")
 		Id.SCOR_REFRAIN_SMALL:
-			return SCOR_REFRAIN_SMALL
+			return load("res://skills/scor_refrain_small.tscn")
 		_:
-			return SKILL
-			
+			return load("res://skills/skill.tscn")
+
+static func get_skill_label(skill_id: int) -> String:
+	var skill = create_skill_instance(skill_id).instantiate()
+	var skill_label = skill.label
+	skill.queue_free()
+	return skill_label
