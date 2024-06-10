@@ -11,6 +11,8 @@ extends HBoxContainer
 	
 func focus():
 	icon_focus.focus()
+	skill_button.grab_focus()
 
 func unfocus():
 	icon_focus.unfocus()
+	skill_button.release_focus()

@@ -21,6 +21,9 @@ func switch_focus(x, y):
 	
 func reset_focus():
 	index = 0
+	clear_focus()
+
+func clear_focus():
 	for enemy in enemies:
 		enemy.focus.unfocus()
 

@@ -1,0 +1,11 @@
+[gd_scene load_steps=2 format=3 uid="uid://bre5xhvhpe5hw"]
+
+[ext_resource type="PackedScene" uid="uid://bdecc7cdnjbaj" path="res://skills/skill.tscn" id="1_cvpjl"]
+
+[node name="ScorRefrainSmallGroup" instance=ExtResource("1_cvpjl")]
+id = 13
+label = "Scor Refrain (group)"
+ingress_energy_cost = 3
+element = 3
+type = 1
+description = "Cover every member in the party with a Scor Refrain."

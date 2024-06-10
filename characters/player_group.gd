@@ -15,9 +15,9 @@ func _ready() -> void:
 	_instantiate_players()
 	players[0].turn.focus()
 	
-func switch_focus(x: int, y: int) -> void:
-	players[x].focus.focus()
-	players[y].focus.unfocus()
+func switch_turn_focus(x: int, y: int) -> void:
+	players[x].turn.focus()
+	players[y].turn.unfocus()
 	
 func reset_focus() -> void:
 	index = 0
@@ -108,8 +108,8 @@ func _set_location(slot_index: int, player: Node2D) -> void:
 func _on_battle_scene_next_player() -> void:
 	if index < players.size() - 1:
 		index += 1
-		switch_focus(index, index - 1)
+		switch_turn_focus(index, index - 1)
 	else:
 		index = 0
-		switch_focus(index, players.size() - 1)
+		switch_turn_focus(index, players.size() - 1)
 

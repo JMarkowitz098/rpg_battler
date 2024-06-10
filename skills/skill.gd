@@ -2,21 +2,21 @@ class_name Skill
 extends Node
 
 enum Id {
-	ETH_INCURSION_SMALL,
-	ETH_INCURSION_DOUBLE,
-	ETH_REFRAIN_SMALL,
-	ETH_REFRAIN_SMALL_GROUP,
-	ENH_INCURSION_SMALL,
-	ENH_REFRAIN_SMALL,
-	SHOR_INCURSION_SMALL,
-	SHOR_INCURSION_DOUBLE,
-	SHOR_REFRAIN_SMALL,
-	SHOR_REFRAIN_GROUP,
-	SCOR_INCURSION_SMALL,
-	SCOR_INCURSION_DOUBLE,
-	SCOR_REFRAIN_SMALL,
-	SCOR_REFRAIN_GROUP,
-	DODGE
+	ETH_INCURSION_SMALL, # 0
+	ETH_INCURSION_DOUBLE, # 1
+	ETH_REFRAIN_SMALL, # 2
+	ETH_REFRAIN_SMALL_GROUP, # 3
+	ENH_INCURSION_SMALL, # 4
+	ENH_REFRAIN_SMALL, # 5
+	SHOR_INCURSION_SMALL, # 6
+	SHOR_INCURSION_DOUBLE, # 7
+	SHOR_REFRAIN_SMALL, # 8
+	SHOR_REFRAIN_GROUP, # 9
+	SCOR_INCURSION_SMALL, # 10
+	SCOR_INCURSION_DOUBLE, # 11
+	SCOR_REFRAIN_SMALL, # 12
+	SCOR_REFRAIN_GROUP, # 13
+	DODGE # 14
 }
 enum Type {
 	INCURSION,
@@ -84,10 +84,16 @@ static func create_skill_instance(skill_id: int) -> PackedScene:
 			return load("res://skills/shor_incursion_small.tscn")
 		Id.SHOR_REFRAIN_SMALL:
 			return load("res://skills/shor_refrain_small.tscn")
+		Id.SHOR_INCURSION_DOUBLE:
+			return load("res://skills/small_shor_incursion_double.tscn")
+		Id.SHOR_REFRAIN_GROUP:
+			return load("res://skills/shor_refrain_small_group.tscn")
 		Id.SCOR_INCURSION_SMALL:
 			return load("res://skills/scor_incursion_small.tscn")
 		Id.SCOR_REFRAIN_SMALL:
 			return load("res://skills/scor_refrain_small.tscn")
+		Id.SCOR_REFRAIN_GROUP:
+			return load("res://skills/scor_refrain_small_group.tscn")
 		_:
 			return load("res://skills/skill.tscn")
 

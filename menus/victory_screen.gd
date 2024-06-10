@@ -70,7 +70,7 @@ func _create_stat_message(stats: Dictionary, stat_key: String, stat_label: Strin
 func _render_players_skills():
 	var players_skills_message := ""
 	for stats in players_stats:
-		players_skills_message += stats.new.label + " " + str(stats.new.slot) + "learned: "
+		players_skills_message += stats.new.label + " " + str(stats.new.slot) + " learned: "
 		for skill_id in stats.new.skills:
 			if not skill_id in stats.old.skills:
 				players_skills_message += Skill.get_skill_label(skill_id) + ", "

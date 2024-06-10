@@ -28,10 +28,10 @@ func draw_action_queue(action_list: HBoxContainer) -> void:
 		if(action.is_choosing): list_item.get_node("Turn").show()
 		action_list.add_child(list_item)
 
-func process_action_queue(tree: SceneTree, players = null) -> void:
+func process_action_queue(tree: SceneTree, players = null, enemies = null) -> void:
 	while queue.size() > 0:
 		var action = queue.pop_front()
-		await _process_skill(action, tree, players)
+		await _process_skill(action, tree, players, enemies)
 		
 func clear_is_choosing():
 	for action in queue:
@@ -141,29 +141,31 @@ func _select_enemy_skill(skills: Array) -> Skill:
 	var rand_skill_i = randi() % skills.size()
 	return skills[rand_skill_i]
 				
-func _process_skill(action: Action, tree: SceneTree, players = null) -> void:
+func _process_skill(action: Action, tree: SceneTree, players = null, enemies = null) -> void:
 	action.actor.stats.use_ingress_energy(action.skill.ingress_energy_cost)
 	if action.actor.stats.current_ingress_energy <= 0:
 		return
 
-	match action.skill.id:
+	match action.skill.id: 
 		Skill.Id.ETH_INCURSION_SMALL, Skill.Id.ENH_INCURSION_SMALL, Skill.Id.SCOR_INCURSION_SMALL, Skill.Id.SHOR_INCURSION_SMALL:
 			await _use_incursion(action, tree)
 			
-		Skill.Id.ETH_INCURSION_DOUBLE:
+		Skill.Id.ETH_INCURSION_DOUBLE, Skill.Id.SHOR_INCURSION_DOUBLE:
 			await _use_incursion(action, tree)
 			await tree.create_timer(2).timeout
 			if action.target != null:
 				_use_incursion(action, tree)
+				await tree.create_timer(2).timeout
 				
 
 		Skill.Id.ETH_REFRAIN_SMALL, Skill.Id.ENH_REFRAIN_SMALL, Skill.Id.SHOR_REFRAIN_SMALL, Skill.Id.SCOR_REFRAIN_SMALL:
 			await _play_refrain_animation(action, tree)
 			_set_refrain(action.actor, action.skill.element)
 			
-		Skill.Id.ETH_REFRAIN_SMALL_GROUP:
+		Skill.Id.ETH_REFRAIN_SMALL_GROUP, Skill.Id.SHOR_REFRAIN_GROUP, Skill.Id.SCOR_REFRAIN_GROUP:
 			await _play_refrain_animation(action, tree)
-			for player in players:
+			var target_players = players if action.actor.icon_type == CharacterStats.IconType.PLAYER else enemies
+			for player in target_players:
 				_set_refrain(player, action.skill.element)
 			
 	if action.skill.id != Skill.Id.DODGE:

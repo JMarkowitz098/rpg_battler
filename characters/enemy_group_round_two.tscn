@@ -1,7 +1,9 @@
-[gd_scene load_steps=3 format=3 uid="uid://cpbmbfuunlscn"]
+[gd_scene load_steps=5 format=3 uid="uid://cpbmbfuunlscn"]
 
 [ext_resource type="Script" path="res://characters/enemy_group.gd" id="1_k88c5"]
 [ext_resource type="PackedScene" uid="uid://dp1n7oj67su8m" path="res://characters/Nash/nash.tscn" id="1_xt31g"]
+[ext_resource type="PackedScene" uid="uid://bre5xhvhpe5hw" path="res://skills/scor_refrain_small_group.tscn" id="3_blu1c"]
+[ext_resource type="PackedScene" uid="uid://57er35of00p8" path="res://skills/shor_refrain_small_group.tscn" id="4_fha02"]
 
 [node name="EnemyGroupRoundTwo" type="Node2D"]
 script = ExtResource("1_k88c5")
@@ -22,6 +24,10 @@ incursion_power = 3
 refrain_power = 3
 agility = 3
 
+[node name="ScorRefrainSmallGroup" parent="Nash/Skills" index="4" instance=ExtResource("3_blu1c")]
+
+[node name="ShorRefrainSmallGroup" parent="Nash/Skills" index="5" instance=ExtResource("4_fha02")]
+
 [node name="Nash2" parent="." instance=ExtResource("1_xt31g")]
 position = Vector2(26, 0)
 
@@ -38,6 +44,10 @@ current_ingress_energy = 15.0
 incursion_power = 3
 refrain_power = 3
 agility = 3
+
+[node name="ShorRefrainSmallGroup" parent="Nash2/Skills" index="4" instance=ExtResource("4_fha02")]
+
+[node name="ScorRefrainSmallGroup" parent="Nash2/Skills" index="5" instance=ExtResource("3_blu1c")]
 
 [editable path="Nash"]
 [editable path="Nash2"]

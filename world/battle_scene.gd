@@ -7,7 +7,9 @@ var defeated: Array[String]
 var action_queue := ActionQueue.new()
 var skill_index := 0
 
+var current_action := "Incursion"
 var current_skill: Skill
+var current_skill_button: HBoxContainer
 var current_skill_type: Skill.Type
 var state: State
 var prev_state: State
@@ -63,12 +65,15 @@ func _process(_delta: float) -> void:
 	if action_queue.is_turn_over():
 		await _process_turn()
 		if _is_game_over():
-			#get_tree().change_scene_to_file("res://menus/start_menu.tscn")
-			get_tree().change_scene_to_file("res://world/battle_scene.tscn")
+			get_tree().change_scene_to_file("res://menus/start_menu.tscn")
+			#get_tree().change_scene_to_file("res://world/battle_scene.tscn")
 		elif _is_victory():
-			get_tree().change_scene_to_file("res://menus/victory_screen.tscn")
-			Utils.round_number += 1
-			Utils.change_scene("res://menus/victory_screen.tscn", { "defeated": defeated })
+			if Utils.round_number == Utils.FINAL_ROUND:
+				get_tree().change_scene_to_file("res://menus/start_menu.tscn")
+			else:
+				#get_tree().change_scene_to_file("res://menus/victory_screen.tscn")
+				Utils.round_number += 1
+				Utils.change_scene("res://menus/victory_screen.tscn", { "defeated": defeated })
 		else:
 			_reset_turn()
 			
@@ -91,7 +96,7 @@ func _connect_signals() -> void:
 
 func _show_action_type() -> void:
 	action_type.show()
-	action_type.find_child("Incursion").grab_focus()
+	action_type.find_child(current_action).grab_focus()
 
 # -------------------
 # Action Buttons
@@ -128,6 +133,7 @@ func _handle_choosing_action() -> void:
 		if(action_type_button.has_focus()):
 			_draw_action_button_description(i)
 			action_type_button.find_child("Focus").focus()
+			current_action = action_type_button.text
 		else:
 			action_type_button.find_child("Focus").unfocus()
 	
@@ -147,9 +153,7 @@ func _clear_action_button_focus():
 	
 func _handle_choose_skill(skill):
 	current_skill = skill
-	#TODO: Can probably get the focused child directly from signal
 	for child in skill_choice_list.get_children():
-		child.skill_button.release_focus()
 		child.unfocus()
 		
 	match current_skill.target:
@@ -160,7 +164,7 @@ func _handle_choose_skill(skill):
 			action_queue.update_player_action_with_skill(players, enemies, current_skill)
 			_clear_info_label()
 			_process_next_player()
-			enemy_group.reset_focus()
+			enemy_group.clear_focus()
 	
 func _handle_choose_skill_input():
 	var skills := skill_ui.current_skills as Array[Node]
@@ -169,6 +173,7 @@ func _handle_choose_skill_input():
 	for i in skill_buttons.size():
 		var skill_button = skill_buttons[i]
 		if(skill_button.skill_button.has_focus()):
+			current_skill_button = skill_button
 			_draw_skill_desciption(skills[i])
 			skill_button.focus()
 		else:
@@ -198,9 +203,8 @@ func _handle_buff_skill():
 	_process_next_player()
 		
 func _return_to_choose_skill():
-	enemy_group.reset_focus()
-	action_queue.enemy_index = 0
-	skill_choice_list.get_children()[0].skill_button.grab_focus()
+	enemy_group.clear_focus()
+	current_skill_button.focus()
 	state = State.CHOOSING_SKILL
 	
 func _draw_skill_desciption(skill: Skill):
@@ -212,7 +216,7 @@ func _draw_skill_desciption(skill: Skill):
 	
 func _clear_skill_button_focus(buttons):
 	for button in buttons:
-		button.find_child("Focus").unfocus()
+		button.unfocus()
 	
 # ------------------------
 # Choosing Enemy Functions
@@ -220,8 +224,7 @@ func _clear_skill_button_focus(buttons):
 	
 func _start_choosing_enemy() -> void:
 	state = State.CHOOSING_ENEMY
-	enemy_group.reset_focus()
-	enemies[0].focus.focus()
+	enemies[action_queue.enemy_index].focus.focus()
 		
 func _handle_choose_enemy_input() -> void:
 	if Input.is_action_just_pressed("menu_left"):
@@ -242,7 +245,7 @@ func _handle_choose_enemy_input() -> void:
 		action_queue.update_player_action_with_skill(players, enemies, current_skill)
 		_clear_info_label()
 		_process_next_player()
-		enemy_group.reset_focus()
+		enemy_group.clear_focus()
 		
 	if Input.is_action_just_pressed("menu_back"):
 		_return_to_choose_skill()
@@ -261,7 +264,7 @@ func _process_turn() -> void:
 	state = State.IS_BATTLING
 	_reset_groups_and_indexes()
 	await get_tree().create_timer(1).timeout
-	await action_queue.process_action_queue(get_tree(), players)
+	await action_queue.process_action_queue(get_tree(), players, enemies)
 
 func _process_next_player() -> void:
 	action_queue.next_player()
@@ -301,9 +304,8 @@ func _reset_dodges():
 func _return_to_action_choice() -> void:
 	state = State.CHOOSING_ACTION
 	_show_action_type()
-	enemy_group.reset_focus()
+	enemy_group.clear_focus()
 	action_queue._set_is_choosing(true)
-	action_queue.enemy_index = 0
 	players[action_queue.player_index].turn.focus()
 	
 func _is_game_over():
@@ -340,6 +342,7 @@ func _start_choosing_action_pos() -> void:
 	player_group.clear_turn_focus()
 	action_queue.clear_is_choosing()
 	skill_ui.release_focus_from_all_buttons()
+	enemy_group.clear_focus()
 	
 func _handle_choose_action_pos_input() -> void:
 	var action = action_queue.get_current_action()
@@ -357,7 +360,7 @@ func _handle_choose_action_pos_input() -> void:
 	if Input.is_action_just_pressed("menu_accept"):
 		pass
 	
-	if Input.is_action_just_pressed("menu_back"):
+	if Input.is_action_just_pressed("menu_back") or Input.is_action_just_pressed("to_action_queue"):
 		for child in action_list.get_children():
 			child.release_focus()
 		action_queue.action_index = 0
@@ -370,9 +373,9 @@ func _handle_choose_action_pos_input() -> void:
 				players[action_queue.player_index].turn.focus()
 				action_queue._set_is_choosing(true)
 			State.CHOOSING_SKILL:
-				skill_ui.prepare_skill_menu(_handle_choose_skill, action_type)
 				state = State.CHOOSING_SKILL
 				players[action_queue.player_index].turn.focus()
+				current_skill_button.focus()
 			State.CHOOSING_ENEMY:
 				_return_to_enemy_choice()
 
