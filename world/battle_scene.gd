@@ -33,6 +33,9 @@ enum State {
 @onready var skill_choice_list = $CanvasLayer/SkillChoiceList
 @onready var skill_ui = SkillMenuUi.new(skill_choice_list)
 @onready var enemy_group_location = $EnemyGroupLocation
+@onready var help_menu = $CanvasLayer/HelpMenu
+
+
 signal next_player
 
 func _ready() -> void:
@@ -405,3 +408,7 @@ func _remove_action_focuses(action: Action):
 
 
 
+
+
+func _on_help_button_pressed():
+	help_menu.show()

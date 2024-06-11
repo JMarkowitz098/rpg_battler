@@ -164,7 +164,7 @@ func _process_skill(action: Action, tree: SceneTree, players = null, enemies = n
 			
 		Skill.Id.ETH_REFRAIN_SMALL_GROUP, Skill.Id.SHOR_REFRAIN_GROUP, Skill.Id.SCOR_REFRAIN_GROUP:
 			await _play_refrain_animation(action, tree)
-			var target_players = players if action.actor.icon_type == CharacterStats.IconType.PLAYER else enemies
+			var target_players = players if action.actor.stats.icon_type == CharacterStats.IconType.PLAYER else enemies
 			for player in target_players:
 				_set_refrain(player, action.skill.element)
 			

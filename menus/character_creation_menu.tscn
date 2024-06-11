@@ -8,7 +8,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-color = Color(1, 0.541176, 1, 1)
+color = Color(0.321569, 0.258824, 1, 1)
 script = ExtResource("1_1w2ob")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
@@ -37,6 +37,6 @@ layout_mode = 2
 disabled = true
 text = "Mage"
 
-[connection signal="pressed" from="VBoxContainer/TalonButton" to="." method="_on_knight_button_pressed"]
 [connection signal="pressed" from="VBoxContainer/TalonButton" to="." method="_on_talon_button_pressed"]
+[connection signal="pressed" from="VBoxContainer/TalonButton" to="." method="_on_knight_button_pressed"]
 [connection signal="pressed" from="VBoxContainer/NashButton" to="." method="_on_nash_button_pressed"]
