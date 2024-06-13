@@ -53,6 +53,10 @@ label_settings = SubResource("LabelSettings_p0inw")
 autowrap_mode = 2
 
 [node name="ActionType" parent="CanvasLayer" instance=ExtResource("2_f1npq")]
+offset_left = 8.0
+offset_top = -68.0
+offset_right = 212.0
+offset_bottom = 33.0
 
 [node name="ActionList" type="HBoxContainer" parent="CanvasLayer"]
 offset_left = 60.0

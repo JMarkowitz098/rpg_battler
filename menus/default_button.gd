@@ -1,9 +1,12 @@
 extends Button
 
 @onready var icon_focus = $Focus
+
+@export var focus_offset_x = 0
+@export var focus_offset_y = 0
 		
 func _ready():
-	icon_focus.position = Vector2(size.x, size.y)
+	icon_focus.position = Vector2(size.x + focus_offset_x, size.y + focus_offset_y)
 	focus()
 		
 func _process(_delta):
