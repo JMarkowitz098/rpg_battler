@@ -15,6 +15,10 @@ func _ready() -> void:
 	_instantiate_players()
 	players[0].turn.focus()
 	
+# ----------------
+# Public Functions
+# ----------------
+	
 func switch_turn_focus(x: int, y: int) -> void:
 	players[x].turn.focus()
 	players[y].turn.unfocus()
@@ -31,54 +35,41 @@ func clear_turn_focus() -> void:
 func remove_player_by_id(id: String) -> void:
 	players = players.filter(func(player): return player.stats.unique_id != id)
 	
+# -----------------
+# Private Functions
+# -----------------
+	
 func _instantiate_players() -> void:
-	var players_stats := SaveAndLoadPlayer.load_all_players()
+	var all_save_data := SaveAndLoadPlayer.load_all_players()
 	
 	var slot_index := 0
-	for loaded_stats in players_stats:
-		if(loaded_stats):
-			_instantiate_player(loaded_stats)
+	for data in all_save_data:
+		if(data):
+			_instantiate_player(data)
 			_set_location(slot_index, players[slot_index])
 			slot_index += 1
 		
-func _instantiate_player(loaded_stats: Dictionary) -> void:
+func _instantiate_player(save_data: SaveData) -> void:
 	var new_player: Node2D
-	match loaded_stats.player_id:
-		CharacterStats.PlayerId.TALON:
+	match save_data.player_id:
+		Stats.PlayerId.TALON:
 			new_player = TALON.instantiate()
-		CharacterStats.PlayerId.NASH:
+		Stats.PlayerId.NASH:
 			new_player = NASH.instantiate()
-			
 	add_child(new_player)
-	_set_stats_on_loaded_player(new_player, loaded_stats)
-	_set_skills_on_loaded_player(new_player, loaded_stats.skills)
-	_set_name_on_loaded_player(new_player)
+	
+	if save_data.level > 1:
+		_update_level(new_player, save_data)
+	
+	_set_skills_on_loaded_player(new_player, new_player.stats.level_stats.skills)
+	#_set_name_on_loaded_player(new_player)
 	players.append(new_player)
-	new_player._update_energy_bar()
-			
-func _set_stats_on_loaded_player(player: Node2D, loaded_stats: Dictionary) -> void:
-	var stat_keys := [
-		"unique_id",
-		"player_id",
-		"label",
-		"icon_type",
-		"elements",
-		"max_ingress_energy",
-		"current_ingress_energy",
-		"incursion_power",
-		"refrain_power",
-		"agility",
-		"slot",
-		"level"
-	]
-	for key in stat_keys:
-		# Because elements is a typed array, it won't let us directly assign
-		if key == "elements":
-			player.stats[key].clear()
-			for element in loaded_stats[key]:
-				player.stats[key].append(element)
-		else:
-			player.stats[key] = loaded_stats[key]
+
+func _update_level(player: Node2D, save_data: SaveData):
+	var new_stats = LevelStats.load_level_data(save_data.player_id, save_data.level)
+	player.stats.level_stats = new_stats
+	player.stats.current_ingress = new_stats.max_ingress
+	player.update_energy_bar()
 
 func _set_skills_on_loaded_player(player: Node2D, skills: Array):
 	for skill in player.skills.get_children():
@@ -87,10 +78,10 @@ func _set_skills_on_loaded_player(player: Node2D, skills: Array):
 	for skill_id in skills:
 		var skill = Skill.create_skill_instance(skill_id).instantiate()
 		player.skills.add_child(skill)
-		
-func _set_name_on_loaded_player(player: Node2D):
-	player.player_name.text = player.stats.label + " " + str(player.stats.slot)
 	
+#TODO: Delete once confirming not needed in battle scene	
+#func _set_name_on_loaded_player(player: Node2D):
+	#player.player_name.text = player.stats.player_details.label + " " + str(player.stats.slot)
 
 func _set_location(slot_index: int, player: Node2D) -> void:
 	match slot_index:
@@ -102,14 +93,13 @@ func _set_location(slot_index: int, player: Node2D) -> void:
 			player.global_position = slot_three_location.global_position
 		3:
 			player.global_position = slot_four_location.global_position
-			
-	
-	
-func _on_battle_scene_next_player() -> void:
-	if index < players.size() - 1:
-		index += 1
-		switch_turn_focus(index, index - 1)
-	else:
-		index = 0
-		switch_turn_focus(index, players.size() - 1)
+
+#TODO: Delete once confirming not used in battle scene		
+#func _on_battle_scene_next_player() -> void:
+	#if index < players.size() - 1:
+		#index += 1
+		#switch_turn_focus(index, index - 1)
+	#else:
+		#index = 0
+		#switch_turn_focus(index, players.size() - 1)
 

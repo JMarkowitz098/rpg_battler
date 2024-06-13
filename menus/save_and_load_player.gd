@@ -35,11 +35,12 @@ func load_player(slot: int) -> SaveData:
 	else:
 		return null
 		
-func load_all_players() -> Array:
-	var players_stats = []
+func load_all_players() -> Array[SaveData]:
+	var all_players_data: Array[SaveData] = []
 	for i in PARTY_SIZE:
-		players_stats.append(load_player(i))
-	return players_stats
+		if load_player(i) is SaveData:
+			all_players_data.append(load_player(i))
+	return all_players_data
 	
 	
 func clear_save_file():

@@ -1,5 +1,5 @@
 class_name Stats
-extends Node2D
+extends Node
 
 signal no_ingress_energy(id)
 signal took_damage

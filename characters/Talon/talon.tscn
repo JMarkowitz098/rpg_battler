@@ -1,7 +1,7 @@
-[gd_scene load_steps=17 format=3 uid="uid://sgl44boffmsf"]
+[gd_scene load_steps=18 format=3 uid="uid://sgl44boffmsf"]
 
 [ext_resource type="Texture2D" uid="uid://df7pcvc8u0ug1" path="res://characters/Talon/sprite_sheets/noBKG_KnightIdle_strip.png" id="1_0nicr"]
-[ext_resource type="Script" path="res://characters/Talon/talon.gd" id="1_duwv8"]
+[ext_resource type="Script" path="res://characters/player.gd" id="1_fdvvo"]
 [ext_resource type="Texture2D" uid="uid://b3eiyyx4skdd2" path="res://characters/Talon/sprite_sheets/noBKG_KnightAttack_strip.png" id="4_1tosp"]
 [ext_resource type="PackedScene" uid="uid://2evhn0npdxi4" path="res://ui/focus_default.tscn" id="4_mrfi8"]
 [ext_resource type="PackedScene" uid="uid://d17rqlb1hgubs" path="res://characters/player_name.tscn" id="4_sqtyk"]
@@ -10,6 +10,7 @@
 [ext_resource type="PackedScene" uid="uid://bqyh4pkeog5r5" path="res://ui/turn.tscn" id="6_emu5t"]
 [ext_resource type="PackedScene" uid="uid://cypb6tqhjigxc" path="res://characters/ingress_energy.tscn" id="6_k2wm0"]
 [ext_resource type="PackedScene" uid="uid://cyi2g62l2egia" path="res://characters/stats.tscn" id="10_c7ixc"]
+[ext_resource type="Resource" uid="uid://ber4ixqhnh8bj" path="res://characters/Talon/talon_player_details.tres" id="11_kf3xo"]
 
 [sub_resource type="Animation" id="Animation_x6vl1"]
 length = 0.001
@@ -112,7 +113,8 @@ _data = {
 }
 
 [node name="Talon" type="Node2D"]
-script = ExtResource("1_duwv8")
+script = ExtResource("1_fdvvo")
+metadata/_edit_group_ = true
 
 [node name="BaseSprite" parent="." instance=ExtResource("5_ei5uc")]
 texture = ExtResource("1_0nicr")
@@ -140,6 +142,7 @@ visible = false
 position = Vector2(8, 8)
 
 [node name="Stats" parent="." instance=ExtResource("10_c7ixc")]
+player_details = ExtResource("11_kf3xo")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {

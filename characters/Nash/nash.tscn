@@ -1,7 +1,7 @@
-[gd_scene load_steps=20 format=3 uid="uid://dp1n7oj67su8m"]
+[gd_scene load_steps=18 format=3 uid="uid://dp1n7oj67su8m"]
 
-[ext_resource type="Script" path="res://characters/Talon/talon.gd" id="1_qyhfd"]
 [ext_resource type="Texture2D" uid="uid://h0h5kd48hvh1" path="res://characters/Nash/Nash attack.png" id="1_uxuf7"]
+[ext_resource type="Script" path="res://characters/player.gd" id="1_wc1mp"]
 [ext_resource type="Texture2D" uid="uid://c120204woffuw" path="res://characters/Nash/Nash idle.png" id="2_yq0yq"]
 [ext_resource type="PackedScene" uid="uid://dl4d2stn4lshh" path="res://characters/refrain_aura.tscn" id="3_yjsww"]
 [ext_resource type="PackedScene" uid="uid://cypb6tqhjigxc" path="res://characters/ingress_energy.tscn" id="4_2fi18"]
@@ -9,10 +9,8 @@
 [ext_resource type="PackedScene" uid="uid://bqyh4pkeog5r5" path="res://ui/turn.tscn" id="6_hxg7a"]
 [ext_resource type="PackedScene" uid="uid://2evhn0npdxi4" path="res://ui/focus_default.tscn" id="7_apc44"]
 [ext_resource type="PackedScene" uid="uid://cyi2g62l2egia" path="res://characters/stats.tscn" id="8_h4na0"]
-[ext_resource type="PackedScene" uid="uid://d4hjrosak0ki7" path="res://skills/shor_incursion_small.tscn" id="9_ir4q1"]
-[ext_resource type="PackedScene" uid="uid://nyp15hkdw2xc" path="res://skills/shor_refrain_small.tscn" id="10_273t4"]
-[ext_resource type="PackedScene" uid="uid://cxmgtml3k8jpt" path="res://skills/scor_incursion_small.tscn" id="11_b085p"]
-[ext_resource type="PackedScene" uid="uid://byir3ffqh8qth" path="res://skills/scor_refrain_small.tscn" id="12_3kc4e"]
+[ext_resource type="Resource" uid="uid://k8x7trqp6s0w" path="res://characters/Nash/nash_player_details.tres" id="9_yemax"]
+[ext_resource type="Resource" uid="uid://dv117ptaw6dsc" path="res://characters/Nash/levels/nash_level_1.tres" id="10_ltxfr"]
 
 [sub_resource type="Animation" id="Animation_dgrtl"]
 length = 0.001
@@ -116,7 +114,7 @@ _data = {
 }
 
 [node name="Nash" type="Node2D"]
-script = ExtResource("1_qyhfd")
+script = ExtResource("1_wc1mp")
 
 [node name="AttackSprite" type="Sprite2D" parent="."]
 visible = false
@@ -152,25 +150,11 @@ position = Vector2(0, -12)
 visible = false
 position = Vector2(8, 10)
 
-[node name="CharacterStats" parent="." instance=ExtResource("8_h4na0")]
-player_id = 1
-label = "Nash"
-elements = Array[int]([2, 3])
-max_ingress_energy = 10.0
-current_ingress_energy = 10.0
-incursion_power = 2
-refrain_power = 2
-agility = 2
+[node name="Stats" parent="." instance=ExtResource("8_h4na0")]
+player_details = ExtResource("9_yemax")
+level_stats = ExtResource("10_ltxfr")
 
 [node name="Skills" type="Node" parent="."]
-
-[node name="ShorIncursionSmall" parent="Skills" instance=ExtResource("9_ir4q1")]
-
-[node name="ShorRefrainSmall" parent="Skills" instance=ExtResource("10_273t4")]
-
-[node name="ScorIncursionSmall" parent="Skills" instance=ExtResource("11_b085p")]
-
-[node name="ScorRefrainSmall" parent="Skills" instance=ExtResource("12_3kc4e")]
 
 [node name="PlayerName" parent="." instance=ExtResource("5_yfakl")]
 offset_left = -12.0
@@ -178,6 +162,6 @@ offset_top = 10.0
 offset_right = 12.0
 offset_bottom = 22.0
 
-[connection signal="no_ingress_energy" from="CharacterStats" to="." method="_on_character_stats_no_ingress_energy"]
-[connection signal="took_damage" from="CharacterStats" to="." method="_on_character_stats_took_damage"]
-[connection signal="used_skill" from="CharacterStats" to="." method="_on_character_stats_used_skill"]
+[connection signal="no_ingress_energy" from="Stats" to="." method="_on_character_stats_no_ingress_energy"]
+[connection signal="took_damage" from="Stats" to="." method="_on_character_stats_took_damage"]
+[connection signal="used_skill" from="Stats" to="." method="_on_character_stats_used_skill"]

@@ -13,7 +13,6 @@ func _process(_delta):
 	if has_focus():
 		focus()
 	else:
-		#focus()
 		unfocus()
 	
 func focus():
