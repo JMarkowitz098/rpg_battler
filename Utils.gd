@@ -6,13 +6,13 @@ var _params = null
 var round_number := 0
 
 func calucluate_attack_damage(actor_stats: Stats, target_stats: Stats) -> int:
-	return _clamped_damage(actor_stats.incursion_power - target_stats.refrain_power)
+	return _clamped_damage(actor_stats.level_stats.incursion - target_stats.level_stats.refrain)
 	
 func calucluate_skill_damage(action: Action) -> int:
 	match action.skill.id:
 		Skill.Id.ETH_INCURSION, Skill.Id.ENH_INCURSION, Skill.Id.SHOR_INCURSION, Skill.Id.SCOR_INCURSION, Skill.Id.ETH_INCURSION_DOUBLE, Skill.Id.SHOR_INCURSION_DOUBLE:
-			var actor_power = action.actor.stats.incursion_power + action.skill.ingress_energy_cost
-			var target_power = action.target.stats.refrain_power
+			var actor_power = action.actor.stats.level_stats.incursion + action.skill.ingress
+			var target_power = action.target.stats.level_stats.refrain
 			
 			if action.target.stats.is_dodging:
 				var dodged =  randi() % 2 == 1
@@ -33,7 +33,7 @@ func calucluate_skill_damage(action: Action) -> int:
 func process_buff(action: Action) -> void:
 	match action.skill.id:
 		Skill.Id.ETH_REFRAIN, Skill.Id.ENH_REFRAIN, Skill.Id.SHOR_REFRAIN, Skill.Id.SCOR_REFRAIN:
-			action.actor.stats.refrain_power *= 2
+			action.actor.stats.refrain *= 2
 
 func change_scene(next_scene, params=null):
 	_params = params

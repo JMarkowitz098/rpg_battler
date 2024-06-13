@@ -136,6 +136,8 @@ position = Vector2(-2, -13)
 
 [node name="Focus" parent="." instance=ExtResource("9_juggu")]
 visible = false
+position = Vector2(4, 8)
+scale = Vector2(0.15, 0.15)
 
 [node name="Stats" parent="." instance=ExtResource("10_nfyao")]
 player_details = ExtResource("11_34duj")

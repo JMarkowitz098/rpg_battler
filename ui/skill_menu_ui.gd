@@ -8,11 +8,11 @@ var current_skills: Array[SkillStats]
 func _init(skill_menu_orig) -> void:
 	skill_menu = skill_menu_orig
 
-func set_current_skills(player: Node2D, skill_type: Skill.Type) -> void: 
+func set_current_skills(player: Node2D) -> void: 
 	current_skills = player.skills
 
-func prepare_skill_menu(_handle_choose_skill, action_type: GridContainer) -> void:
-	_fill_skill_menu_with_current_skills()
+func prepare_skill_menu(_handle_choose_skill, action_type: GridContainer, skill_type: Skill.Type) -> void:
+	_fill_skill_menu_with_current_skills(skill_type)
 	_connect_skill_button_signals(_handle_choose_skill)
 	_show_skill_choice_list(action_type)
 	
@@ -20,7 +20,7 @@ func release_focus_from_all_buttons():
 	for child in skill_menu.get_children():
 		child.release_focus()
 
-func _fill_skill_menu_with_current_skills() -> void:
+func _fill_skill_menu_with_current_skills(skill_type: Skill.Type) -> void:
 	for child in skill_menu.get_children():
 		# queue_free is deferred until end of frame, so we remove node from list
 		# to prevent indexing issues while turn is processing
@@ -28,7 +28,8 @@ func _fill_skill_menu_with_current_skills() -> void:
 		child.queue_free()
 		
 	for skill in current_skills:
-		_create_button_choice(skill.label)
+		if skill.type == skill_type:
+			_create_button_choice(skill.label)
 
 func _create_button_choice(button_text: String) -> void:
 	var button = BATTLE_SCENE_BUTTON.instantiate()

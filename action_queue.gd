@@ -15,7 +15,6 @@ func draw_action_queue(action_list: HBoxContainer) -> void:
 		child.queue_free()
 		
 	for action in queue:
-		var message: String
 		var portrait
 		match action.actor.stats.player_details.player_id:
 			Stats.PlayerId.TALON:
@@ -50,7 +49,7 @@ func queue_initial_turn_actions(players: Array[Node2D], enemies: Array[Node2D]):
 	_set_is_choosing(true, players)
 	
 func _set_is_choosing(state: bool, players = null):
-	if !state:
+	if !state or player_index >= players.size():
 		for action in queue:
 			action.is_choosing = false
 	else:
@@ -156,8 +155,8 @@ func _select_enemy_skill(skill_ids: Array) -> SkillStats:
 	return Skill.create_skill_instance(skill_ids[rand_skill_i])
 				
 func _process_skill(action: Action, tree: SceneTree, players = null, enemies = null) -> void:
-	action.actor.stats.use_ingress_energy(action.skill.ingress_energy_cost)
-	if action.actor.stats.current_ingress_energy <= 0:
+	action.actor.stats.use_ingress_energy(action.skill.ingress)
+	if action.actor.stats.current_ingress <= 0:
 		return
 
 	match action.skill.id: 

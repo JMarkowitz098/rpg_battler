@@ -7,8 +7,7 @@ var defeated: Array[String]
 var action_queue := ActionQueue.new()
 var skill_index := 0
 
-var current_action := "Incursion"
-var current_skill: Skill
+var current_skill: SkillStats
 var current_skill_button: Button
 var current_skill_type: Skill.Type
 var state: State
@@ -34,7 +33,11 @@ enum State {
 @onready var skill_ui = SkillMenuUi.new(skill_choice_list)
 @onready var enemy_group_location = $EnemyGroupLocation
 @onready var help_menu = $CanvasLayer/HelpMenu
+@onready var incursion = $CanvasLayer/ActionType/Incursion
+@onready var refrain = $CanvasLayer/ActionType/Refrain
+@onready var dodge = $CanvasLayer/ActionType/Dodge
 
+@onready var current_action_button: Button = incursion
 
 signal next_player
 
@@ -99,21 +102,33 @@ func _connect_signals() -> void:
 
 func _show_action_type() -> void:
 	action_type.show()
-	action_type.find_child(current_action).grab_focus()
+	current_action_button.focus()
 
 # -------------------
 # Action Buttons
 # -------------------
+
+func _on_incursion_focus_entered():
+	current_action_button = incursion
+	_draw_action_button_description(0)
+	
+func _on_refrain_focus_entered():
+	current_action_button = refrain
+	_draw_action_button_description(1)
+	
+func _on_dodge_focus_entered():
+	current_action_button = dodge
+	_draw_action_button_description(2)
 	
 func _on_incursion_pressed():
-	skill_ui.set_current_skills(players[action_queue.player_index], Skill.Type.INCURSION)
-	skill_ui.prepare_skill_menu(_handle_choose_skill, action_type)
+	skill_ui.set_current_skills(players[action_queue.player_index])
+	skill_ui.prepare_skill_menu(_handle_choose_skill, action_type, Skill.Type.INCURSION)
 	state = State.CHOOSING_SKILL
 	current_skill_type = Skill.Type.INCURSION
 
 func _on_refrain_pressed():
-	skill_ui.set_current_skills(players[action_queue.player_index], Skill.Type.REFRAIN)
-	skill_ui.prepare_skill_menu(_handle_choose_skill, action_type)
+	skill_ui.set_current_skills(players[action_queue.player_index])
+	skill_ui.prepare_skill_menu(_handle_choose_skill, action_type, Skill.Type.REFRAIN)
 	state = State.CHOOSING_SKILL
 	current_skill_type = Skill.Type.REFRAIN
 	
@@ -122,6 +137,7 @@ func _on_dodge_pressed():
 	_handle_choose_skill(Skill.create_skill_instance(Skill.Id.DODGE))
 	
 func _draw_action_button_description(action_type_index: int):
+	if !info_label: return
 	match action_type_index:
 		0:
 			info_label.text = "Use an incursion"
@@ -131,24 +147,10 @@ func _draw_action_button_description(action_type_index: int):
 			info_label.text = "Attempt to dodge an attack"
 			
 func _handle_choosing_action() -> void:
-	for i in action_type.get_children().size():
-		var action_type_button = action_type.get_children()[i]
-		if(action_type_button.has_focus()):
-			_draw_action_button_description(i)
-			action_type_button.find_child("Focus").focus()
-			current_action = action_type_button.text
-		else:
-			action_type_button.find_child("Focus").unfocus()
-	
 	if Input.is_action_just_pressed("to_action_queue"):
 		for child in action_type.get_children():
 			child.release_focus()
 		_start_choosing_action_pos()
-		_clear_action_button_focus()
-		
-func _clear_action_button_focus():
-	for button in action_type.get_children():
-		button.find_child("Focus").unfocus()
 	
 # ----------------------
 # Shared Skill Functions
@@ -278,11 +280,8 @@ func _process_next_player() -> void:
 func _clear_ui_for_battle() -> void:
 	action_type.hide()
 	_clear_info_label()
-	_clear_action_queue()
+	action_queue._set_is_choosing(false)
 	
-func _clear_action_queue():
-	for child in action_list.get_children():
-		child.turn.hide()
 
 func _reset_turn() -> void:
 	state = State.CHOOSING_ACTION
@@ -409,3 +408,4 @@ func _remove_action_focuses(action: Action):
 
 func _on_help_button_pressed():
 	help_menu.show()
+

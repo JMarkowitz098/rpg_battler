@@ -4,10 +4,10 @@
 
 [resource]
 script = ExtResource("1_alj0c")
-id = 5
-label = "Enh Refrain"
+id = 2
+label = "Eth Refrain"
 ingress = 1
-element = 0
+element = 1
 type = 1
 target = 0
 description = "Create an Enh Refrain barrier to block one attack. If attacked with an Enh Incursion, gain Ingress equal to the attack."

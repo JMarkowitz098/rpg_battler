@@ -12,7 +12,8 @@ enum PlayerId { TALON, NASH }
 @export var player_details: PlayerDetails
 @export var level_stats: LevelStats
 
-@onready var current_ingress := level_stats.max_ingress
+@onready var current_ingress := level_stats.max_ingress: 
+	set = set_ingress_energy
 
 var has_small_refrain_open := false
 var is_dodging := false
@@ -24,7 +25,7 @@ var unique_id: String
 var level: int
 
 func set_ingress_energy(value: float) -> void:
-	current_ingress = clamp(value, 0, level_stats.max_ingress_energy)
+	current_ingress = clamp(value, 0, level_stats.max_ingress)
 	if current_ingress <= 0: 
 		no_ingress_energy.emit(unique_id)
 
