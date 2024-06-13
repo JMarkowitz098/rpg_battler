@@ -1,10 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://cv3dnw5j7loal"]
+[gd_scene load_steps=3 format=3 uid="uid://5l7c80buhfsy"]
 
 [ext_resource type="PackedScene" uid="uid://bdecc7cdnjbaj" path="res://skills/skill.tscn" id="1_ujr2b"]
+[ext_resource type="Resource" uid="uid://mgqy7xcsmp7j" path="res://skills/eth/eth_incursion.tres" id="2_cq01t"]
 
 [node name="EthIncursionSmall" instance=ExtResource("1_ujr2b")]
-label = "Eth Incusion (small)"
-ingress_energy_cost = 1
-element = 1
-target = 1
-description = "Open a small Eth incursion and damage one foe"
+skill_stats = ExtResource("2_cq01t")

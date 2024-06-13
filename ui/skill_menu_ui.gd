@@ -1,6 +1,6 @@
 class_name SkillMenuUi
 
-const SKILL_BUTTON = preload("res://menus/skill_button.tscn")
+const SKILL_BUTTON = preload("res://menus/default_button.tscn")
 
 var skill_menu: GridContainer
 var current_skills: Array[Node]

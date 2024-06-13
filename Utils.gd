@@ -10,7 +10,7 @@ func calucluate_attack_damage(actor_stats: Stats, target_stats: Stats) -> int:
 	
 func calucluate_skill_damage(action: Action) -> int:
 	match action.skill.id:
-		Skill.Id.ETH_INCURSION_SMALL, Skill.Id.ENH_INCURSION_SMALL, Skill.Id.SHOR_INCURSION_SMALL, Skill.Id.SCOR_INCURSION_SMALL, Skill.Id.ETH_INCURSION_DOUBLE, Skill.Id.SHOR_INCURSION_DOUBLE:
+		Skill.Id.ETH_INCURSION, Skill.Id.ENH_INCURSION, Skill.Id.SHOR_INCURSION, Skill.Id.SCOR_INCURSION, Skill.Id.ETH_INCURSION_DOUBLE, Skill.Id.SHOR_INCURSION_DOUBLE:
 			var actor_power = action.actor.stats.incursion_power + action.skill.ingress_energy_cost
 			var target_power = action.target.stats.refrain_power
 			
@@ -32,7 +32,7 @@ func calucluate_skill_damage(action: Action) -> int:
 			
 func process_buff(action: Action) -> void:
 	match action.skill.id:
-		Skill.Id.ETH_REFRAIN_SMALL, Skill.Id.ENH_REFRAIN_SMALL, Skill.Id.SHOR_REFRAIN_SMALL, Skill.Id.SCOR_REFRAIN_SMALL:
+		Skill.Id.ETH_REFRAIN, Skill.Id.ENH_REFRAIN, Skill.Id.SHOR_REFRAIN, Skill.Id.SCOR_REFRAIN:
 			action.actor.stats.refrain_power *= 2
 
 func change_scene(next_scene, params=null):

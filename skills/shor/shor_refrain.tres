@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="SkillStats" load_steps=2 format=3 uid="uid://dpkph4q38hic5"]
+
+[ext_resource type="Script" path="res://skills/skill_stats.gd" id="1_mttfw"]
+
+[resource]
+script = ExtResource("1_mttfw")
+id = 8
+label = "Shor Refrain"
+ingress = 1
+element = 2
+type = 1
+target = 0
+description = "Create an Shor Refrain barrier to block one attack. If attacked with a Shor Incursion, gain Ingress equal to the attack."

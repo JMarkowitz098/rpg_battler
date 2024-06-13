@@ -14,10 +14,10 @@ func draw_action_queue(action_list: HBoxContainer) -> void:
 		
 	for action in queue:
 		var message: String
-		match action.actor.stats.icon_type:
-			CharacterStats.IconType.PLAYER:
+		match action.actor.stats.player_details.icon_type:
+			Stats.IconType.PLAYER:
 				message = "O"
-			CharacterStats.IconType.ENEMY:
+			Stats.IconType.ENEMY:
 				message = "X"
 			_:
 				message = "_"
@@ -48,7 +48,7 @@ func queue_initial_turn_actions(players: Array[Node2D], enemies: Array[Node2D]):
 func _set_is_choosing(state: bool):
 	var is_set = 0
 	for action in queue:
-		if action.actor.stats.icon_type == CharacterStats.IconType.PLAYER:
+		if action.actor.stats.player_details.icon_type == Stats.IconType.PLAYER:
 			if is_set == player_index: action.is_choosing = state
 			is_set += 1
 
@@ -120,26 +120,26 @@ func _queue_empty_actions(characters: Array[Node2D]):
 
 func _fill_enemy_actions(players: Array[Node2D]):
 	for action in queue:
-		if(action.actor.stats.icon_type == CharacterStats.IconType.ENEMY):
-			if action.actor.stats.current_ingress_energy == 1:
+		if(action.actor.stats.player_details.icon_type == Stats.IconType.ENEMY):
+			if action.actor.stats.current_ingress == 1:
 				_set_dodge(action)
 			else:
 				_set_skill(action, players)
 				
 func _set_dodge(action: Action):
 	action.actor.stats.is_dodging = true
-	action.set_attack(null, Skill.create_dodge())
+	action.set_attack(null, Skill.create_skill_instance(Skill.Id.DODGE))
 	
 func _set_skill(action: Action, players: Array[Node2D]):
 	var target = null
-	var selected_skill = _select_enemy_skill(action.actor.skills.get_children())
+	var selected_skill := _select_enemy_skill(action.actor.stats.level_stats.skills)
 	if selected_skill.target == Skill.Target.ENEMY:
 		target = players[randi() % players.size()]
 	action.set_attack(target, selected_skill)
 
-func _select_enemy_skill(skills: Array) -> Skill:
-	var rand_skill_i = randi() % skills.size()
-	return skills[rand_skill_i]
+func _select_enemy_skill(skill_ids: Array) -> SkillStats:
+	var rand_skill_i = randi() % skill_ids.size()
+	return Skill.create_skill_instance(skill_ids[rand_skill_i])
 				
 func _process_skill(action: Action, tree: SceneTree, players = null, enemies = null) -> void:
 	action.actor.stats.use_ingress_energy(action.skill.ingress_energy_cost)
@@ -147,7 +147,7 @@ func _process_skill(action: Action, tree: SceneTree, players = null, enemies = n
 		return
 
 	match action.skill.id: 
-		Skill.Id.ETH_INCURSION_SMALL, Skill.Id.ENH_INCURSION_SMALL, Skill.Id.SCOR_INCURSION_SMALL, Skill.Id.SHOR_INCURSION_SMALL:
+		Skill.Id.ETH_INCURSION, Skill.Id.ENH_INCURSION, Skill.Id.SCOR_INCURSION, Skill.Id.SHOR_INCURSION:
 			await _use_incursion(action, tree)
 			
 		Skill.Id.ETH_INCURSION_DOUBLE, Skill.Id.SHOR_INCURSION_DOUBLE:
@@ -158,13 +158,13 @@ func _process_skill(action: Action, tree: SceneTree, players = null, enemies = n
 				await tree.create_timer(2).timeout
 				
 
-		Skill.Id.ETH_REFRAIN_SMALL, Skill.Id.ENH_REFRAIN_SMALL, Skill.Id.SHOR_REFRAIN_SMALL, Skill.Id.SCOR_REFRAIN_SMALL:
+		Skill.Id.ETH_REFRAIN, Skill.Id.ENH_REFRAIN, Skill.Id.SHOR_REFRAIN, Skill.Id.SCOR_REFRAIN:
 			await _play_refrain_animation(action, tree)
 			_set_refrain(action.actor, action.skill.element)
 			
-		Skill.Id.ETH_REFRAIN_SMALL_GROUP, Skill.Id.SHOR_REFRAIN_GROUP, Skill.Id.SCOR_REFRAIN_GROUP:
+		Skill.Id.ETH_REFRAIN_GROUP, Skill.Id.SHOR_REFRAIN_GROUP, Skill.Id.SCOR_REFRAIN_GROUP:
 			await _play_refrain_animation(action, tree)
-			var target_players = players if action.actor.stats.icon_type == CharacterStats.IconType.PLAYER else enemies
+			var target_players = players if action.actor.stats.player_details.icon_type == Stats.IconType.PLAYER else enemies
 			for player in target_players:
 				_set_refrain(player, action.skill.element)
 			
@@ -196,18 +196,18 @@ func _set_refrain(player: Node2D, skill_element):
 	player.stats.current_refrain_element = skill_element
 	player.refrain_aura.show()
 	match skill_element:
-		CharacterStats.Element.ETH:
+		Stats.Element.ETH:
 			player.refrain_aura.modulate = Color("Green")
-		CharacterStats.Element.ENH:
+		Stats.Element.ENH:
 			player.refrain_aura.modulate = Color("Orange")
-		CharacterStats.Element.SCOR:
+		Stats.Element.SCOR:
 			player.refrain_aura.modulate = Color("Red")
-		CharacterStats.Element.SHOR:
+		Stats.Element.SHOR:
 			player.refrain_aura.modulate = Color("Blue")
 
 func _sort_queue_by_agility():
 	for action in queue:
-		action.actor.stats.rand_agi = action.actor.stats.agility + randi() % 10 
+		action.actor.stats.rand_agi = action.actor.stats.level_stats.agility + randi() % 10 
 	queue.sort_custom(func(a, b): return a.actor.stats.rand_agi  > b.actor.stats.rand_agi )
 	
 		

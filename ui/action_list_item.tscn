@@ -22,3 +22,5 @@ visible = false
 position = Vector2(9, 15)
 
 [node name="Turn" parent="." instance=ExtResource("3_hloil")]
+visible = true
+position = Vector2(5, 3)

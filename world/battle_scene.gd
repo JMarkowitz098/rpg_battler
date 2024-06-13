@@ -119,7 +119,7 @@ func _on_refrain_pressed():
 	
 func _on_dodge_pressed():
 	players[action_queue.player_index].stats.is_dodging = true
-	_handle_choose_skill(Skill.create_dodge())
+	_handle_choose_skill(Skill.create_skill_instance(Skill.Id.DODGE))
 	
 func _draw_action_button_description(action_type_index: int):
 	match action_type_index:
@@ -213,7 +213,7 @@ func _return_to_choose_skill():
 func _draw_skill_desciption(skill: Skill):
 	info_label.text  = "Ingress Energy Cost: {0}\nElement: {1}\n{2}".format([
 		skill.ingress_energy_cost,
-		CharacterStats.get_element_label(skill.element),
+		Stats.get_element_label(skill.element),
 		skill.description
 	])
 	

@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="SkillStats" load_steps=2 format=3 uid="uid://banu2mh64maec"]
+
+[ext_resource type="Script" path="res://skills/skill_stats.gd" id="1_85kn7"]
+
+[resource]
+script = ExtResource("1_85kn7")
+id = 14
+label = "Dodge"
+ingress = 0
+element = 4
+type = 2
+target = 0
+description = "Attempt to dodge an attack"

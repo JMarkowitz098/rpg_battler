@@ -1,0 +1,31 @@
+[gd_scene load_steps=4 format=3 uid="uid://b5b42noos8pd3"]
+
+[ext_resource type="PackedScene" uid="uid://cypb6tqhjigxc" path="res://players/ingress_energy.tscn" id="1_lyp8f"]
+[ext_resource type="PackedScene" uid="uid://d17rqlb1hgubs" path="res://players/player_name.tscn" id="2_mch3f"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_8wqv2"]
+font_size = 6
+
+[node name="Info" type="VBoxContainer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -18.0
+offset_top = -24.0
+offset_right = 18.0
+offset_bottom = 24.0
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 1
+
+[node name="IngressEnergy" parent="." instance=ExtResource("1_lyp8f")]
+layout_mode = 2
+text = "XX / XX"
+label_settings = SubResource("LabelSettings_8wqv2")
+
+[node name="Spacer" type="Container" parent="."]
+custom_minimum_size = Vector2(2.08165e-12, 20)
+layout_mode = 2
+
+[node name="PlayerName" parent="." instance=ExtResource("2_mch3f")]
+layout_mode = 2

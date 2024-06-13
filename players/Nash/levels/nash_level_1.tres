@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="LevelStats" load_steps=2 format=3 uid="uid://dv117ptaw6dsc"]
+
+[ext_resource type="Script" path="res://players/level_stats.gd" id="1_lrldw"]
+
+[resource]
+script = ExtResource("1_lrldw")
+level = 1
+max_ingress = 10
+incursion = 2
+refrain = 2
+agility = 2
+skills = Array[int]([6, 10, 8, 12])
