@@ -8,10 +8,10 @@ const MAX_SLOTS := 2
 @onready var slot_two_portrait := $VBoxContainer/HBoxContainer/SlotTwoContainer/SlotTwoPortrait
 @onready var start_button := $VBoxContainer/StartButton
 
-const TALON_PORTRAIT := preload("res://characters/Talon/TalonPortrait.jpeg")
-const TALON_PLAYER_DETAILS := preload("res://characters/Talon/talon_player_details.tres")
-const NASH_PORTRAIT := preload("res://characters/Nash/NashPortrait.jpeg")
-const NASH_PLAYER_DETAILS = preload("res://characters/Nash/nash_player_details.tres")
+const TALON_PORTRAIT := preload("res://players/Talon/TalonPortrait.jpeg")
+const TALON_PLAYER_DETAILS := preload("res://players/Talon/talon_player_details.tres")
+const NASH_PORTRAIT := preload("res://players/Nash/NashPortrait.jpeg")
+const NASH_PLAYER_DETAILS = preload("res://players/Nash/nash_player_details.tres")
 
 func _ready():
 	_set_focus()

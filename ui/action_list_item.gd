@@ -1,5 +1,5 @@
-extends HBoxContainer
+extends VBoxContainer
 
-@onready var label = $Label
 @onready var focus = $Focus
 @onready var turn = $Turn
+@onready var icon = $Icon

@@ -1,10 +1,10 @@
 [gd_scene load_steps=3 format=3 uid="uid://2evhn0npdxi4"]
 
-[ext_resource type="Texture2D" uid="uid://8dectdajngo1" path="res://world/cursor.png" id="1_lshoy"]
+[ext_resource type="Texture2D" uid="uid://ddcxjrhe1r3p1" path="res://ui/cursor-1.png.png" id="1_kcdd3"]
 [ext_resource type="Script" path="res://ui/focus_default.gd" id="2_w7m7k"]
 
 [node name="Focus" type="Sprite2D"]
 z_index = 5
-scale = Vector2(0.007, 0.007)
-texture = ExtResource("1_lshoy")
+scale = Vector2(0.2, 0.2)
+texture = ExtResource("1_kcdd3")
 script = ExtResource("2_w7m7k")

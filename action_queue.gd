@@ -23,7 +23,7 @@ func draw_action_queue(action_list: HBoxContainer) -> void:
 				message = "_"
 				
 		var list_item = ActionListItemScene.instantiate()
-		list_item.get_node("Label").text = message
+		#list_item.get_node("Label").text = message
 		if(action.is_focused): list_item.get_node("Focus").focus()
 		if(action.is_choosing): list_item.get_node("Turn").show()
 		action_list.add_child(list_item)

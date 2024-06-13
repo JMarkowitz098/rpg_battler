@@ -10,28 +10,40 @@ script = ExtResource("1_khrov")
 
 [node name="Talon" parent="." instance=ExtResource("3_8pgww")]
 
-[node name="BaseSprite" parent="Talon" index="0"]
+[node name="BaseSprite" parent="Talon" index="1"]
 position = Vector2(0, 3)
 scale = Vector2(-0.798, 0.6)
 
-[node name="AttackSprite" parent="Talon" index="1"]
+[node name="AttackSprite" parent="Talon" index="2"]
 scale = Vector2(-0.798, 0.6)
 
-[node name="Stats" parent="Talon" index="7"]
+[node name="Turn" parent="Talon" index="4"]
+offset_left = -2.0
+offset_top = -11.0
+offset_right = -2.0
+offset_bottom = -11.0
+
+[node name="Stats" parent="Talon" index="6"]
 player_details = ExtResource("3_vg3hm")
 level_stats = ExtResource("4_rk7qd")
 
 [node name="Talon2" parent="." instance=ExtResource("3_8pgww")]
 position = Vector2(42, 0)
 
-[node name="BaseSprite" parent="Talon2" index="0"]
+[node name="BaseSprite" parent="Talon2" index="1"]
 position = Vector2(0, 3)
 scale = Vector2(-0.798, 0.6)
 
-[node name="AttackSprite" parent="Talon2" index="1"]
+[node name="AttackSprite" parent="Talon2" index="2"]
 scale = Vector2(-0.798, 0.6)
 
-[node name="Stats" parent="Talon2" index="7"]
+[node name="Turn" parent="Talon2" index="4"]
+offset_left = -2.0
+offset_top = -11.0
+offset_right = -2.0
+offset_bottom = -11.0
+
+[node name="Stats" parent="Talon2" index="6"]
 player_details = ExtResource("3_vg3hm")
 level_stats = ExtResource("4_rk7qd")
 

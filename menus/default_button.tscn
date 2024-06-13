@@ -11,5 +11,3 @@ text = "Lorem Ipsum Lorem Ipsum"
 script = ExtResource("1_fvlow")
 
 [node name="Focus" parent="." instance=ExtResource("2_iroba")]
-visible = false
-scale = Vector2(0.0118333, 0.0118333)

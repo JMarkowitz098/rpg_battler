@@ -1,12 +1,12 @@
 extends ColorRect
 
-const NASH_PORTRAIT := preload("res://characters/Nash/NashPortrait.jpeg")
-const NASH_PLAYER_DETAILS = preload("res://characters/Nash/nash_player_details.tres")
-const NASH_LEVEL_1 = preload("res://characters/Nash/levels/nash_level_1.tres")
+const NASH_PORTRAIT := preload("res://players/Nash/NashPortrait.jpeg")
+const NASH_PLAYER_DETAILS = preload("res://players/Nash/nash_player_details.tres")
+const NASH_LEVEL_1 = preload("res://players/Nash/levels/nash_level_1.tres")
 
-const TALON_PORTRAIT := preload("res://characters/Talon/TalonPortrait.jpeg")
-const TALON_PLAYER_DETAILS := preload("res://characters/Talon/talon_player_details.tres")
-const TALON_LEVEL_1 := preload("res://characters/Talon/levels/talon_level_1.tres")
+const TALON_PORTRAIT := preload("res://players/Talon/TalonPortrait.jpeg")
+const TALON_PLAYER_DETAILS := preload("res://players/Talon/talon_player_details.tres")
+const TALON_LEVEL_1 := preload("res://players/Talon/levels/talon_level_1.tres")
 
 @onready var talon_button := $VBoxContainer/HBoxContainer/CharacterButtons/TalonButton
 @onready var nash_button := $VBoxContainer/HBoxContainer/CharacterButtons/NashButton

@@ -133,11 +133,9 @@ hframes = 22
 [node name="RefrainAura" parent="." instance=ExtResource("5_ahw2m")]
 
 [node name="Turn" parent="." instance=ExtResource("8_v2rbo")]
-position = Vector2(-2, -11)
 
 [node name="Focus" parent="." instance=ExtResource("9_juggu")]
 visible = false
-position = Vector2(8, 8)
 
 [node name="Stats" parent="." instance=ExtResource("10_nfyao")]
 player_details = ExtResource("11_34duj")
