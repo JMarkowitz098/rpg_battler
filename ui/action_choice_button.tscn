@@ -1,4 +1,4 @@
-[gd_scene load_steps=2 format=3 uid="uid://c2iuvbvw80h22"]
+[gd_scene load_steps=2 format=3 uid="uid://cg15kifntjya6"]
 
 [ext_resource type="PackedScene" uid="uid://2evhn0npdxi4" path="res://ui/focus_default.tscn" id="1_0g7lu"]
 

@@ -12,7 +12,8 @@
 [ext_resource type="PackedScene" uid="uid://crwce2voha8mt" path="res://menus/help_menu.tscn" id="10_w6e8n"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_p0inw"]
-font_size = 10
+font_size = 5
+font_color = Color(0, 0, 0, 1)
 
 [node name="BattleScene" type="Node2D"]
 script = ExtResource("1_r5piu")
@@ -31,7 +32,7 @@ offset_top = 5.0
 offset_right = 100.0
 offset_bottom = 25.0
 grow_horizontal = 2
-color = Color(0.721569, 0.721569, 0.721569, 1)
+color = Color(0.580392, 0.690196, 0.854902, 1)
 
 [node name="InfoBackground" type="ColorRect" parent="CanvasLayer"]
 anchors_preset = 3
@@ -43,12 +44,20 @@ offset_left = -186.0
 offset_top = -71.0
 grow_horizontal = 0
 grow_vertical = 0
-color = Color(0.721569, 0.721569, 0.721569, 1)
+color = Color(0.862745, 0.929412, 1, 1)
 
 [node name="InfoLabel" type="Label" parent="CanvasLayer/InfoBackground"]
-layout_mode = 0
-offset_right = 185.0
-offset_bottom = 71.0
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 8.0
+offset_top = 6.0
+offset_right = -10.0
+offset_bottom = -10.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Lorem IpsumLorem IpsumLorem "
 label_settings = SubResource("LabelSettings_p0inw")
 autowrap_mode = 2
 
@@ -73,9 +82,9 @@ size_flags_stretch_ratio = 0.0
 [node name="SkillChoiceList" parent="CanvasLayer" instance=ExtResource("4_166j1")]
 visible = false
 offset_left = 7.0
-offset_top = -66.0
-offset_right = 209.0
-offset_bottom = 34.0
+offset_top = -68.0
+offset_right = 260.0
+offset_bottom = 32.0
 
 [node name="TextureRect" type="TextureRect" parent="."]
 self_modulate = Color(0.823529, 0.823529, 0.823529, 1)

@@ -57,6 +57,7 @@ func _instantiate_player(save_data: SaveData) -> void:
 		Stats.PlayerId.NASH:
 			new_player = NASH.instantiate()
 	add_child(new_player)
+	new_player.stats.unique_id = save_data.unique_id
 	
 	if save_data.level > 1:
 		_update_level(new_player, save_data)

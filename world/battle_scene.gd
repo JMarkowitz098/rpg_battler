@@ -9,7 +9,7 @@ var skill_index := 0
 
 var current_action := "Incursion"
 var current_skill: Skill
-var current_skill_button: HBoxContainer
+var current_skill_button: Button
 var current_skill_type: Skill.Type
 var state: State
 var prev_state: State
@@ -170,12 +170,12 @@ func _handle_choose_skill(skill):
 			enemy_group.clear_focus()
 	
 func _handle_choose_skill_input():
-	var skills := skill_ui.current_skills as Array[Node]
+	var skills := skill_ui.current_skills as Array[SkillStats]
 	var skill_buttons = skill_ui.skill_menu.get_children()
 
 	for i in skill_buttons.size():
 		var skill_button = skill_buttons[i]
-		if(skill_button.skill_button.has_focus()):
+		if(skill_button.has_focus()):
 			current_skill_button = skill_button
 			_draw_skill_desciption(skills[i])
 			skill_button.focus()
@@ -210,9 +210,9 @@ func _return_to_choose_skill():
 	current_skill_button.focus()
 	state = State.CHOOSING_SKILL
 	
-func _draw_skill_desciption(skill: Skill):
+func _draw_skill_desciption(skill: SkillStats):
 	info_label.text  = "Ingress Energy Cost: {0}\nElement: {1}\n{2}".format([
-		skill.ingress_energy_cost,
+		skill.ingress,
 		Stats.get_element_label(skill.element),
 		skill.description
 	])
@@ -270,7 +270,7 @@ func _process_turn() -> void:
 	await action_queue.process_action_queue(get_tree(), players, enemies)
 
 func _process_next_player() -> void:
-	action_queue.next_player()
+	action_queue.next_player(players)
 	emit_signal("next_player")
 	state = State.CHOOSING_ACTION
 	_show_action_type()
@@ -308,7 +308,7 @@ func _return_to_action_choice() -> void:
 	state = State.CHOOSING_ACTION
 	_show_action_type()
 	enemy_group.clear_focus()
-	action_queue._set_is_choosing(true)
+	action_queue._set_is_choosing(true, players)
 	players[action_queue.player_index].turn.focus()
 	
 func _is_game_over():
@@ -374,11 +374,12 @@ func _handle_choose_action_pos_input() -> void:
 				state = State.CHOOSING_ACTION
 				_show_action_type()
 				players[action_queue.player_index].turn.focus()
-				action_queue._set_is_choosing(true)
+				action_queue._set_is_choosing(true, players)
 			State.CHOOSING_SKILL:
 				state = State.CHOOSING_SKILL
 				players[action_queue.player_index].turn.focus()
 				current_skill_button.focus()
+				action_queue._set_is_choosing(true, players)
 			State.CHOOSING_ENEMY:
 				_return_to_enemy_choice()
 
@@ -401,14 +402,10 @@ func _set_action_focuses(action: Action):
 func _remove_action_focuses(action: Action):
 	action.actor.find_child("Turn").unfocus()
 	action_queue.set_focus(action_queue.action_index, false)
-	action.actor.find_child("Turn").self_modulate = Color("White")
+	action.actor.find_child("Turn").self_modulate = Color("94b0da")
 	if action.target:
-		action.target.find_child("Turn").self_modulate = Color("White")
+		action.target.find_child("Turn").self_modulate = Color("94b0da")
 		action.target.find_child("Turn").unfocus()
-
-
-
-
 
 func _on_help_button_pressed():
 	help_menu.show()

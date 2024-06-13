@@ -112,7 +112,6 @@ _data = {
 }
 
 [node name="Talon" type="Node2D"]
-position = Vector2(89, 42)
 script = ExtResource("1_syi0g")
 
 [node name="Info" parent="." instance=ExtResource("2_v0cl7")]
@@ -133,6 +132,7 @@ hframes = 22
 [node name="RefrainAura" parent="." instance=ExtResource("5_ahw2m")]
 
 [node name="Turn" parent="." instance=ExtResource("8_v2rbo")]
+position = Vector2(-2, -13)
 
 [node name="Focus" parent="." instance=ExtResource("9_juggu")]
 visible = false
@@ -144,8 +144,6 @@ player_details = ExtResource("11_34duj")
 libraries = {
 "": SubResource("AnimationLibrary_6fabj")
 }
-
-[node name="Skills" type="Node" parent="."]
 
 [connection signal="no_ingress_energy" from="Stats" to="." method="_on_character_stats_no_ingress_energy"]
 [connection signal="took_damage" from="Stats" to="." method="_on_character_stats_took_damage"]

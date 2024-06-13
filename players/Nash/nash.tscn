@@ -116,6 +116,9 @@ _data = {
 script = ExtResource("1_wexmg")
 
 [node name="Info" parent="." instance=ExtResource("2_mn3a1")]
+anchors_preset = 10
+anchor_bottom = 0.0
+grow_vertical = 1
 
 [node name="AttackSprite" type="Sprite2D" parent="."]
 visible = false
@@ -139,6 +142,7 @@ position = Vector2(1.90735e-06, 1.90735e-06)
 scale = Vector2(1.24438, 1.12997)
 
 [node name="Turn" parent="." instance=ExtResource("6_gu3rd")]
+position = Vector2(0, -12)
 
 [node name="Focus" parent="." instance=ExtResource("7_4wh2y")]
 visible = false

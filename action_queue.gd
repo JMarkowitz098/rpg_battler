@@ -6,7 +6,9 @@ var enemy_index := 0
 var player_index := 0
 var action_index := 0
 
-const ActionListItemScene := preload("res://ui/action_list_item.tscn")
+const ACTION_LIST_ITEM = preload("res://ui/action_list_item.tscn")
+const NASH_PORTRAIT := preload("res://players/Nash/NashPortrait.jpeg")
+const TALON_PORTRAIT := preload("res://players/Talon/TalonPortrait.jpeg")
 
 func draw_action_queue(action_list: HBoxContainer) -> void:
 	for child in action_list.get_children():
@@ -14,16 +16,19 @@ func draw_action_queue(action_list: HBoxContainer) -> void:
 		
 	for action in queue:
 		var message: String
-		match action.actor.stats.player_details.icon_type:
-			Stats.IconType.PLAYER:
-				message = "O"
-			Stats.IconType.ENEMY:
-				message = "X"
+		var portrait
+		match action.actor.stats.player_details.player_id:
+			Stats.PlayerId.TALON:
+				portrait = TALON_PORTRAIT
+			Stats.PlayerId.NASH:
+				portrait = NASH_PORTRAIT
 			_:
-				message = "_"
+				portrait = TALON_PORTRAIT
 				
-		var list_item = ActionListItemScene.instantiate()
-		#list_item.get_node("Label").text = message
+		var list_item = ACTION_LIST_ITEM.instantiate()
+		list_item.texture = portrait
+		if action.actor.stats.player_details.icon_type == Stats.IconType.ENEMY:
+			list_item.self_modulate = Color("ff1c00")
 		if(action.is_focused): list_item.get_node("Focus").focus()
 		if(action.is_choosing): list_item.get_node("Turn").show()
 		action_list.add_child(list_item)
@@ -42,15 +47,24 @@ func queue_initial_turn_actions(players: Array[Node2D], enemies: Array[Node2D]):
 	_queue_empty_actions(enemies)
 	_sort_queue_by_agility()
 	_fill_enemy_actions(players)
-	_set_is_choosing(true)
+	_set_is_choosing(true, players)
 	
+func _set_is_choosing(state: bool, players = null):
+	if !state:
+		for action in queue:
+			action.is_choosing = false
+	else:
+		var choosing_player = players[player_index]
+		for action in queue:
+			if _is_player_action(action) and _is_choosing_player(action, choosing_player): 
+				action.is_choosing = state
 
-func _set_is_choosing(state: bool):
-	var is_set = 0
-	for action in queue:
-		if action.actor.stats.player_details.icon_type == Stats.IconType.PLAYER:
-			if is_set == player_index: action.is_choosing = state
-			is_set += 1
+func _is_player_action(action: Action) -> bool:
+	return action.actor.stats.player_details.icon_type == Stats.IconType.PLAYER
+
+func _is_choosing_player(action: Action, choosing_player: Node2D) -> bool:
+	return action.actor.stats.unique_id == choosing_player.stats.unique_id
+
 
 func is_turn_over():
 	return queue.all(func(action): return action.action_chosen)
@@ -89,10 +103,10 @@ func update_player_action_with_skill(players, enemies, skill):
 		action_to_update.set_attack(enemies[enemy_index], skill)
 		
 	
-func next_player() -> void:
+func next_player(players) -> void:
 	_set_is_choosing(false)
 	player_index += 1
-	_set_is_choosing(true)
+	_set_is_choosing(true, players)
 	action_index = 0
 	
 func remove_action_by_character_id(id: String) -> void:
@@ -106,11 +120,11 @@ func remove_action_by_character_id(id: String) -> void:
 			return !action_matches)
 			
 func create_action_message(action: Action) -> String:
-	var message = action.actor.player_name.text
+	var message = "Player: " + action.actor.player_name.text
 	if action.skill:
-		message += "\n" + action.skill.label
+		message += "\nAction: " + action.skill.label
 	if action.target:
-		message += "\n-> " + action.target.player_name.text
+		message += "\nTarget -> " + action.target.player_name.text
 	return message
 
 func _queue_empty_actions(characters: Array[Node2D]):
