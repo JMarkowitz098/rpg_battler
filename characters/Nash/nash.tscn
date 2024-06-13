@@ -8,7 +8,7 @@
 [ext_resource type="PackedScene" uid="uid://d17rqlb1hgubs" path="res://characters/player_name.tscn" id="5_yfakl"]
 [ext_resource type="PackedScene" uid="uid://bqyh4pkeog5r5" path="res://ui/turn.tscn" id="6_hxg7a"]
 [ext_resource type="PackedScene" uid="uid://2evhn0npdxi4" path="res://ui/focus_default.tscn" id="7_apc44"]
-[ext_resource type="PackedScene" uid="uid://cyi2g62l2egia" path="res://characters/character_stats.tscn" id="8_h4na0"]
+[ext_resource type="PackedScene" uid="uid://cyi2g62l2egia" path="res://characters/stats.tscn" id="8_h4na0"]
 [ext_resource type="PackedScene" uid="uid://d4hjrosak0ki7" path="res://skills/shor_incursion_small.tscn" id="9_ir4q1"]
 [ext_resource type="PackedScene" uid="uid://nyp15hkdw2xc" path="res://skills/shor_refrain_small.tscn" id="10_273t4"]
 [ext_resource type="PackedScene" uid="uid://cxmgtml3k8jpt" path="res://skills/scor_incursion_small.tscn" id="11_b085p"]

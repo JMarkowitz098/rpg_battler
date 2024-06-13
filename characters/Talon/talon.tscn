@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3 uid="uid://sgl44boffmsf"]
+[gd_scene load_steps=17 format=3 uid="uid://sgl44boffmsf"]
 
 [ext_resource type="Texture2D" uid="uid://df7pcvc8u0ug1" path="res://characters/Talon/sprite_sheets/noBKG_KnightIdle_strip.png" id="1_0nicr"]
 [ext_resource type="Script" path="res://characters/Talon/talon.gd" id="1_duwv8"]
@@ -9,11 +9,7 @@
 [ext_resource type="PackedScene" uid="uid://bno3iriedun4j" path="res://characters/base_character_sprite.tscn" id="5_ei5uc"]
 [ext_resource type="PackedScene" uid="uid://bqyh4pkeog5r5" path="res://ui/turn.tscn" id="6_emu5t"]
 [ext_resource type="PackedScene" uid="uid://cypb6tqhjigxc" path="res://characters/ingress_energy.tscn" id="6_k2wm0"]
-[ext_resource type="PackedScene" uid="uid://cyi2g62l2egia" path="res://characters/character_stats.tscn" id="7_d0o7f"]
-[ext_resource type="PackedScene" uid="uid://cv3dnw5j7loal" path="res://skills/eth_incursion_small.tscn" id="8_fontn"]
-[ext_resource type="PackedScene" uid="uid://b058j0x0cprh1" path="res://skills/eth_refrain_small.tscn" id="8_qt8s3"]
-[ext_resource type="PackedScene" uid="uid://d4hjrosak0ki7" path="res://skills/shor_incursion_small.tscn" id="13_btsru"]
-[ext_resource type="PackedScene" uid="uid://nyp15hkdw2xc" path="res://skills/shor_refrain_small.tscn" id="14_yxjla"]
+[ext_resource type="PackedScene" uid="uid://cyi2g62l2egia" path="res://characters/stats.tscn" id="10_c7ixc"]
 
 [sub_resource type="Animation" id="Animation_x6vl1"]
 length = 0.001
@@ -143,13 +139,7 @@ position = Vector2(2, -12)
 visible = false
 position = Vector2(8, 8)
 
-[node name="CharacterStats" parent="." instance=ExtResource("7_d0o7f")]
-label = "Talon"
-elements = Array[int]([1, 2])
-max_ingress_energy = 10.0
-current_ingress_energy = 10.0
-incursion_power = 3
-agility = 2
+[node name="Stats" parent="." instance=ExtResource("10_c7ixc")]
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
@@ -158,14 +148,6 @@ libraries = {
 
 [node name="Skills" type="Node" parent="."]
 
-[node name="EthIncursionSmall" parent="Skills" instance=ExtResource("8_fontn")]
-
-[node name="EthRefrainSmall" parent="Skills" instance=ExtResource("8_qt8s3")]
-
-[node name="ShorIncursionSmall" parent="Skills" instance=ExtResource("13_btsru")]
-
-[node name="ShorRefrainSmall" parent="Skills" instance=ExtResource("14_yxjla")]
-
-[connection signal="no_ingress_energy" from="CharacterStats" to="." method="_on_character_stats_no_ingress_energy"]
-[connection signal="took_damage" from="CharacterStats" to="." method="_on_character_stats_took_damage"]
-[connection signal="used_skill" from="CharacterStats" to="." method="_on_character_stats_used_skill"]
+[connection signal="no_ingress_energy" from="Stats" to="." method="_on_character_stats_no_ingress_energy"]
+[connection signal="took_damage" from="Stats" to="." method="_on_character_stats_took_damage"]
+[connection signal="used_skill" from="Stats" to="." method="_on_character_stats_used_skill"]

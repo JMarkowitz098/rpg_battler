@@ -1,49 +1,72 @@
 extends ColorRect
 
-@onready var character_one_button = $HBoxContainer/CharacterOneButton
-@onready var character_two_button = $HBoxContainer/CharacterTwoButton
-@onready var character_three_button = $HBoxContainer/CharacterThreeButton
-@onready var character_four_button = $HBoxContainer/CharacterFourButton
+const MAX_SLOTS := 2
+
+@onready var slot_one_button := $VBoxContainer/HBoxContainer/SlotOneContainer/SlotOneButton
+@onready var slot_two_button := $VBoxContainer/HBoxContainer/SlotTwoContainer/SlotTwoButton
+@onready var slot_one_portrait := $VBoxContainer/HBoxContainer/SlotOneContainer/SlotOnePortrait
+@onready var slot_two_portrait := $VBoxContainer/HBoxContainer/SlotTwoContainer/SlotTwoPortrait
+@onready var start_button := $VBoxContainer/StartButton
+
+const TALON_PORTRAIT := preload("res://characters/Talon/TalonPortrait.jpeg")
+const TALON_PLAYER_DETAILS := preload("res://characters/Talon/talon_player_details.tres")
+const NASH_PORTRAIT := preload("res://characters/Nash/NashPortrait.jpeg")
+const NASH_PLAYER_DETAILS = preload("res://characters/Nash/nash_player_details.tres")
 
 func _ready():
-	character_one_button.grab_focus()
+	_set_focus()
 	_render_player_slots()
+
+func _set_focus():
+	match Utils.get_param("slot"):
+		0:
+			slot_one_button.focus()
+		1: 
+			slot_two_button.focus()
+		_:
+			slot_one_button.focus()
 	
 func _render_player_slots():
-	for player_slot_index in 4:
+	for player_slot_index in MAX_SLOTS:
 		_render_slot(player_slot_index)
 	
-func _on_character_one_button_pressed():
-	_change_to_character_creation(0)
-
-func _on_character_two_button_pressed():
-	_change_to_character_creation(1)
-	
-func _on_character_three_button_pressed():
-	_change_to_character_creation(2)
-	
-func _on_character_four_button_pressed():
-	_change_to_character_creation(3)
-	
-func _render_slot(slot_index):
-	var slot = SaveAndLoadPlayer.load_player(slot_index)
-	if not slot:
+func _render_slot(slot_index: int):
+	var save_data := SaveAndLoadPlayer.load_player(slot_index)
+	if not save_data:
 		return
 		
+	var player_details: Resource
+	var player_portrait: Texture2D
+	
+	match save_data.player_id:
+		Stats.PlayerId.TALON:
+			player_details = TALON_PLAYER_DETAILS
+			player_portrait = TALON_PORTRAIT
+		Stats.PlayerId.NASH:
+			player_details = NASH_PLAYER_DETAILS
+			player_portrait = NASH_PORTRAIT
+	
 	match slot_index:
 		0:
-			character_one_button.text = slot.label
-		1: 
-			character_two_button.text = slot.label
-		2:
-			character_three_button.text = slot.label
-		3: 
-			character_four_button.text = slot.label
+			slot_one_button.text = player_details.label
+			slot_one_portrait.texture = player_portrait
 			
-	
+		1: 
+			slot_two_button.text = player_details.label
+			slot_two_portrait.texture = player_portrait
+		#2:
+			#slot_three_button_container.text = slot.label
+		#3: 
+			#slot_four_button_container.text = slot.label
+			
 func _change_to_character_creation(slot):
 	Utils.change_scene("res://menus/character_creation_menu.tscn", { "slot": slot })
 
+func _on_slot_one_button_pressed():
+	_change_to_character_creation(0)
 
-func _on_start_battle_button_pressed():
+func _on_slot_two_button_pressed():
+	_change_to_character_creation(1)
+
+func _on_start_button_pressed():
 	get_tree().change_scene_to_file("res://world/battle_scene.tscn")

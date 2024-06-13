@@ -35,7 +35,7 @@ const SMALL_REFRAIN_POWER := 1
 @export var id: Id
 @export var label: String
 @export var ingress_energy_cost: int
-@export var element: CharacterStats.Element
+@export var element: Stats.Element
 @export var type: Type
 @export var target: Target
 @export_multiline var description: String

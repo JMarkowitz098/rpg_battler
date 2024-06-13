@@ -5,7 +5,7 @@ const FINAL_ROUND = 1
 var _params = null
 var round_number := 0
 
-func calucluate_attack_damage(actor_stats: CharacterStats, target_stats: CharacterStats) -> int:
+func calucluate_attack_damage(actor_stats: Stats, target_stats: Stats) -> int:
 	return _clamped_damage(actor_stats.incursion_power - target_stats.refrain_power)
 	
 func calucluate_skill_damage(action: Action) -> int:
@@ -40,7 +40,6 @@ func change_scene(next_scene, params=null):
 	get_tree().change_scene_to_file(next_scene)
 
 func get_param(key):
-	#var _params = {"defeated": ["0_88", "0_213"]}
 	if _params != null and _params.has(key):
 		return _params[key]
 	return null

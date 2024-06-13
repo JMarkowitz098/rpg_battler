@@ -33,6 +33,10 @@ window/stretch/mode="canvas_items"
 version_control/plugin_name="GitPlugin"
 version_control/autoload_on_startup=true
 
+[gui]
+
+theme/custom="res://menus/default_theme.tres"
+
 [input]
 
 menu_right={
