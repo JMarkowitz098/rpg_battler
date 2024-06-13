@@ -121,15 +121,17 @@ func _on_dodge_focus_entered():
 	_draw_action_button_description(2)
 	
 func _on_incursion_pressed():
-	skill_ui.set_current_skills(players[action_queue.player_index])
-	skill_ui.prepare_skill_menu(_handle_choose_skill, action_type, Skill.Type.INCURSION)
+	skill_ui.set_current_skills(players[action_queue.player_index], Skill.Type.INCURSION)
+	skill_ui.prepare_skill_menu(_handle_choose_skill, action_type)
 	state = State.CHOOSING_SKILL
+	current_skill = skill_ui.current_skills[0]
 	current_skill_type = Skill.Type.INCURSION
 
 func _on_refrain_pressed():
-	skill_ui.set_current_skills(players[action_queue.player_index])
-	skill_ui.prepare_skill_menu(_handle_choose_skill, action_type, Skill.Type.REFRAIN)
+	skill_ui.set_current_skills(players[action_queue.player_index], Skill.Type.REFRAIN)
+	skill_ui.prepare_skill_menu(_handle_choose_skill, action_type)
 	state = State.CHOOSING_SKILL
+	current_skill = skill_ui.current_skills[0]
 	current_skill_type = Skill.Type.REFRAIN
 	
 func _on_dodge_pressed():
@@ -268,6 +270,7 @@ func _process_turn() -> void:
 	_clear_ui_for_battle()
 	state = State.IS_BATTLING
 	_reset_groups_and_indexes()
+	_set_dodging_animation()
 	await get_tree().create_timer(1).timeout
 	await action_queue.process_action_queue(get_tree(), players, enemies)
 
@@ -300,6 +303,7 @@ func _reset_groups_and_indexes() -> void:
 func _reset_dodges():
 	for player in players:
 		player.stats.is_dodging = false
+		player.base_sprite.self_modulate = Color("ffffff")
 	for enemy in enemies:
 		enemy.stats.is_dodging = false
 	
@@ -318,6 +322,11 @@ func _clear_info_label():
 	
 func _is_victory():
 	return enemy_group.enemies.size() == 0
+	
+func _set_dodging_animation():
+	for action in action_queue.queue:
+		if action.skill.id == Skill.Id.DODGE:
+			action.actor.base_sprite.self_modulate = Color("ffffff9b")
 	
 # ----------------------
 # Signals

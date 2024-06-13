@@ -170,7 +170,6 @@ func _process_skill(action: Action, tree: SceneTree, players = null, enemies = n
 				_use_incursion(action, tree)
 				await tree.create_timer(2).timeout
 				
-
 		Skill.Id.ETH_REFRAIN, Skill.Id.ENH_REFRAIN, Skill.Id.SHOR_REFRAIN, Skill.Id.SCOR_REFRAIN:
 			await _play_refrain_animation(action, tree)
 			_set_refrain(action.actor, action.skill.element)
@@ -180,7 +179,7 @@ func _process_skill(action: Action, tree: SceneTree, players = null, enemies = n
 			var target_players = players if action.actor.stats.player_details.icon_type == Stats.IconType.PLAYER else enemies
 			for player in target_players:
 				_set_refrain(player, action.skill.element)
-			
+				
 	if action.skill.id != Skill.Id.DODGE:
 		await tree.create_timer(2).timeout
 		
