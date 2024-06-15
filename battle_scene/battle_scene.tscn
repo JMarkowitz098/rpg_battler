@@ -100,7 +100,6 @@ offset_bottom = 8.0
 theme_override_font_sizes/font_size = 8
 text = "?"
 
-[connection signal="next_player" from="." to="PlayerGroup" method="_on_battle_scene_next_player"]
 [connection signal="focus_entered" from="CanvasLayer/ActionType/Incursion" to="." method="_on_incursion_focus_entered"]
 [connection signal="pressed" from="CanvasLayer/ActionType/Incursion" to="." method="_on_incursion_pressed"]
 [connection signal="focus_entered" from="CanvasLayer/ActionType/Refrain" to="." method="_on_refrain_focus_entered"]

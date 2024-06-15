@@ -35,8 +35,12 @@ func handle_input():
 			holder.enemy_group.enemies, 
 			holder.current_skill
 		)
-		holder.action_queue.next_player()
-		change_state.call(State.Type.CHOOSING_ACTION)
+		
+		if !holder.action_queue.is_turn_over():
+			holder.action_queue.next_player()
+			change_state.call(State.Type.CHOOSING_ACTION)
+		else:
+			change_state.call(State.Type.IS_BATTLING)
 		
 	if Input.is_action_just_pressed("menu_back"):
 		change_state.call(State.Type.CHOOSING_SKILL)

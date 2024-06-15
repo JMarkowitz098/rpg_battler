@@ -41,9 +41,6 @@ var skill_index := 0
 })
 @onready var state_t := State.new(holder)
 
-signal next_player
-
-
 func _ready() -> void:
 	audio_stream_player_2d.play()
 	_load_enemy_group()
@@ -54,15 +51,14 @@ func _ready() -> void:
 func _process(_delta: float) -> void:
 	players = player_group.players
 	enemies = enemy_group.enemies
-	
-	if state != State.Type.IS_BATTLING:
-		state_t.current.handle_input()
-	
-		# State.Type.IS_BATTLING:
-		# 	return
+
+	state_t.current.handle_input()
 
 	if action_queue.is_turn_over():
+		set_process(false)
 		await _process_turn()
+		set_process(true)
+
 		if _is_game_over():
 			get_tree().change_scene_to_file("res://menus/start_menu.tscn")
 			#get_tree().change_scene_to_file("res://world/battle_scene.tscn")
@@ -74,7 +70,7 @@ func _process(_delta: float) -> void:
 				Utils.change_scene("res://menus/victory_screen.tscn", { "defeated": defeated })
 		else:
 			_reset_turn()
-			
+
 func _load_enemy_group() -> void:
 	var old_enemy_group = enemy_group
 	match Utils.round_number:
@@ -116,11 +112,17 @@ func _on_refrain_pressed():
 	holder.current_skill = skill_ui.current_skills[0]
 	
 func _on_dodge_pressed():
-	var current_action = action_queue.items[action_queue.action_index].action
+	var unique_id = players[action_queue.player_index].stats.unique_id
+	var current_action_id = action_queue.get_action_index_by_unique_id(unique_id)
+	var current_action = action_queue.items[current_action_id].action
 	action_queue.set_dodge(current_action)
-	holder.action_queue.next_player()
-	state_t.change_state(State.Type.CHOOSING_ACTION)
-	
+
+	if !holder.action_queue.is_turn_over():
+		holder.action_queue.next_player()
+		state_t.change_state(State.Type.CHOOSING_ACTION)
+	else:
+		state_t.change_state.call(State.Type.IS_BATTLING)
+		
 func _draw_action_button_description(action_type_index: int):
 	if !info_label: return
 	match action_type_index:
@@ -136,49 +138,27 @@ func _draw_action_button_description(action_type_index: int):
 # ----------------------
 	
 func _process_turn() -> void:
-	_clear_ui_for_battle()
-	state = State.Type.IS_BATTLING
-	_reset_groups_and_indexes()
 	_set_dodging_animation()
+
 	await get_tree().create_timer(1).timeout
-	await action_queue.process_action_queue(get_tree(), players, enemies)
+	await action_queue.process_action_queue(get_tree(), players, enemies, set_process)
+	state_t.change_state(State.Type.IS_BATTLING)
+	action_queue.reset_indexes()
 
-func _process_next_player() -> void:
-	action_queue.next_player(players)
-	emit_signal("next_player")
-	state = State.Type.CHOOSING_ACTION
 
-func _clear_ui_for_battle() -> void:
-	action_type.hide()
-	_clear_info_label()
-	action_queue._set_is_choosing(false)
 	
 
 func _reset_turn() -> void:
-	state = State.Type.CHOOSING_ACTION
-	players[0].turn.focus()
+	action_queue.fill_initial_turn_items(player_group.players, enemy_group.enemies)
+	state_t.change_state(State.Type.CHOOSING_ACTION)
 	_reset_dodges()
-	action_queue.queue_initial_turn_actions(player_group.players, enemy_group.enemies)
-	
-func _reset_groups_and_indexes() -> void:
-	player_group.clear_focus()
-	player_group.clear_turn_focus()
-	enemy_group.reset_focus()
-	enemy_group.clear_turn_focus()
-	action_queue.reset_indexes()
 	
 func _reset_dodges():
-	for player in players:
+	for player in player_group.players:
 		player.stats.is_dodging = false
 		player.base_sprite.self_modulate = Color("ffffff")
-	for enemy in enemies:
+	for enemy in enemy_group.enemies:
 		enemy.stats.is_dodging = false
-	
-func _return_to_action_choice() -> void:
-	state = State.Type.CHOOSING_ACTION
-	enemy_group.clear_focus()
-	action_queue._set_is_choosing(true, players)
-	players[action_queue.player_index].turn.focus()
 	
 func _is_game_over():
 	return player_group.players.size() == 0
@@ -190,9 +170,9 @@ func _is_victory():
 	return enemy_group.enemies.size() == 0
 	
 func _set_dodging_animation():
-	for action in action_queue.queue:
-		if action.skill.id == Skill.Id.DODGE:
-			action.actor.base_sprite.self_modulate = Color("ffffff9b")
+	for item in action_queue.items:
+		if item.action.skill.id == Skill.Id.DODGE:
+			item.action.actor.base_sprite.self_modulate = Color("ffffff9b")
 	
 # ----------------------
 # Signals

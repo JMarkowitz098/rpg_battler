@@ -26,11 +26,10 @@ func enter():
 
 	holder.skill_choice_list.hide()
 
-
 func handle_input():
 	if Input.is_action_just_pressed("to_action_queue"):
 		change_state.call(State.Type.CHOOSING_ACTION_QUEUE)
-			
+
 func draw_action_button_description(info_label: Label, action_type_index: int):
 	if !info_label: return
 	match action_type_index:

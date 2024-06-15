@@ -6,6 +6,8 @@ var enemy_index := 0
 var player_index := 0
 var action_index := 0
 
+var items_set = false
+
 const ACTION_QUEUE_ITEM = preload("res://ui/action_queue_item.tscn")
 const NASH_PORTRAIT := preload("res://players/Nash/NashPortrait.jpeg")
 const TALON_PORTRAIT := preload("res://players/Talon/TalonPortrait.jpeg")
@@ -15,6 +17,9 @@ const TALON_PORTRAIT := preload("res://players/Talon/TalonPortrait.jpeg")
 # ----------------
 
 func fill_initial_turn_items(players: Array[Node2D], enemies: Array[Node2D]):
+	for child in get_children():
+		child.queue_free()
+
 	_queue_empty_items(players)
 	_queue_empty_items(enemies)
 	_sort_items_by_agility()
@@ -22,13 +27,18 @@ func fill_initial_turn_items(players: Array[Node2D], enemies: Array[Node2D]):
 	for item in items:
 		add_child(item)
 
-func process_action_queue(tree: SceneTree, players = null, enemies = null) -> void:
+func process_action_queue(tree: SceneTree, players = null, enemies = null, set_battle_process = null) -> void:
 	while items.size() > 0:
-		var action = items.pop_front()
+		var action = items.pop_front().action
+
+		# For some reason, have to stop process to trigger await in loops
+		set_battle_process.call(false)
 		await _process_skill(action, tree, players, enemies)
+		set_battle_process.call(true)
 
 func is_turn_over():
-	return items.all(func(item): return item.action.action_chosen)
+	return items.all(func(item): 
+		return item.action.action_chosen)
 		
 func reset_indexes() -> void:
 	enemy_index = 0
@@ -62,7 +72,8 @@ func next_player() -> void:
 	
 func remove_action_by_character_id(id: String) -> void:
 	items = items.filter(
-		func(action): 
+		func(item): 
+			var action = item.action
 			var action_matches = false
 			if action.target and action.target.stats.unique_id == id:
 				action_matches = true
@@ -143,21 +154,21 @@ func _process_skill(action: Action, tree: SceneTree, players = null, enemies = n
 
 	match action.skill.id: 
 		Skill.Id.ETH_INCURSION, Skill.Id.ENH_INCURSION, Skill.Id.SCOR_INCURSION, Skill.Id.SHOR_INCURSION:
-			await _use_incursion(action, tree)
+			await _use_incursion(action)
 			
 		Skill.Id.ETH_INCURSION_DOUBLE, Skill.Id.SHOR_INCURSION_DOUBLE:
-			await _use_incursion(action, tree)
+			await _use_incursion(action)
 			await tree.create_timer(2).timeout
 			if action.target != null:
-				_use_incursion(action, tree)
+				_use_incursion(action)
 				await tree.create_timer(2).timeout
 				
 		Skill.Id.ETH_REFRAIN, Skill.Id.ENH_REFRAIN, Skill.Id.SHOR_REFRAIN, Skill.Id.SCOR_REFRAIN:
-			await _play_refrain_animation(action, tree)
+			await _play_refrain_animation(action)
 			_set_refrain(action.actor, action.skill.element)
 			
 		Skill.Id.ETH_REFRAIN_GROUP, Skill.Id.SHOR_REFRAIN_GROUP, Skill.Id.SCOR_REFRAIN_GROUP:
-			await _play_refrain_animation(action, tree)
+			await _play_refrain_animation(action)
 			var target_players = players if action.actor.stats.player_details.icon_type == Stats.IconType.PLAYER else enemies
 			for player in target_players:
 				_set_refrain(player, action.skill.element)
@@ -165,24 +176,26 @@ func _process_skill(action: Action, tree: SceneTree, players = null, enemies = n
 	if action.skill.id != Skill.Id.DODGE:
 		await tree.create_timer(2).timeout
 		
-func _use_incursion(action: Action, tree: SceneTree):
-	await _play_attack_animation(action, tree)
+func _use_incursion(action: Action):
+	await _play_attack_animation(action)
 	var damage = Utils.calucluate_skill_damage(action)
 	action.target.stats.take_damage(damage)
 		
-func _play_attack_animation(action: Action, tree: SceneTree) -> void:
+func _play_attack_animation(action: Action) -> void:
 	action.actor.base_sprite.hide()
 	action.actor.attack_sprite.show()
+
 	action.actor.animation_player.play("attack")
-	await tree.create_timer(2.2).timeout
+	await action.actor.animation_player.animation_finished
+
 	if(action.actor != null):
 		action.actor.base_sprite.show()
 		action.actor.attack_sprite.hide()
 		action.actor.animation_player.play("idle")
 
-func _play_refrain_animation(action: Action, tree: SceneTree):
+func _play_refrain_animation(action: Action):
 	action.actor.animation_player.play("refrain")
-	await tree.create_timer(1).timeout
+	await action.actor.animation_player.animation_finished
 	action.actor.animation_player.play("idle")
 		
 func _set_refrain(player: Node2D, skill_element):

@@ -15,6 +15,7 @@ func enter():
 	holder.action_type.hide()
 	skill_ui.prepare_skill_menu(_handle_choose_skill)
 	skill_ui.show_skill_choice_list()
+	holder.enemy_group.clear_focus()
 
 	# Factor into action queue
 	var current_player = holder.player_group.players[holder.action_queue.player_index]
@@ -58,8 +59,13 @@ func _handle_choose_skill(skill: SkillStats):
 			holder.enemy_group.enemies, 
 			holder.current_skill
 		)
-			holder.action_queue.next_player()
-			change_state.call(State.Type.CHOOSING_ACTION)
+
+			# Factor into function in state class
+			if !holder.action_queue.is_turn_over():
+				holder.action_queue.next_player()
+				change_state.call(State.Type.CHOOSING_ACTION)
+			else:
+				change_state.call(State.Type.IS_BATTLING)
 			return
 
 func _draw_skill_desciption(skill: SkillStats):
