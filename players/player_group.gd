@@ -23,14 +23,13 @@ func switch_turn_focus(x: int, y: int) -> void:
 	players[x].turn.focus()
 	players[y].turn.unfocus()
 	
-func reset_focus() -> void:
-	index = 0
+func clear_focus() -> void:
 	for player in players:
-		player.focus.unfocus()
+		player.focus.clear()
 		
 func clear_turn_focus() -> void:
 	for player in players:
-		player.turn.unfocus()
+		player.turn.clear()
 		
 func remove_player_by_id(id: String) -> void:
 	players = players.filter(func(player): return player.stats.unique_id != id)
@@ -62,8 +61,6 @@ func _instantiate_player(save_data: SaveData) -> void:
 	if save_data.level > 1:
 		_update_level(new_player, save_data)
 	
-	#_set_skills_on_loaded_player(new_player, new_player.stats.level_stats.skills)
-	#_set_name_on_loaded_player(new_player)
 	players.append(new_player)
 
 func _update_level(player: Node2D, save_data: SaveData):
@@ -71,18 +68,6 @@ func _update_level(player: Node2D, save_data: SaveData):
 	player.stats.level_stats = new_stats
 	player.stats.current_ingress = new_stats.max_ingress
 	player.update_energy_bar()
-
-#func _set_skills_on_loaded_player(player: Node2D, skills: Array):
-	#for skill in player.skills.get_children():
-		#skill.queue_free()
-		#
-	#for skill_id in skills:
-		#var skill = Skill.create_skill_instance(skill_id).instantiate()
-		#player.skills.add_child(skill)
-	
-#TODO: Delete once confirming not needed in battle scene	
-#func _set_name_on_loaded_player(player: Node2D):
-	#player.player_name.text = player.stats.player_details.label + " " + str(player.stats.slot)
 
 func _set_location(slot_index: int, player: Node2D) -> void:
 	match slot_index:
@@ -95,12 +80,4 @@ func _set_location(slot_index: int, player: Node2D) -> void:
 		3:
 			player.global_position = slot_four_location.global_position
 
-#TODO: Delete once confirming not used in battle scene		
-#func _on_battle_scene_next_player() -> void:
-	#if index < players.size() - 1:
-		#index += 1
-		#switch_turn_focus(index, index - 1)
-	#else:
-		#index = 0
-		#switch_turn_focus(index, players.size() - 1)
 

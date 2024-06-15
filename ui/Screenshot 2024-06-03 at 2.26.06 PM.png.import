@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dtey10l3mwlt0"
-path="res://.godot/imported/Refrain Aura-1.png.png-e8602138d63757ed8da6838d3e683652.ctex"
+uid="uid://dvv7tmkmcd4rv"
+path="res://.godot/imported/Screenshot 2024-06-03 at 2.26.06 PM.png-5fdc998ba7811a02c6619fb9fcd0750c.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://world/Refrain Aura-1.png.png"
-dest_files=["res://.godot/imported/Refrain Aura-1.png.png-e8602138d63757ed8da6838d3e683652.ctex"]
+source_file="res://ui/Screenshot 2024-06-03 at 2.26.06 PM.png"
+dest_files=["res://.godot/imported/Screenshot 2024-06-03 at 2.26.06 PM.png-5fdc998ba7811a02c6619fb9fcd0750c.ctex"]
 
 [params]
 

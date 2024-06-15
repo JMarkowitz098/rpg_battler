@@ -29,11 +29,11 @@ func set_ingress_energy(value: float) -> void:
 	if current_ingress <= 0: 
 		no_ingress_energy.emit(unique_id)
 
-func take_damage(value: float) -> void:
+func take_damage(value: int) -> void:
 	current_ingress -= value
 	took_damage.emit()
 	
-func use_ingress_energy(value: float) -> void:
+func use_ingress_energy(value: int) -> void:
 	current_ingress -= value
 	used_skill.emit()
 

@@ -1,62 +1,50 @@
+extends HBoxContainer
 class_name ActionQueue
-extends Node
 
-var queue: Array[Action] = []
+var items: Array[ActionQueueItem] = []
 var enemy_index := 0
 var player_index := 0
 var action_index := 0
 
-const ACTION_LIST_ITEM = preload("res://ui/action_list_item.tscn")
+const ACTION_QUEUE_ITEM = preload("res://ui/action_queue_item.tscn")
 const NASH_PORTRAIT := preload("res://players/Nash/NashPortrait.jpeg")
 const TALON_PORTRAIT := preload("res://players/Talon/TalonPortrait.jpeg")
 
-func draw_action_queue(action_list: HBoxContainer) -> void:
-	for child in action_list.get_children():
-		child.queue_free()
+func update_action_queue(action_list: HBoxContainer) -> void:
+	pass
+	# for child in action_list.get_children():
+	# 	child.queue_free()
 		
-	for action in queue:
-		var portrait
-		match action.actor.stats.player_details.player_id:
-			Stats.PlayerId.TALON:
-				portrait = TALON_PORTRAIT
-			Stats.PlayerId.NASH:
-				portrait = NASH_PORTRAIT
-			_:
-				portrait = TALON_PORTRAIT
+	# for item in items:
+	# 	var portrait
+	# 	match action.actor.stats.player_details.player_id:
+	# 		Stats.PlayerId.TALON:
+	# 			portrait = TALON_PORTRAIT
+	# 		Stats.PlayerId.NASH:
+	# 			portrait = NASH_PORTRAIT
+	# 		_:
+	# 			portrait = TALON_PORTRAIT
 				
-		var list_item = ACTION_LIST_ITEM.instantiate()
-		list_item.texture = portrait
-		if action.actor.stats.player_details.icon_type == Stats.IconType.ENEMY:
-			list_item.self_modulate = Color("ff1c00")
-		if(action.is_focused): list_item.get_node("Focus").focus()
-		if(action.is_choosing): list_item.get_node("Turn").show()
-		action_list.add_child(list_item)
+	# 	var list_item = ACTION_QUEUE_ITEM.instantiate()
+	# 	list_item.texture = portrait
+	# 	if action.actor.stats.player_details.icon_type == Stats.IconType.ENEMY:
+	# 		list_item.self_modulate = Color("ff1c00")
+		# if(action.is_focused): list_item.get_node("Focus").focus()
+		# if(action.is_choosing): list_item.get_node("Turn").show()
+		# action_list.add_child(list_item)
 
 func process_action_queue(tree: SceneTree, players = null, enemies = null) -> void:
-	while queue.size() > 0:
-		var action = queue.pop_front()
+	while items.size() > 0:
+		var action = items.pop_front()
 		await _process_skill(action, tree, players, enemies)
-		
-func clear_is_choosing():
-	for action in queue:
-		action.is_choosing = false
 
-func queue_initial_turn_actions(players: Array[Node2D], enemies: Array[Node2D]):
-	_queue_empty_actions(players)
-	_queue_empty_actions(enemies)
-	_sort_queue_by_agility()
+func fill_initial_turn_items(players: Array[Node2D], enemies: Array[Node2D]):
+	_queue_empty_items(players)
+	_queue_empty_items(enemies)
+	_sort_items_by_agility()
 	_fill_enemy_actions(players)
-	_set_is_choosing(true, players)
-	
-func _set_is_choosing(state: bool, players = null):
-	if !state or player_index >= players.size():
-		for action in queue:
-			action.is_choosing = false
-	else:
-		var choosing_player = players[player_index]
-		for action in queue:
-			if _is_player_action(action) and _is_choosing_player(action, choosing_player): 
-				action.is_choosing = state
+	for item in items:
+		add_child(item)
 
 func _is_player_action(action: Action) -> bool:
 	return action.actor.stats.player_details.icon_type == Stats.IconType.PLAYER
@@ -66,7 +54,7 @@ func _is_choosing_player(action: Action, choosing_player: Node2D) -> bool:
 
 
 func is_turn_over():
-	return queue.all(func(action): return action.action_chosen)
+	return items.all(func(item): return item.action.action_chosen)
 		
 func reset_indexes() -> void:
 	enemy_index = 0
@@ -74,27 +62,30 @@ func reset_indexes() -> void:
 	action_index = 0
 	
 func size() -> int:
-	return queue.size()
+	return items.size()
 	
-func push_back(action: Action) -> void:
-	queue.push_back(action)
+# func push_back(action: Action) -> void:
+# 	items.push_back(action)
 	
-func push_front(action: Action) -> void:
-	queue.push_front(action)
+# func push_front(action: Action) -> void:
+# 	items.push_front(action)
 	
-func insert(index: int, action: Action) -> void:
-	queue.insert(index, action)
+# func insert(index: int, action: Action) -> void:
+# 	items.insert(index, action)
 	
-func get_current_action() -> Action:
-	return queue[action_index]
+func get_current_item() -> ActionQueueItem:
+	return items[action_index]
 
-func set_focus(index: int, value: bool) -> void:
-	queue[index].is_focused = value
+func set_focus(index: int) -> void:
+	items[index].focus.focus()
+
+func set_turn_focus(index: int) -> void:
+	items[index].turn.focus()
 
 
 func update_player_action_with_skill(players, enemies, skill):
 	var current_player_id = players[player_index].stats.unique_id
-	var action_to_update = queue.filter(func(action): 
+	var action_to_update = items.filter(func(action): 
 		return action.actor.stats.unique_id == current_player_id)[0]
 	if skill.target == Skill.Target.SELF:
 		action_to_update.set_attack(null, skill)
@@ -103,13 +94,11 @@ func update_player_action_with_skill(players, enemies, skill):
 		
 	
 func next_player(players) -> void:
-	_set_is_choosing(false)
 	player_index += 1
-	_set_is_choosing(true, players)
 	action_index = 0
 	
 func remove_action_by_character_id(id: String) -> void:
-	queue = queue.filter(
+	items = items.filter(
 		func(action): 
 			var action_matches = false
 			if action.target and action.target.stats.unique_id == id:
@@ -126,29 +115,28 @@ func create_action_message(action: Action) -> String:
 		message += "\nTarget -> " + action.target.player_name.text
 	return message
 
-func _queue_empty_actions(characters: Array[Node2D]):
-	for character in characters:
-		var new_action = Action.new(character)
-		queue.push_back(new_action)
+func _queue_empty_items(players: Array[Node2D]):
+	for player in players:
+		var new_item = ACTION_QUEUE_ITEM.instantiate()
+		new_item.set_empty_action(player)
+		new_item.texture = _get_protrait(player.stats.player_details.player_id)
+		if(player.stats.player_details.icon_type == Stats.IconType.ENEMY):
+			new_item.self_modulate = Color("Red")
+		items.push_back(new_item)
 
 func _fill_enemy_actions(players: Array[Node2D]):
-	for action in queue:
+	for item in items:
+		var action := item.action
 		if(action.actor.stats.player_details.icon_type == Stats.IconType.ENEMY):
 			if action.actor.stats.current_ingress == 1:
-				_set_dodge(action)
+				action.set_dodge()
 			else:
-				_set_skill(action, players)
+				var enemy_skill = _select_enemy_skill(action.actor.stats.level_stats.skills)
+				action.set_enemy_skill(enemy_skill, players)
 				
 func _set_dodge(action: Action):
 	action.actor.stats.is_dodging = true
 	action.set_attack(null, Skill.create_skill_instance(Skill.Id.DODGE))
-	
-func _set_skill(action: Action, players: Array[Node2D]):
-	var target = null
-	var selected_skill := _select_enemy_skill(action.actor.stats.level_stats.skills)
-	if selected_skill.target == Skill.Target.ENEMY:
-		target = players[randi() % players.size()]
-	action.set_attack(target, selected_skill)
 
 func _select_enemy_skill(skill_ids: Array) -> SkillStats:
 	var rand_skill_i = randi() % skill_ids.size()
@@ -217,9 +205,44 @@ func _set_refrain(player: Node2D, skill_element):
 		Stats.Element.SHOR:
 			player.refrain_aura.modulate = Color("Blue")
 
-func _sort_queue_by_agility():
-	for action in queue:
-		action.actor.stats.rand_agi = action.actor.stats.level_stats.agility + randi() % 10 
-	queue.sort_custom(func(a, b): return a.actor.stats.rand_agi  > b.actor.stats.rand_agi )
+func _sort_items_by_agility():
+	for item in items:
+		item.action.actor.stats.rand_agi = item.action.actor.stats.level_stats.agility + randi() % 10 
+	items.sort_custom(func(a, b): 
+		return a.action.actor.stats.rand_agi  > b.action.actor.stats.rand_agi )
 	
-		
+func clear_all_turn_focus():
+	for item in items:
+		item.turn.clear()
+
+func clear_all_focus():
+	for item in items:
+		item.focus.clear()
+
+func set_focuses():
+	var item := get_current_item()
+	var action: Action = item.action
+	action.actor.turn.focus()
+	item.focus.focus()
+	
+	if action.target:
+		action.target.turn.self_modulate = Color("Red")
+		action.target.find_child("Turn").focus()
+	elif action.skill and action.skill.target == Skill.Target.SELF:
+		action.actor.find_child("Turn").self_modulate = Color("Green")
+
+func get_action_index_by_unique_id(unique_id: String) -> int:
+	for i in items.size():
+		var action = items[i].action
+		if action.actor.stats.unique_id == unique_id:
+			return i
+	return 0
+
+func _get_protrait(player_id: Stats.PlayerId):
+	match player_id:
+		Stats.PlayerId.TALON:
+			return TALON_PORTRAIT
+		Stats.PlayerId.NASH:
+			return NASH_PORTRAIT
+		_:
+			return TALON_PORTRAIT

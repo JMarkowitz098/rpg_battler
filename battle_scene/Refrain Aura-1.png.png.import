@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bquypxhjqqxa0"
-path="res://.godot/imported/battle_background.png-756cb0505c0785c92aa2cb7371b25912.ctex"
+uid="uid://dtey10l3mwlt0"
+path="res://.godot/imported/Refrain Aura-1.png.png-5a027d889612908c1216ffaaaf5534cc.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://world/battle_background.png"
-dest_files=["res://.godot/imported/battle_background.png-756cb0505c0785c92aa2cb7371b25912.ctex"]
+source_file="res://battle_scene/Refrain Aura-1.png.png"
+dest_files=["res://.godot/imported/Refrain Aura-1.png.png-5a027d889612908c1216ffaaaf5534cc.ctex"]
 
 [params]
 

@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://c3l1dioc443ry"
-path="res://.godot/imported/Refrain Aura White.png-a44285b58a9728dc1443bafb72a218c7.ctex"
+path="res://.godot/imported/Refrain Aura White.png-85700a96a979b06f0e794a7e621f6808.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://world/Refrain Aura White.png"
-dest_files=["res://.godot/imported/Refrain Aura White.png-a44285b58a9728dc1443bafb72a218c7.ctex"]
+source_file="res://battle_scene/Refrain Aura White.png"
+dest_files=["res://.godot/imported/Refrain Aura White.png-85700a96a979b06f0e794a7e621f6808.ctex"]
 
 [params]
 

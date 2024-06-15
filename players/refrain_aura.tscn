@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://dl4d2stn4lshh"]
 
-[ext_resource type="Texture2D" uid="uid://c3l1dioc443ry" path="res://world/Refrain Aura White.png" id="1_vecw8"]
+[ext_resource type="Texture2D" uid="uid://c3l1dioc443ry" path="res://battle_scene/Refrain Aura White.png" id="1_vecw8"]
 
 [node name="RefrainAura" type="Sprite2D"]
 visible = false

@@ -1,4 +1,5 @@
 extends Node2D
+class_name Player
 
 @onready var turn = $Turn
 @onready var focus := $Focus

@@ -1,43 +1,55 @@
 extends Node2D
 
-var enemies: Array[Node2D]
-var players: Array[Node2D]
-var defeated: Array[String]
-
-var action_queue := ActionQueue.new()
-var skill_index := 0
-
-var current_skill: SkillStats
 var current_skill_button: Button
 var current_skill_type: Skill.Type
-var state: State
-var prev_state: State
+var current_skill: SkillStats
+var defeated: Array[String]
+var enemies: Array[Node2D]
+var players: Array[Node2D]
+var prev_state: State.Type
+var state: State.Type
 
-enum State { 
-	CHOOSING_ENEMY, 
-	CHOOSING_ACTION_POS, 
-	IS_BATTLING, 
-	CHOOSING_ACTION,
-	CHOOSING_SKILL,
-	GAME_OVER,
-	VICTORY
-}
+var skill_index := 0
+# @onready var choosing_action_state := ChoosingAction.new()
 
-@onready var action_list := $CanvasLayer/ActionList
+#enum State.Type { 
+	#CHOOSING_ENEMY, 
+	#CHOOSING_ACTION_QUEUE, 
+	#IS_BATTLING, 
+	#CHOOSING_ACTION,
+	#CHOOSING_SKILL,
+	#GAME_OVER,
+	#VICTORY
+#}
+
+@onready var action_queue := $CanvasLayer/ActionQueue
 @onready var action_type := $CanvasLayer/ActionType
 @onready var audio_stream_player_2d = $AudioStreamPlayer2D
+@onready var dodge = $CanvasLayer/ActionType/Dodge
 @onready var enemy_group := $EnemyGroup
-@onready var info_label := $CanvasLayer/InfoBackground/InfoLabel
-@onready var player_group := $PlayerGroup
-@onready var skill_choice_list = $CanvasLayer/SkillChoiceList
-@onready var skill_ui = SkillMenuUi.new(skill_choice_list)
 @onready var enemy_group_location = $EnemyGroupLocation
 @onready var help_menu = $CanvasLayer/HelpMenu
 @onready var incursion = $CanvasLayer/ActionType/Incursion
+@onready var info_label := $CanvasLayer/InfoBackground/InfoLabel
+@onready var player_group := $PlayerGroup
 @onready var refrain = $CanvasLayer/ActionType/Refrain
-@onready var dodge = $CanvasLayer/ActionType/Dodge
+@onready var skill_choice_list = $CanvasLayer/SkillChoiceList
 
 @onready var current_action_button: Button = incursion
+@onready var skill_ui = SkillMenuUi.new(skill_choice_list)
+
+@onready var holder = ComponentHolder.new({
+	"action_queue": action_queue,
+	"current_action_button": current_action_button,
+	"enemy_group": enemy_group,
+	"info_label": info_label,
+	"player_group": player_group,
+	"skill_ui": skill_ui,
+	"action_type": action_type
+})
+@onready var state_t := State.new(holder)
+
+
 
 signal next_player
 
@@ -45,28 +57,35 @@ func _ready() -> void:
 	audio_stream_player_2d.play()
 	_load_enemy_group()
 	_connect_signals()
-	state = State.CHOOSING_ACTION
+	
+	# state = State.Type.CHOOSING_ACTION
+
 	_show_action_type()
-	action_queue.queue_initial_turn_actions(player_group.players, enemy_group.enemies)
+	action_queue.fill_initial_turn_items(player_group.players, enemy_group.enemies)
+	state_t.change_state(State.Type.CHOOSING_ACTION)
 	
 func _process(_delta: float) -> void:
 	players = player_group.players
 	enemies = enemy_group.enemies
 	
-	if state != State.IS_BATTLING:
-		action_queue.draw_action_queue(action_list)
+	if state != State.Type.IS_BATTLING:
+		# action_queue.update_action_queue(action_queue)
+		# action_queue.draw_action_queue(action_queue)
+
+		state_t.current.handle_input()
 	
-	match state:
-		State.IS_BATTLING:
-			return
-		State.CHOOSING_ENEMY:
-			_handle_choose_enemy_input()
-		State.CHOOSING_ACTION:
-			_handle_choosing_action()
-		State.CHOOSING_ACTION_POS:
-			_handle_choose_action_pos_input()
-		State.CHOOSING_SKILL:
-			_handle_choose_skill_input()
+	# match state:
+		# State.Type.IS_BATTLING:
+		# 	return
+		# State.Type.CHOOSING_ENEMY:
+		# 	_handle_choose_enemy_input()
+		# State.Type.CHOOSING_ACTION:
+		# 	_handle_choosing_action()
+			# choosing_action_state.handle_input(action_type, current_action_button)
+		# State.Type.CHOOSING_ACTION_QUEUE:
+		# 	_handle_choose_action_pos_input()
+		# State.Type.CHOOSING_SKILL:
+		# 	_handle_choose_skill_input()
 		
 	if action_queue.is_turn_over():
 		await _process_turn()
@@ -107,30 +126,35 @@ func _show_action_type() -> void:
 # -------------------
 # Action Buttons
 # -------------------
-
 func _on_incursion_focus_entered():
-	current_action_button = incursion
-	_draw_action_button_description(0)
+	# if choosing_action_state:
+	# 	current_action_button = incursion
+	# 	choosing_action_state.draw_action_button_description(info_label, 0)
+		_draw_action_button_description(0)
 	
 func _on_refrain_focus_entered():
-	current_action_button = refrain
-	_draw_action_button_description(1)
+	# if choosing_action_state:
+	# 	current_action_button = refrain
+	# 	choosing_action_state.draw_action_button_description(info_label, 1)
+		_draw_action_button_description(1)
 	
 func _on_dodge_focus_entered():
-	current_action_button = dodge
-	_draw_action_button_description(2)
+	# if choosing_action_state:
+	# 	current_action_button = dodge
+	# 	choosing_action_state.draw_action_button_description(info_label, 2)
+		_draw_action_button_description(2)
 	
 func _on_incursion_pressed():
 	skill_ui.set_current_skills(players[action_queue.player_index], Skill.Type.INCURSION)
 	skill_ui.prepare_skill_menu(_handle_choose_skill, action_type)
-	state = State.CHOOSING_SKILL
+	state = State.Type.CHOOSING_SKILL
 	current_skill = skill_ui.current_skills[0]
 	current_skill_type = Skill.Type.INCURSION
 
 func _on_refrain_pressed():
 	skill_ui.set_current_skills(players[action_queue.player_index], Skill.Type.REFRAIN)
 	skill_ui.prepare_skill_menu(_handle_choose_skill, action_type)
-	state = State.CHOOSING_SKILL
+	state = State.Type.CHOOSING_SKILL
 	current_skill = skill_ui.current_skills[0]
 	current_skill_type = Skill.Type.REFRAIN
 	
@@ -212,7 +236,7 @@ func _handle_buff_skill():
 func _return_to_choose_skill():
 	enemy_group.clear_focus()
 	current_skill_button.focus()
-	state = State.CHOOSING_SKILL
+	state = State.Type.CHOOSING_SKILL
 	
 func _draw_skill_desciption(skill: SkillStats):
 	info_label.text  = "Ingress Energy Cost: {0}\nElement: {1}\n{2}".format([
@@ -230,7 +254,7 @@ func _clear_skill_button_focus(buttons):
 # ------------------------
 	
 func _start_choosing_enemy() -> void:
-	state = State.CHOOSING_ENEMY
+	state = State.Type.CHOOSING_ENEMY
 	enemies[action_queue.enemy_index].focus.focus()
 		
 func _handle_choose_enemy_input() -> void:
@@ -268,7 +292,7 @@ func _return_to_enemy_choice():
 	
 func _process_turn() -> void:
 	_clear_ui_for_battle()
-	state = State.IS_BATTLING
+	state = State.Type.IS_BATTLING
 	_reset_groups_and_indexes()
 	_set_dodging_animation()
 	await get_tree().create_timer(1).timeout
@@ -277,7 +301,7 @@ func _process_turn() -> void:
 func _process_next_player() -> void:
 	action_queue.next_player(players)
 	emit_signal("next_player")
-	state = State.CHOOSING_ACTION
+	state = State.Type.CHOOSING_ACTION
 	_show_action_type()
 
 func _clear_ui_for_battle() -> void:
@@ -287,14 +311,14 @@ func _clear_ui_for_battle() -> void:
 	
 
 func _reset_turn() -> void:
-	state = State.CHOOSING_ACTION
+	state = State.Type.CHOOSING_ACTION
 	players[0].turn.focus()
 	_reset_dodges()
 	action_queue.queue_initial_turn_actions(player_group.players, enemy_group.enemies)
 	_show_action_type()
 	
 func _reset_groups_and_indexes() -> void:
-	player_group.reset_focus()
+	player_group.clear_focus()
 	player_group.clear_turn_focus()
 	enemy_group.reset_focus()
 	enemy_group.clear_turn_focus()
@@ -308,7 +332,7 @@ func _reset_dodges():
 		enemy.stats.is_dodging = false
 	
 func _return_to_action_choice() -> void:
-	state = State.CHOOSING_ACTION
+	state = State.Type.CHOOSING_ACTION
 	_show_action_type()
 	enemy_group.clear_focus()
 	action_queue._set_is_choosing(true, players)
@@ -347,9 +371,9 @@ func _on_player_no_ingress_energy(player_id: String) -> void:
 
 func _start_choosing_action_pos() -> void:
 	prev_state = state
-	state = State.CHOOSING_ACTION_POS
+	state = State.Type.CHOOSING_ACTION_QUEUE
 	action_queue.set_focus(0, true)
-	player_group.reset_focus()
+	player_group.clear_focus()
 	player_group.clear_turn_focus()
 	action_queue.clear_is_choosing()
 	skill_ui.release_focus_from_all_buttons()
@@ -372,23 +396,23 @@ func _handle_choose_action_pos_input() -> void:
 		pass
 	
 	if Input.is_action_just_pressed("menu_back") or Input.is_action_just_pressed("to_action_queue"):
-		for child in action_list.get_children():
+		for child in action_queue.get_children():
 			child.release_focus()
 		action_queue.action_index = 0
 		_clear_info_label()
 
 		match prev_state:
-			State.CHOOSING_ACTION:
-				state = State.CHOOSING_ACTION
+			State.Type.CHOOSING_ACTION:
+				state = State.Type.CHOOSING_ACTION
 				_show_action_type()
 				players[action_queue.player_index].turn.focus()
 				action_queue._set_is_choosing(true, players)
-			State.CHOOSING_SKILL:
-				state = State.CHOOSING_SKILL
+			State.Type.CHOOSING_SKILL:
+				state = State.Type.CHOOSING_SKILL
 				players[action_queue.player_index].turn.focus()
 				current_skill_button.focus()
 				action_queue._set_is_choosing(true, players)
-			State.CHOOSING_ENEMY:
+			State.Type.CHOOSING_ENEMY:
 				_return_to_enemy_choice()
 
 		return
@@ -409,7 +433,7 @@ func _set_action_focuses(action: Action):
 
 func _remove_action_focuses(action: Action):
 	action.actor.find_child("Turn").unfocus()
-	action_queue.set_focus(action_queue.action_index, false)
+	action_queue.set_focus(action_queue.action_index)
 	action.actor.find_child("Turn").self_modulate = Color("94b0da")
 	if action.target:
 		action.target.find_child("Turn").self_modulate = Color("94b0da")

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://8dectdajngo1"
-path="res://.godot/imported/cursor.png-d571d911213fc869c645ef9126a9a027.ctex"
+uid="uid://fmq2gujgqjkl"
+path="res://.godot/imported/pixel-art-pointer-color-depth-brand-technology.jpg-953a5f09c1b40f3f25e86e7674322124.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://world/cursor.png"
-dest_files=["res://.godot/imported/cursor.png-d571d911213fc869c645ef9126a9a027.ctex"]
+source_file="res://battle_scene/pixel-art-pointer-color-depth-brand-technology.jpg"
+dest_files=["res://.godot/imported/pixel-art-pointer-color-depth-brand-technology.jpg-953a5f09c1b40f3f25e86e7674322124.ctex"]
 
 [params]
 
