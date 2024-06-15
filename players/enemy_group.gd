@@ -33,4 +33,3 @@ func clear_turn_focus():
 
 func remove_enemy_by_id(id: String):
 	enemies = enemies.filter(func(enemy): return enemy.stats.unique_id != id)
-	

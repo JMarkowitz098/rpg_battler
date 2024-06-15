@@ -24,6 +24,8 @@ func enter():
 	var index = holder.action_queue.get_action_index_by_unique_id(current_player.stats.unique_id)
 	holder.action_queue.set_turn_focus(index)
 
+	holder.skill_choice_list.hide()
+
 
 func handle_input():
 	if Input.is_action_just_pressed("to_action_queue"):
