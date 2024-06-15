@@ -85,15 +85,15 @@ func set_turn_focus(index: int) -> void:
 
 func update_player_action_with_skill(players, enemies, skill):
 	var current_player_id = players[player_index].stats.unique_id
-	var action_to_update = items.filter(func(action): 
-		return action.actor.stats.unique_id == current_player_id)[0]
+	var action_to_update = items.filter(func(item): 
+		return item.action.actor.stats.unique_id == current_player_id)[0].action
 	if skill.target == Skill.Target.SELF:
 		action_to_update.set_attack(null, skill)
 	else:
 		action_to_update.set_attack(enemies[enemy_index], skill)
 		
 	
-func next_player(players) -> void:
+func next_player() -> void:
 	player_index += 1
 	action_index = 0
 	

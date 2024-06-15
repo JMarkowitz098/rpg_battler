@@ -16,9 +16,11 @@ func enter():
 	action_queue.clear_all_turn_focus()
 	holder.player_group.clear_turn_focus()
 	holder.enemy_group.clear_turn_focus()
+	holder.enemy_group.clear_focus()
 	
 	# Refactor into action queue
 	var current_player = holder.player_group.players[action_queue.player_index]
+	current_player.turn.focus()
 	var index = holder.action_queue.get_action_index_by_unique_id(current_player.stats.unique_id)
 	holder.action_queue.set_turn_focus(index)
 

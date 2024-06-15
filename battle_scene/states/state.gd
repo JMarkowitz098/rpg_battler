@@ -17,6 +17,7 @@ var previous
 var choosing_action_state: ChoosingAction
 var choosing_action_queue_state: ChoosingActionQueue
 var choosing_skill_state: ChoosingSkill
+var choosing_enemy_state: ChoosingEnemy
 
 func _init(holder):
 	var init_params := {
@@ -27,6 +28,7 @@ func _init(holder):
 	choosing_action_state = ChoosingAction.new(init_params)
 	choosing_action_queue_state = ChoosingActionQueue.new(init_params)
 	choosing_skill_state = ChoosingSkill.new(init_params)
+	choosing_enemy_state = ChoosingEnemy.new(init_params)
 
 func change_state(new_state_id: Type):
 	match new_state_id:
@@ -36,6 +38,8 @@ func change_state(new_state_id: Type):
 			_update_state_vars(choosing_action_queue_state)
 		Type.CHOOSING_SKILL:
 			_update_state_vars(choosing_skill_state)
+		Type.CHOOSING_ENEMY:
+			_update_state_vars(choosing_enemy_state)
 
 func change_to_previous_state():
 	var new_state = previous

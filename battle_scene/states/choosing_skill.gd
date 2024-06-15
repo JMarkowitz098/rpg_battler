@@ -34,14 +34,6 @@ func handle_input():
 		else:
 			skill_button.unfocus()
 
-	if Input.is_action_just_pressed("menu_left"):
-		pass
-			
-	if Input.is_action_just_pressed("menu_right"):
-		pass
-		
-	if Input.is_action_just_pressed("menu_accept"):
-		pass
 
 	if Input.is_action_just_pressed("to_action_queue"):
 		change_state.call(State.Type.CHOOSING_ACTION_QUEUE)
@@ -57,15 +49,18 @@ func _handle_choose_skill(skill: SkillStats):
 		
 	match holder.current_skill.target:
 		Skill.Target.ENEMY:
-			pass
-			# _start_choosing_enemy()
+			change_state.call(State.Type.CHOOSING_ENEMY)
+			return
 		Skill.Target.SELF:
+			# Factor into action_queue
 			holder.action_queue.update_player_action_with_skill(
-				holder.players,
-				holder.enemies, 
-				holder.current_skill)
-			# _process_next_player()
-			# _clear_info_label()
+			holder.player_group.players, 
+			holder.enemy_group.enemies, 
+			holder.current_skill
+		)
+			holder.action_queue.next_player()
+			change_state.call(State.Type.CHOOSING_ACTION)
+			return
 
 func _draw_skill_desciption(skill: SkillStats):
 	holder.info_label.text  = "Ingress Energy Cost: {0}\nElement: {1}\n{2}".format([
