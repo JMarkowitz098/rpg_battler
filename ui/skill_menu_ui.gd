@@ -11,10 +11,9 @@ func _init(skill_menu_orig) -> void:
 func set_current_skills(player: Node2D, type: Skill.Type) -> void: 
 	current_skills = player.skills.filter(func(skill): return skill.type == type)
 
-func prepare_skill_menu(_handle_choose_skill, action_type: GridContainer) -> void:
+func prepare_skill_menu(_handle_choose_skill) -> void:
 	_fill_skill_menu_with_current_skills()
 	_connect_skill_button_signals(_handle_choose_skill)
-	_show_skill_choice_list(action_type)
 	
 func release_focus_from_all_buttons():
 	for child in skill_menu.get_children():
@@ -24,6 +23,7 @@ func _fill_skill_menu_with_current_skills() -> void:
 	for child in skill_menu.get_children():
 		# queue_free is deferred until end of frame, so we remove node from list
 		# to prevent indexing issues while turn is processing
+		
 		skill_menu.remove_child(child)
 		child.queue_free()
 		
@@ -43,7 +43,6 @@ func _connect_skill_button_signals(_handle_choose_skill) -> void:
 		var skill_button = skill_buttons[i]
 		skill_button.pressed.connect(_handle_choose_skill.bind(skill))
 
-func _show_skill_choice_list(action_type: GridContainer):
-	action_type.hide()
+func show_skill_choice_list():
 	skill_menu.show()
 	skill_menu.get_children()[0].focus()
