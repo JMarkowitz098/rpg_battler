@@ -1,0 +1,13 @@
+[gd_scene load_steps=2 format=3 uid="uid://cypb6tqhjigxc"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_27frv"]
+font_size = 8
+
+[node name="IngressEnergy" type="Label"]
+offset_left = -11.0
+offset_top = -24.0
+offset_right = 16.0
+offset_bottom = -12.0
+text = "X / X"
+label_settings = SubResource("LabelSettings_27frv")
+horizontal_alignment = 1

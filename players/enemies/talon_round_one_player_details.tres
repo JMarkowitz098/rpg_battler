@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="PlayerDetails" load_steps=2 format=3 uid="uid://dlct7yltan56j"]
+
+[ext_resource type="Script" path="res://players/base_stats.gd" id="1_d1gpr"]
+
+[resource]
+script = ExtResource("1_d1gpr")
+player_id = 0
+label = "Talon"
+icon_type = 1
+elements = Array[int]([1, 2])

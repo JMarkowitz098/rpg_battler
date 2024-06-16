@@ -1,0 +1,11 @@
+[gd_scene load_steps=2 format=3 uid="uid://cg15kifntjya6"]
+
+[ext_resource type="PackedScene" uid="uid://2evhn0npdxi4" path="res://ui/focus_default.tscn" id="1_0g7lu"]
+
+[node name="ActionChoiceButton" type="Button"]
+text = "BUTTON"
+
+[node name="Focus" parent="." instance=ExtResource("1_0g7lu")]
+visible = false
+position = Vector2(81.3118, 32.1859)
+scale = Vector2(0.0115667, 0.0115667)
