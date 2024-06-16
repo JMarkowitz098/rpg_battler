@@ -7,7 +7,6 @@ extends Button
 		
 func _ready():
 	icon_focus.position = Vector2(size.x + focus_offset_x, size.y + focus_offset_y)
-	focus()
 		
 func _process(_delta):
 	if icon_focus.position.x != size.x:

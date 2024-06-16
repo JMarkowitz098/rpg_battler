@@ -1,8 +1,11 @@
 extends ColorRect
 
 @onready var start_game_button = $CenterContainer/VBoxContainer/StartGameButton
+@onready var controls_button = $CenterContainer/VBoxContainer/ControlsButton
+@onready var help_menu = $CenterContainer/VBoxContainer/HelpMenu
 
 func _ready():
+	#Input.set_mouse_mode(Input.MOUSE_MODE_HIDDEN)
 	start_game_button.focus()
 
 func _on_start_game_button_pressed():
@@ -11,3 +14,13 @@ func _on_start_game_button_pressed():
 
 func _on_exit_game_button_pressed():
 	get_tree().quit()
+
+func _on_controls_button_pressed():
+	help_menu.show()
+	help_menu.close_button.focus()
+	help_menu.restart_battle_button.hide()
+	help_menu.restart_game_button.hide()
+
+
+func _on_help_menu_hidden():
+	controls_button.focus()

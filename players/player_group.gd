@@ -29,7 +29,7 @@ func switch_turn_focus(x: int, y: int) -> void:
 	
 func clear_focus() -> void:
 	for player in players:
-		player.focus.clear()
+		player.icon_focus.clear()
 		
 func clear_turn_focus() -> void:
 	for player in players:
@@ -44,6 +44,9 @@ func get_current_player() -> Node2D:
 func next_player() -> void:
 	if (current <= players.size()):
 		current += 1
+
+func reset_current():
+	current = 0
 	
 # -----------------
 # Private Functions

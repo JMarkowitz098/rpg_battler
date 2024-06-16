@@ -14,6 +14,8 @@ signal choosing_enemy_state_entered
 
 signal is_battling_state_entered
 
+signal pause_game(current_state)
+
 signal update_action_index(new_index)
 signal update_action_queue_focuses()
 signal update_enemy_group_current

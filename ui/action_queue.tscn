@@ -12,13 +12,6 @@ scale = Vector2(0.659803, 0.659803)
 script = ExtResource("1_ns805")
 metadata/_edit_group_ = true
 
-[node name="ActionListBackground" type="ColorRect" parent="."]
-visible = false
-custom_minimum_size = Vector2(200, 2.08165e-12)
-layout_mode = 2
-color = Color(0.580392, 0.690196, 0.854902, 1)
-
 [node name="ActionListItem" parent="." instance=ExtResource("2_nbgru")]
-visible = false
 layout_mode = 2
 size_flags_stretch_ratio = 0.0

@@ -33,26 +33,20 @@ metadata/_edit_lock_ = true
 [node name="HelpMenu" parent="CanvasLayer" instance=ExtResource("10_w6e8n")]
 visible = false
 
-[node name="InfoBackground" type="ColorRect" parent="CanvasLayer"]
-anchors_preset = 3
-anchor_left = 1.0
-anchor_top = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = -186.0
-offset_top = -71.0
-grow_horizontal = 0
-grow_vertical = 0
-color = Color(0.862745, 0.929412, 1, 1)
+[node name="InfoBackground" type="Panel" parent="CanvasLayer"]
+offset_left = 128.0
+offset_top = 107.0
+offset_right = 315.0
+offset_bottom = 175.0
 
 [node name="InfoLabel" type="Label" parent="CanvasLayer/InfoBackground"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 8.0
+offset_left = 9.0
 offset_top = 6.0
-offset_right = -10.0
+offset_right = -9.0
 offset_bottom = -10.0
 grow_horizontal = 2
 grow_vertical = 2
@@ -62,14 +56,26 @@ autowrap_mode = 2
 script = ExtResource("4_cqd3r")
 
 [node name="ActionChoice" parent="CanvasLayer" instance=ExtResource("2_f1npq")]
-offset_left = 8.0
-offset_top = -68.0
-offset_right = 212.0
-offset_bottom = 33.0
+offset_left = 3.0
+offset_top = -69.0
+offset_right = 207.0
+offset_bottom = 32.0
+
+[node name="ActionQueueBackground" type="Panel" parent="CanvasLayer"]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -50.5
+offset_top = 3.0
+offset_right = 50.5
+offset_bottom = 19.0
+grow_horizontal = 2
 
 [node name="ActionQueue" parent="CanvasLayer" instance=ExtResource("5_s0ybd")]
-offset_left = 61.0
-offset_right = 77.0
+offset_left = 112.0
+offset_top = -2.0
+offset_right = 132.0
+offset_bottom = 28.0
 
 [node name="SkillChoiceList" parent="CanvasLayer" instance=ExtResource("4_166j1")]
 visible = false
@@ -102,8 +108,9 @@ position = Vector2(217, 53)
 offset_right = 8.0
 offset_bottom = 8.0
 theme_override_font_sizes/font_size = 8
-text = "?"
+text = "H"
 
+[connection signal="hidden" from="CanvasLayer/HelpMenu" to="." method="_on_help_menu_hidden"]
 [connection signal="focus_entered" from="CanvasLayer/ActionChoice/Incursion" to="." method="_on_incursion_focus_entered"]
 [connection signal="pressed" from="CanvasLayer/ActionChoice/Incursion" to="." method="_on_incursion_pressed"]
 [connection signal="focus_entered" from="CanvasLayer/ActionChoice/Refrain" to="." method="_on_refrain_focus_entered"]

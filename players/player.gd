@@ -2,7 +2,7 @@ extends Node2D
 class_name Player
 
 @onready var turn = $Turn
-@onready var focus := $Focus
+@onready var icon_focus := $Focus
 @onready var animation_player := $AnimationPlayer
 @onready var base_sprite := $BaseSprite
 @onready var stats := $Stats
@@ -39,3 +39,9 @@ func _on_character_stats_no_ingress_energy(_id):
 	
 func update_energy_bar():
 	ingress_energy.text = str(stats.current_ingress) + "/" + str(stats.level_stats.max_ingress)
+
+func focus():
+	icon_focus.focus()
+
+func unfocus():
+	icon_focus.unfocus()

@@ -58,7 +58,7 @@ func get_current_item() -> ActionQueueItem:
 	return items[action_index]
 
 func set_focus(index: int) -> void:
-	items[index].focus.focus()
+	items[index].focus()
 
 func set_turn_focus(index: int) -> void:
 	items[index].turn.focus()
@@ -96,13 +96,13 @@ func clear_all_turn_focus():
 
 func clear_all_focus():
 	for item in items:
-		item.focus.clear()
+		item.icon_focus.clear()
 
 func set_focuses():
 	var item := get_current_item()
 	var action: Action = item.action
 	action.actor.turn.focus()
-	item.focus.focus()
+	item.focus()
 	
 	if action.target:
 		action.target.turn.self_modulate = Color("Red")

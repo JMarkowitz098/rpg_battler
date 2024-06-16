@@ -4,9 +4,8 @@ var current_skill_button: Button
 var current_skill_type: Skill.Type
 var current_skill: SkillStats
 var defeated: Array[String]
-var enemies: Array[Node2D]
-var players: Array[Node2D]
 var prev_state: State.Type
+var before_pause_focus
 
 var skill_index := 0
 
@@ -34,9 +33,6 @@ func _ready() -> void:
 	state.change_state(State.Type.CHOOSING_ACTION)
 	
 func _process(_delta: float) -> void:
-	players = player_group.players
-	enemies = enemy_group.enemies
-
 	state.current.handle_input()
 
 	if action_queue.is_turn_over():
@@ -76,6 +72,7 @@ func _connect_signals() -> void:
 	Events.choosing_skill_state_entered.connect(_on_choosing_skill_state_entered)
 	Events.choosing_enemy_state_entered.connect(_on_choosing_enemy_state_entered)
 	Events.choose_enemy.connect(_on_choose_enemy)
+	Events.pause_game.connect(_on_game_paused)
 
 # -------------------
 # Action Buttons
@@ -100,9 +97,9 @@ func _on_refrain_pressed():
 	current_skill = skill_choice_list.current_skills[0]
 	
 func _on_dodge_pressed():
-	var unique_id = players[action_queue.player_index].stats.unique_id
-	var current_action_id = action_queue.get_action_index_by_unique_id(unique_id)
-	var current_action = action_queue.items[current_action_id].action
+	var unique_id = player_group.get_current_player().stats.unique_id
+	var current_players_action_id = action_queue.get_action_index_by_unique_id(unique_id)
+	var current_action = action_queue.items[current_players_action_id].action
 	action_queue.set_dodge(current_action)
 
 	if !action_queue.is_turn_over():
@@ -151,7 +148,12 @@ func _process_turn() -> void:
 	_set_dodging_animation()
 
 	await get_tree().create_timer(1).timeout
-	await action_queue.process_action_queue(get_tree(), players, enemies, set_process)
+	await action_queue.process_action_queue(
+		get_tree(), 
+		player_group.players, 
+		enemy_group.enemies, 
+		set_process
+	)
 	state.change_state(State.Type.IS_BATTLING)
 	action_queue.reset_indexes()
 
@@ -194,8 +196,10 @@ func _on_player_no_ingress_energy(player_id: String) -> void:
 	action_queue.remove_action_by_character_id(player_id)
 	player_group.remove_player_by_id(player_id)
 
-func _on_help_button_pressed():
-	help_menu.show()
+# func _on_help_button_pressed():
+# 	get_tree().paused = true
+# 	help_menu.show()
+# 	help_menu.close_button.focus()
 
 func _on_choosing_action_state_entered():
 	current_action_button.focus()
@@ -212,7 +216,7 @@ func _on_choosing_skill_state_entered():
 	action_queue.set_turn_on_player(current_player.stats.unique_id)
 
 func _on_choosing_enemy_state_entered():
-	enemy_group.get_current_enemy().focus.focus()
+	enemy_group.get_current_enemy().icon_focus.focus()
 
 func _on_choose_enemy():
 	action_queue.update_player_action_with_skill(
@@ -224,4 +228,27 @@ func _on_choose_enemy():
 		player_group.next_player()
 		state.change_state(State.Type.CHOOSING_ACTION)
 	else:
+		player_group.reset_current()
 		state.change_state(State.Type.IS_BATTLING)
+
+func _on_game_paused(current_state: int):
+	match current_state:
+		State.Type.CHOOSING_ACTION:
+			before_pause_focus = current_action_button
+		State.Type.CHOOSING_SKILL:
+			before_pause_focus = skill_choice_list.get_current_skill_button()
+		State.Type.CHOOSING_ACTION_QUEUE:
+			before_pause_focus = action_queue.get_current_item()
+		State.Type.CHOOSING_ENEMY:
+			before_pause_focus = enemy_group.get_current_enemy()
+		State.Type.IS_BATTLING:
+			before_pause_focus = null
+
+	get_tree().paused = true
+	help_menu.show()
+	help_menu.close_button.focus()
+
+func _on_help_menu_hidden():
+	# Need to figure out how to return focus. Check heartbest tutorials on pausing probably
+	get_tree().paused = false
+	before_pause_focus.focus()

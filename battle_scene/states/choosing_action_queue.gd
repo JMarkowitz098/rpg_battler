@@ -20,4 +20,8 @@ func handle_input():
 		Events.change_to_previous_state.emit()
 		return
 
+	if Input.is_action_just_pressed("pause"):
+		Events.pause_game.emit(State.Type.CHOOSING_ACTION_QUEUE)
+		return
+
 	Events.update_action_queue_focuses.emit()

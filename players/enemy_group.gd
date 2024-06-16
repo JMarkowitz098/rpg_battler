@@ -23,15 +23,15 @@ func _ready():
 	Events.update_enemy_group_current.connect(_on_update_enemy_group_current)
 
 func switch_focus(x, y):
-	enemies[x].focus.focus()
-	enemies[y].focus.unfocus()
+	enemies[x].focus()
+	enemies[y].unfocus()
 	
 func reset_focus():
 	clear_focus()
 
 func clear_focus():
 	for enemy in enemies:
-		enemy.focus.unfocus()
+		enemy.unfocus()
 
 func clear_turn_focus():
 	for enemy in enemies:

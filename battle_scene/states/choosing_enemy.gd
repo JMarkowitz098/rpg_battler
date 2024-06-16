@@ -18,3 +18,6 @@ func handle_input():
 
 	if Input.is_action_just_pressed("menu_back"):
 		Events.change_state.emit(State.Type.CHOOSING_SKILL)
+	
+	if Input.is_action_just_pressed("pause"):
+		Events.pause_game.emit(State.Type.CHOOSING_ENEMY)

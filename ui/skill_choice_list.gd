@@ -27,6 +27,9 @@ func release_focus_from_all_buttons():
 func get_current_skill() -> SkillStats:
 	return current_skills[current_skill_index]
 
+func get_current_skill_button() -> Button:
+	return get_children()[current_skill_index]
+
 func _fill_skill_menu_with_current_skills() -> void:
 	for child in get_children():
 		# queue_free is deferred until end of frame, so we remove node from list
