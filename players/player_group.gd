@@ -9,7 +9,7 @@ const TALON := preload("res://players/Talon/talon.tscn")
 const NASH := preload("res://players/Nash/nash.tscn")
 
 var players: Array[Node2D] = []
-var index: int = 0
+var current: int = 0
 
 func _ready() -> void:
 	_instantiate_players()
@@ -37,6 +37,13 @@ func clear_turn_focus() -> void:
 		
 func remove_player_by_id(id: String) -> void:
 	players = players.filter(func(player): return player.stats.unique_id != id)
+
+func get_current_player() -> Node2D:
+	return players[current]
+
+func next_player() -> void:
+	if (current <= players.size()):
+		current += 1
 	
 # -----------------
 # Private Functions

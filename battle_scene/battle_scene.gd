@@ -106,7 +106,7 @@ func _on_dodge_pressed():
 	action_queue.set_dodge(current_action)
 
 	if !action_queue.is_turn_over():
-		action_queue.next_player()
+		player_group.next_player()
 		state.change_state(State.Type.CHOOSING_ACTION)
 	else:
 		state.change_state.call(State.Type.IS_BATTLING)
@@ -130,17 +130,17 @@ func _handle_choose_skill(skill: SkillStats):
 			return
 		Skill.Target.SELF:
 			action_queue.update_player_action_with_skill(
-			player_group.players, 
+			player_group.get_current_player(), 
 			enemy_group.get_current_enemy(),
 			current_skill
 		)
 
 			# Factor into function in state class
 			if !action_queue.is_turn_over():
-				action_queue.next_player()
-				state.change_state.call(State.Type.CHOOSING_ACTION)
+				player_group.next_player()
+				state.change_state(State.Type.CHOOSING_ACTION)
 			else:
-				state.change_state.call(State.Type.IS_BATTLING)
+				state.change_state(State.Type.IS_BATTLING)
 			return
 	
 # ----------------------
@@ -181,13 +181,6 @@ func _set_dodging_animation():
 		if item.action.skill.id == Skill.Id.DODGE:
 			item.action.actor.base_sprite.self_modulate = Color("ffffff9b")
 
-func _get_current_player() -> Node2D:
-	return player_group.players[action_queue.player_index]
-
-func _get_current_enemy() -> Node2D:
-	return enemy_group.enemies[action_queue.enemy_index]
-
-	
 # ----------------------
 # Signals
 # ----------------------
@@ -206,12 +199,12 @@ func _on_help_button_pressed():
 
 func _on_choosing_action_state_entered():
 	current_action_button.focus()
-	var current_player = _get_current_player()
+	var current_player = player_group.get_current_player()
 	current_player.turn.focus()
 	action_queue.set_turn_on_player(current_player.stats.unique_id)
 
 func _on_choosing_skill_state_entered():
-	var current_player = _get_current_player()
+	var current_player = player_group.get_current_player()
 	skill_choice_list.set_current_skills(current_player, current_skill_type)
 	skill_choice_list.prepare_skill_menu(_handle_choose_skill)
 	skill_choice_list.get_children()[0].focus()
@@ -223,12 +216,12 @@ func _on_choosing_enemy_state_entered():
 
 func _on_choose_enemy():
 	action_queue.update_player_action_with_skill(
-		player_group.players,
+		player_group.get_current_player(),
 		enemy_group.get_current_enemy(),
 		skill_choice_list.get_current_skill()
 	)
 	if !action_queue.is_turn_over():
-		action_queue.next_player()
+		player_group.next_player()
 		state.change_state(State.Type.CHOOSING_ACTION)
 	else:
 		state.change_state(State.Type.IS_BATTLING)

@@ -4,8 +4,6 @@ class_name ActionQueue
 enum Direction { LEFT, RIGHT }
 
 var items: Array[ActionQueueItem] = []
-var enemy_index := 0
-var player_index := 0
 var action_index := 0
 
 var items_set = false
@@ -51,7 +49,6 @@ func is_turn_over():
 		return item.action.action_chosen)
 		
 func reset_indexes() -> void:
-	player_index = 0
 	action_index = 0
 	
 func size() -> int:
@@ -66,18 +63,13 @@ func set_focus(index: int) -> void:
 func set_turn_focus(index: int) -> void:
 	items[index].turn.focus()
 
-func update_player_action_with_skill(players, enemy, skill):
-	var current_player_id = players[player_index].stats.unique_id
+func update_player_action_with_skill(player, enemy, skill):
 	var action_to_update = items.filter(func(item): 
-		return item.action.actor.stats.unique_id == current_player_id)[0].action
+		return item.action.actor.stats.unique_id == player.stats.unique_id)[0].action
 	if skill.target == Skill.Target.SELF:
 		action_to_update.set_attack(null, skill)
 	else:
 		action_to_update.set_attack(enemy, skill)
-		
-func next_player() -> void:
-	player_index += 1
-	action_index = 0
 	
 func remove_action_by_character_id(id: String) -> void:
 	items = items.filter(
