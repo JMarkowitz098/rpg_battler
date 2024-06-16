@@ -14,6 +14,9 @@ func _ready():
 			slot += 1
 			enemy.player_name.text = enemy.stats.player_details.label
 			enemy.stats.unique_id = enemy.stats.create_unique_id(enemy.stats.player_details.player_id)
+	Events.choosing_action_state_entered.connect(_on_choosing_action_state_entered)
+	Events.choosing_action_queue_state_entered.connect(_on_choosing_action_queue_state_entered)
+	Events.choosing_skill_state_entered.connect(_on_choosing_skill_state_entered)
 
 func switch_focus(x, y):
 	enemies[x].focus.focus()
@@ -33,3 +36,13 @@ func clear_turn_focus():
 
 func remove_enemy_by_id(id: String):
 	enemies = enemies.filter(func(enemy): return enemy.stats.unique_id != id)
+
+func _on_choosing_action_state_entered():
+	clear_focus()
+	clear_turn_focus()
+
+func _on_choosing_action_queue_state_entered():
+	clear_focus()
+
+func _on_choosing_skill_state_entered():
+	clear_focus()

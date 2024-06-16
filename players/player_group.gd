@@ -14,6 +14,8 @@ var index: int = 0
 func _ready() -> void:
 	_instantiate_players()
 	players[0].turn.focus()
+	Events.choosing_action_state_entered.connect(_on_choosing_action_state_entered)
+	Events.choosing_action_queue_state_entered.connect(_on_choosing_action_queue_state_entered)
 	
 # ----------------
 # Public Functions
@@ -80,4 +82,13 @@ func _set_location(slot_index: int, player: Node2D) -> void:
 		3:
 			player.global_position = slot_four_location.global_position
 
+# -------
+# Signals
+# -------
 
+func _on_choosing_action_state_entered():
+	clear_turn_focus()
+
+func _on_choosing_action_queue_state_entered():
+	clear_focus()
+	clear_turn_focus()

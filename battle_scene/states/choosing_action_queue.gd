@@ -6,12 +6,7 @@ var change_to_previous_state: Callable
 var holder = ComponentHolder
 
 func enter():
-	holder.action_queue.set_focus(0)
-	holder.action_type.clear_focus()
-	holder.player_group.clear_focus()
-	holder.player_group.clear_turn_focus()
-	holder.skill_ui.release_focus_from_all_buttons()
-	holder.enemy_group.clear_focus()
+	Events.choosing_action_queue_state_entered.emit()
 	
 func _init(init):
 	change_state = init.change_state

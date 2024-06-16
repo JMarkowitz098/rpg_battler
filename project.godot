@@ -19,6 +19,7 @@ config/icon="res://icon.svg"
 
 Utils="*res://Utils.gd"
 SaveAndLoadPlayer="*res://menus/save_and_load_player.gd"
+Events="*res://ui/events.gd"
 
 [display]
 

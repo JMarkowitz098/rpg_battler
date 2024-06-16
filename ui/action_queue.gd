@@ -12,6 +12,10 @@ const ACTION_QUEUE_ITEM = preload("res://ui/action_queue_item.tscn")
 const NASH_PORTRAIT := preload("res://players/Nash/NashPortrait.jpeg")
 const TALON_PORTRAIT := preload("res://players/Talon/TalonPortrait.jpeg")
 
+func _ready():
+	Events.choosing_action_state_entered.connect(_on_choosing_action_state_entered)
+	Events.choosing_action_queue_state_entered.connect(_on_choosing_action_queue_state_entered)
+
 # ----------------
 # Public Functions
 # ----------------
@@ -115,6 +119,10 @@ func get_action_index_by_unique_id(unique_id: String) -> int:
 		if action.actor.stats.unique_id == unique_id:
 			return i
 	return 0
+
+func set_turn_on_player(unique_id: String):
+	var index := get_action_index_by_unique_id(unique_id)
+	set_turn_focus(index)
 
 # -----------------
 # Private Functions
@@ -226,3 +234,14 @@ func _get_protrait(player_id: Stats.PlayerId):
 			return NASH_PORTRAIT
 		_:
 			return TALON_PORTRAIT
+
+# -------
+# Signals
+# -------
+
+func _on_choosing_action_state_entered():
+	clear_all_focus()
+	clear_all_turn_focus()
+
+func _on_choosing_action_queue_state_entered():
+	set_focus(0)

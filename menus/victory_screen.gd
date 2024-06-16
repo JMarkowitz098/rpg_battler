@@ -17,7 +17,7 @@ func _render_summary() -> void:
 	if defeated:
 		var labels = defeated.map(func(unique_id): 
 			var player_id = int(unique_id[0])
-			return CharacterStats.get_player_label(player_id))
+			return Stats.get_player_label(player_id))
 		var summary_data_text = "You defeated "
 		for label in labels:
 			summary_data_text += label + " and "

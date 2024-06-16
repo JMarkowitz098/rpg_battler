@@ -8,23 +8,7 @@ func _init(init):
 	change_state = init.change_state
 
 func enter():
-	holder.action_type.show()
-	holder.current_action_button.focus()
-
-	var action_queue = holder.action_queue
-	action_queue.clear_all_focus()
-	action_queue.clear_all_turn_focus()
-	holder.player_group.clear_turn_focus()
-	holder.enemy_group.clear_turn_focus()
-	holder.enemy_group.clear_focus()
-	
-	# Refactor into action queue
-	var current_player = holder.player_group.players[action_queue.player_index]
-	current_player.turn.focus()
-	var index = holder.action_queue.get_action_index_by_unique_id(current_player.stats.unique_id)
-	holder.action_queue.set_turn_focus(index)
-
-	holder.skill_choice_list.hide()
+	Events.choosing_action_state_entered.emit()
 
 func handle_input():
 	if Input.is_action_just_pressed("to_action_queue"):

@@ -1,13 +1,14 @@
-[gd_scene load_steps=12 format=3 uid="uid://bolui7l1oisu1"]
+[gd_scene load_steps=13 format=3 uid="uid://bolui7l1oisu1"]
 
 [ext_resource type="Texture2D" uid="uid://bquypxhjqqxa0" path="res://battle_scene/battle_background.png" id="1_i0o4p"]
 [ext_resource type="Script" path="res://battle_scene/battle_scene.gd" id="1_r5piu"]
 [ext_resource type="Texture2D" uid="uid://cfxkdlm6ydlv7" path="res://mockups/Battle UI Mockup.png" id="2_2y8pj"]
 [ext_resource type="PackedScene" uid="uid://bl476pa5ernx5" path="res://ui/action_choice.tscn" id="2_f1npq"]
 [ext_resource type="PackedScene" uid="uid://cir0hf6b30mxx" path="res://players/enemy_group.tscn" id="3_dc2lk"]
-[ext_resource type="PackedScene" uid="uid://cpkpwy86k3he2" path="res://ui/skill_choice.tscn" id="4_166j1"]
+[ext_resource type="PackedScene" uid="uid://cpkpwy86k3he2" path="res://ui/skill_choice_list.tscn" id="4_166j1"]
 [ext_resource type="PackedScene" uid="uid://bv8dkjaf6yr17" path="res://players/player_group.tscn" id="4_rbeni"]
 [ext_resource type="PackedScene" uid="uid://c7d1vt1bnige2" path="res://ui/action_queue.tscn" id="5_s0ybd"]
+[ext_resource type="Script" path="res://ui/skill_choice_list.gd" id="7_5pabf"]
 [ext_resource type="AudioStream" uid="uid://dy4h0826wa26i" path="res://audio/kim-lightyear-just-a-dream-wake-up-153991.mp3" id="9_6o17c"]
 [ext_resource type="PackedScene" uid="uid://crwce2voha8mt" path="res://menus/help_menu.tscn" id="10_w6e8n"]
 
@@ -58,7 +59,7 @@ text = "Lorem IpsumLorem IpsumLorem "
 label_settings = SubResource("LabelSettings_p0inw")
 autowrap_mode = 2
 
-[node name="ActionType" parent="CanvasLayer" instance=ExtResource("2_f1npq")]
+[node name="ActionChoice" parent="CanvasLayer" instance=ExtResource("2_f1npq")]
 offset_left = 8.0
 offset_top = -68.0
 offset_right = 212.0
@@ -74,6 +75,7 @@ offset_left = 7.0
 offset_top = -68.0
 offset_right = 260.0
 offset_bottom = 32.0
+script = ExtResource("7_5pabf")
 
 [node name="Mockup" type="Sprite2D" parent="."]
 visible = false
@@ -100,14 +102,14 @@ offset_bottom = 8.0
 theme_override_font_sizes/font_size = 8
 text = "?"
 
-[connection signal="focus_entered" from="CanvasLayer/ActionType/Incursion" to="." method="_on_incursion_focus_entered"]
-[connection signal="pressed" from="CanvasLayer/ActionType/Incursion" to="." method="_on_incursion_pressed"]
-[connection signal="focus_entered" from="CanvasLayer/ActionType/Refrain" to="." method="_on_refrain_focus_entered"]
-[connection signal="pressed" from="CanvasLayer/ActionType/Refrain" to="." method="_on_refrain_pressed"]
-[connection signal="focus_entered" from="CanvasLayer/ActionType/Dodge" to="." method="_on_dodge_focus_entered"]
-[connection signal="pressed" from="CanvasLayer/ActionType/Dodge" to="." method="_on_dodge_pressed"]
+[connection signal="focus_entered" from="CanvasLayer/ActionChoice/Incursion" to="." method="_on_incursion_focus_entered"]
+[connection signal="pressed" from="CanvasLayer/ActionChoice/Incursion" to="." method="_on_incursion_pressed"]
+[connection signal="focus_entered" from="CanvasLayer/ActionChoice/Refrain" to="." method="_on_refrain_focus_entered"]
+[connection signal="pressed" from="CanvasLayer/ActionChoice/Refrain" to="." method="_on_refrain_pressed"]
+[connection signal="focus_entered" from="CanvasLayer/ActionChoice/Dodge" to="." method="_on_dodge_focus_entered"]
+[connection signal="pressed" from="CanvasLayer/ActionChoice/Dodge" to="." method="_on_dodge_pressed"]
 [connection signal="pressed" from="HelpButton" to="." method="_on_help_button_pressed"]
 
 [editable path="CanvasLayer/HelpMenu"]
-[editable path="CanvasLayer/ActionType"]
+[editable path="CanvasLayer/ActionChoice"]
 [editable path="CanvasLayer/SkillChoiceList"]

@@ -8,7 +8,7 @@ func _init(init):
 	change_state = init.change_state
 
 func enter():
-	holder.enemy_group.enemies[holder.action_queue.enemy_index].focus.focus()
+	Events.choosing_enemy_state_entered.emit()
 
 func handle_input():
 	var action_queue = holder.action_queue

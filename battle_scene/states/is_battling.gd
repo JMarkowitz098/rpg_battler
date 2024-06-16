@@ -9,7 +9,6 @@ func _init(init):
 
 func enter():
 	var action_queue = holder.action_queue
-	print(action_queue.is_turn_over())
 	action_queue.clear_all_focus()
 	action_queue.clear_all_turn_focus()
 	holder.player_group.clear_turn_focus()
