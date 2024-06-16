@@ -9,6 +9,7 @@ func _ready():
 	Events.choosing_action_queue_state_entered.connect(_on_choosing_action_queue_state_entered)
 	Events.choosing_skill_state_entered.connect(_on_choosing_skill_state_entered)
 	Events.choosing_enemy_state_entered.connect(_on_choosing_enemy_state_entered)
+	Events.update_info_label_with_skill_description.connect(_on_update_info_label_with_skill_description)
 
 func set_current_skills(player: Node2D, type: Skill.Type) -> void:
 	current_skills = player.skills.filter(func(skill): return skill.type == type)
@@ -45,6 +46,13 @@ func _connect_skill_button_signals(_handle_choose_skill) -> void:
 		var skill_button = skill_buttons[i]
 		skill_button.pressed.connect(_handle_choose_skill.bind(skill))
 
+func _create_skill_desciption(skill: SkillStats) -> String:
+	return "Ingress Energy Cost: {0}\nElement: {1}\n{2}".format([
+		skill.ingress,
+		Stats.get_element_label(skill.element),
+		skill.description
+	])
+
 func show_list():
 	show()
 	get_children()[0].focus()
@@ -64,3 +72,9 @@ func _on_choosing_skill_state_entered():
 
 func _on_choosing_enemy_state_entered():
 	release_focus_from_all_buttons()
+
+func _on_update_info_label_with_skill_description():
+	var skill_buttons = get_children()
+	for i in skill_buttons.size():
+		if(skill_buttons[i].has_focus()):
+			Events.update_info_label.emit(_create_skill_desciption(current_skills[i]))

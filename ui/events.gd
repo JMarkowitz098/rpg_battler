@@ -13,5 +13,6 @@ signal choosing_enemy_state_entered
 signal is_battling_state_entered
 
 signal update_action_index(new_index)
-signal update_info_label(new_message)
 signal update_action_queue_focuses()
+signal update_info_label(new_message)
+signal update_info_label_with_skill_description()
