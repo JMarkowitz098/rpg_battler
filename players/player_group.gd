@@ -17,6 +17,7 @@ func _ready() -> void:
 	Events.choosing_action_state_entered.connect(_on_choosing_action_state_entered)
 	Events.choosing_action_queue_state_entered.connect(_on_choosing_action_queue_state_entered)
 	Events.is_battling_state_entered.connect(_on_is_battling_state_entered)
+	Events.enter_action_queue_handle_input.connect(_on_enter_action_queue_handle_input)
 	
 # ----------------
 # Public Functions
@@ -95,4 +96,7 @@ func _on_choosing_action_queue_state_entered():
 	clear_turn_focus()
 
 func _on_is_battling_state_entered():
+	clear_turn_focus()
+
+func _on_enter_action_queue_handle_input():
 	clear_turn_focus()

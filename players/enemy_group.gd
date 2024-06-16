@@ -18,6 +18,7 @@ func _ready():
 	Events.choosing_action_queue_state_entered.connect(_on_choosing_action_queue_state_entered)
 	Events.choosing_skill_state_entered.connect(_on_choosing_skill_state_entered)
 	Events.is_battling_state_entered.connect(_on_is_battling_state_entered)
+	Events.enter_action_queue_handle_input.connect(_on_enter_action_queue_handle_input)
 
 func switch_focus(x, y):
 	enemies[x].focus.focus()
@@ -50,4 +51,7 @@ func _on_choosing_skill_state_entered():
 
 func _on_is_battling_state_entered():
 	clear_focus()
+	clear_turn_focus()
+
+func _on_enter_action_queue_handle_input():
 	clear_turn_focus()

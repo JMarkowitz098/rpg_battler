@@ -32,6 +32,9 @@ func _init(holder):
 	choosing_enemy_state = ChoosingEnemy.new(init_params)
 	is_battling_state = IsBattling.new(init_params)
 
+	Events.change_state.connect(change_state)
+	Events.change_to_previous_state.connect(change_to_previous_state)
+
 func change_state(new_state_id: Type):
 	match new_state_id:
 		Type.CHOOSING_ACTION:

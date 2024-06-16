@@ -92,14 +92,13 @@ func _connect_signals() -> void:
 # Action Buttons
 # -------------------
 func _on_incursion_focus_entered():
-	#TODO Move into action button state maybe
-		_draw_action_button_description(0)
+	if info_label: info_label.draw_action_button_description(0)
 	
 func _on_refrain_focus_entered():
-		_draw_action_button_description(1)
+	if info_label: info_label.draw_action_button_description(1)
 	
 func _on_dodge_focus_entered():
-		_draw_action_button_description(2)
+	if info_label: info_label.draw_action_button_description(2)
 	
 func _on_incursion_pressed():
 	holder.current_skill_type = Skill.Type.INCURSION

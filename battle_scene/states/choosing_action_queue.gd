@@ -14,26 +14,16 @@ func _init(init):
 	holder = init.holder
 	
 func handle_input():
-	var action_queue = holder.action_queue
-	var action = action_queue.get_current_item().action
-	action_queue.clear_all_focus()
-	action_queue.clear_all_turn_focus()
-	holder.player_group.clear_turn_focus()
-	holder.enemy_group.clear_turn_focus()
+	Events.enter_action_queue_handle_input.emit()
 
 	if Input.is_action_just_pressed("menu_right"):
-		action_queue.action_index = (action_queue.action_index + 1) % action_queue.size()
+		Events.update_action_index.emit(ActionQueue.Direction.RIGHT)
 		
 	if Input.is_action_just_pressed("menu_left"):
-		if action_queue.action_index == 0:
-			action_queue.action_index = action_queue.size() - 1
-		else:
-			action_queue.action_index = action_queue.action_index - 1
-	
+		Events.update_action_index.emit(ActionQueue.Direction.LEFT)
+
 	if Input.is_action_just_pressed("menu_back") or Input.is_action_just_pressed("to_action_queue"):
-		change_to_previous_state.call()
+		Events.change_to_previous_state.emit()
 		return
 
-	holder.info_label.text = action_queue.create_action_message(action)
-	action = action_queue.get_current_item()
-	action_queue.set_focuses()
+	Events.update_action_queue_focuses.emit()

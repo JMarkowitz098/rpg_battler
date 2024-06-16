@@ -6,7 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://bl476pa5ernx5" path="res://ui/action_choice.tscn" id="2_f1npq"]
 [ext_resource type="PackedScene" uid="uid://cir0hf6b30mxx" path="res://players/enemy_group.tscn" id="3_dc2lk"]
 [ext_resource type="PackedScene" uid="uid://cpkpwy86k3he2" path="res://ui/skill_choice_list.tscn" id="4_166j1"]
-[ext_resource type="Script" path="res://battle_scene/InfoLabel.gd" id="4_cqd3r"]
+[ext_resource type="Script" path="res://battle_scene/info_label.gd" id="4_cqd3r"]
 [ext_resource type="PackedScene" uid="uid://bv8dkjaf6yr17" path="res://players/player_group.tscn" id="4_rbeni"]
 [ext_resource type="PackedScene" uid="uid://c7d1vt1bnige2" path="res://ui/action_queue.tscn" id="5_s0ybd"]
 [ext_resource type="Script" path="res://ui/skill_choice_list.gd" id="7_5pabf"]

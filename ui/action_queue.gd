@@ -1,6 +1,8 @@
 extends HBoxContainer
 class_name ActionQueue
 
+enum Direction { LEFT, RIGHT }
+
 var items: Array[ActionQueueItem] = []
 var enemy_index := 0
 var player_index := 0
@@ -16,6 +18,9 @@ func _ready():
 	Events.choosing_action_state_entered.connect(_on_choosing_action_state_entered)
 	Events.choosing_action_queue_state_entered.connect(_on_choosing_action_queue_state_entered)
 	Events.is_battling_state_entered.connect(_on_is_battling_state_entered)
+	Events.enter_action_queue_handle_input.connect(_on_enter_action_queue_handle_input)
+	Events.update_action_index.connect(_on_update_action_index)
+	Events.update_action_queue_focuses.connect(_on_update_action_queue_focuses)
 
 # ----------------
 # Public Functions
@@ -250,3 +255,23 @@ func _on_choosing_action_queue_state_entered():
 func _on_is_battling_state_entered():
 	clear_all_focus()
 	clear_all_turn_focus()
+
+func _on_enter_action_queue_handle_input():
+	clear_all_focus()
+	clear_all_turn_focus()
+
+func _on_update_action_index(direction: Direction):
+	match direction:
+		Direction.RIGHT:
+			action_index = (action_index + 1) % items.size()
+		Direction.LEFT:
+			if action_index == 0:
+				action_index = size() - 1
+			else:
+				action_index = action_index - 1
+		
+	var action = get_current_item().action
+	Events.update_info_label.emit(create_action_message(action))
+
+func _on_update_action_queue_focuses():
+	set_focuses()
