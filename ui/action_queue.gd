@@ -51,7 +51,6 @@ func is_turn_over():
 		return item.action.action_chosen)
 		
 func reset_indexes() -> void:
-	enemy_index = 0
 	player_index = 0
 	action_index = 0
 	
@@ -67,14 +66,14 @@ func set_focus(index: int) -> void:
 func set_turn_focus(index: int) -> void:
 	items[index].turn.focus()
 
-func update_player_action_with_skill(players, enemies, skill):
+func update_player_action_with_skill(players, enemy, skill):
 	var current_player_id = players[player_index].stats.unique_id
 	var action_to_update = items.filter(func(item): 
 		return item.action.actor.stats.unique_id == current_player_id)[0].action
 	if skill.target == Skill.Target.SELF:
 		action_to_update.set_attack(null, skill)
 	else:
-		action_to_update.set_attack(enemies[enemy_index], skill)
+		action_to_update.set_attack(enemy, skill)
 		
 func next_player() -> void:
 	player_index += 1

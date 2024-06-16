@@ -87,6 +87,7 @@ func _connect_signals() -> void:
 	Events.choosing_action_state_entered.connect(_on_choosing_action_state_entered)
 	Events.choosing_skill_state_entered.connect(_on_choosing_skill_state_entered)
 	Events.choosing_enemy_state_entered.connect(_on_choosing_enemy_state_entered)
+	Events.choose_enemy.connect(_on_choose_enemy)
 
 # -------------------
 # Action Buttons
@@ -140,10 +141,9 @@ func _handle_choose_skill(skill: SkillStats):
 			state.change_state.call(State.Type.CHOOSING_ENEMY)
 			return
 		Skill.Target.SELF:
-			# Factor into action_queue
 			action_queue.update_player_action_with_skill(
 			player_group.players, 
-			enemy_group.enemies, 
+			enemy_group.get_current_enemy(),
 			current_skill
 		)
 
@@ -224,12 +224,23 @@ func _on_choosing_action_state_entered():
 
 func _on_choosing_skill_state_entered():
 	var current_player = _get_current_player()
-	skill_choice_list.set_current_skills(current_player, 
-		holder.current_skill_type)
+	skill_choice_list.set_current_skills(current_player, current_skill_type)
 	skill_choice_list.prepare_skill_menu(_handle_choose_skill)
 	skill_choice_list.get_children()[0].focus()
 	current_player.turn.focus()
 	action_queue.set_turn_on_player(current_player.stats.unique_id)
 
 func _on_choosing_enemy_state_entered():
-	_get_current_enemy().focus.focus()
+	enemy_group.get_current_enemy().focus.focus()
+
+func _on_choose_enemy():
+	action_queue.update_player_action_with_skill(
+		player_group.players,
+		enemy_group.get_current_enemy(),
+		skill_choice_list.get_current_skill()
+	)
+	if !action_queue.is_turn_over():
+		action_queue.next_player()
+		state.change_state(State.Type.CHOOSING_ACTION)
+	else:
+		state.change_state(State.Type.IS_BATTLING)

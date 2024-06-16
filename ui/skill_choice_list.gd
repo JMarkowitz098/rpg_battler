@@ -3,12 +3,14 @@ extends GridContainer
 const BATTLE_SCENE_BUTTON = preload("res://menus/battle_scene_button.tscn")
 
 var current_skills: Array[SkillStats]
+var current_skill_index := 0
 
 func _ready():
 	Events.choosing_action_state_entered.connect(_on_choosing_action_state_entered)
 	Events.choosing_action_queue_state_entered.connect(_on_choosing_action_queue_state_entered)
 	Events.choosing_skill_state_entered.connect(_on_choosing_skill_state_entered)
 	Events.choosing_enemy_state_entered.connect(_on_choosing_enemy_state_entered)
+	Events.is_battling_state_entered.connect(_on_is_battling_state_entered)
 	Events.update_info_label_with_skill_description.connect(_on_update_info_label_with_skill_description)
 
 func set_current_skills(player: Node2D, type: Skill.Type) -> void:
@@ -21,6 +23,9 @@ func prepare_skill_menu(_handle_choose_skill) -> void:
 func release_focus_from_all_buttons():
 	for child in get_children():
 		child.release_focus()
+
+func get_current_skill() -> SkillStats:
+	return current_skills[current_skill_index]
 
 func _fill_skill_menu_with_current_skills() -> void:
 	for child in get_children():
@@ -73,8 +78,12 @@ func _on_choosing_skill_state_entered():
 func _on_choosing_enemy_state_entered():
 	release_focus_from_all_buttons()
 
+func _on_is_battling_state_entered():
+	release_focus_from_all_buttons()
+
 func _on_update_info_label_with_skill_description():
 	var skill_buttons = get_children()
 	for i in skill_buttons.size():
 		if(skill_buttons[i].has_focus()):
 			Events.update_info_label.emit(_create_skill_desciption(current_skills[i]))
+			current_skill_index = i

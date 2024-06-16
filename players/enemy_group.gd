@@ -1,9 +1,10 @@
 extends Node2D
 
+enum Direction{ LEFT, RIGHT }
+
 var enemies: Array[Node2D] = []
-#var action_queue: Array = [] #:TODO Remove after confimring not used in battle scene
 var is_battling: bool = false
-var index: int = 0
+var current := 0
 
 func _ready():
 	var slot := 0
@@ -19,13 +20,13 @@ func _ready():
 	Events.choosing_skill_state_entered.connect(_on_choosing_skill_state_entered)
 	Events.is_battling_state_entered.connect(_on_is_battling_state_entered)
 	Events.enter_action_queue_handle_input.connect(_on_enter_action_queue_handle_input)
+	Events.update_enemy_group_current.connect(_on_update_enemy_group_current)
 
 func switch_focus(x, y):
 	enemies[x].focus.focus()
 	enemies[y].focus.unfocus()
 	
 func reset_focus():
-	index = 0
 	clear_focus()
 
 func clear_focus():
@@ -38,6 +39,9 @@ func clear_turn_focus():
 
 func remove_enemy_by_id(id: String):
 	enemies = enemies.filter(func(enemy): return enemy.stats.unique_id != id)
+
+func get_current_enemy():
+	return enemies[current]
 
 func _on_choosing_action_state_entered():
 	clear_focus()
@@ -55,3 +59,14 @@ func _on_is_battling_state_entered():
 
 func _on_enter_action_queue_handle_input():
 	clear_turn_focus()
+
+func _on_update_enemy_group_current(direction: Direction):
+	match direction:
+		Direction.LEFT:
+			var new_enemy_index = (current - 1) % enemies.size()
+			switch_focus(new_enemy_index, current)
+			current = new_enemy_index
+		Direction.RIGHT:
+			var new_enemy_index = (current + 1) % enemies.size()
+			switch_focus(new_enemy_index, current)
+			current = new_enemy_index

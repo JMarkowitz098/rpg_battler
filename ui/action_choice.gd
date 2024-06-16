@@ -4,6 +4,7 @@ func _ready():
 	Events.choosing_action_state_entered.connect(_on_choosing_action_state_entered)
 	Events.choosing_action_queue_state_entered.connect(_on_choosing_action_queue_state_entered)
 	Events.choosing_skill_state_entered.connect(_on_choosing_skill_state_entered)
+	Events.is_battling_state_entered.connect(_on_is_battling_state_entered)
 
 func clear_focus():
 	for child in get_children():
@@ -17,3 +18,6 @@ func _on_choosing_action_queue_state_entered():
 
 func _on_choosing_skill_state_entered():
 	hide()
+
+func _on_is_battling_state_entered():
+	clear_focus()
