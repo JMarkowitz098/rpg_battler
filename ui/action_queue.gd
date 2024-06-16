@@ -15,6 +15,7 @@ const TALON_PORTRAIT := preload("res://players/Talon/TalonPortrait.jpeg")
 func _ready():
 	Events.choosing_action_state_entered.connect(_on_choosing_action_state_entered)
 	Events.choosing_action_queue_state_entered.connect(_on_choosing_action_queue_state_entered)
+	Events.is_battling_state_entered.connect(_on_is_battling_state_entered)
 
 # ----------------
 # Public Functions
@@ -245,3 +246,7 @@ func _on_choosing_action_state_entered():
 
 func _on_choosing_action_queue_state_entered():
 	set_focus(0)
+
+func _on_is_battling_state_entered():
+	clear_all_focus()
+	clear_all_turn_focus()
