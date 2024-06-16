@@ -3,15 +3,9 @@ class_name ChoosingActionQueue
 
 var change_state: Callable
 var change_to_previous_state: Callable
-var holder = ComponentHolder
 
 func enter():
 	Events.choosing_action_queue_state_entered.emit()
-	
-func _init(init):
-	change_state = init.change_state
-	change_to_previous_state = init.change_to_previous_state
-	holder = init.holder
 	
 func handle_input():
 	Events.enter_action_queue_handle_input.emit()

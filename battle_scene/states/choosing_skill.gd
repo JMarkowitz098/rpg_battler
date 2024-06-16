@@ -1,12 +1,5 @@
 class_name ChoosingSkill
 
-var change_state: Callable
-var holder: ComponentHolder
-
-func _init(init):
-	holder = init.holder
-	change_state = init.change_state
-
 func enter():
 	Events.choosing_skill_state_entered.emit()
 

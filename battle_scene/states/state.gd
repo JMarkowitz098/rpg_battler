@@ -20,17 +20,12 @@ var choosing_skill_state: ChoosingSkill
 var choosing_enemy_state: ChoosingEnemy
 var is_battling_state: IsBattling
 
-func _init(holder):
-	var init_params := {
-		"change_state": change_state,
-		"change_to_previous_state": change_to_previous_state,
-		"holder": holder
-	}
-	choosing_action_state = ChoosingAction.new(init_params)
-	choosing_action_queue_state = ChoosingActionQueue.new(init_params)
-	choosing_skill_state = ChoosingSkill.new(init_params)
-	choosing_enemy_state = ChoosingEnemy.new(init_params)
-	is_battling_state = IsBattling.new(init_params)
+func _init():
+	choosing_action_state = ChoosingAction.new()
+	choosing_action_queue_state = ChoosingActionQueue.new()
+	choosing_skill_state = ChoosingSkill.new()
+	choosing_enemy_state = ChoosingEnemy.new()
+	is_battling_state = IsBattling.new()
 
 	Events.change_state.connect(change_state)
 	Events.change_to_previous_state.connect(change_to_previous_state)

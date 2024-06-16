@@ -1,12 +1,5 @@
 class_name ChoosingEnemy
 
-var change_state: Callable
-var holder: ComponentHolder
-
-func _init(init):
-	holder = init.holder
-	change_state = init.change_state
-
 func enter():
 	Events.choosing_enemy_state_entered.emit()
 

@@ -24,19 +24,7 @@ var skill_index := 0
 @onready var skill_choice_list = $CanvasLayer/SkillChoiceList
 
 @onready var current_action_button: Button = incursion
-@onready var holder = ComponentHolder.new({
-	"action_queue": action_queue,
-	"action_choice": action_choice,
-	"current_action_button": current_action_button,
-	"current_skill_button": current_skill_button,
-	"current_skill_type": current_skill_type,
-	"current_skill": current_skill,
-	"enemy_group": enemy_group,
-	"info_label": info_label,
-	"player_group": player_group,
-	"skill_choice_list": skill_choice_list,
-})
-@onready var state := State.new(holder)
+@onready var state := State.new()
 
 func _ready() -> void:
 	audio_stream_player_2d.play()
@@ -102,14 +90,14 @@ func _on_dodge_focus_entered():
 	if info_label: info_label.draw_action_button_description(2)
 	
 func _on_incursion_pressed():
-	holder.current_skill_type = Skill.Type.INCURSION
+	current_skill_type = Skill.Type.INCURSION
 	state.change_state(State.Type.CHOOSING_SKILL)
-	holder.current_skill = skill_choice_list.current_skills[0]
+	current_skill = skill_choice_list.current_skills[0]
 
 func _on_refrain_pressed():
-	holder.current_skill_type = Skill.Type.REFRAIN
+	current_skill_type = Skill.Type.REFRAIN
 	state.change_state(State.Type.CHOOSING_SKILL)
-	holder.current_skill = skill_choice_list.current_skills[0]
+	current_skill = skill_choice_list.current_skills[0]
 	
 func _on_dodge_pressed():
 	var unique_id = players[action_queue.player_index].stats.unique_id
@@ -117,8 +105,8 @@ func _on_dodge_pressed():
 	var current_action = action_queue.items[current_action_id].action
 	action_queue.set_dodge(current_action)
 
-	if !holder.action_queue.is_turn_over():
-		holder.action_queue.next_player()
+	if !action_queue.is_turn_over():
+		action_queue.next_player()
 		state.change_state(State.Type.CHOOSING_ACTION)
 	else:
 		state.change_state.call(State.Type.IS_BATTLING)
@@ -136,7 +124,7 @@ func _draw_action_button_description(action_choice_index: int):
 func _handle_choose_skill(skill: SkillStats):
 	current_skill = skill
 		
-	match holder.current_skill.target:
+	match current_skill.target:
 		Skill.Target.ENEMY:
 			state.change_state.call(State.Type.CHOOSING_ENEMY)
 			return
@@ -148,8 +136,8 @@ func _handle_choose_skill(skill: SkillStats):
 		)
 
 			# Factor into function in state class
-			if !holder.action_queue.is_turn_over():
-				holder.action_queue.next_player()
+			if !action_queue.is_turn_over():
+				action_queue.next_player()
 				state.change_state.call(State.Type.CHOOSING_ACTION)
 			else:
 				state.change_state.call(State.Type.IS_BATTLING)
