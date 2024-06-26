@@ -13,11 +13,11 @@ const TALON_PLAYER_DETAILS := preload("res://players/Talon/talon_player_details.
 const NASH_PORTRAIT := preload("res://players/Nash/NashPortrait.jpeg")
 const NASH_PLAYER_DETAILS = preload("res://players/Nash/nash_player_details.tres")
 
-func _ready():
+func _ready() -> void:
 	_set_focus()
 	_render_player_slots()
 
-func _set_focus():
+func _set_focus() -> void:
 	match Utils.get_param("slot"):
 		0:
 			slot_one_button.focus()
@@ -26,11 +26,11 @@ func _set_focus():
 		_:
 			slot_one_button.focus()
 	
-func _render_player_slots():
+func _render_player_slots() -> void:
 	for player_slot_index in MAX_SLOTS:
 		_render_slot(player_slot_index)
 	
-func _render_slot(slot_index: int):
+func _render_slot(slot_index: int) -> void:
 	var save_data := SaveAndLoadPlayer.load_player(slot_index)
 	if not save_data:
 		return
@@ -59,14 +59,14 @@ func _render_slot(slot_index: int):
 		#3: 
 			#slot_four_button_container.text = slot.label
 			
-func _change_to_character_creation(slot):
+func _change_to_character_creation(slot: int) -> void:
 	Utils.change_scene("res://menus/character_creation_menu.tscn", { "slot": slot })
 
-func _on_slot_one_button_pressed():
+func _on_slot_one_button_pressed() -> void:
 	_change_to_character_creation(0)
 
-func _on_slot_two_button_pressed():
+func _on_slot_two_button_pressed() -> void:
 	_change_to_character_creation(1)
 
-func _on_start_button_pressed():
+func _on_start_button_pressed() -> void:
 	get_tree().change_scene_to_file("res://battle_scene/battle_scene.tscn")

@@ -1,9 +1,9 @@
 class_name ChoosingSkill
 
-func enter():
+func enter() -> void:
 	Events.choosing_skill_state_entered.emit()
 
-func handle_input():
+func handle_input() -> void:
 	Events.update_info_label_with_skill_description.emit()
 
 	if Input.is_action_just_pressed("to_action_queue"):

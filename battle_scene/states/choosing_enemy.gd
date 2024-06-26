@@ -1,9 +1,9 @@
 class_name ChoosingEnemy
 
-func enter():
+func enter() -> void:
 	Events.choosing_enemy_state_entered.emit()
 
-func handle_input():
+func handle_input() -> void:
 	if Input.is_action_just_pressed("menu_left"):
 		Events.update_enemy_group_current.emit(ActionQueue.Direction.LEFT)
 			

@@ -5,12 +5,12 @@ const SAVE_PATH = "res://save.cfg"
 
 const PARTY_SIZE = 4
 
-@onready var config = ConfigFile.new()
+@onready var config := ConfigFile.new()
 
-func _ready():
+func _ready() -> void:
 	config.load(SAVE_PATH)
 
-func save_player(player_slot, stats):
+func save_player(player_slot: int, stats: Dictionary) -> void:
 	
 	config.load(SAVE_PATH)
 	# We want it to create a new file if one doesn't exist, so for now no check
@@ -24,8 +24,8 @@ func save_player(player_slot, stats):
 	
 func load_player(slot: int) -> SaveData:
 	if config.has_section_key("Players", str(slot)):
-		var data_dict = config.get_value("Players", str(slot))
-		var save_data = SaveData.new(
+		var data_dict: Dictionary = config.get_value("Players", str(slot))
+		var save_data := SaveData.new(
 			data_dict.level,
 			data_dict.player_id,
 			data_dict.slot,
@@ -43,7 +43,7 @@ func load_all_players() -> Array[SaveData]:
 	return all_players_data
 	
 	
-func clear_save_file():
+func clear_save_file() -> void:
 	config.clear()
 	config.save(SAVE_PATH)
 

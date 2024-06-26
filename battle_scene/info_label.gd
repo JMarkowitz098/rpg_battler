@@ -1,13 +1,13 @@
 extends Label
 
-func _ready():
+func _ready() -> void:
 	Events.is_battling_state_entered.connect(_on_is_battling_state_entered)
 	Events.update_info_label.connect(_on_update_info_label)
 
-func clear():
+func clear() -> void:
 	text = ""
 
-func draw_action_button_description(action_type_index: int):
+func draw_action_button_description(action_type_index: int) -> void:
 	match action_type_index:
 		0:
 			text = "Use an incursion"
@@ -16,8 +16,8 @@ func draw_action_button_description(action_type_index: int):
 		2: 
 			text = "Attempt to dodge an attack"
 	
-func _on_is_battling_state_entered():
+func _on_is_battling_state_entered() -> void:
 	clear()
 
-func _on_update_info_label(new_message):
+func _on_update_info_label(new_message: String) -> void:
 	text = new_message

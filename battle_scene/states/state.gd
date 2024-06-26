@@ -11,8 +11,8 @@ enum Type {
 	VICTORY
 }
 
-var current
-var previous
+var current: Variant
+var previous: Variant
 
 var choosing_action_state: ChoosingAction
 var choosing_action_queue_state: ChoosingActionQueue
@@ -20,7 +20,7 @@ var choosing_skill_state: ChoosingSkill
 var choosing_enemy_state: ChoosingEnemy
 var is_battling_state: IsBattling
 
-func _init():
+func _init() -> void:
 	choosing_action_state = ChoosingAction.new()
 	choosing_action_queue_state = ChoosingActionQueue.new()
 	choosing_skill_state = ChoosingSkill.new()
@@ -30,7 +30,7 @@ func _init():
 	Events.change_state.connect(change_state)
 	Events.change_to_previous_state.connect(change_to_previous_state)
 
-func change_state(new_state_id: Type):
+func change_state(new_state_id: Type) -> void:
 	match new_state_id:
 		Type.CHOOSING_ACTION:
 			_update_state_vars(choosing_action_state)
@@ -43,13 +43,13 @@ func change_state(new_state_id: Type):
 		Type.IS_BATTLING:
 			_update_state_vars(is_battling_state)
 
-func change_to_previous_state():
-	var new_state = previous
+func change_to_previous_state() -> void:
+	var new_state: Variant = previous
 	previous = current
 	current = new_state
 	new_state.enter()
 
-func _update_state_vars(new_state):
+func _update_state_vars(new_state: Variant) -> void:
 	previous = current
 	current = new_state
 	new_state.enter()

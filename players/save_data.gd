@@ -6,7 +6,7 @@ var player_id: int
 var slot: int
 var unique_id: String
 
-func _init(n_level: int, n_player_id: int, n_slot: int, n_unique_id: String):
+func _init(n_level: int, n_player_id: int, n_slot: int, n_unique_id: String) -> void:
 	level = n_level
 	player_id = n_player_id
 	slot = n_slot

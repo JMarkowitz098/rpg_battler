@@ -1,7 +1,7 @@
 class_name Stats
 extends Node
 
-signal no_ingress_energy(id)
+signal no_ingress_energy(id: String)
 signal took_damage
 signal used_skill
 
@@ -37,8 +37,8 @@ func use_ingress_energy(value: int) -> void:
 	current_ingress -= value
 	used_skill.emit()
 
-static func create_unique_id(new_player_id):
-	var rand_player_i = randi() % 1000
+static func create_unique_id(new_player_id: int) -> String:
+	var rand_player_i := randi() % 1000
 	return str(new_player_id) + "_" + str(rand_player_i)
 	
 static func get_element_label(element_id: int) -> String:

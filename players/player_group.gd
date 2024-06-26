@@ -36,7 +36,7 @@ func clear_turn_focus() -> void:
 		player.turn.clear()
 		
 func remove_player_by_id(id: String) -> void:
-	players = players.filter(func(player): return player.stats.unique_id != id)
+	players = players.filter(func(player: Node2D) -> bool: return player.stats.unique_id != id)
 
 func get_current_player() -> Node2D:
 	return players[current]
@@ -45,7 +45,7 @@ func next_player() -> void:
 	if (current <= players.size()):
 		current += 1
 
-func reset_current():
+func reset_current() -> void:
 	current = 0
 	
 # -----------------
@@ -77,8 +77,8 @@ func _instantiate_player(save_data: SaveData) -> void:
 	
 	players.append(new_player)
 
-func _update_level(player: Node2D, save_data: SaveData):
-	var new_stats = LevelStats.load_level_data(save_data.player_id, save_data.level)
+func _update_level(player: Node2D, save_data: SaveData) -> void:
+	var new_stats := LevelStats.load_level_data(save_data.player_id, save_data.level)
 	player.stats.level_stats = new_stats
 	player.stats.current_ingress = new_stats.max_ingress
 	player.update_energy_bar()
@@ -98,15 +98,15 @@ func _set_location(slot_index: int, player: Node2D) -> void:
 # Signals
 # -------
 
-func _on_choosing_action_state_entered():
+func _on_choosing_action_state_entered() -> void:
 	clear_turn_focus()
 
-func _on_choosing_action_queue_state_entered():
+func _on_choosing_action_queue_state_entered() -> void:
 	clear_focus()
 	clear_turn_focus()
 
-func _on_is_battling_state_entered():
+func _on_is_battling_state_entered() -> void:
 	clear_turn_focus()
 
-func _on_enter_action_queue_handle_input():
+func _on_enter_action_queue_handle_input() -> void:
 	clear_turn_focus()

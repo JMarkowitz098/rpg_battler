@@ -16,17 +16,17 @@ func _init(
 	if(init_target): target = init_target
 	skill = init_skill
 
-func set_attack(attack_target: Node2D = null, attack_skill: SkillStats = null):
+func set_attack(attack_target: Node2D = null, attack_skill: SkillStats = null) -> void:
 	if (attack_target): target = attack_target
 	skill = attack_skill
 	action_chosen = true
 
-func set_dodge():
+func set_dodge() -> void:
 	actor.stats.is_dodging = true
 	set_attack(null, Skill.create_skill_instance(Skill.Id.DODGE))
 
-func set_enemy_skill(incoming_skill: SkillStats, players: Array[Node2D]):
-	var incoming_target = null
+func set_enemy_skill(incoming_skill: SkillStats, players: Array[Node2D]) -> void:
+	var incoming_target: Node2D = null
 	if incoming_skill.target == Skill.Target.ENEMY:
 		incoming_target = players[randi() % players.size()]
 	set_attack(incoming_target, incoming_skill)

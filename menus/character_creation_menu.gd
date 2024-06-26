@@ -31,11 +31,11 @@ func _ready() -> void:
 # Signals
 # -------
 
-func _on_talon_button_pressed():
+func _on_talon_button_pressed() -> void:
 	_create_and_save_new_player()
 	Utils.change_scene("res://menus/character_menu.tscn", { "slot": player_slot })
 
-func _on_nash_button_pressed():
+func _on_nash_button_pressed() -> void:
 	_create_and_save_new_player()
 	Utils.change_scene("res://menus/character_menu.tscn", { "slot": player_slot })
 
@@ -48,17 +48,17 @@ func _create_and_save_new_player() -> void:
 		1, details.player_id, player_slot, Stats.create_unique_id(details.player_id))
 	SaveAndLoadPlayer.save_player(player_slot, save_data.format_for_save())
 	
-func _on_talon_button_focus_entered():
+func _on_talon_button_focus_entered() -> void:
 	details = TALON_PLAYER_DETAILS
 	stats = TALON_LEVEL_1
 	_update_display_info(TALON_PORTRAIT)
 
-func _on_nash_button_focus_entered():
+func _on_nash_button_focus_entered() -> void:
 	details = NASH_PLAYER_DETAILS
 	stats = NASH_LEVEL_1
 	_update_display_info(NASH_PORTRAIT)
 		
-func _update_display_info(player_portrait):
+func _update_display_info(player_portrait: Texture2D) -> void:
 	# Ensure nodes have loaded. Focus signals seem to trigger before ready
 	if !character_name: return
 	

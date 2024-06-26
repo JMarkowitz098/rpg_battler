@@ -45,14 +45,14 @@ const SMALL_REFRAIN_POWER := 1
 
 signal pressed()
 
-static func fill_skill_choice_list(player: Node2D, skill_choice_list: GridContainer, filter_type: Skill.Type):
+static func fill_skill_choice_list(player: Node2D, skill_choice_list: GridContainer, filter_type: Skill.Type) -> void:
 	for child in skill_choice_list.get_children():
 		# queue_free is deferred until end of frame, so we remove node from list
 		# to prevent indexing issues while turn is processing
 		skill_choice_list.remove_child(child)
 		child.queue_free()
 		
-	for skill in player.get_skills(filter_type):
+	for skill: SkillStats in player.get_skills(filter_type):
 		_create_button_choice(skill_choice_list, skill.label)
 
 #static func create_dodge() -> Skill:
@@ -64,8 +64,8 @@ static func fill_skill_choice_list(player: Node2D, skill_choice_list: GridContai
 	#dodge.target = Target.SELF
 	#return dodge
 	
-static func _create_button_choice(skill_choice_list, button_text) -> void:
-	var button = Button.new()
+static func _create_button_choice(skill_choice_list: GridContainer, button_text: String) -> void:
+	var button := Button.new()
 	button.text = button_text
 	skill_choice_list.add_child(button)
 
@@ -103,7 +103,7 @@ static func create_skill_instance(skill_id: int) -> Resource:
 			return null
 
 static func get_skill_label(skill_id: int) -> String:
-	var skill = create_skill_instance(skill_id).instantiate()
-	var skill_label = skill.label
+	var skill: SkillStats = create_skill_instance(skill_id).instantiate()
+	var skill_label := skill.label
 	skill.queue_free()
 	return skill_label
