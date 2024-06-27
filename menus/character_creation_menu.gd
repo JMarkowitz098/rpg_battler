@@ -44,9 +44,13 @@ func _on_nash_button_pressed() -> void:
 # ----------------
 
 func _create_and_save_new_player() -> void:
-	var save_data := SaveData.new(
-		1, details.player_id, player_slot, Stats.create_unique_id(details.player_id))
-	SaveAndLoadPlayer.save_player(player_slot, save_data.format_for_save())
+	var save_data := PlayerSaveData.new({
+		"level": 1,
+		"player_id": details.player_id,
+		"slot": player_slot,
+		"unique_id": Stats.create_unique_id(details.player_id)
+	})
+	SaveAndLoadPlayer.save_player(player_slot, save_data)
 	
 func _on_talon_button_focus_entered() -> void:
 	details = TALON_PLAYER_DETAILS

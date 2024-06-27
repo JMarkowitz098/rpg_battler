@@ -1,82 +1,124 @@
-extends ColorRect
+extends Panel
 
-@onready var summary_data = $VBoxContainer/SummaryData
-@onready var stat_data = $VBoxContainer/StatData
-@onready var skills_data = $VBoxContainer/SkillsData
+const NASH_PORTRAIT := preload("res://players/Nash/NashPortrait.jpeg")
+const TALON_PORTRAIT := preload("res://players/Talon/TalonPortrait.jpeg")
+
+@onready var defeated_portraits := $Screen1/DefeatedPortraits
+@onready var next_battle_button := $Screen2/NextBattleButton
+@onready var next_screen_button := $Screen1/NextScreenButton
+@onready var player_columns := $Screen2/PlayerColumns
+@onready var screen_1 := $Screen1
+@onready var screen_2 := $Screen2
+@onready var summary_data := $Screen1/SummaryData
 
 var players_stats := []
 
-func _ready():
+func _ready() -> void:
+	next_screen_button.focus()
 	_render_summary()
-	_update_players_stats_and_skills()
-	_render_players_stats()
-	_render_players_skills()
+	_level_up_player_and_save()
+	_render_level_up_columns()
 
 func _render_summary() -> void:
-	var defeated = Utils.get_param("defeated")
-	if defeated:
-		var labels = defeated.map(func(unique_id): 
-			var player_id = int(unique_id[0])
-			return Stats.get_player_label(player_id))
-		var summary_data_text = "You defeated "
-		for label in labels:
-			summary_data_text += label + " and "
-		summary_data.text = summary_data_text.trim_suffix(" and ")
+	var defeated: Array[String] = Utils.get_param("defeated")
+	# var defeated: Array[String] = ["0_123", "1_456"] # For debugging
+	var summary_data_text := "You defeated "
 	
-func _update_players_stats_and_skills():
-	var loaded = SaveAndLoadPlayer.load_all_players()
-	var level_loader = SaveAndLoadLevel.new()
+	for unique_id: String in defeated:
+		var player_id := int(unique_id[0])
+		summary_data_text += Stats.get_player_label(player_id) + " and "
 
-	var slot_index := 0
-	for loaded_stats in loaded:
-		if(loaded_stats):
-			players_stats.append({"old": loaded_stats})
-			var new_stats = level_loader.get_data(loaded_stats.player_id, loaded_stats.level + 1)
-			_fill_new_stats(new_stats, loaded_stats)
-			SaveAndLoadPlayer.save_player(slot_index, new_stats)
-			players_stats[slot_index]["new"] = new_stats
-			slot_index += 1
+		var new_texture_rect := _create_portrait_texture_rec(player_id)
+		defeated_portraits.add_child(new_texture_rect)
+		
+	summary_data.text = summary_data_text.trim_suffix(" and ")
 
-func _fill_new_stats(new_stats: Dictionary, loaded_stats: Dictionary):
-	var keys = [
-		"elements",
-		"icon_type",
-		"label",
-		"level",
-		"player_id",
-		"slot",
-		"unique_id"
-	]
-	for key in keys:
-		new_stats[key] = loaded_stats[key]
-	new_stats.current_ingress_energy = new_stats.max_ingress_energy
-	new_stats.level = loaded_stats.level + 1
+func _get_player_portrait(player_id: Stats.PlayerId) -> Texture2D:
+	match(player_id):
+		Stats.PlayerId.TALON:
+			return TALON_PORTRAIT
+		Stats.PlayerId.NASH:
+			return NASH_PORTRAIT
+		_:
+			return null
 
-func _render_players_stats():
-	var players_stats_message := ""
-	for stats in players_stats:
-		players_stats_message += stats.new.label + " " + str(stats.new.slot) + ": "
-		players_stats_message += _create_stat_message(stats, "max_ingress_energy", "Ingress")
-		players_stats_message += _create_stat_message(stats, "incursion_power", "Incursion")
-		players_stats_message += _create_stat_message(stats, "refrain_power", "Refrain")
-		players_stats_message += _create_stat_message(stats, "agility", "Agility")
-		players_stats_message += "\n"
+func _create_portrait_texture_rec(player_id: Stats.PlayerId) -> TextureRect:
+	var player_portait := _get_player_portrait(player_id)
+	var new_texture_rect := TextureRect.new()
+	new_texture_rect.texture = player_portait
+	new_texture_rect.expand_mode = TextureRect.EXPAND_FIT_WIDTH
+	new_texture_rect.self_modulate = Color("red")
+	return new_texture_rect
 	
-	stat_data.text = players_stats_message.trim_suffix(",")
+func _level_up_player_and_save() -> void:
+	var loaded_players := SaveAndLoadPlayer.load_all_players()
+
+	for loaded_player_data in loaded_players:
+		if(loaded_player_data):
+			players_stats.append({"player_details": loaded_player_data})
+
+			var old_level_data: Variant = LevelStats.load_level_data(
+				loaded_player_data.player_id, loaded_player_data.level)
+			players_stats[loaded_player_data.slot]["old"] = old_level_data
+
+			var new_save_data := _save_and_return_new_level_data(loaded_player_data)
+			var new_level_data: Variant = LevelStats.load_level_data(
+				new_save_data.player_id, new_save_data.level)
+			players_stats[loaded_player_data.slot]["new"] = new_level_data
+
+func _save_and_return_new_level_data(loaded_player_data: PlayerSaveData) -> PlayerSaveData:
+	var new_save_data := PlayerSaveData.new({
+		"level": loaded_player_data.level + 1,
+		"player_id": loaded_player_data.player_id,
+		"slot": loaded_player_data.slot,
+		"unique_id": loaded_player_data.unique_id
+	})
+	SaveAndLoadPlayer.save_player(loaded_player_data.slot, new_save_data)
+	return new_save_data
+
+func _render_level_up_columns() -> void:
+	var level_up_columns := player_columns.get_children()
+
+	for stats: Dictionary in players_stats:
+		var column := level_up_columns[stats.player_details.slot]
+
+		_render_column_player_label(column, stats)
+		_render_column_portrait(column, stats)
+		_render_column_stats(column, stats)
+		_render_column_skills(column, stats)
+
+		column.show()
+	
+func _render_column_player_label(column: VBoxContainer, stats: Dictionary) -> void:
+	column.find_child("PlayerLabel").text = Stats.get_player_label(stats.player_details.player_id)
+
+func _render_column_portrait(column: VBoxContainer, stats: Dictionary) -> void:
+	var player_portait := _get_player_portrait(stats.player_details.player_id)
+	column.find_child("PlayerPortrait").texture = player_portait
+
+func _render_column_stats(column: VBoxContainer, stats: Dictionary) -> void:
+	var message := _create_stat_message(stats, "max_ingress", "Ingress")
+	message += _create_stat_message(stats, "incursion", "Incursion")
+	message += _create_stat_message(stats, "refrain", "Refrain")
+	message += _create_stat_message(stats, "agility", "Agility")
+
+	column.find_child("StatIncreases").text = message
 
 func _create_stat_message(stats: Dictionary, stat_key: String, stat_label: String) -> String:
-	return " +" + str(stats.new[stat_key] - stats.old[stat_key]) + " " + stat_label + ","
+	return stat_label + " +" + str(stats.new[stat_key] - stats.old[stat_key]) + "\n"
 
-func _render_players_skills():
-	var players_skills_message := ""
-	for stats in players_stats:
-		players_skills_message += stats.new.label + " " + str(stats.new.slot) + " learned: "
-		for skill_id in stats.new.skills:
-			if not skill_id in stats.old.skills:
-				players_skills_message += Skill.get_skill_label(skill_id) + ", "
-		players_skills_message += "\n"
-	
-	skills_data.text = players_skills_message
+func _render_column_skills(column: VBoxContainer, stats: Dictionary) -> void:
+	var message := ""
+	for skill_id: Skill.Id in stats.new.skills:
+		if not skill_id in stats.old.skills:
+			message += Skill.get_skill_label(skill_id) + "\n"
 
-func _on_next_battle_pressed():
-	get_tree().change_scene_to_file("res://world/battle_scene.tscn")
+	column.find_child("SkillsData").text = message
+
+func _on_next_button_pressed() -> void:
+	screen_1.hide()
+	screen_2.show()
+	next_battle_button.focus()
+
+func _on_next_battle_button_pressed() -> void:
+	get_tree().change_scene_to_file("res://battle_scene/battle_scene.tscn")

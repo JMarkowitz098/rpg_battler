@@ -103,7 +103,4 @@ static func create_skill_instance(skill_id: int) -> Resource:
 			return null
 
 static func get_skill_label(skill_id: int) -> String:
-	var skill: SkillStats = create_skill_instance(skill_id).instantiate()
-	var skill_label := skill.label
-	skill.queue_free()
-	return skill_label
+	return create_skill_instance(skill_id).label

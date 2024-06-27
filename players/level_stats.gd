@@ -13,17 +13,17 @@ static func load_level_data(player_id: int, new_level: int) -> Resource:
 		Stats.PlayerId.TALON:
 			match new_level:
 				1:
-					return load("res://characters/Talon/levels/talon_level_1.tres")
+					return load("res://players/Talon/levels/talon_level_1.tres")
 				2:
-					return load("res://characters/Talon/levels/talon_level_2.tres")
+					return load("res://players/Talon/levels/talon_level_2.tres")
 				_:
 					return null
 		Stats.PlayerId.NASH:
 			match new_level:
 				1:
-					return load("res://characters/Nash/levels/nash_level_1.tres")
+					return load("res://players/Nash/levels/nash_level_1.tres")
 				2:
-					return load("res://characters/Nash/levels/nash_level_2.tres")
+					return load("res://players/Nash/levels/nash_level_2.tres")
 				_:
 					return null
 		_:

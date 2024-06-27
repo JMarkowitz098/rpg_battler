@@ -1,84 +1,247 @@
-[gd_scene load_steps=5 format=3 uid="uid://b1ta8y2077onx"]
+[gd_scene load_steps=7 format=3 uid="uid://b1ta8y2077onx"]
 
 [ext_resource type="Script" path="res://menus/victory_screen.gd" id="1_v2ysd"]
+[ext_resource type="Texture2D" uid="uid://n58duguylnib" path="res://icon.svg" id="2_3hmeu"]
+[ext_resource type="PackedScene" uid="uid://ch51mvl5giece" path="res://menus/default_button.tscn" id="3_27qmw"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_60yq4"]
-
-[sub_resource type="LabelSettings" id="LabelSettings_q47jw"]
-font_size = 10
+font_color = Color(0, 0, 0, 1)
 
 [sub_resource type="LabelSettings" id="LabelSettings_p8jk1"]
-font_size = 6
+font_size = 4
+font_color = Color(0, 0, 0, 1)
 
-[node name="VictoryScreen" type="ColorRect"]
+[sub_resource type="LabelSettings" id="LabelSettings_q47jw"]
+font_size = 6
+font_color = Color(0, 0, 0, 1)
+
+[node name="VictoryScreen" type="Panel"]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-color = Color(0.321569, 0.258824, 1, 1)
 script = ExtResource("1_v2ysd")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="."]
+[node name="Screen1" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="YouWon" type="Label" parent="Screen1"]
+layout_mode = 2
+text = "You Won!"
+label_settings = SubResource("LabelSettings_60yq4")
+horizontal_alignment = 1
+
+[node name="SummaryData" type="Label" parent="Screen1"]
+layout_mode = 2
+text = "You defeated PLACEHOLDER TEXT"
+label_settings = SubResource("LabelSettings_p8jk1")
+horizontal_alignment = 1
+
+[node name="DefeatedPortraits" type="HBoxContainer" parent="Screen1"]
+custom_minimum_size = Vector2(2.08165e-12, 70)
+layout_mode = 2
+size_flags_vertical = 0
+alignment = 1
+
+[node name="TextureRect" type="TextureRect" parent="Screen1/DefeatedPortraits"]
+visible = false
+layout_mode = 2
+texture = ExtResource("2_3hmeu")
+expand_mode = 2
+
+[node name="SummaryData2" type="Label" parent="Screen1"]
+layout_mode = 2
+text = "You went up a level and got new stats and skills"
+label_settings = SubResource("LabelSettings_p8jk1")
+horizontal_alignment = 1
+
+[node name="NextScreenButton" parent="Screen1" instance=ExtResource("3_27qmw")]
+layout_mode = 2
+size_flags_horizontal = 4
+text = "Next"
+
+[node name="Screen2" type="VBoxContainer" parent="."]
+visible = false
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
 grow_horizontal = 2
 alignment = 1
 
-[node name="YouWon" type="Label" parent="VBoxContainer"]
+[node name="PlayerColumns" type="HBoxContainer" parent="Screen2"]
+custom_minimum_size = Vector2(2.08165e-12, 100)
 layout_mode = 2
-text = "You Won!"
-label_settings = SubResource("LabelSettings_60yq4")
+alignment = 1
+
+[node name="Slot1" type="VBoxContainer" parent="Screen2/PlayerColumns"]
+custom_minimum_size = Vector2(60, 100)
+layout_mode = 2
+
+[node name="PlayerLabel" type="Label" parent="Screen2/PlayerColumns/Slot1"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 8
+text = "Talon"
 horizontal_alignment = 1
 
-[node name="Summary" type="Label" parent="VBoxContainer"]
+[node name="PlayerPortrait" type="TextureRect" parent="Screen2/PlayerColumns/Slot1"]
+custom_minimum_size = Vector2(2.08165e-12, 50)
 layout_mode = 2
-text = "Summary"
-label_settings = SubResource("LabelSettings_q47jw")
-horizontal_alignment = 1
+texture = ExtResource("2_3hmeu")
+expand_mode = 2
 
-[node name="SummaryData" type="Label" parent="VBoxContainer"]
+[node name="StatIncreases" type="Label" parent="Screen2/PlayerColumns/Slot1"]
 layout_mode = 2
-text = "You defeated PLACEHOLDER TEXT"
+text = "Ingress +1 
+Incursion +1 
+Refrain +1
+Agility +1 "
 label_settings = SubResource("LabelSettings_p8jk1")
 horizontal_alignment = 1
 
-[node name="SummaryData2" type="Label" parent="VBoxContainer"]
+[node name="NewSkills" type="Label" parent="Screen2/PlayerColumns/Slot1"]
 layout_mode = 2
-text = "You went up a level and got new stats and skills"
-label_settings = SubResource("LabelSettings_p8jk1")
-horizontal_alignment = 1
-
-[node name="StatIncreases" type="Label" parent="VBoxContainer"]
-layout_mode = 2
-text = "Stat Increases"
+text = "New Skills:"
 label_settings = SubResource("LabelSettings_q47jw")
 horizontal_alignment = 1
 
-[node name="StatData" type="Label" parent="VBoxContainer"]
+[node name="SkillsData" type="Label" parent="Screen2/PlayerColumns/Slot1"]
 layout_mode = 2
-text = "Slot1: +1 Ingress, +1 Incursion +1, Refrain +1 Agility, +1"
-label_settings = SubResource("LabelSettings_p8jk1")
-horizontal_alignment = 1
-
-[node name="NewSkills" type="Label" parent="VBoxContainer"]
-layout_mode = 2
-text = "New Skills"
-label_settings = SubResource("LabelSettings_q47jw")
-horizontal_alignment = 1
-
-[node name="SkillsData" type="Label" parent="VBoxContainer"]
-layout_mode = 2
-text = "Slot 1: Mult Eth Incursion, Eth Refrain (medium)"
+text = "Mult Eth Incursion
+Eth Refrain"
 label_settings = SubResource("LabelSettings_p8jk1")
 horizontal_alignment = 1
 autowrap_mode = 3
 
-[node name="NextBattle" type="Button" parent="VBoxContainer"]
+[node name="Slot2" type="VBoxContainer" parent="Screen2/PlayerColumns"]
+visible = false
+custom_minimum_size = Vector2(60, 100)
+layout_mode = 2
+
+[node name="PlayerLabel" type="Label" parent="Screen2/PlayerColumns/Slot2"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 8
+text = "Talon"
+horizontal_alignment = 1
+
+[node name="PlayerPortrait" type="TextureRect" parent="Screen2/PlayerColumns/Slot2"]
+custom_minimum_size = Vector2(2.08165e-12, 50)
+layout_mode = 2
+texture = ExtResource("2_3hmeu")
+expand_mode = 2
+
+[node name="StatIncreases" type="Label" parent="Screen2/PlayerColumns/Slot2"]
+layout_mode = 2
+text = "Ingress +1 
+Incursion +1 
+Refrain +1
+Agility +1 "
+label_settings = SubResource("LabelSettings_p8jk1")
+horizontal_alignment = 1
+
+[node name="NewSkills" type="Label" parent="Screen2/PlayerColumns/Slot2"]
+layout_mode = 2
+text = "New Skills:"
+label_settings = SubResource("LabelSettings_q47jw")
+horizontal_alignment = 1
+
+[node name="SkillsData" type="Label" parent="Screen2/PlayerColumns/Slot2"]
+layout_mode = 2
+text = "Mult Eth Incursion
+Eth Refrain"
+label_settings = SubResource("LabelSettings_p8jk1")
+horizontal_alignment = 1
+autowrap_mode = 3
+
+[node name="Slot3" type="VBoxContainer" parent="Screen2/PlayerColumns"]
+visible = false
+custom_minimum_size = Vector2(60, 100)
+layout_mode = 2
+
+[node name="PlayerLabel" type="Label" parent="Screen2/PlayerColumns/Slot3"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 8
+text = "Talon"
+horizontal_alignment = 1
+
+[node name="PlayerPortrait" type="TextureRect" parent="Screen2/PlayerColumns/Slot3"]
+custom_minimum_size = Vector2(2.08165e-12, 50)
+layout_mode = 2
+texture = ExtResource("2_3hmeu")
+expand_mode = 2
+
+[node name="StatIncreases" type="Label" parent="Screen2/PlayerColumns/Slot3"]
+layout_mode = 2
+text = "Ingress +1 
+Incursion +1 
+Refrain +1
+Agility +1 "
+label_settings = SubResource("LabelSettings_p8jk1")
+horizontal_alignment = 1
+
+[node name="NewSkills" type="Label" parent="Screen2/PlayerColumns/Slot3"]
+layout_mode = 2
+text = "New Skills:"
+label_settings = SubResource("LabelSettings_q47jw")
+horizontal_alignment = 1
+
+[node name="SkillsData" type="Label" parent="Screen2/PlayerColumns/Slot3"]
+layout_mode = 2
+text = "Mult Eth Incursion
+Eth Refrain"
+label_settings = SubResource("LabelSettings_p8jk1")
+horizontal_alignment = 1
+autowrap_mode = 3
+
+[node name="Slot4" type="VBoxContainer" parent="Screen2/PlayerColumns"]
+visible = false
+custom_minimum_size = Vector2(60, 100)
+layout_mode = 2
+
+[node name="PlayerLabel" type="Label" parent="Screen2/PlayerColumns/Slot4"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 8
+text = "Talon"
+horizontal_alignment = 1
+
+[node name="PlayerPortrait" type="TextureRect" parent="Screen2/PlayerColumns/Slot4"]
+custom_minimum_size = Vector2(2.08165e-12, 50)
+layout_mode = 2
+texture = ExtResource("2_3hmeu")
+expand_mode = 2
+
+[node name="StatIncreases" type="Label" parent="Screen2/PlayerColumns/Slot4"]
+layout_mode = 2
+text = "Ingress +1 
+Incursion +1 
+Refrain +1
+Agility +1 "
+label_settings = SubResource("LabelSettings_p8jk1")
+horizontal_alignment = 1
+
+[node name="NewSkills" type="Label" parent="Screen2/PlayerColumns/Slot4"]
+layout_mode = 2
+text = "New Skills:"
+label_settings = SubResource("LabelSettings_q47jw")
+horizontal_alignment = 1
+
+[node name="SkillsData" type="Label" parent="Screen2/PlayerColumns/Slot4"]
+layout_mode = 2
+text = "Mult Eth Incursion
+Eth Refrain"
+label_settings = SubResource("LabelSettings_p8jk1")
+horizontal_alignment = 1
+autowrap_mode = 3
+
+[node name="NextBattleButton" parent="Screen2" instance=ExtResource("3_27qmw")]
 layout_mode = 2
 size_flags_horizontal = 4
-theme_override_font_sizes/font_size = 8
 text = "Start Next Battle"
 
-[connection signal="pressed" from="VBoxContainer/NextBattle" to="." method="_on_next_battle_pressed"]
+[connection signal="pressed" from="Screen1/NextScreenButton" to="." method="_on_next_button_pressed"]
+[connection signal="pressed" from="Screen2/NextBattleButton" to="." method="_on_next_battle_button_pressed"]

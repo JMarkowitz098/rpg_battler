@@ -34,7 +34,7 @@ func _set_skills() -> void:
 func _on_character_stats_used_skill() -> void:
 	update_energy_bar()
 
-func _on_character_stats_no_ingress_energy(_id: String):
+func _on_character_stats_no_ingress_energy(_id: String) -> void:
 	queue_free()
 	
 func update_energy_bar() -> void:

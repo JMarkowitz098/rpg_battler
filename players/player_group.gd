@@ -62,7 +62,7 @@ func _instantiate_players() -> void:
 			_set_location(slot_index, players[slot_index])
 			slot_index += 1
 		
-func _instantiate_player(save_data: SaveData) -> void:
+func _instantiate_player(save_data: PlayerSaveData) -> void:
 	var new_player: Node2D
 	match save_data.player_id:
 		Stats.PlayerId.TALON:
@@ -77,7 +77,7 @@ func _instantiate_player(save_data: SaveData) -> void:
 	
 	players.append(new_player)
 
-func _update_level(player: Node2D, save_data: SaveData) -> void:
+func _update_level(player: Node2D, save_data: PlayerSaveData) -> void:
 	var new_stats := LevelStats.load_level_data(save_data.player_id, save_data.level)
 	player.stats.level_stats = new_stats
 	player.stats.current_ingress = new_stats.max_ingress
