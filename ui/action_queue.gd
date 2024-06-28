@@ -125,7 +125,7 @@ func _queue_empty_items(players: Array[Node2D]) -> void:
 	for player in players:
 		var new_item := ACTION_QUEUE_ITEM.instantiate()
 		new_item.set_empty_action(player)
-		new_item.texture = Utils.get_player_protrait(player.stats.player_details.player_id)
+		new_item.texture = Utils.get_player_portrait(player.stats.player_details.player_id)
 		if(player.stats.player_details.icon_type == Stats.IconType.ENEMY):
 			new_item.self_modulate = Color("Red")
 		items.push_back(new_item)
@@ -168,10 +168,11 @@ func _process_skill(action: Action, tree: SceneTree, players: Array[Node2D], ene
 			await _play_refrain_animation(action)
 			_set_refrain(action.actor, action.skill.element)
 			
-		Skill.Id.ETH_REFRAIN_GROUP, Skill.Id.SHOR_REFRAIN_GROUP, Skill.Id.SCOR_REFRAIN_GROUP:
+		Skill.Id.ETH_REFRAIN_GROUP, Skill.Id.SHOR_REFRAIN_GROUP, Skill.Id.SCOR_REFRAIN_GROUP, Skill.Id.ETH_REFRAIN_GROUP:
 			await _play_refrain_animation(action)
 			var target_players := players if action.actor.stats.player_details.icon_type == Stats.IconType.PLAYER else enemies
 			for player: Node2D in target_players:
+				# if player == Node2D:
 				_set_refrain(player, action.skill.element)
 				
 	if action.skill.id != Skill.Id.DODGE:

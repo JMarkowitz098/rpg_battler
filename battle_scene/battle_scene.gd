@@ -54,13 +54,17 @@ func _process(_delta: float) -> void:
 
 func _load_enemy_group() -> void:
 	var old_enemy_group := enemy_group
+	# Utils.round_number = 2 # for testing
 	match Utils.round_number:
 		0:
 			return
 		1:
-			enemy_group = load("res://players/enemy_group_round_two.tscn").instantiate()
-			enemy_group.global_position = enemy_group_location.global_position
-			add_child(enemy_group)
+			enemy_group = load("res://players/enemies/enemy_group_round_two.tscn").instantiate()
+		2:
+			enemy_group = load("res://players/enemies/enemy_group_round_three.tscn").instantiate()
+
+	enemy_group.global_position = enemy_group_location.global_position
+	add_child(enemy_group)
 	old_enemy_group.queue_free()
 		
 func _connect_signals() -> void:
@@ -125,7 +129,7 @@ func _handle_choose_skill(skill: SkillStats) -> void:
 		Skill.Target.ENEMY:
 			state.change_state.call(State.Type.CHOOSING_ENEMY)
 			return
-		Skill.Target.SELF:
+		Skill.Target.SELF, Skill.Target.ALL_ALLIES:
 			action_queue.update_player_action_with_skill(
 			player_group.get_current_player(), 
 			enemy_group.get_current_enemy(),

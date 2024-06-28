@@ -1,0 +1,39 @@
+[gd_scene load_steps=5 format=3 uid="uid://p7dux8vpbi6b"]
+
+[ext_resource type="PackedScene" uid="uid://cu24uqyrl005o" path="res://players/Esen/esen.tscn" id="1_8vg1k"]
+[ext_resource type="Script" path="res://players/enemies/enemy_group.gd" id="1_quewg"]
+[ext_resource type="Resource" uid="uid://csw3bdkuvjwfb" path="res://players/enemies/esen_enemy_player_details.tres" id="2_4p5bp"]
+[ext_resource type="Resource" uid="uid://d23nb0f4bayok" path="res://players/enemies/esen_round_three_level_stats.tres" id="3_4qooj"]
+
+[node name="EnemyGroupRoundThree" type="Node2D"]
+script = ExtResource("1_quewg")
+
+[node name="Esen" parent="." instance=ExtResource("1_8vg1k")]
+
+[node name="BaseSprite" parent="Esen" index="1"]
+scale = Vector2(0.643, 0.643)
+
+[node name="AttackSprite" parent="Esen" index="2"]
+scale = Vector2(-0.643, -0.643)
+frame = 11
+
+[node name="Stats" parent="Esen" index="6"]
+player_details = ExtResource("2_4p5bp")
+level_stats = ExtResource("3_4qooj")
+
+[node name="Esen2" parent="." instance=ExtResource("1_8vg1k")]
+position = Vector2(39, 0)
+
+[node name="BaseSprite" parent="Esen2" index="1"]
+scale = Vector2(0.643, 0.643)
+
+[node name="AttackSprite" parent="Esen2" index="2"]
+scale = Vector2(-0.643, -0.643)
+frame = 3
+
+[node name="Stats" parent="Esen2" index="6"]
+player_details = ExtResource("2_4p5bp")
+level_stats = ExtResource("3_4qooj")
+
+[editable path="Esen"]
+[editable path="Esen2"]

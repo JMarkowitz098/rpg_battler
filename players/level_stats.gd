@@ -16,6 +16,8 @@ static func load_level_data(player_id: int, new_level: int) -> Resource:
 					return load("res://players/Talon/levels/talon_level_1.tres")
 				2:
 					return load("res://players/Talon/levels/talon_level_2.tres")
+				3: 
+					return load("res://players/Talon/levels/talon_level_3.tres")
 				_:
 					return null
 		Stats.PlayerId.NASH:
@@ -24,6 +26,8 @@ static func load_level_data(player_id: int, new_level: int) -> Resource:
 					return load("res://players/Nash/levels/nash_level_1.tres")
 				2:
 					return load("res://players/Nash/levels/nash_level_2.tres")
+				3:
+					return load("res://players/Nash/levels/nash_level_3.tres")
 				_:
 					return null
 		Stats.PlayerId.ESEN:
@@ -32,6 +36,8 @@ static func load_level_data(player_id: int, new_level: int) -> Resource:
 					return load("res://players/Esen/levels/esen_level_1.tres")
 				2:
 					return load("res://players/Esen/levels/esen_level_2.tres")
+				3:
+					return load("res://players/Esen/levels/esen_level_3.tres")
 				_:
 					return null
 		_:

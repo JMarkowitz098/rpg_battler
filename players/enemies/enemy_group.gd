@@ -41,7 +41,10 @@ func remove_enemy_by_id(id: String) -> void:
 	enemies = enemies.filter(func(enemy: Node2D) -> bool: return enemy.stats.unique_id != id)
 
 func get_current_enemy() -> Node2D:
-	return enemies[current]
+	if current < enemies.size():
+		return enemies[current]
+	else:
+		return enemies[0]
 
 func _on_choosing_action_state_entered() -> void:
 	clear_focus()

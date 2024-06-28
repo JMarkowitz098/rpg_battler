@@ -122,7 +122,7 @@ metadata/_edit_group_ = true
 position = Vector2(-4, 0)
 texture = ExtResource("3_bgm7c")
 hframes = 15
-frame = 2
+frame = 14
 
 [node name="AttackSprite" type="Sprite2D" parent="."]
 visible = false

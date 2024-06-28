@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="PlayerDetails" load_steps=2 format=3 uid="uid://cp8pinjye6epp"]
+
+[ext_resource type="Script" path="res://players/player_details.gd" id="1_hwavs"]
+
+[resource]
+script = ExtResource("1_hwavs")
+player_id = 1
+label = "Nash"
+icon_type = 1
+elements = Array[int]([3, 2])

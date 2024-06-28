@@ -7,7 +7,7 @@ const NASH_PLAYER_DETAILS = preload("res://players/Nash/nash_player_details.tres
 const ESEN_PORTRAIT := preload("res://players/Esen/esen_portrait.jpeg")
 const ESEN_PLAYER_DETAILS := preload("res://players/Esen/esen_player_details.tres")
 
-const FINAL_ROUND = 1
+const FINAL_ROUND = 2
 
 var _params: Dictionary
 var round_number := 0
