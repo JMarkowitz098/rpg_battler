@@ -7,6 +7,7 @@ extends Node2D
 
 const TALON := preload("res://players/Talon/talon.tscn")
 const NASH := preload("res://players/Nash/nash.tscn")
+const ESEN := preload("res://players/Esen/esen.tscn")
 
 var players: Array[Node2D] = []
 var current: int = 0
@@ -69,6 +70,8 @@ func _instantiate_player(save_data: PlayerSaveData) -> void:
 			new_player = TALON.instantiate()
 		Stats.PlayerId.NASH:
 			new_player = NASH.instantiate()
+		Stats.PlayerId.ESEN:
+			new_player = ESEN.instantiate()
 	add_child(new_player)
 	new_player.stats.unique_id = save_data.unique_id
 	

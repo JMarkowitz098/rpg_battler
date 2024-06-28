@@ -59,7 +59,6 @@ text = "Nash"
 custom_minimum_size = Vector2(80, 2.08165e-12)
 layout_mode = 2
 size_flags_horizontal = 4
-disabled = true
 text = "Esen"
 
 [node name="CharacterDetails" type="VBoxContainer" parent="VBoxContainer/HBoxContainer"]
@@ -116,3 +115,5 @@ label_settings = ExtResource("4_wbxnf")
 [connection signal="pressed" from="VBoxContainer/HBoxContainer/CharacterButtons/TalonButton" to="." method="_on_talon_button_pressed"]
 [connection signal="focus_entered" from="VBoxContainer/HBoxContainer/CharacterButtons/NashButton" to="." method="_on_nash_button_focus_entered"]
 [connection signal="pressed" from="VBoxContainer/HBoxContainer/CharacterButtons/NashButton" to="." method="_on_nash_button_pressed"]
+[connection signal="focus_entered" from="VBoxContainer/HBoxContainer/CharacterButtons/EsenButton" to="." method="_on_esen_button_focus_entered"]
+[connection signal="pressed" from="VBoxContainer/HBoxContainer/CharacterButtons/EsenButton" to="." method="_on_esen_button_pressed"]

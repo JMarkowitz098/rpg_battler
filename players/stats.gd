@@ -7,7 +7,7 @@ signal used_skill
 
 enum IconType { PLAYER, ENEMY }
 enum Element { ENH, ETH, SHOR, SCOR, NONE }
-enum PlayerId { TALON, NASH }
+enum PlayerId { TALON, NASH, ESEN }
 
 @export var player_details: PlayerDetails
 @export var level_stats: LevelStats
@@ -54,11 +54,13 @@ static func get_element_label(element_id: int) -> String:
 		_:
 			return ""
 
-static func get_player_label(incoming_player_id: int) -> String:
+static func get_player_label(incoming_player_id: Stats.PlayerId) -> String:
 	match incoming_player_id:
-		0:
+		Stats.PlayerId.TALON:
 			return "Talon"
-		1:
+		Stats.PlayerId.NASH:
 			return "Nash"
+		Stats.PlayerId.ESEN:
+			return "Esen"
 		_:
 			return "No match"

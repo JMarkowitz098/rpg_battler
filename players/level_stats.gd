@@ -26,6 +26,14 @@ static func load_level_data(player_id: int, new_level: int) -> Resource:
 					return load("res://players/Nash/levels/nash_level_2.tres")
 				_:
 					return null
+		Stats.PlayerId.ESEN:
+			match new_level:
+				1:
+					return load("res://players/Esen/levels/esen_level_1.tres")
+				2:
+					return load("res://players/Esen/levels/esen_level_2.tres")
+				_:
+					return null
 		_:
 			return null
 				

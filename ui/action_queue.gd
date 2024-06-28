@@ -7,8 +7,6 @@ var items: Array[ActionQueueItem] = []
 var action_index := 0
 
 const ACTION_QUEUE_ITEM := preload("res://ui/action_queue_item.tscn")
-const NASH_PORTRAIT := preload("res://players/Nash/NashPortrait.jpeg")
-const TALON_PORTRAIT := preload("res://players/Talon/TalonPortrait.jpeg")
 
 func _ready() -> void:
 	Events.choosing_action_state_entered.connect(_on_choosing_action_state_entered)
@@ -127,7 +125,7 @@ func _queue_empty_items(players: Array[Node2D]) -> void:
 	for player in players:
 		var new_item := ACTION_QUEUE_ITEM.instantiate()
 		new_item.set_empty_action(player)
-		new_item.texture = _get_protrait(player.stats.player_details.player_id)
+		new_item.texture = Utils.get_player_protrait(player.stats.player_details.player_id)
 		if(player.stats.player_details.icon_type == Stats.IconType.ENEMY):
 			new_item.self_modulate = Color("Red")
 		items.push_back(new_item)
@@ -221,14 +219,6 @@ func _sort_items_by_agility() -> void:
 	items.sort_custom(func(a: ActionQueueItem, b: ActionQueueItem) -> bool: 
 		return a.action.actor.stats.rand_agi  > b.action.actor.stats.rand_agi )
 
-func _get_protrait(player_id: Stats.PlayerId) -> Texture2D:
-	match player_id:
-		Stats.PlayerId.TALON:
-			return TALON_PORTRAIT
-		Stats.PlayerId.NASH:
-			return NASH_PORTRAIT
-		_:
-			return TALON_PORTRAIT
 
 # -------
 # Signals

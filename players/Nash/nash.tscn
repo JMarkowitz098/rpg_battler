@@ -8,7 +8,7 @@
 [ext_resource type="PackedScene" uid="uid://bqyh4pkeog5r5" path="res://ui/turn.tscn" id="6_gu3rd"]
 [ext_resource type="PackedScene" uid="uid://2evhn0npdxi4" path="res://ui/focus_default.tscn" id="7_4wh2y"]
 [ext_resource type="PackedScene" uid="uid://cyi2g62l2egia" path="res://players/stats.tscn" id="8_88ef6"]
-[ext_resource type="Resource" uid="uid://k8x7trqp6s0w" path="res://players/Nash/nash_player_details.tres" id="9_3oase"]
+[ext_resource type="Resource" uid="uid://pue3uw4dj1e3" path="res://players/Nash/nash_player_details.tres" id="9_3oase"]
 [ext_resource type="Resource" uid="uid://dv117ptaw6dsc" path="res://players/Nash/levels/nash_level_1.tres" id="10_4clvy"]
 
 [sub_resource type="Animation" id="Animation_dgrtl"]

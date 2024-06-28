@@ -1,0 +1,170 @@
+[gd_scene load_steps=17 format=3 uid="uid://cu24uqyrl005o"]
+
+[ext_resource type="Script" path="res://players/player.gd" id="1_g2afx"]
+[ext_resource type="PackedScene" uid="uid://b5b42noos8pd3" path="res://players/player_info.tscn" id="2_n4v6u"]
+[ext_resource type="Texture2D" uid="uid://crksnvhvgl201" path="res://players/Esen/Esen Idle.png" id="3_3r2p1"]
+[ext_resource type="Texture2D" uid="uid://dkgv1u2504ud5" path="res://players/Esen/Esen Attack.png" id="4_aariw"]
+[ext_resource type="PackedScene" uid="uid://dl4d2stn4lshh" path="res://players/refrain_aura.tscn" id="4_tstkc"]
+[ext_resource type="PackedScene" uid="uid://bqyh4pkeog5r5" path="res://ui/turn.tscn" id="5_slrna"]
+[ext_resource type="PackedScene" uid="uid://2evhn0npdxi4" path="res://ui/focus_default.tscn" id="6_h6ckf"]
+[ext_resource type="PackedScene" uid="uid://cyi2g62l2egia" path="res://players/stats.tscn" id="7_ecqjf"]
+[ext_resource type="Resource" uid="uid://bfb5d4e0qvg6p" path="res://players/Esen/esen_player_details.tres" id="9_hcqt7"]
+[ext_resource type="Resource" uid="uid://myum07vddj6i" path="res://players/Esen/levels/esen_level_1.tres" id="9_sr07u"]
+
+[sub_resource type="Animation" id="Animation_upenk"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("BaseSprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("BaseSprite:self_modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("AttackSprite:frame")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_w46yt"]
+resource_name = "attack"
+length = 1.2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AttackSprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1, 1.1),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
+}
+
+[sub_resource type="Animation" id="Animation_paoy7"]
+resource_name = "hurt"
+length = 0.6
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("BaseSprite:self_modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4, 0.6),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Color(100, 1, 1, 1), Color(1, 1, 1, 1), Color(100, 1, 1, 1), Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_deetm"]
+resource_name = "idle"
+length = 0.4
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("BaseSprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [0, 1]
+}
+
+[sub_resource type="Animation" id="Animation_tqm1h"]
+resource_name = "refrain"
+length = 0.6
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("BaseSprite:self_modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4, 0.6),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Color(0.00392157, 1, 0.12549, 1), Color(1, 1, 1, 1), Color(0.00392157, 1, 0.12549, 1), Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_jplbi"]
+_data = {
+"RESET": SubResource("Animation_upenk"),
+"attack": SubResource("Animation_w46yt"),
+"hurt": SubResource("Animation_paoy7"),
+"idle": SubResource("Animation_deetm"),
+"refrain": SubResource("Animation_tqm1h")
+}
+
+[node name="Esen" type="Node2D"]
+script = ExtResource("1_g2afx")
+
+[node name="Info" parent="." instance=ExtResource("2_n4v6u")]
+
+[node name="BaseSprite" type="Sprite2D" parent="."]
+scale = Vector2(-0.643, 0.643)
+texture = ExtResource("3_3r2p1")
+hframes = 2
+
+[node name="AttackSprite" type="Sprite2D" parent="."]
+visible = false
+position = Vector2(4, -9)
+rotation = 3.14159
+scale = Vector2(0.643, -0.643)
+texture = ExtResource("4_aariw")
+hframes = 6
+vframes = 2
+
+[node name="RefrainAura" parent="." instance=ExtResource("4_tstkc")]
+position = Vector2(1.19209e-07, -1)
+
+[node name="Turn" parent="." instance=ExtResource("5_slrna")]
+position = Vector2(1, -11)
+
+[node name="Focus" parent="." instance=ExtResource("6_h6ckf")]
+visible = false
+position = Vector2(9, 12)
+scale = Vector2(0.15, 0.15)
+
+[node name="Stats" parent="." instance=ExtResource("7_ecqjf")]
+player_details = ExtResource("9_hcqt7")
+level_stats = ExtResource("9_sr07u")
+
+[node name="Skills" type="Node" parent="."]
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_jplbi")
+}
+
+[connection signal="no_ingress_energy" from="Stats" to="." method="_on_character_stats_no_ingress_energy"]
+[connection signal="took_damage" from="Stats" to="." method="_on_character_stats_took_damage"]
+[connection signal="used_skill" from="Stats" to="." method="_on_character_stats_used_skill"]

@@ -8,11 +8,6 @@ const MAX_SLOTS := 2
 @onready var slot_two_portrait := $VBoxContainer/HBoxContainer/SlotTwoContainer/SlotTwoPortrait
 @onready var start_button := $VBoxContainer/StartButton
 
-const TALON_PORTRAIT := preload("res://players/Talon/TalonPortrait.jpeg")
-const TALON_PLAYER_DETAILS := preload("res://players/Talon/talon_player_details.tres")
-const NASH_PORTRAIT := preload("res://players/Nash/NashPortrait.jpeg")
-const NASH_PLAYER_DETAILS = preload("res://players/Nash/nash_player_details.tres")
-
 func _ready() -> void:
 	_set_focus()
 	_render_player_slots()
@@ -40,11 +35,14 @@ func _render_slot(slot_index: int) -> void:
 	
 	match save_data.player_id:
 		Stats.PlayerId.TALON:
-			player_details = TALON_PLAYER_DETAILS
-			player_portrait = TALON_PORTRAIT
+			player_details = Utils.get_player_details(Stats.PlayerId.TALON)
+			player_portrait = Utils.get_player_portrait(Stats.PlayerId.TALON)
 		Stats.PlayerId.NASH:
-			player_details = NASH_PLAYER_DETAILS
-			player_portrait = NASH_PORTRAIT
+			player_details = Utils.get_player_details(Stats.PlayerId.NASH)
+			player_portrait = Utils.get_player_portrait(Stats.PlayerId.NASH)
+		Stats.PlayerId.ESEN:
+			player_details = Utils.get_player_details(Stats.PlayerId.ESEN)
+			player_portrait = Utils.get_player_portrait(Stats.PlayerId.ESEN)
 	
 	match slot_index:
 		0:

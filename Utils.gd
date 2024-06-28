@@ -1,5 +1,12 @@
 extends Node
 
+const TALON_PORTRAIT := preload("res://players/Talon/TalonPortrait.jpeg")
+const TALON_PLAYER_DETAILS := preload("res://players/Talon/talon_player_details.tres")
+const NASH_PORTRAIT := preload("res://players/Nash/NashPortrait.jpeg")
+const NASH_PLAYER_DETAILS = preload("res://players/Nash/nash_player_details.tres")
+const ESEN_PORTRAIT := preload("res://players/Esen/esen_portrait.jpeg")
+const ESEN_PLAYER_DETAILS := preload("res://players/Esen/esen_player_details.tres")
+
 const FINAL_ROUND = 1
 
 var _params: Dictionary
@@ -46,5 +53,25 @@ func get_param(key: String) -> Variant:
 	
 func _clamped_damage(value: int) -> int:
 	return clamp(value, 0, INF)
-	
 
+func get_player_portrait(player_id: Stats.PlayerId) -> Texture:
+	match(player_id):
+		Stats.PlayerId.TALON:
+			return TALON_PORTRAIT
+		Stats.PlayerId.NASH:
+			return NASH_PORTRAIT
+		Stats.PlayerId.ESEN:
+			return ESEN_PORTRAIT
+		_:
+			return null
+
+func get_player_details(player_id: Stats.PlayerId) -> Resource:
+	match(player_id):
+		Stats.PlayerId.TALON:
+			return TALON_PLAYER_DETAILS
+		Stats.PlayerId.NASH:
+			return NASH_PLAYER_DETAILS
+		Stats.PlayerId.ESEN:
+			return ESEN_PLAYER_DETAILS
+		_:
+			return null

@@ -1,8 +1,5 @@
 extends Panel
 
-const NASH_PORTRAIT := preload("res://players/Nash/NashPortrait.jpeg")
-const TALON_PORTRAIT := preload("res://players/Talon/TalonPortrait.jpeg")
-
 @onready var defeated_portraits := $Screen1/DefeatedPortraits
 @onready var next_battle_button := $Screen2/NextBattleButton
 @onready var next_screen_button := $Screen1/NextScreenButton
@@ -36,9 +33,11 @@ func _render_summary() -> void:
 func _get_player_portrait(player_id: Stats.PlayerId) -> Texture2D:
 	match(player_id):
 		Stats.PlayerId.TALON:
-			return TALON_PORTRAIT
+			return Utils.get_player_portrait(Stats.PlayerId.TALON)
 		Stats.PlayerId.NASH:
-			return NASH_PORTRAIT
+			return Utils.get_player_portrait(Stats.PlayerId.NASH)
+		Stats.PlayerId.ESEN:
+			return Utils.get_player_portrait(Stats.PlayerId.ESEN)
 		_:
 			return null
 

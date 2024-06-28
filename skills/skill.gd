@@ -78,7 +78,7 @@ static func create_skill_instance(skill_id: int) -> Resource:
 		Id.ETH_REFRAIN:
 			return load("res://skills/eth/eth_refrain.tres")
 		Id.ETH_REFRAIN_GROUP:
-			return null
+			return load("res://skills/eth/eth_refrain_group.tres")
 		Id.ENH_INCURSION:
 			return load("res://skills/enh/enh_incursion.tres")
 		Id.ENH_REFRAIN:
