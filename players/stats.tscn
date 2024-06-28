@@ -1,8 +1,8 @@
 [gd_scene load_steps=3 format=3 uid="uid://cyi2g62l2egia"]
 
 [ext_resource type="Script" path="res://players/stats.gd" id="1_ggo4s"]
-[ext_resource type="Resource" uid="uid://cl0cwnv02jif8" path="res://players/Talon/levels/talon_level_1.tres" id="2_auy1r"]
+[ext_resource type="Resource" uid="uid://c02e3c1fyj4xv" path="res://players/enemies/talon_round_one_level_stats.tres" id="2_33wo4"]
 
 [node name="Stats" type="Node"]
 script = ExtResource("1_ggo4s")
-level_stats = ExtResource("2_auy1r")
+level_stats = ExtResource("2_33wo4")

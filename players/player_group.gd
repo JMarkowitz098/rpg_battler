@@ -74,6 +74,7 @@ func _instantiate_player(save_data: PlayerSaveData) -> void:
 	
 	if save_data.level > 1:
 		_update_level(new_player, save_data)
+		new_player.set_skills()
 	
 	players.append(new_player)
 

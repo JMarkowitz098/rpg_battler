@@ -5,7 +5,7 @@ extends ColorRect
 @onready var help_menu := $CenterContainer/VBoxContainer/HelpMenu
 
 func _ready() -> void:
-	#Input.set_mouse_mode(Input.MOUSE_MODE_HIDDEN)
+	Input.set_mouse_mode(Input.MOUSE_MODE_HIDDEN)
 	start_game_button.focus()
 
 func _on_start_game_button_pressed() -> void:
