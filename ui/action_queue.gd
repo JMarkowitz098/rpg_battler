@@ -240,6 +240,8 @@ func _on_choosing_action_state_entered() -> void:
 
 func _on_choosing_action_queue_state_entered() -> void:
 	set_focus(0)
+	var action := get_current_item().action
+	Events.update_info_label.emit(create_action_message(action))
 
 func _on_is_battling_state_entered() -> void:
 	clear_all_focus()
