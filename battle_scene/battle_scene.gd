@@ -209,7 +209,6 @@ func _on_choosing_action_state_entered() -> void:
 
 func _on_choosing_skill_state_entered() -> void:
 	var current_player: Node2D = player_group.get_current_player()
-	print(current_player)
 	skill_choice_list.set_current_skills(current_player, current_skill_type)
 	skill_choice_list.prepare_skill_menu(_handle_choose_skill)
 	skill_choice_list.get_children()[0].focus()

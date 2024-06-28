@@ -45,7 +45,7 @@ func _create_button_choice(button_text: String) -> void:
 	var button := BATTLE_SCENE_BUTTON.instantiate()
 	add_child(button)
 	button.text = button_text
-	button.add_theme_font_size_override("font_size", 10)
+	button.add_theme_font_size_override("font_size", 8)
 
 func _connect_skill_button_signals(_handle_choose_skill: Callable) -> void:
 	var skill_buttons := get_children()
@@ -55,7 +55,8 @@ func _connect_skill_button_signals(_handle_choose_skill: Callable) -> void:
 		skill_button.pressed.connect(_handle_choose_skill.bind(skill))
 
 func _create_skill_desciption(skill: SkillStats) -> String:
-	return "Ingress Energy Cost: {0}\nElement: {1}\n{2}".format([
+	return "{0}\nIngress Energy Cost: {1}\nElement: {2}\n{3}".format([
+		skill.label,
 		skill.ingress,
 		Stats.get_element_label(skill.element),
 		skill.description
