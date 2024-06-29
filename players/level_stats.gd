@@ -6,8 +6,7 @@ class_name LevelStats
 @export var incursion: int
 @export var refrain: int
 @export var agility: int
-@export var skills: Array[Skill.Id]
-@export var skills_new: Array[Ingress]
+@export var skills: Array[Ingress]
 
 static func load_level_data(player_id: int, new_level: int) -> Resource:
 	match player_id: 

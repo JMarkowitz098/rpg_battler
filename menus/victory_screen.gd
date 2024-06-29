@@ -108,9 +108,9 @@ func _create_stat_message(stats: Dictionary, stat_key: String, stat_label: Strin
 
 func _render_column_skills(column: VBoxContainer, stats: Dictionary) -> void:
 	var message := ""
-	for skill_id: Skill.Id in stats.new.skills:
-		if not skill_id in stats.old.skills:
-			message += Skill.get_skill_label(skill_id) + "\n"
+	for skill: Ingress in stats.new.skills:
+		if not skill in stats.old.skills:
+			message += skill.label + "\n"
 
 	column.find_child("SkillsData").text = message
 

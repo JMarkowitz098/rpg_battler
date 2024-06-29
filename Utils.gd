@@ -37,10 +37,10 @@ func calucluate_skill_damage(action: Action) -> int:
 		_:
 			return 0
 			
-func process_buff(action: Action) -> void:
-	match action.skill.id:
-		Skill.Id.ETH_REFRAIN, Skill.Id.ENH_REFRAIN, Skill.Id.SHOR_REFRAIN, Skill.Id.SCOR_REFRAIN:
-			action.actor.stats.refrain *= 2
+#func process_buff(action: Action) -> void:
+	#match action.skill.id:
+		#Skill.Id.ETH_REFRAIN, Skill.Id.ENH_REFRAIN, Skill.Id.SHOR_REFRAIN, Skill.Id.SCOR_REFRAIN:
+			#action.actor.stats.refrain *= 2
 
 func change_scene(next_scene: String, params: Dictionary) -> void:
 	_params = params

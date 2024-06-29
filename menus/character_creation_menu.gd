@@ -82,7 +82,7 @@ func _update_display_info(player_portrait: Texture2D) -> void:
 
 func _create_elements_text() -> String:
 	var new_str := "Elements: "
-	for elem_id: Stats.Element in details.elements:
-		new_str += Stats.get_element_label(elem_id) + ", "
+	for elem_id: Element.Type in details.elements:
+		new_str += Element.get_label(elem_id) + ", "
 	return new_str.trim_suffix(", ")
 

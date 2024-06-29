@@ -23,7 +23,8 @@ func set_attack(attack_target: Node2D = null, attack_skill: Ingress = null) -> v
 
 func set_dodge() -> void:
 	actor.stats.is_dodging = true
-	set_attack(null, Skill.create_skill_instance(Skill.Id.DODGE))
+	var dodge := load("res://skills/dodge.tres")
+	set_attack(null, dodge)
 
 func set_enemy_skill(incoming_skill: Ingress, players: Array[Node2D]) -> void:
 	var incoming_target: Node2D = null

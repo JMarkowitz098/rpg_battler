@@ -91,12 +91,12 @@ func _on_dodge_focus_entered() -> void:
 	if info_label: info_label.draw_action_button_description(2)
 	
 func _on_incursion_pressed() -> void:
-	current_skill_type = Skill.Type.INCURSION
+	current_skill_type = Ingress.Type.INCURSION
 	state.change_state(State.Type.CHOOSING_SKILL)
 	current_skill = skill_choice_list.current_skills[0]
 
 func _on_refrain_pressed() -> void:
-	current_skill_type = Skill.Type.REFRAIN
+	current_skill_type = Ingress.Type.REFRAIN
 	state.change_state(State.Type.CHOOSING_SKILL)
 	current_skill = skill_choice_list.current_skills[0]
 	
@@ -184,7 +184,7 @@ func _is_victory() -> bool:
 	
 func _set_dodging_animation() -> void:
 	for item: ActionQueueItem in action_queue.items:
-		if item.action.skill.id == Skill.Id.DODGE:
+		if item.action.skill.id == Ingress.Id.DODGE:
 			item.action.actor.base_sprite.self_modulate = Color("ffffff9b")
 
 # ----------------------

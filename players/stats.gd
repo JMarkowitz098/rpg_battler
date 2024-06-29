@@ -41,18 +41,6 @@ static func create_unique_id(new_player_id: int) -> String:
 	var rand_player_i := randi() % 1000
 	return str(new_player_id) + "_" + str(rand_player_i)
 	
-static func get_element_label(element_id: int) -> String:
-	match element_id:
-		0:
-			return "Enh"
-		1:
-			return "Eth"
-		2:
-			return "Shor"
-		3:
-			return "Scor"
-		_:
-			return ""
 
 static func get_player_label(incoming_player_id: Stats.PlayerId) -> String:
 	match incoming_player_id:

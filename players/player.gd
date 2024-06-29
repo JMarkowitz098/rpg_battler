@@ -27,7 +27,7 @@ func _on_character_stats_took_damage() -> void:
 	animation_player.play("idle")
 	
 func set_skills() -> void:
-	skills = stats.level_stats.skills_new
+	skills = stats.level_stats.skills
 
 func _on_character_stats_used_skill() -> void:
 	update_energy_bar()
