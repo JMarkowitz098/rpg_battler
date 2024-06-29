@@ -18,7 +18,7 @@ enum PlayerId { TALON, NASH, ESEN }
 var has_small_refrain_open := false
 var is_dodging := false
 
-var current_refrain_element: Element
+var current_refrain_element: Element.Type
 var slot: int
 var rand_agi: int
 var unique_id: String

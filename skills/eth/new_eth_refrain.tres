@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="Eth" load_steps=2 format=3 uid="uid://dupsoy6eqmyu5"]
+
+[ext_resource type="Script" path="res://skills/eth/eth_ingress.gd" id="1_4rnv2"]
+
+[resource]
+script = ExtResource("1_4rnv2")
+element = 0
+id = 6
+label = "Eth Refrain"
+ingress = 1
+type = 1
+target = 0
+description = "NEW Eth refrain"

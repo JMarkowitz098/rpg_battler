@@ -1,8 +1,8 @@
 extends Node2D
 
 var current_skill_button: Button
-var current_skill_type: Skill.Type
-var current_skill: SkillStats
+var current_skill_type: Ingress.Type
+var current_skill: Ingress
 var defeated: Array[String]
 var prev_state: State.Type
 var before_pause_focus: Variant
@@ -122,14 +122,14 @@ func _draw_action_button_description(action_choice_index: int) -> void:
 		2: 
 			info_label.text = "Attempt to dodge an attack"
 
-func _handle_choose_skill(skill: SkillStats) -> void:
+func _handle_choose_skill(skill: Ingress) -> void:
 	current_skill = skill
 		
 	match current_skill.target:
-		Skill.Target.ENEMY:
+		Ingress.Target.ENEMY:
 			state.change_state.call(State.Type.CHOOSING_ENEMY)
 			return
-		Skill.Target.SELF, Skill.Target.ALL_ALLIES:
+		Ingress.Target.SELF, Ingress.Target.ALL_ALLIES:
 			action_queue.update_player_action_with_skill(
 			player_group.get_current_player(), 
 			enemy_group.get_current_enemy(),

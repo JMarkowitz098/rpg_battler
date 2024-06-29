@@ -59,7 +59,7 @@ func set_focus(index: int) -> void:
 func set_turn_focus(index: int) -> void:
 	items[index].turn.focus()
 
-func update_player_action_with_skill(player: Node2D, enemy: Node2D, skill: SkillStats) -> void:
+func update_player_action_with_skill(player: Node2D, enemy: Node2D, skill: Ingress) -> void:
 	var action_to_update: Action = items.filter(func(item: ActionQueueItem)-> bool: 
 		return item.action.actor.stats.unique_id == player.stats.unique_id)[0].action
 	if skill.target == Skill.Target.SELF:
@@ -137,16 +137,16 @@ func _fill_enemy_actions(players: Array[Node2D]) -> void:
 			if action.actor.stats.current_ingress == 1:
 				action.set_dodge()
 			else:
-				var enemy_skill := _select_enemy_skill(action.actor.stats.level_stats.skills)
+				var enemy_skill := _select_enemy_skill(action.actor.stats.level_stats.skills_new)
 				action.set_enemy_skill(enemy_skill, players)
 				
 func set_dodge(action: Action) -> void:
 	action.actor.stats.is_dodging = true
 	action.set_attack(null, Skill.create_skill_instance(Skill.Id.DODGE))
 
-func _select_enemy_skill(skill_ids: Array) -> SkillStats:
-	var rand_skill_i := randi() % skill_ids.size()
-	return Skill.create_skill_instance(skill_ids[rand_skill_i])
+func _select_enemy_skill(skills: Array) -> Ingress:
+	var rand_skill_i := randi() % skills.size()
+	return skills[rand_skill_i]
 				
 func _process_skill(action: Action, tree: SceneTree, players: Array[Node2D], enemies: Array[Node2D]) -> void:
 	action.actor.stats.use_ingress_energy(action.skill.ingress)
@@ -154,7 +154,7 @@ func _process_skill(action: Action, tree: SceneTree, players: Array[Node2D], ene
 		return
 
 	match action.skill.id: 
-		Skill.Id.ETH_INCURSION, Skill.Id.ENH_INCURSION, Skill.Id.SCOR_INCURSION, Skill.Id.SHOR_INCURSION:
+		Ingress.Id.INCURSION:
 			await _use_incursion(action)
 			
 		Skill.Id.ETH_INCURSION_DOUBLE, Skill.Id.SHOR_INCURSION_DOUBLE:
@@ -164,7 +164,7 @@ func _process_skill(action: Action, tree: SceneTree, players: Array[Node2D], ene
 				_use_incursion(action)
 				await tree.create_timer(2).timeout
 				
-		Skill.Id.ETH_REFRAIN, Skill.Id.ENH_REFRAIN, Skill.Id.SHOR_REFRAIN, Skill.Id.SCOR_REFRAIN:
+		Ingress.Id.REFRAIN:
 			await _play_refrain_animation(action)
 			_set_refrain(action.actor, action.skill.element)
 			
@@ -205,13 +205,13 @@ func _set_refrain(player: Node2D, skill_element: Stats.Element) -> void:
 	player.stats.current_refrain_element = skill_element
 	player.refrain_aura.show()
 	match skill_element:
-		Stats.Element.ETH:
+		Element.Type.ETH:
 			player.refrain_aura.modulate = Color("Green")
-		Stats.Element.ENH:
+		Element.Type.ENH:
 			player.refrain_aura.modulate = Color("Orange")
-		Stats.Element.SCOR:
+		Element.Type.SCOR:
 			player.refrain_aura.modulate = Color("Red")
-		Stats.Element.SHOR:
+		Element.Type.SHOR:
 			player.refrain_aura.modulate = Color("Blue")
 
 func _sort_items_by_agility() -> void:

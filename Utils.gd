@@ -17,7 +17,7 @@ func calucluate_attack_damage(actor_stats: Stats, target_stats: Stats) -> int:
 	
 func calucluate_skill_damage(action: Action) -> int:
 	match action.skill.id:
-		Skill.Id.ETH_INCURSION, Skill.Id.ENH_INCURSION, Skill.Id.SHOR_INCURSION, Skill.Id.SCOR_INCURSION, Skill.Id.ETH_INCURSION_DOUBLE, Skill.Id.SHOR_INCURSION_DOUBLE:
+		Ingress.Id.INCURSION:
 			var actor_power: int = action.actor.stats.level_stats.incursion + action.skill.ingress
 			var target_power: int = action.target.stats.level_stats.refrain
 			

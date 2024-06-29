@@ -11,7 +11,7 @@ class_name Player
 @onready var attack_sprite := $AttackSprite
 @onready var refrain_aura := $RefrainAura
 
-@onready var skills: Array[SkillStats] = []
+@onready var skills: Array[Ingress] = []
 
 func _ready() -> void:
 	animation_player.play("idle")
@@ -27,11 +27,7 @@ func _on_character_stats_took_damage() -> void:
 	animation_player.play("idle")
 	
 func set_skills() -> void:
-	var current_skills_ids := skills.map(func(skill: SkillStats) -> int: return skill.id)
-	for skill_id: Skill.Id in stats.level_stats.skills:
-		if skill_id not in current_skills_ids:
-			var skill := Skill.create_skill_instance(skill_id)
-			skills.append(skill)
+	skills = stats.level_stats.skills_new
 
 func _on_character_stats_used_skill() -> void:
 	update_energy_bar()

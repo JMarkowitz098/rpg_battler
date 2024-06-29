@@ -16,8 +16,18 @@ enum Id {
 	SCOR_INCURSION_DOUBLE, # 11
 	SCOR_REFRAIN, # 12
 	SCOR_REFRAIN_GROUP, # 13
-	DODGE # 14
+	ETH_INCURSION_PIERCE, # 14
+	ETH_INCURSION_GROUP, # 15
+	ETH_MOVEMENT, # 16
+	SHOR_INCURSION_PIERCE, # 17
+	SHOR_INCURSION_GROUP, # 18
+	SHOR_DEFENSE, # 19
+	SCOR_INCURSION_PIERCE, # 20
+	SCOR_INCURSION_GROUP, # 21
+	SCOR_OFFENSE, # 22
+	DODGE # 23
 }
+
 enum Type {
 	INCURSION,
 	REFRAIN,
@@ -34,13 +44,6 @@ enum Target {
 
 const SMALL_REFRAIN_POWER := 1
 
-#@export var id: Id
-#@export var label: String
-#@export var ingress_energy_cost: int
-#@export var element: Stats.Element
-#@export var type: Type
-#@export var target: Target
-#@export_multiline var description: String
 @export var skill_stats: SkillStats
 
 signal pressed()
@@ -55,14 +58,6 @@ static func fill_skill_choice_list(player: Node2D, skill_choice_list: GridContai
 	for skill: SkillStats in player.get_skills(filter_type):
 		_create_button_choice(skill_choice_list, skill.label)
 
-#static func create_dodge() -> Skill:
-	#var dodge = new()
-	#dodge.id = Id.DODGE
-	#dodge.label  = "Dodge"
-	#dodge.ingress_energy_cost = 0
-	#dodge.type = Type.DODGE
-	#dodge.target = Target.SELF
-	#return dodge
 	
 static func _create_button_choice(skill_choice_list: GridContainer, button_text: String) -> void:
 	var button := Button.new()
@@ -97,6 +92,12 @@ static func create_skill_instance(skill_id: int) -> Resource:
 			return load("res://skills/scor/scor_refrain.tres")
 		Id.SCOR_REFRAIN_GROUP:
 			return load("res://skills/scor/scor_refrain_group.tres")
+		Id.ETH_INCURSION_PIERCE:
+			return load("res://skills/eth/eth_incursion_pierce.tres")
+		Id.ETH_INCURSION_GROUP:
+			return load("res://skills/eth/eth_incursion_group.tres")
+		Id.ETH_MOVEMENT:
+			return load("res://skills/eth/eth_movement.tres")
 		Id.DODGE:
 			return load("res://skills/dodge.tres")
 		_:

@@ -2,7 +2,7 @@ extends GridContainer
 
 const BATTLE_SCENE_BUTTON := preload("res://menus/battle_scene_button.tscn")
 
-var current_skills: Array[SkillStats]
+var current_skills: Array[Ingress]
 var current_skill_index := 0
 
 func _ready() -> void:
@@ -14,7 +14,7 @@ func _ready() -> void:
 	Events.update_info_label_with_skill_description.connect(_on_update_info_label_with_skill_description)
 
 func set_current_skills(player: Node2D, type: Skill.Type) -> void:
-	current_skills = player.skills.filter(func(skill: SkillStats) -> bool: return skill.type == type)
+	current_skills = player.skills.filter(func(skill: Ingress) -> bool: return skill.type == type)
 
 func prepare_skill_menu(_handle_choose_skill: Callable) -> void:
 	_fill_skill_menu_with_current_skills()
@@ -24,7 +24,7 @@ func release_focus_from_all_buttons() -> void:
 	for child in get_children():
 		child.release_focus()
 
-func get_current_skill() -> SkillStats:
+func get_current_skill() -> Ingress:
 	return current_skills[current_skill_index]
 
 func get_current_skill_button() -> Button:
@@ -34,7 +34,6 @@ func _fill_skill_menu_with_current_skills() -> void:
 	for child in get_children():
 		# queue_free is deferred until end of frame, so we remove node from list
 		# to prevent indexing issues while turn is processing
-		
 		remove_child(child)
 		child.queue_free()
 		
@@ -54,7 +53,7 @@ func _connect_skill_button_signals(_handle_choose_skill: Callable) -> void:
 		var skill_button := skill_buttons[i]
 		skill_button.pressed.connect(_handle_choose_skill.bind(skill))
 
-func _create_skill_desciption(skill: SkillStats) -> String:
+func _create_skill_desciption(skill: Ingress) -> String:
 	return "{0}\nIngress Energy Cost: {1}\nElement: {2}\n{3}".format([
 		skill.label,
 		skill.ingress,
