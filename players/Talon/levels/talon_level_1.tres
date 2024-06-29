@@ -1,9 +1,10 @@
-[gd_resource type="Resource" script_class="LevelStats" load_steps=5 format=3 uid="uid://cl0cwnv02jif8"]
+[gd_resource type="Resource" script_class="LevelStats" load_steps=6 format=3 uid="uid://cl0cwnv02jif8"]
 
 [ext_resource type="Script" path="res://players/level_stats.gd" id="1_b4bhr"]
-[ext_resource type="Resource" uid="uid://bsia6bqru68qu" path="res://skills/eth/new_eth_incursion.tres" id="2_l653v"]
-[ext_resource type="Resource" uid="uid://ctdusg70hieyd" path="res://skills/shor/shor_incursion_new.tres" id="3_ewfyy"]
-[ext_resource type="Resource" uid="uid://dupsoy6eqmyu5" path="res://skills/eth/new_eth_refrain.tres" id="4_2fjsj"]
+[ext_resource type="Resource" uid="uid://bsia6bqru68qu" path="res://skills/eth/eth_incursion.tres" id="2_eav8o"]
+[ext_resource type="Resource" uid="uid://dupsoy6eqmyu5" path="res://skills/eth/eth_refrain.tres" id="3_xa1en"]
+[ext_resource type="Resource" uid="uid://ctdusg70hieyd" path="res://skills/shor/shor_incursion.tres" id="4_3rg1x"]
+[ext_resource type="Resource" uid="uid://y81nh2ijcjeq" path="res://skills/shor/shor_refrain.tres" id="5_dh483"]
 
 [resource]
 script = ExtResource("1_b4bhr")
@@ -12,5 +13,4 @@ max_ingress = 10
 incursion = 3
 refrain = 1
 agility = 2
-skills = Array[int]([0, 6, 2, 8])
-skills_new = Array[Resource]([ExtResource("2_l653v"), ExtResource("3_ewfyy"), ExtResource("4_2fjsj")])
+skills = Array[Resource("res://skills/ingress.gd")]([ExtResource("2_eav8o"), ExtResource("3_xa1en"), ExtResource("4_3rg1x"), ExtResource("5_dh483")])

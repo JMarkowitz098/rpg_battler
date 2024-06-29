@@ -13,7 +13,7 @@ func _ready() -> void:
 	Events.is_battling_state_entered.connect(_on_is_battling_state_entered)
 	Events.update_info_label_with_skill_description.connect(_on_update_info_label_with_skill_description)
 
-func set_current_skills(player: Node2D, type: Skill.Type) -> void:
+func set_current_skills(player: Node2D, type: Ingress.Type) -> void:
 	current_skills = player.skills.filter(func(skill: Ingress) -> bool: return skill.type == type)
 
 func prepare_skill_menu(_handle_choose_skill: Callable) -> void:
@@ -57,7 +57,7 @@ func _create_skill_desciption(skill: Ingress) -> String:
 	return "{0}\nIngress Energy Cost: {1}\nElement: {2}\n{3}".format([
 		skill.label,
 		skill.ingress,
-		Stats.get_element_label(skill.element),
+		Element.get_label(skill.element),
 		skill.description
 	])
 

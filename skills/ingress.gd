@@ -8,7 +8,8 @@ enum Id {
   INCURSION,
   MOVEMENT,
   PIERCING_INCURSION,
-  REFRAIN
+  REFRAIN,
+	DODGE
 }
 
 enum Type {

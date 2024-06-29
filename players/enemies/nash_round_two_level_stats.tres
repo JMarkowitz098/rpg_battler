@@ -9,4 +9,4 @@ max_ingress = 20
 incursion = 4
 refrain = 4
 agility = 3
-skills = Array[int]([6, 10, 9, 13])
+skills = Array[Resource("res://skills/ingress.gd")]([])

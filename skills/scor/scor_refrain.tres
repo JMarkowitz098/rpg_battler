@@ -1,13 +1,13 @@
-[gd_resource type="Resource" script_class="SkillStats" load_steps=2 format=3 uid="uid://c83i0mrrhsyf0"]
+[gd_resource type="Resource" script_class="Scor" load_steps=2 format=3 uid="uid://cmflo62wybvqg"]
 
-[ext_resource type="Script" path="res://skills/skill_stats.gd" id="1_pvdev"]
+[ext_resource type="Script" path="res://skills/scor/scor_ingress.gd" id="1_f7jjn"]
 
 [resource]
-script = ExtResource("1_pvdev")
-id = 12
+script = ExtResource("1_f7jjn")
+element = 3
+id = 6
 label = "Scor Refrain"
 ingress = 1
-element = 3
 type = 1
 target = 0
-description = "Create an Scor Refrain barrier to block one attack. If attacked with an Scor Incursion, gain Ingress equal to the attack."
+description = "Block an attack with a Scor Refrain. Absorbs damage from Scor incursions"

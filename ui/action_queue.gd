@@ -62,7 +62,7 @@ func set_turn_focus(index: int) -> void:
 func update_player_action_with_skill(player: Node2D, enemy: Node2D, skill: Ingress) -> void:
 	var action_to_update: Action = items.filter(func(item: ActionQueueItem)-> bool: 
 		return item.action.actor.stats.unique_id == player.stats.unique_id)[0].action
-	if skill.target == Skill.Target.SELF:
+	if skill.target == Ingress.Target.SELF:
 		action_to_update.set_attack(null, skill)
 	else:
 		action_to_update.set_attack(enemy, skill)
@@ -103,7 +103,7 @@ func set_focuses() -> void:
 	if action.target:
 		action.target.turn.self_modulate = Color("Red")
 		action.target.find_child("Turn").focus()
-	elif action.skill and action.skill.target == Skill.Target.SELF:
+	elif action.skill and action.skill.target == Ingress.Target.SELF:
 		action.actor.find_child("Turn").self_modulate = Color("Green")
 
 func get_action_index_by_unique_id(unique_id: String) -> int:
@@ -137,12 +137,8 @@ func _fill_enemy_actions(players: Array[Node2D]) -> void:
 			if action.actor.stats.current_ingress == 1:
 				action.set_dodge()
 			else:
-				var enemy_skill := _select_enemy_skill(action.actor.stats.level_stats.skills_new)
+				var enemy_skill := _select_enemy_skill(action.actor.stats.level_stats.skills)
 				action.set_enemy_skill(enemy_skill, players)
-				
-func set_dodge(action: Action) -> void:
-	action.actor.stats.is_dodging = true
-	action.set_attack(null, Skill.create_skill_instance(Skill.Id.DODGE))
 
 func _select_enemy_skill(skills: Array) -> Ingress:
 	var rand_skill_i := randi() % skills.size()
@@ -157,7 +153,7 @@ func _process_skill(action: Action, tree: SceneTree, players: Array[Node2D], ene
 		Ingress.Id.INCURSION:
 			await _use_incursion(action)
 			
-		Skill.Id.ETH_INCURSION_DOUBLE, Skill.Id.SHOR_INCURSION_DOUBLE:
+		Ingress.Id.DOUBLE_INCURSION:
 			await _use_incursion(action)
 			await tree.create_timer(2).timeout
 			if action.target != null:
@@ -168,14 +164,14 @@ func _process_skill(action: Action, tree: SceneTree, players: Array[Node2D], ene
 			await _play_refrain_animation(action)
 			_set_refrain(action.actor, action.skill.element)
 			
-		Skill.Id.ETH_REFRAIN_GROUP, Skill.Id.SHOR_REFRAIN_GROUP, Skill.Id.SCOR_REFRAIN_GROUP, Skill.Id.ETH_REFRAIN_GROUP:
+		Ingress.Id.GROUP_REFRAIN:
 			await _play_refrain_animation(action)
 			var target_players := players if action.actor.stats.player_details.icon_type == Stats.IconType.PLAYER else enemies
 			for player: Node2D in target_players:
 				# if player == Node2D:
 				_set_refrain(player, action.skill.element)
 				
-	if action.skill.id != Skill.Id.DODGE:
+	if action.skill.id != Ingress.Id.DODGE:
 		await tree.create_timer(2).timeout
 		
 func _use_incursion(action: Action) -> void:
@@ -200,7 +196,7 @@ func _play_refrain_animation(action: Action) -> void:
 	await action.actor.animation_player.animation_finished
 	action.actor.animation_player.play("idle")
 		
-func _set_refrain(player: Node2D, skill_element: Stats.Element) -> void:
+func _set_refrain(player: Node2D, skill_element: Element.Type) -> void:
 	player.stats.has_small_refrain_open = true
 	player.stats.current_refrain_element = skill_element
 	player.refrain_aura.show()

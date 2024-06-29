@@ -7,4 +7,4 @@ script = ExtResource("1_paxr0")
 player_id = 0
 label = "Talon"
 icon_type = 0
-elements = Array[int]([1, 2])
+elements = Array[int]([0, 2])

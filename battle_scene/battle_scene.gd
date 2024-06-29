@@ -104,7 +104,7 @@ func _on_dodge_pressed() -> void:
 	var unique_id: String = player_group.get_current_player().stats.unique_id
 	var current_players_action_id: int = action_queue.get_action_index_by_unique_id(unique_id)
 	var current_action: Action = action_queue.items[current_players_action_id].action
-	action_queue.set_dodge(current_action)
+	current_action.set_dodge()
 
 	if !action_queue.is_turn_over():
 		player_group.next_player()
