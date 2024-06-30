@@ -9,10 +9,11 @@ var action_index := 0
 const ACTION_QUEUE_ITEM := preload("res://ui/action_queue_item.tscn")
 
 func _ready() -> void:
-	Events.choosing_action_state_entered.connect(_on_choosing_action_state_entered)
 	Events.choosing_action_queue_state_entered.connect(_on_choosing_action_queue_state_entered)
-	Events.is_battling_state_entered.connect(_on_is_battling_state_entered)
+	Events.choosing_action_state_entered.connect(_on_choosing_action_state_entered)
+	Events.choosing_ally_state_entered.connect(_on_choosing_ally_state_entered)
 	Events.enter_action_queue_handle_input.connect(_on_enter_action_queue_handle_input)
+	Events.is_battling_state_entered.connect(_on_is_battling_state_entered)
 	Events.update_action_index.connect(_on_update_action_index)
 	Events.update_action_queue_focuses.connect(_on_update_action_queue_focuses)
 
@@ -260,3 +261,7 @@ func _on_update_action_index(direction: Direction) -> void:
 
 func _on_update_action_queue_focuses() -> void:
 	set_focuses()
+
+func _on_choosing_ally_state_entered() -> void:
+	clear_all_focus()
+	clear_all_turn_focus()

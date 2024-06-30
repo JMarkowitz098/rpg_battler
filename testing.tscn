@@ -1,8 +1,9 @@
-[gd_scene load_steps=4 format=3 uid="uid://qdtcqm58bg3b"]
+[gd_scene load_steps=5 format=3 uid="uid://qdtcqm58bg3b"]
 
 [ext_resource type="Script" path="res://testing.gd" id="1_0usll"]
 [ext_resource type="PackedScene" uid="uid://bdhgmwwhyk3x1" path="res://players/group.tscn" id="2_xy1m1"]
 [ext_resource type="PackedScene" uid="uid://uspstsj5payu" path="res://players/player_group_new.tscn" id="3_52ygg"]
+[ext_resource type="PackedScene" uid="uid://cgok3ungpxl0x" path="res://players/enemies/enemy_group_new.tscn" id="4_7m1cl"]
 
 [node name="Testing" type="Node"]
 script = ExtResource("1_0usll")
@@ -12,4 +13,7 @@ visible = false
 position = Vector2(105, 98)
 
 [node name="PlayerGroupNew" parent="." instance=ExtResource("3_52ygg")]
-position = Vector2(58, 62)
+position = Vector2(13, 60)
+
+[node name="EnemyGroupNew" parent="." instance=ExtResource("4_7m1cl")]
+position = Vector2(179, 60)
