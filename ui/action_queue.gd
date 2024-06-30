@@ -26,7 +26,7 @@ func fill_initial_turn_items(players: Array[Node2D], enemies: Array[Node2D]) -> 
 	_queue_empty_items(players)
 	_queue_empty_items(enemies)
 	_sort_items_by_agility()
-	_fill_enemy_actions(players)
+	_fill_enemy_actions(players, enemies)
 	for item in items:
 		add_child(item)
 
@@ -58,13 +58,13 @@ func set_focus(index: int) -> void:
 func set_turn_focus(index: int) -> void:
 	items[index].turn.focus()
 
-func update_player_action_with_skill(player: Node2D, enemy: Node2D, skill: Ingress) -> void:
+func update_player_action_with_skill(player: Node2D, target: Node2D, skill: Ingress) -> void:
 	var action_to_update: Action = items.filter(func(item: ActionQueueItem)-> bool: 
 		return item.action.actor.stats.unique_id == player.stats.unique_id)[0].action
 	if skill.target == Ingress.Target.SELF or skill.target == Ingress.Target.ALL_ENEMIES:
-		action_to_update.set_attack(null, skill)
+		action_to_update.set_target(null, skill)
 	else:
-		action_to_update.set_attack(enemy, skill)
+		action_to_update.set_target(target, skill)
 	
 func remove_action_by_character_id(id: String) -> void:
 	items = items.filter(
@@ -132,7 +132,7 @@ func _queue_empty_items(players: Array[Node2D]) -> void:
 			new_item.self_modulate = Color("Red")
 		items.push_back(new_item)
 
-func _fill_enemy_actions(players: Array[Node2D]) -> void:
+func _fill_enemy_actions(players: Array[Node2D], enemies: Array[Node2D]) -> void:
 	for item in items:
 		var action := item.action
 		if(action.actor.stats.player_details.icon_type == Stats.IconType.ENEMY):
@@ -140,7 +140,7 @@ func _fill_enemy_actions(players: Array[Node2D]) -> void:
 				action.set_dodge()
 			else:
 				var enemy_skill := _select_enemy_skill(action.actor.stats.level_stats.skills)
-				action.set_enemy_skill(enemy_skill, players)
+				action.set_enemy_skill(enemy_skill, players, enemies)
 
 func _select_enemy_skill(skills: Array) -> Ingress:
 	var rand_skill_i := randi() % skills.size()
@@ -171,7 +171,7 @@ func _process_skill(action: Action, tree: SceneTree, players: Array[Node2D], ene
 				
 		Ingress.Id.REFRAIN:
 			await _play_refrain_animation(action)
-			_set_refrain(action.actor, action.skill.element)
+			_set_refrain(action.target, action.skill.element)
 			
 		Ingress.Id.GROUP_REFRAIN:
 			await _play_refrain_animation(action)

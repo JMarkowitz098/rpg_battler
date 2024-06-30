@@ -14,7 +14,6 @@ var skill_index := 0
 @onready var audio_stream_player_2d := $AudioStreamPlayer2D
 @onready var dodge := $CanvasLayer/ActionChoice/Dodge
 @onready var enemy_group := $EnemyGroup
-@onready var enemy_group_location := $EnemyGroupLocation
 @onready var help_menu := $CanvasLayer/HelpMenu
 @onready var incursion := $CanvasLayer/ActionChoice/Incursion
 @onready var info_label := $CanvasLayer/InfoBackground/InfoLabel
@@ -66,6 +65,7 @@ func _connect_signals() -> void:
 	Events.choosing_action_state_entered.connect(_on_choosing_action_state_entered)
 	Events.choosing_skill_state_entered.connect(_on_choosing_skill_state_entered)
 	Events.choose_enemy.connect(_on_choose_enemy)
+	Events.choose_ally.connect(_on_choose_ally)
 	Events.pause_game.connect(_on_game_paused)
 
 # -------------------
@@ -224,6 +224,14 @@ func _on_choose_enemy() -> void:
 	action_queue.update_player_action_with_skill(
 		player_group.get_current_member_turn(),
 		enemy_group.get_current_member(),
+		skill_choice_list.get_current_skill()
+	)
+	_handle_done_choosing()
+
+func _on_choose_ally() -> void:
+	action_queue.update_player_action_with_skill(
+		player_group.get_current_member_turn(),
+		player_group.get_current_member(),
 		skill_choice_list.get_current_skill()
 	)
 	_handle_done_choosing()

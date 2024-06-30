@@ -21,7 +21,7 @@ func _connect_signals() -> void:
 	Events.choosing_skill_state_entered.connect(_on_choosing_skill_state_entered)
 	Events.enter_action_queue_handle_input.connect(_on_enter_action_queue_handle_input)
 	Events.is_battling_state_entered.connect(_on_is_battling_state_entered)
-	Events.update_enemy_group_current.connect(_on_update_enemy_group_current)
+	Events.update_enemy_group_current.connect(_on_update_current) # Defined in Group
 
 func _create_new_player_data(new_enemy_data: Array[NewPlayerData], round_data: Round) -> void:
 	for i: int in round_data.players_details.size():
@@ -54,19 +54,6 @@ func _on_is_battling_state_entered() -> void:
 
 func _on_enter_action_queue_handle_input() -> void:
 	unfocus_all(Focus.Type.ALL)
-
-func _on_update_enemy_group_current(direction: Direction.Type) -> void:
-	#TODO: Sometimes leads to current member being -1. Fix.
-	if(members.size() > 0):
-		match direction:
-			Direction.Type.LEFT:
-				var new_enemy_index := (current_member - 1) % members.size()
-				switch_focus(Focus.Type.FINGER, current_member, new_enemy_index)
-				current_member = new_enemy_index
-			Direction.Type.RIGHT:
-				var new_enemy_index := (current_member + 1) % members.size()
-				switch_focus(Focus.Type.FINGER, current_member, new_enemy_index)
-				current_member = new_enemy_index
 
 func _on_choosing_enemy_state_entered() -> void:
 	unfocus_all(Focus.Type.ALL)
