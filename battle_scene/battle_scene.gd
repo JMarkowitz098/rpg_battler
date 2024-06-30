@@ -144,9 +144,6 @@ func _reset_dodges() -> void:
 func _is_game_over() -> bool:
 	return player_group.members.size() == 0
 	
-func _clear_info_label() -> void:
-	info_label.text = ""
-	
 func _is_victory() -> bool:
 	return enemy_group.members.size() == 0
 	

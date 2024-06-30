@@ -2,7 +2,7 @@ extends HBoxContainer
 class_name ActionQueue
 
 var items: Array[ActionQueueItem] = []
-var action_index := 0
+var current_member: int = 0
 
 const ACTION_QUEUE_ITEM := preload("res://ui/action_queue_item.tscn")
 
@@ -15,9 +15,9 @@ func _ready() -> void:
 	Events.update_action_index.connect(_on_update_action_index)
 	Events.update_action_queue_focuses.connect(_on_update_action_queue_focuses)
 
-# ----------------
-# Public Functions
-# ----------------
+# -------------
+# Process Queue
+# -------------
 
 func fill_initial_turn_items(players: Array[Node2D], enemies: Array[Node2D]) -> void:
 	for child in get_children():
@@ -42,21 +42,6 @@ func process_action_queue(tree: SceneTree, players: Array[Node2D], enemies: Arra
 func is_turn_over() -> bool:
 	return items.all(func(item: ActionQueueItem)-> bool: 
 		return item.action.action_chosen)
-		
-func reset_indexes() -> void:
-	action_index = 0
-	
-func size() -> int:
-	return items.size()
-	
-func get_current_item() -> ActionQueueItem:
-	return items[action_index]
-
-func set_focus(index: int) -> void:
-	items[index].focus()
-
-func set_turn_focus(index: int) -> void:
-	items[index].turn.focus()
 
 func update_player_action_with_skill(player: Node2D, target: Node2D, skill: Ingress) -> void:
 	var action_to_update: Action = items.filter(func(item: ActionQueueItem)-> bool: 
@@ -76,48 +61,6 @@ func remove_action_by_character_id(id: String) -> void:
 			if action.actor.stats.unique_id == id:
 				action_matches = true
 			return !action_matches)
-			
-func create_action_message(action: Action) -> String:
-	var message: String = "Player: " + action.actor.player_name.text
-	if action.skill:
-		message += "\nAction: " + action.skill.label
-	if action.target:
-		message += "\nTarget -> " + action.target.player_name.text
-	return message
-
-func clear_all_turn_focus() -> void:
-	for item in items:
-		item.turn.clear()
-
-func clear_all_focus() -> void:
-	for item in items:
-		item.icon_focus.clear()
-
-func set_focuses() -> void:
-	var item := get_current_item()
-	var action: Action = item.action
-	action.actor.focus(Focus.Type.TRIANGLE)
-	item.focus()
-	
-	# Need to redo based on skills and targets, not just targets
-	if action.target:
-		action.target.triangle_focus.self_modulate = Color("Red")
-		action.target.focus(Focus.Type.TRIANGLE)
-		# action.target.find_child("TriangleFocus").focus()
-	elif action.skill and action.skill.target == Ingress.Target.SELF:
-		action.actor.triangle_focus.self_modulate = Color("Green")
-		# action.actor.find_child("TriangleFocus").self_modulate = Color("Green")
-
-func get_action_index_by_unique_id(unique_id: String) -> int:
-	for i in items.size():
-		var action := items[i].action
-		if action.actor.stats.unique_id == unique_id:
-			return i
-	return 0
-
-func set_turn_on_player(unique_id: String) -> void:
-	var index := get_action_index_by_unique_id(unique_id)
-	set_turn_focus(index)
 
 # -----------------
 # Private Functions
@@ -225,37 +168,93 @@ func _sort_items_by_agility() -> void:
 	items.sort_custom(func(a: ActionQueueItem, b: ActionQueueItem) -> bool: 
 		return a.action.actor.stats.rand_agi  > b.action.actor.stats.rand_agi )
 
+# ------------------
+# Action Queue Focus
+# ------------------
+		
+func reset_current_member() -> void:
+	current_member = 0
+	
+func size() -> int:
+	return items.size()
+	
+func get_current_item() -> ActionQueueItem:
+	return items[current_member]
+
+func set_item_focus(index: int, type: Focus.Type) -> void:
+	items[index].focus(type)
+			
+func create_action_message(action: Action) -> String:
+	var message: String = "Player: " + action.actor.player_name.text
+	if action.skill:
+		message += "\nAction: " + action.skill.label
+	if action.target:
+		message += "\nTarget -> " + action.target.player_name.text
+	return message
+
+func unfocus_all(type: Focus.Type) -> void:
+	for item in items:
+		item.unfocus(type)
+	
+
+func set_focuses() -> void:
+	var item := get_current_item()
+	var action: Action = item.action
+
+	action.actor.focus(Focus.Type.TRIANGLE)
+	action.actor.set_triangle_focus_color(Color.GRAY)
+	action.actor.set_triangle_focus_size(Vector2(.6, .6))
+
+	item.focus(Focus.Type.FINGER)
+
+	if action.skill:
+		match action.skill.id:
+			Ingress.Id.INCURSION:
+				action.target.focus(Focus.Type.TRIANGLE)
+				action.target.set_triangle_focus_color(Color.RED)
+			Ingress.Id.REFRAIN:
+				action.target.focus(Focus.Type.TRIANGLE)
+				action.target.set_triangle_focus_color(Color.GREEN)
+
+func get_action_index_by_unique_id(unique_id: String) -> int:
+	for i in items.size():
+		var action := items[i].action
+		if action.actor.stats.unique_id == unique_id:
+			return i
+	return 0
+
+func set_turn_on_player(unique_id: String) -> void:
+	var index := get_action_index_by_unique_id(unique_id)
+	set_item_focus(index, Focus.Type.TRIANGLE)
+
 
 # -------
 # Signals
 # -------
 
 func _on_choosing_action_state_entered() -> void:
-	clear_all_focus()
-	clear_all_turn_focus()
+	unfocus_all(Focus.Type.ALL)
 
 func _on_choosing_action_queue_state_entered() -> void:
-	set_focus(0)
+	set_item_focus(0, Focus.Type.FINGER)
 	var action := get_current_item().action
 	Events.update_info_label.emit(create_action_message(action))
 
 func _on_is_battling_state_entered() -> void:
-	clear_all_focus()
-	clear_all_turn_focus()
+	unfocus_all(Focus.Type.ALL)
 
 func _on_enter_action_queue_handle_input() -> void:
-	clear_all_focus()
-	clear_all_turn_focus()
+	unfocus_all(Focus.Type.ALL)
 
 func _on_update_action_index(direction: Direction.Type) -> void:
 	match direction:
 		Direction.Type.RIGHT:
-			action_index = (action_index + 1) % items.size()
+			current_member = (current_member + 1) % items.size()
 		Direction.Type.LEFT:
-			if action_index == 0:
-				action_index = size() - 1
+			if current_member == 0:
+				current_member = size() - 1
 			else:
-				action_index = action_index - 1
+				current_member = current_member - 1
 		
 	var action := get_current_item().action
 	Events.update_info_label.emit(create_action_message(action))
@@ -264,5 +263,4 @@ func _on_update_action_queue_focuses() -> void:
 	set_focuses()
 
 func _on_choosing_ally_state_entered() -> void:
-	clear_all_focus()
-	clear_all_turn_focus()
+	unfocus_all(Focus.Type.ALL)

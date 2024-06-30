@@ -14,11 +14,11 @@ texture = ExtResource("1_7ylrf")
 expand_mode = 2
 script = ExtResource("2_wtqkh")
 
-[node name="Turn" parent="." instance=ExtResource("2_qdccw")]
+[node name="TriangleFocus" parent="." instance=ExtResource("2_qdccw")]
 position = Vector2(10, -5)
 scale = Vector2(1, 1)
 
-[node name="Focus" parent="." instance=ExtResource("3_y1g33")]
+[node name="FingerFocus" parent="." instance=ExtResource("3_y1g33")]
 visible = false
 position = Vector2(22, 22)
 scale = Vector2(0.176984, 0.176984)

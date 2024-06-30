@@ -19,8 +19,8 @@ func _connect_signals() -> void:
 	Events.choosing_enemy_all_state_entered.connect(_on_choosing_enemy_state_all_entered)
 	Events.choosing_enemy_state_entered.connect(_on_choosing_enemy_state_entered)
 	Events.choosing_skill_state_entered.connect(_on_choosing_skill_state_entered)
-	Events.enter_action_queue_handle_input.connect(_on_enter_action_queue_handle_input)
 	Events.is_battling_state_entered.connect(_on_is_battling_state_entered)
+	Events.enter_action_queue_handle_input.connect(_on_enter_action_queue_handle_input) # Defined in Group
 	Events.update_enemy_group_current.connect(_on_update_current) # Defined in Group
 
 func _create_new_player_data(new_enemy_data: Array[NewPlayerData], round_data: Round) -> void:
@@ -50,9 +50,6 @@ func _on_choosing_skill_state_entered() -> void:
 	unfocus_all(Focus.Type.ALL)
 
 func _on_is_battling_state_entered() -> void:
-	unfocus_all(Focus.Type.ALL)
-
-func _on_enter_action_queue_handle_input() -> void:
 	unfocus_all(Focus.Type.ALL)
 
 func _on_choosing_enemy_state_entered() -> void:

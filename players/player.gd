@@ -40,6 +40,12 @@ func unfocus(type: Focus.Type) -> void:
 			finger_focus.unfocus()
 			triangle_focus.unfocus()
 
+func set_triangle_focus_color(color: Color) -> void:
+	triangle_focus.self_modulate = color
+
+func set_triangle_focus_size(size: Vector2) -> void:
+	triangle_focus.scale = size
+
 func set_skills() -> void:
 	skills = stats.level_stats.skills
 

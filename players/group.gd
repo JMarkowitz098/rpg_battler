@@ -33,6 +33,14 @@ func unfocus_all(type: Focus.Type) -> void:
 	for member in members:
 		member.unfocus(type)
 
+func set_triangle_focus_color_all(color: String) -> void:
+	for member in members:
+		member.set_triangle_focus_color(color)
+
+func set_triangle_focus_size_all(size: Vector2) -> void:
+	for member in members:
+		member.set_triangle_focus_size(size)
+
 func switch_focus(type: Focus.Type, old_index: int, new_index: int) -> void:
 	members[old_index].unfocus(type)
 	members[new_index].focus(type)
@@ -93,3 +101,8 @@ func _on_update_current(direction: Direction.Type) -> void:
 				var new_current_index := (current_member + 1) % members.size()
 				switch_focus(Focus.Type.FINGER, current_member, new_current_index)
 				current_member = new_current_index
+
+func _on_enter_action_queue_handle_input() -> void:
+	unfocus_all(Focus.Type.ALL)
+	set_triangle_focus_color_all("White")
+	set_triangle_focus_size_all(Vector2(.4, .4))
