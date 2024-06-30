@@ -1,4 +1,11 @@
 extends Sprite2D
+class_name Focus
+
+enum Type{
+	FINGER,
+	TRIANGLE,
+	ALL
+}
 
 func focus() -> void:
 	show()

@@ -5,8 +5,8 @@
 [ext_resource type="Texture2D" uid="uid://h0h5kd48hvh1" path="res://players/Nash/Nash attack.png" id="2_ok7ke"]
 [ext_resource type="Texture2D" uid="uid://c120204woffuw" path="res://players/Nash/Nash idle.png" id="3_c61ff"]
 [ext_resource type="PackedScene" uid="uid://dl4d2stn4lshh" path="res://players/refrain_aura.tscn" id="4_iw82a"]
-[ext_resource type="PackedScene" uid="uid://bqyh4pkeog5r5" path="res://ui/turn.tscn" id="6_gu3rd"]
-[ext_resource type="PackedScene" uid="uid://2evhn0npdxi4" path="res://ui/focus_default.tscn" id="7_4wh2y"]
+[ext_resource type="PackedScene" uid="uid://bqyh4pkeog5r5" path="res://ui/triangle_focus.tscn" id="6_gu3rd"]
+[ext_resource type="PackedScene" uid="uid://2evhn0npdxi4" path="res://ui/finger_focus.tscn" id="7_4wh2y"]
 [ext_resource type="PackedScene" uid="uid://cyi2g62l2egia" path="res://players/stats.tscn" id="8_88ef6"]
 [ext_resource type="Resource" uid="uid://pue3uw4dj1e3" path="res://players/Nash/nash_player_details.tres" id="9_3oase"]
 [ext_resource type="Resource" uid="uid://dv117ptaw6dsc" path="res://players/Nash/levels/nash_level_1.tres" id="10_4clvy"]
@@ -141,10 +141,10 @@ libraries = {
 position = Vector2(1.90735e-06, 1.90735e-06)
 scale = Vector2(1.24438, 1.12997)
 
-[node name="Turn" parent="." instance=ExtResource("6_gu3rd")]
+[node name="TriangleFocus" parent="." instance=ExtResource("6_gu3rd")]
 position = Vector2(0, -12)
 
-[node name="Focus" parent="." instance=ExtResource("7_4wh2y")]
+[node name="FingerFocus" parent="." instance=ExtResource("7_4wh2y")]
 visible = false
 position = Vector2(8, 9)
 scale = Vector2(0.15, 0.15)

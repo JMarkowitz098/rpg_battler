@@ -1,0 +1,15 @@
+[gd_scene load_steps=4 format=3 uid="uid://qdtcqm58bg3b"]
+
+[ext_resource type="Script" path="res://testing.gd" id="1_0usll"]
+[ext_resource type="PackedScene" uid="uid://bdhgmwwhyk3x1" path="res://players/group.tscn" id="2_xy1m1"]
+[ext_resource type="PackedScene" uid="uid://uspstsj5payu" path="res://players/player_group_new.tscn" id="3_52ygg"]
+
+[node name="Testing" type="Node"]
+script = ExtResource("1_0usll")
+
+[node name="Group" parent="." instance=ExtResource("2_xy1m1")]
+visible = false
+position = Vector2(105, 98)
+
+[node name="PlayerGroupNew" parent="." instance=ExtResource("3_52ygg")]
+position = Vector2(58, 62)

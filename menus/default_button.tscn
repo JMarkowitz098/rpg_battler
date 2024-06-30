@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://ch51mvl5giece"]
 
 [ext_resource type="Script" path="res://menus/default_button.gd" id="1_fvlow"]
-[ext_resource type="PackedScene" uid="uid://2evhn0npdxi4" path="res://ui/focus_default.tscn" id="2_iroba"]
+[ext_resource type="PackedScene" uid="uid://2evhn0npdxi4" path="res://ui/finger_focus.tscn" id="2_iroba"]
 
 [node name="Button" type="Button"]
 offset_right = 147.0

@@ -6,8 +6,8 @@
 [ext_resource type="Texture2D" uid="uid://df7pcvc8u0ug1" path="res://players/Talon/sprite_sheets/noBKG_KnightIdle_strip.png" id="3_bgm7c"]
 [ext_resource type="Texture2D" uid="uid://b3eiyyx4skdd2" path="res://players/Talon/sprite_sheets/noBKG_KnightAttack_strip.png" id="4_so0p2"]
 [ext_resource type="PackedScene" uid="uid://dl4d2stn4lshh" path="res://players/refrain_aura.tscn" id="5_ahw2m"]
-[ext_resource type="PackedScene" uid="uid://bqyh4pkeog5r5" path="res://ui/turn.tscn" id="8_v2rbo"]
-[ext_resource type="PackedScene" uid="uid://2evhn0npdxi4" path="res://ui/focus_default.tscn" id="9_juggu"]
+[ext_resource type="PackedScene" uid="uid://bqyh4pkeog5r5" path="res://ui/triangle_focus.tscn" id="7_clngs"]
+[ext_resource type="PackedScene" uid="uid://2evhn0npdxi4" path="res://ui/finger_focus.tscn" id="8_l8hxc"]
 [ext_resource type="PackedScene" uid="uid://cyi2g62l2egia" path="res://players/stats.tscn" id="10_nfyao"]
 [ext_resource type="Resource" uid="uid://ber4ixqhnh8bj" path="res://players/Talon/talon_player_details.tres" id="11_34duj"]
 [ext_resource type="Resource" uid="uid://cl0cwnv02jif8" path="res://players/Talon/levels/talon_level_1.tres" id="11_yt7d8"]
@@ -133,10 +133,10 @@ hframes = 22
 
 [node name="RefrainAura" parent="." instance=ExtResource("5_ahw2m")]
 
-[node name="Turn" parent="." instance=ExtResource("8_v2rbo")]
+[node name="TriangleFocus" parent="." instance=ExtResource("7_clngs")]
 position = Vector2(-2, -13)
 
-[node name="Focus" parent="." instance=ExtResource("9_juggu")]
+[node name="FingerFocus" parent="." instance=ExtResource("8_l8hxc")]
 visible = false
 position = Vector2(4, 8)
 scale = Vector2(0.15, 0.15)
