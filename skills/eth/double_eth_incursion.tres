@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="Eth" load_steps=2 format=3 uid="uid://cika1mnqx80ac"]
+
+[ext_resource type="Script" path="res://skills/eth/eth_ingress.gd" id="1_4jt6d"]
+
+[resource]
+script = ExtResource("1_4jt6d")
+element = 0
+id = 0
+label = "Double Eth Incursion"
+ingress = 3
+type = 0
+target = 1
+description = "Attack an enemy with two consecutive Eth Incursions"

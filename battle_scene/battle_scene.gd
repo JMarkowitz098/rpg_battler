@@ -25,6 +25,10 @@ var skill_index := 0
 @onready var current_action_button: Button = incursion
 @onready var state := State.new()
 
+# ----------------------
+# Initializing Functions
+# ----------------------
+
 func _ready() -> void:
 	audio_stream_player_2d.play()
 	_load_enemy_group()
@@ -54,7 +58,7 @@ func _process(_delta: float) -> void:
 
 func _load_enemy_group() -> void:
 	var old_enemy_group := enemy_group
-	# Utils.round_number = 2 # for testing
+	Utils.round_number = 1 # for testing
 	match Utils.round_number:
 		0:
 			return
@@ -74,7 +78,6 @@ func _connect_signals() -> void:
 		player.stats.no_ingress_energy.connect(_on_player_no_ingress_energy)
 	Events.choosing_action_state_entered.connect(_on_choosing_action_state_entered)
 	Events.choosing_skill_state_entered.connect(_on_choosing_skill_state_entered)
-	Events.choosing_enemy_state_entered.connect(_on_choosing_enemy_state_entered)
 	Events.choose_enemy.connect(_on_choose_enemy)
 	Events.pause_game.connect(_on_game_paused)
 
@@ -121,28 +124,6 @@ func _draw_action_button_description(action_choice_index: int) -> void:
 			info_label.text = "Use a refrain"
 		2: 
 			info_label.text = "Attempt to dodge an attack"
-
-func _handle_choose_skill(skill: Ingress) -> void:
-	current_skill = skill
-		
-	match current_skill.target:
-		Ingress.Target.ENEMY:
-			state.change_state.call(State.Type.CHOOSING_ENEMY)
-			return
-		Ingress.Target.SELF, Ingress.Target.ALL_ALLIES:
-			action_queue.update_player_action_with_skill(
-			player_group.get_current_player(), 
-			enemy_group.get_current_enemy(),
-			current_skill
-		)
-
-			# Factor into function in state class
-			if !action_queue.is_turn_over():
-				player_group.next_player()
-				state.change_state(State.Type.CHOOSING_ACTION)
-			else:
-				state.change_state(State.Type.IS_BATTLING)
-			return
 	
 # ----------------------
 # Process Turn Functions
@@ -188,6 +169,36 @@ func _set_dodging_animation() -> void:
 			item.action.actor.base_sprite.self_modulate = Color("ffffff9b")
 
 # ----------------------
+# Helper Functions
+# ----------------------
+
+func _handle_choose_skill(skill: Ingress) -> void:
+	current_skill = skill
+		
+	match current_skill.target:
+		Ingress.Target.ENEMY:
+			state.change_state.call(State.Type.CHOOSING_ENEMY)
+			return
+		Ingress.Target.SELF, Ingress.Target.ALL_ALLIES:
+			action_queue.update_player_action_with_skill(
+				player_group.get_current_player(), 
+				enemy_group.get_current_enemy(),
+				current_skill
+			)
+			_handle_done_choosing()
+		Ingress.Target.ALL_ENEMIES:
+			state.change_state.call(State.Type.CHOOSING_ENEMY_ALL)
+			return
+	
+func _handle_done_choosing() -> void:
+	if !action_queue.is_turn_over():
+		player_group.next_player()
+		state.change_state(State.Type.CHOOSING_ACTION)
+	else:
+		player_group.reset_current()
+		state.change_state(State.Type.IS_BATTLING)
+
+# ----------------------
 # Signals
 # ----------------------
 	
@@ -219,21 +230,13 @@ func _on_choosing_skill_state_entered() -> void:
 	current_player.turn.focus()
 	action_queue.set_turn_on_player(current_player.stats.unique_id)
 
-func _on_choosing_enemy_state_entered() -> void:
-	enemy_group.get_current_enemy().icon_focus.focus()
-
 func _on_choose_enemy() -> void:
 	action_queue.update_player_action_with_skill(
 		player_group.get_current_player(),
 		enemy_group.get_current_enemy(),
 		skill_choice_list.get_current_skill()
 	)
-	if !action_queue.is_turn_over():
-		player_group.next_player()
-		state.change_state(State.Type.CHOOSING_ACTION)
-	else:
-		player_group.reset_current()
-		state.change_state(State.Type.IS_BATTLING)
+	_handle_done_choosing()
 
 func _on_game_paused(current_state: int) -> void:
 	match current_state:

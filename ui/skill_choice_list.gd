@@ -10,6 +10,7 @@ func _ready() -> void:
 	Events.choosing_action_queue_state_entered.connect(_on_choosing_action_queue_state_entered)
 	Events.choosing_skill_state_entered.connect(_on_choosing_skill_state_entered)
 	Events.choosing_enemy_state_entered.connect(_on_choosing_enemy_state_entered)
+	Events.choosing_enemy_all_state_entered.connect(_on_choosing_enemy_all_state_entered)
 	Events.is_battling_state_entered.connect(_on_is_battling_state_entered)
 	Events.update_info_label_with_skill_description.connect(_on_update_info_label_with_skill_description)
 
@@ -79,6 +80,9 @@ func _on_choosing_skill_state_entered() -> void:
 	show_list()
 
 func _on_choosing_enemy_state_entered() -> void:
+	release_focus_from_all_buttons()
+
+func _on_choosing_enemy_all_state_entered() -> void:
 	release_focus_from_all_buttons()
 
 func _on_is_battling_state_entered() -> void:

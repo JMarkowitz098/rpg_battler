@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="Shor" load_steps=2 format=3 uid="uid://bqt0wwswuq0d0"]
+
+[ext_resource type="Script" path="res://skills/shor/shor_ingress.gd" id="1_nhwnl"]
+
+[resource]
+script = ExtResource("1_nhwnl")
+element = 2
+id = 2
+label = "Group Shor Refrain"
+ingress = 3
+type = 1
+target = 4
+description = "Cover all party members with a Shor refrain"

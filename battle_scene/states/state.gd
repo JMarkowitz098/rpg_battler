@@ -8,7 +8,8 @@ enum Type {
 	CHOOSING_ACTION,
 	CHOOSING_SKILL,
 	GAME_OVER,
-	VICTORY
+	VICTORY,
+	CHOOSING_ENEMY_ALL
 }
 
 var current: Variant
@@ -18,6 +19,7 @@ var choosing_action_state: ChoosingAction
 var choosing_action_queue_state: ChoosingActionQueue
 var choosing_skill_state: ChoosingSkill
 var choosing_enemy_state: ChoosingEnemy
+var choosing_enemy_all_state: ChoosingEnemyAll
 var is_battling_state: IsBattling
 
 func _init() -> void:
@@ -25,6 +27,7 @@ func _init() -> void:
 	choosing_action_queue_state = ChoosingActionQueue.new()
 	choosing_skill_state = ChoosingSkill.new()
 	choosing_enemy_state = ChoosingEnemy.new()
+	choosing_enemy_all_state = ChoosingEnemyAll.new()
 	is_battling_state = IsBattling.new()
 
 	Events.change_state.connect(change_state)
@@ -40,6 +43,8 @@ func change_state(new_state_id: Type) -> void:
 			_update_state_vars(choosing_skill_state)
 		Type.CHOOSING_ENEMY:
 			_update_state_vars(choosing_enemy_state)
+		Type.CHOOSING_ENEMY_ALL:
+			_update_state_vars(choosing_enemy_all_state)
 		Type.IS_BATTLING:
 			_update_state_vars(is_battling_state)
 

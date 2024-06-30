@@ -6,7 +6,6 @@ signal took_damage
 signal used_skill
 
 enum IconType { PLAYER, ENEMY }
-enum Element { ENH, ETH, SHOR, SCOR, NONE }
 enum PlayerId { TALON, NASH, ESEN }
 
 @export var player_details: PlayerDetails

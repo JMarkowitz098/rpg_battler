@@ -62,7 +62,7 @@ func set_turn_focus(index: int) -> void:
 func update_player_action_with_skill(player: Node2D, enemy: Node2D, skill: Ingress) -> void:
 	var action_to_update: Action = items.filter(func(item: ActionQueueItem)-> bool: 
 		return item.action.actor.stats.unique_id == player.stats.unique_id)[0].action
-	if skill.target == Ingress.Target.SELF:
+	if skill.target == Ingress.Target.SELF or skill.target == Ingress.Target.ALL_ENEMIES:
 		action_to_update.set_attack(null, skill)
 	else:
 		action_to_update.set_attack(enemy, skill)
@@ -159,6 +159,13 @@ func _process_skill(action: Action, tree: SceneTree, players: Array[Node2D], ene
 			if action.target != null:
 				_use_incursion(action)
 				await tree.create_timer(2).timeout
+
+		Ingress.Id.GROUP_INCURSION:
+			await _play_attack_animation(action)
+			for enemy in enemies:
+				action.target = enemy
+				var damage := Utils.calucluate_skill_damage(action)
+				enemy.stats.take_damage(damage)
 				
 		Ingress.Id.REFRAIN:
 			await _play_refrain_animation(action)
