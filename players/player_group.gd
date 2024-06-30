@@ -1,116 +1,73 @@
-extends Node2D
+extends Group
 
-@onready var slot_one_location := $SlotOneLocation
-@onready var slot_two_location := $SlotTwoLocation
-@onready var slot_three_location := $SlotThreeLocation
-@onready var slot_four_location := $SlotFourLocation
-
-const TALON := preload("res://players/Talon/talon.tscn")
-const NASH := preload("res://players/Nash/nash.tscn")
-const ESEN := preload("res://players/Esen/esen.tscn")
-
-var players: Array[Node2D] = []
-var current: int = 0
+var current_members_turn := 0
 
 func _ready() -> void:
-	_instantiate_players()
-	players[0].turn.focus()
+	_connect_signals()
+
+func _connect_signals() -> void:
 	Events.choosing_action_state_entered.connect(_on_choosing_action_state_entered)
 	Events.choosing_action_queue_state_entered.connect(_on_choosing_action_queue_state_entered)
 	Events.is_battling_state_entered.connect(_on_is_battling_state_entered)
 	Events.enter_action_queue_handle_input.connect(_on_enter_action_queue_handle_input)
+	Events.choosing_ally_state_entered.connect(_on_choosing_ally_state_entered)
 	
 # ----------------
 # Public Functions
 # ----------------
-	
-func switch_turn_focus(x: int, y: int) -> void:
-	players[x].turn.focus()
-	players[y].turn.unfocus()
-	
-func clear_focus() -> void:
-	for player in players:
-		player.icon_focus.clear()
-		
-func clear_turn_focus() -> void:
-	for player in players:
-		player.turn.clear()
-		
-func remove_player_by_id(id: String) -> void:
-	players = players.filter(func(player: Node2D) -> bool: return player.stats.unique_id != id)
-
-func get_current_player() -> Node2D:
-	return players[current]
 
 func next_player() -> void:
-	if (current <= players.size()):
-		current += 1
+	if (current_members_turn <= members.size()):
+		current_members_turn += 1
+		current_member = current_members_turn
+
+func load_members_from_save_data() -> void:
+	var all_save_data := SaveAndLoadPlayer.load_all_players()
+	var new_player_data: Array[NewPlayerData] = []
+	
+	for player_save_data: PlayerSaveData in all_save_data:
+		if(player_save_data):
+			var new_player_data_object := _create_new_player_data(player_save_data)
+			new_player_data.append(new_player_data_object)
+
+	instantiate_members(new_player_data)
 
 func reset_current() -> void:
-	current = 0
-	
+	current_member = 0
+	current_members_turn = 0
+
+func get_current_member_turn() -> Node2D:
+	return members[current_members_turn]
+
 # -----------------
 # Private Functions
 # -----------------
-	
-func _instantiate_players() -> void:
-	var all_save_data := SaveAndLoadPlayer.load_all_players()
-	
-	var slot_index := 0
-	for data in all_save_data:
-		if(data):
-			_instantiate_player(data)
-			_set_location(slot_index, players[slot_index])
-			slot_index += 1
-		
-func _instantiate_player(save_data: PlayerSaveData) -> void:
-	var new_player: Node2D
-	match save_data.player_id:
-		Stats.PlayerId.TALON:
-			new_player = TALON.instantiate()
-		Stats.PlayerId.NASH:
-			new_player = NASH.instantiate()
-		Stats.PlayerId.ESEN:
-			new_player = ESEN.instantiate()
-	add_child(new_player)
-	new_player.stats.unique_id = save_data.unique_id
-	
-	if save_data.level > 1:
-		_update_level(new_player, save_data)
-		new_player.set_skills()
-	
-	players.append(new_player)
 
-func _update_level(player: Node2D, save_data: PlayerSaveData) -> void:
-	var new_stats := LevelStats.load_level_data(save_data.player_id, save_data.level)
-	player.stats.level_stats = new_stats
-	player.stats.current_ingress = new_stats.max_ingress
-	player.update_energy_bar()
-
-func _set_location(slot_index: int, player: Node2D) -> void:
-	match slot_index:
-		0:
-			player.global_position = slot_one_location.global_position
-		1:
-			player.global_position = slot_two_location.global_position
-		2: 
-			player.global_position = slot_three_location.global_position
-		3:
-			player.global_position = slot_four_location.global_position
+func _create_new_player_data(save_data: PlayerSaveData) -> NewPlayerData:
+	return NewPlayerData.new({
+		"player_id": save_data.player_id,
+		"player_details": Utils.get_player_details(save_data.player_id),
+		"level_stats": LevelStats.load_level_data(save_data.player_id, save_data.level),
+		"unique_id": Stats.create_unique_id(save_data.player_id)
+	})
 
 # -------
 # Signals
 # -------
 
 func _on_choosing_action_state_entered() -> void:
-	clear_turn_focus()
+	unfocus_all(Focus.Type.ALL)
+	get_current_member().focus(Focus.Type.TRIANGLE)
 
 func _on_choosing_action_queue_state_entered() -> void:
-	clear_focus()
-	clear_turn_focus()
+	unfocus_all(Focus.Type.ALL)
 
 func _on_is_battling_state_entered() -> void:
-	clear_turn_focus()
+	unfocus_all(Focus.Type.ALL)
 
 func _on_enter_action_queue_handle_input() -> void:
-	clear_turn_focus()
+	unfocus_all(Focus.Type.ALL)
+
+func _on_choosing_ally_state_entered() -> void:
+	unfocus_all(Focus.Type.ALL)
+	get_current_member().focus(Focus.Type.FINGER)

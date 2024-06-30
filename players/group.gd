@@ -28,7 +28,7 @@ func get_current_member() -> Node2D:
 func focus_all(type: Focus.Type) -> void:
 	for member in members:
 		member.focus(type)
-
+		
 func unfocus_all(type: Focus.Type) -> void:
 	for member in members:
 		member.unfocus(type)

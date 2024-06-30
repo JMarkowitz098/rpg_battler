@@ -31,9 +31,10 @@ var skill_index := 0
 
 func _ready() -> void:
 	audio_stream_player_2d.play()
-	_load_enemy_group()
+	player_group.load_members_from_save_data()
+	enemy_group.load_members_from_round_data(Round.Number.ONE)
 	_connect_signals()
-	action_queue.fill_initial_turn_items(player_group.players, enemy_group.enemies)
+	action_queue.fill_initial_turn_items(player_group.members, enemy_group.members)
 	state.change_state(State.Type.CHOOSING_ACTION)
 	
 func _process(_delta: float) -> void:
@@ -56,25 +57,11 @@ func _process(_delta: float) -> void:
 		else:
 			_reset_turn()
 
-func _load_enemy_group() -> void:
-	var old_enemy_group := enemy_group
-	Utils.round_number = 1 # for testing
-	match Utils.round_number:
-		0:
-			return
-		1:
-			enemy_group = load("res://players/enemies/enemy_group_round_two.tscn").instantiate()
-		2:
-			enemy_group = load("res://players/enemies/enemy_group_round_three.tscn").instantiate()
-
-	enemy_group.global_position = enemy_group_location.global_position
-	add_child(enemy_group)
-	old_enemy_group.queue_free()
 		
 func _connect_signals() -> void:
-	for enemy: Node2D in enemy_group.enemies:
+	for enemy: Node2D in enemy_group.members:
 		enemy.stats.no_ingress_energy.connect(_on_enemy_no_ingress_energy)
-	for player: Node2D in player_group.players:
+	for player: Node2D in player_group.members:
 		player.stats.no_ingress_energy.connect(_on_player_no_ingress_energy)
 	Events.choosing_action_state_entered.connect(_on_choosing_action_state_entered)
 	Events.choosing_skill_state_entered.connect(_on_choosing_skill_state_entered)
@@ -104,7 +91,7 @@ func _on_refrain_pressed() -> void:
 	current_skill = skill_choice_list.current_skills[0]
 	
 func _on_dodge_pressed() -> void:
-	var unique_id: String = player_group.get_current_player().stats.unique_id
+	var unique_id: String = player_group.get_current_member().stats.unique_id
 	var current_players_action_id: int = action_queue.get_action_index_by_unique_id(unique_id)
 	var current_action: Action = action_queue.items[current_players_action_id].action
 	current_action.set_dodge()
@@ -135,33 +122,33 @@ func _process_turn() -> void:
 	await get_tree().create_timer(1).timeout
 	await action_queue.process_action_queue(
 		get_tree(), 
-		player_group.players, 
-		enemy_group.enemies, 
+		player_group.members, 
+		enemy_group.members, 
 		set_process
 	)
 	state.change_state(State.Type.IS_BATTLING)
 	action_queue.reset_indexes()
 
 func _reset_turn() -> void:
-	action_queue.fill_initial_turn_items(player_group.players, enemy_group.enemies)
+	action_queue.fill_initial_turn_items(player_group.members, enemy_group.members)
 	state.change_state(State.Type.CHOOSING_ACTION)
 	_reset_dodges()
 	
 func _reset_dodges() -> void:
-	for player: Node2D in player_group.players:
+	for player: Node2D in player_group.members:
 		player.stats.is_dodging = false
 		player.base_sprite.self_modulate = Color("ffffff")
-	for enemy: Node2D in enemy_group.enemies:
+	for enemy: Node2D in enemy_group.members:
 		enemy.stats.is_dodging = false
 	
 func _is_game_over() -> bool:
-	return player_group.players.size() == 0
+	return player_group.members.size() == 0
 	
 func _clear_info_label() -> void:
 	info_label.text = ""
 	
 func _is_victory() -> bool:
-	return enemy_group.enemies.size() == 0
+	return enemy_group.members.size() == 0
 	
 func _set_dodging_animation() -> void:
 	for item: ActionQueueItem in action_queue.items:
@@ -179,10 +166,13 @@ func _handle_choose_skill(skill: Ingress) -> void:
 		Ingress.Target.ENEMY:
 			state.change_state.call(State.Type.CHOOSING_ENEMY)
 			return
+		Ingress.Target.ALLY:
+			state.change_state.call(State.Type.CHOOSING_ALLY)
+			return
 		Ingress.Target.SELF, Ingress.Target.ALL_ALLIES:
 			action_queue.update_player_action_with_skill(
-				player_group.get_current_player(), 
-				enemy_group.get_current_enemy(),
+				player_group.get_current_member(), 
+				enemy_group.get_current_member(),
 				current_skill
 			)
 			_handle_done_choosing()
@@ -198,18 +188,18 @@ func _handle_done_choosing() -> void:
 		player_group.reset_current()
 		state.change_state(State.Type.IS_BATTLING)
 
-# ----------------------
+# -------
 # Signals
-# ----------------------
+# -------
 	
 func _on_enemy_no_ingress_energy(enemy_id: String) -> void:
 	defeated.append(enemy_id)
 	action_queue.remove_action_by_character_id(enemy_id)
-	enemy_group.remove_enemy_by_id(enemy_id)
+	enemy_group.remove_member_by_id(enemy_id)
 	
 func _on_player_no_ingress_energy(player_id: String) -> void:
 	action_queue.remove_action_by_character_id(player_id)
-	player_group.remove_player_by_id(player_id)
+	player_group.remove_member_by_id(player_id)
 
 # func _on_help_button_pressed():
 # 	get_tree().paused = true
@@ -218,22 +208,22 @@ func _on_player_no_ingress_energy(player_id: String) -> void:
 
 func _on_choosing_action_state_entered() -> void:
 	current_action_button.focus()
-	var current_player: Node2D = player_group.get_current_player()
-	current_player.turn.focus()
+	var current_player: Node2D = player_group.get_current_member_turn()
+	current_player.focus(Focus.Type.TRIANGLE) # move to player group
 	action_queue.set_turn_on_player(current_player.stats.unique_id)
 
 func _on_choosing_skill_state_entered() -> void:
-	var current_player: Node2D = player_group.get_current_player()
+	var current_player: Node2D = player_group.get_current_member_turn()
 	skill_choice_list.set_current_skills(current_player, current_skill_type)
 	skill_choice_list.prepare_skill_menu(_handle_choose_skill)
 	skill_choice_list.get_children()[0].focus()
-	current_player.turn.focus()
+	current_player.focus(Focus.Type.TRIANGLE) # move to player group
 	action_queue.set_turn_on_player(current_player.stats.unique_id)
 
 func _on_choose_enemy() -> void:
 	action_queue.update_player_action_with_skill(
-		player_group.get_current_player(),
-		enemy_group.get_current_enemy(),
+		player_group.get_current_member_turn(),
+		enemy_group.get_current_member(),
 		skill_choice_list.get_current_skill()
 	)
 	_handle_done_choosing()
@@ -247,7 +237,7 @@ func _on_game_paused(current_state: int) -> void:
 		State.Type.CHOOSING_ACTION_QUEUE:
 			before_pause_focus = action_queue.get_current_item()
 		State.Type.CHOOSING_ENEMY:
-			before_pause_focus = enemy_group.get_current_enemy()
+			before_pause_focus = enemy_group.get_current_member()
 		State.Type.IS_BATTLING:
 			before_pause_focus = null
 

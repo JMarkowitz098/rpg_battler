@@ -6,11 +6,12 @@ var current_skills: Array[Ingress]
 var current_skill_index := 0
 
 func _ready() -> void:
-	Events.choosing_action_state_entered.connect(_on_choosing_action_state_entered)
 	Events.choosing_action_queue_state_entered.connect(_on_choosing_action_queue_state_entered)
-	Events.choosing_skill_state_entered.connect(_on_choosing_skill_state_entered)
-	Events.choosing_enemy_state_entered.connect(_on_choosing_enemy_state_entered)
+	Events.choosing_action_state_entered.connect(_on_choosing_action_state_entered)
+	Events.choosing_ally_state_entered.connect(_on_choosing_ally_state_entered)
 	Events.choosing_enemy_all_state_entered.connect(_on_choosing_enemy_all_state_entered)
+	Events.choosing_enemy_state_entered.connect(_on_choosing_enemy_state_entered)
+	Events.choosing_skill_state_entered.connect(_on_choosing_skill_state_entered)
 	Events.is_battling_state_entered.connect(_on_is_battling_state_entered)
 	Events.update_info_label_with_skill_description.connect(_on_update_info_label_with_skill_description)
 
@@ -87,6 +88,7 @@ func _on_choosing_enemy_all_state_entered() -> void:
 
 func _on_is_battling_state_entered() -> void:
 	release_focus_from_all_buttons()
+	hide()
 
 func _on_update_info_label_with_skill_description() -> void:
 	var skill_buttons := get_children()
@@ -94,3 +96,6 @@ func _on_update_info_label_with_skill_description() -> void:
 		if(skill_buttons[i].has_focus()):
 			Events.update_info_label.emit(_create_skill_desciption(current_skills[i]))
 			current_skill_index = i
+
+func _on_choosing_ally_state_entered() -> void:
+	release_focus_from_all_buttons()

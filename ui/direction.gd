@@ -1,6 +1,6 @@
 class_name Direction
 
-enum {
+enum Type {
   LEFT,
   RIGHT
 }

@@ -11,10 +11,10 @@ func handle_input() -> void:
 	Events.enter_action_queue_handle_input.emit()
 
 	if Input.is_action_just_pressed("menu_right"):
-		Events.update_action_index.emit(ActionQueue.Direction.RIGHT)
+		Events.update_action_index.emit(Direction.Type.RIGHT)
 		
 	if Input.is_action_just_pressed("menu_left"):
-		Events.update_action_index.emit(ActionQueue.Direction.LEFT)
+		Events.update_action_index.emit(Direction.Type.LEFT)
 
 	if Input.is_action_just_pressed("menu_back") or Input.is_action_just_pressed("to_action_queue"):
 		Events.change_to_previous_state.emit()

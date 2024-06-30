@@ -5,10 +5,10 @@ func enter() -> void:
 
 func handle_input() -> void:
 	if Input.is_action_just_pressed("menu_left"):
-		Events.update_enemy_group_current.emit(ActionQueue.Direction.LEFT)
+		Events.update_enemy_group_current.emit(Direction.Type.LEFT)
 			
 	if Input.is_action_just_pressed("menu_right"):
-		Events.update_enemy_group_current.emit(ActionQueue.Direction.RIGHT)
+		Events.update_enemy_group_current.emit(Direction.Type.RIGHT)
 
 	if Input.is_action_just_pressed("to_action_queue"):
 		Events.change_state.emit(State.Type.CHOOSING_ACTION_QUEUE)

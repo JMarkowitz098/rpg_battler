@@ -1,8 +1,6 @@
 extends HBoxContainer
 class_name ActionQueue
 
-enum Direction { LEFT, RIGHT }
-
 var items: Array[ActionQueueItem] = []
 var action_index := 0
 
@@ -98,14 +96,17 @@ func clear_all_focus() -> void:
 func set_focuses() -> void:
 	var item := get_current_item()
 	var action: Action = item.action
-	action.actor.turn.focus()
+	action.actor.focus(Focus.Type.TRIANGLE)
 	item.focus()
 	
+	# Need to redo based on skills and targets, not just targets
 	if action.target:
-		action.target.turn.self_modulate = Color("Red")
-		action.target.find_child("Turn").focus()
+		action.target.triangle_focus.self_modulate = Color("Red")
+		action.target.focus(Focus.Type.TRIANGLE)
+		# action.target.find_child("TriangleFocus").focus()
 	elif action.skill and action.skill.target == Ingress.Target.SELF:
-		action.actor.find_child("Turn").self_modulate = Color("Green")
+		action.actor.triangle_focus.self_modulate = Color("Green")
+		# action.actor.find_child("TriangleFocus").self_modulate = Color("Green")
 
 func get_action_index_by_unique_id(unique_id: String) -> int:
 	for i in items.size():
@@ -246,11 +247,11 @@ func _on_enter_action_queue_handle_input() -> void:
 	clear_all_focus()
 	clear_all_turn_focus()
 
-func _on_update_action_index(direction: Direction) -> void:
+func _on_update_action_index(direction: Direction.Type) -> void:
 	match direction:
-		Direction.RIGHT:
+		Direction.Type.RIGHT:
 			action_index = (action_index + 1) % items.size()
-		Direction.LEFT:
+		Direction.Type.LEFT:
 			if action_index == 0:
 				action_index = size() - 1
 			else:

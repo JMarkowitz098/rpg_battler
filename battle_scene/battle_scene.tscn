@@ -4,14 +4,14 @@
 [ext_resource type="Script" path="res://battle_scene/battle_scene.gd" id="1_r5piu"]
 [ext_resource type="Texture2D" uid="uid://cfxkdlm6ydlv7" path="res://mockups/Battle UI Mockup.png" id="2_2y8pj"]
 [ext_resource type="PackedScene" uid="uid://bl476pa5ernx5" path="res://ui/action_choice.tscn" id="2_f1npq"]
-[ext_resource type="PackedScene" uid="uid://cir0hf6b30mxx" path="res://players/enemies/enemy_group.tscn" id="3_dc2lk"]
 [ext_resource type="PackedScene" uid="uid://cpkpwy86k3he2" path="res://ui/skill_choice_list.tscn" id="4_166j1"]
 [ext_resource type="Script" path="res://battle_scene/info_label.gd" id="4_cqd3r"]
-[ext_resource type="PackedScene" uid="uid://bv8dkjaf6yr17" path="res://players/player_group.tscn" id="4_rbeni"]
+[ext_resource type="PackedScene" uid="uid://cgok3ungpxl0x" path="res://players/enemies/enemy_group.tscn" id="4_rbeni"]
 [ext_resource type="PackedScene" uid="uid://c7d1vt1bnige2" path="res://ui/action_queue.tscn" id="5_s0ybd"]
 [ext_resource type="Script" path="res://ui/skill_choice_list.gd" id="7_5pabf"]
 [ext_resource type="AudioStream" uid="uid://dy4h0826wa26i" path="res://audio/kim-lightyear-just-a-dream-wake-up-153991.mp3" id="9_6o17c"]
 [ext_resource type="PackedScene" uid="uid://crwce2voha8mt" path="res://menus/help_menu.tscn" id="10_w6e8n"]
+[ext_resource type="PackedScene" uid="uid://uspstsj5payu" path="res://players/player_group.tscn" id="13_av40a"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_p0inw"]
 font_size = 5
@@ -92,16 +92,11 @@ scale = Vector2(0.221786, 0.194805)
 texture = ExtResource("2_2y8pj")
 metadata/_edit_lock_ = true
 
-[node name="EnemyGroup" parent="." instance=ExtResource("3_dc2lk")]
-position = Vector2(232, 56)
-
-[node name="PlayerGroup" parent="." instance=ExtResource("4_rbeni")]
-position = Vector2(35, 55)
-
 [node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("9_6o17c")
 
 [node name="EnemyGroupLocation" type="Marker2D" parent="."]
+visible = false
 position = Vector2(217, 53)
 
 [node name="HelpButton" type="Button" parent="."]
@@ -109,6 +104,12 @@ offset_right = 8.0
 offset_bottom = 8.0
 theme_override_font_sizes/font_size = 8
 text = "H"
+
+[node name="PlayerGroup" parent="." instance=ExtResource("13_av40a")]
+position = Vector2(24, 53)
+
+[node name="EnemyGroup" parent="." instance=ExtResource("4_rbeni")]
+position = Vector2(190, 55)
 
 [connection signal="hidden" from="CanvasLayer/HelpMenu" to="." method="_on_help_menu_hidden"]
 [connection signal="focus_entered" from="CanvasLayer/ActionChoice/Incursion" to="." method="_on_incursion_focus_entered"]
