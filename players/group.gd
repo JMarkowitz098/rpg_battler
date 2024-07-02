@@ -90,17 +90,19 @@ func _set_location(slot_index: int, player: Node2D) -> void:
 			player.global_position = slot_four_location.global_position
 
 func _on_update_current(direction: Direction.Type) -> void:
-	#TODO: Sometimes leads to current member being -1
 	if(members.size() > 0):
+		var new_current_index: int
 		match direction:
 			Direction.Type.LEFT:
-				var new_current_index := (current_member - 1) % members.size()
-				switch_focus(Focus.Type.FINGER, current_member, new_current_index)
-				current_member = new_current_index
+				if current_member == 0:
+					new_current_index = members.size() - 1
+				else:
+					new_current_index = (current_member - 1) % members.size()
 			Direction.Type.RIGHT:
-				var new_current_index := (current_member + 1) % members.size()
-				switch_focus(Focus.Type.FINGER, current_member, new_current_index)
-				current_member = new_current_index
+				new_current_index = (current_member + 1) % members.size()
+	
+		switch_focus(Focus.Type.FINGER, current_member, new_current_index)
+		current_member = new_current_index
 
 func _on_enter_action_queue_handle_input() -> void:
 	unfocus_all(Focus.Type.ALL)
