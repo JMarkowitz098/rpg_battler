@@ -5,11 +5,17 @@ func _ready() -> void:
 
 func load_members_from_round_data(round_number: Round.Number) -> void:
 	var new_enemy_data: Array[NewPlayerData] = []
+	var round_data: Resource
+
 	match round_number:
 		Round.Number.ONE:
-			var round_data := load("res://players/enemies/round_one.tres")
-			_create_new_player_data(new_enemy_data, round_data)
-			
+			round_data = load("res://players/enemies/round_one.tres")
+		Round.Number.TWO:
+			round_data = load("res://players/enemies/round_two.tres")
+		Round.Number.THREE:
+			round_data = load("res://players/enemies/round_three.tres")
+
+	_create_new_player_data(new_enemy_data, round_data)
 	instantiate_members(new_enemy_data)
 	_flip_members_direction()
 

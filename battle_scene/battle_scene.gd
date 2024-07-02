@@ -31,7 +31,7 @@ var skill_index := 0
 func _ready() -> void:
 	audio_stream_player_2d.play()
 	player_group.load_members_from_save_data()
-	enemy_group.load_members_from_round_data(Round.Number.ONE)
+	enemy_group.load_members_from_round_data(Utils.current_round)
 	_connect_signals()
 	action_queue.fill_initial_turn_items(player_group.members, enemy_group.members)
 	state.change_state(State.Type.CHOOSING_ACTION)
@@ -48,10 +48,10 @@ func _process(_delta: float) -> void:
 			get_tree().change_scene_to_file("res://menus/start_menu.tscn")
 			#get_tree().change_scene_to_file("res://world/battle_scene.tscn")
 		elif _is_victory():
-			if Utils.round_number == Utils.FINAL_ROUND:
+			if Utils.current_round == Utils.FINAL_ROUND:
 				get_tree().change_scene_to_file("res://menus/start_menu.tscn")
 			else:
-				Utils.round_number += 1
+				Utils.next_round()
 				Utils.change_scene("res://menus/victory_screen.tscn", { "defeated": defeated })
 		else:
 			_reset_turn()
@@ -127,7 +127,7 @@ func _process_turn() -> void:
 		set_process
 	)
 	state.change_state(State.Type.IS_BATTLING)
-	action_queue.reset_indexes()
+	action_queue.reset_current_member()
 
 func _reset_turn() -> void:
 	action_queue.fill_initial_turn_items(player_group.members, enemy_group.members)

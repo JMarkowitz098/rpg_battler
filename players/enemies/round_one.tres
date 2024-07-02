@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="Round" load_steps=10 format=3 uid="uid://bvb763g7vwiqs"]
+[gd_resource type="Resource" script_class="Round" load_steps=12 format=3 uid="uid://bvb763g7vwiqs"]
 
 [ext_resource type="Script" path="res://players/enemies/round.gd" id="1_csxtt"]
 [ext_resource type="Script" path="res://players/level_stats.gd" id="1_te4cn"]
@@ -7,6 +7,8 @@
 [ext_resource type="Resource" uid="uid://ctdusg70hieyd" path="res://skills/shor/shor_incursion.tres" id="4_s5lby"]
 [ext_resource type="Resource" uid="uid://y81nh2ijcjeq" path="res://skills/shor/shor_refrain.tres" id="5_g5qi6"]
 [ext_resource type="Resource" uid="uid://dlct7yltan56j" path="res://players/enemies/talon_enemy_player_details.tres" id="6_u4vtn"]
+[ext_resource type="Resource" uid="uid://myum07vddj6i" path="res://players/Esen/levels/esen_level_1.tres" id="6_xostn"]
+[ext_resource type="Resource" uid="uid://csw3bdkuvjwfb" path="res://players/enemies/esen_enemy_player_details.tres" id="8_inobe"]
 
 [sub_resource type="Resource" id="Resource_nfre6"]
 script = ExtResource("1_te4cn")
@@ -29,5 +31,5 @@ skills = Array[Resource("res://skills/ingress.gd")]([ExtResource("4_s5lby"), Ext
 [resource]
 script = ExtResource("1_csxtt")
 round_number = 0
-players_details = Array[Resource("res://players/player_details.gd")]([ExtResource("6_u4vtn"), ExtResource("6_u4vtn")])
-levels = Array[ExtResource("1_te4cn")]([SubResource("Resource_nfre6"), SubResource("Resource_lj4o7")])
+players_details = Array[Resource("res://players/player_details.gd")]([ExtResource("6_u4vtn"), ExtResource("6_u4vtn"), ExtResource("8_inobe")])
+levels = Array[ExtResource("1_te4cn")]([SubResource("Resource_nfre6"), SubResource("Resource_lj4o7"), ExtResource("6_xostn")])

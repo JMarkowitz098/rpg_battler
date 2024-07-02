@@ -134,10 +134,10 @@ vframes = 2
 [node name="RefrainAura" parent="." instance=ExtResource("4_tstkc")]
 position = Vector2(1.19209e-07, -1)
 
-[node name="Turn" parent="." instance=ExtResource("5_slrna")]
+[node name="TriangleFocus" parent="." instance=ExtResource("5_slrna")]
 position = Vector2(1, -11)
 
-[node name="Focus" parent="." instance=ExtResource("6_h6ckf")]
+[node name="FingerFocus" parent="." instance=ExtResource("6_h6ckf")]
 visible = false
 position = Vector2(9, 12)
 scale = Vector2(0.15, 0.15)

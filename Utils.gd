@@ -7,10 +7,10 @@ const NASH_PLAYER_DETAILS = preload("res://players/Nash/nash_player_details.tres
 const ESEN_PORTRAIT := preload("res://players/Esen/esen_portrait.jpeg")
 const ESEN_PLAYER_DETAILS := preload("res://players/Esen/esen_player_details.tres")
 
-const FINAL_ROUND = 2
+const FINAL_ROUND = Round.Number.THREE
 
 var _params: Dictionary
-var round_number := 0
+var current_round := Round.Number.ONE
 
 func calucluate_attack_damage(actor_stats: Stats, target_stats: Stats) -> int:
 	return _clamped_damage(actor_stats.level_stats.incursion - target_stats.level_stats.refrain)
@@ -36,11 +36,6 @@ func calucluate_skill_damage(action: Action) -> int:
 			return _clamped_damage(actor_power - target_power)
 		_:
 			return 0
-			
-#func process_buff(action: Action) -> void:
-	#match action.skill.id:
-		#Skill.Id.ETH_REFRAIN, Skill.Id.ENH_REFRAIN, Skill.Id.SHOR_REFRAIN, Skill.Id.SCOR_REFRAIN:
-			#action.actor.stats.refrain *= 2
 
 func change_scene(next_scene: String, params: Dictionary) -> void:
 	_params = params
@@ -50,6 +45,13 @@ func get_param(key: String) -> Variant:
 	if _params != null and _params.has(key):
 		return _params[key]
 	return null
+
+func next_round() -> void:
+	match(current_round):
+		Round.Number.ONE:
+			current_round = Round.Number.TWO
+		Round.Number.TWO:
+			current_round = Round.Number.THREE
 	
 func _clamped_damage(value: int) -> int:
 	return clamp(value, 0, INF)

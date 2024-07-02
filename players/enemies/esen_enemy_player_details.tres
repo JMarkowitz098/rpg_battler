@@ -7,4 +7,4 @@ script = ExtResource("1_s6fwt")
 player_id = 2
 label = "Esen"
 icon_type = 1
-elements = Array[int]([1])
+elements = Array[int]([0])
