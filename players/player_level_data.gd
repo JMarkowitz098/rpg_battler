@@ -5,7 +5,7 @@ var max_ingress_energy: int
 var incursion_power: int
 var refrain_power: int
 var agility: int
-var skills: Array[Skill.Id]
+var skills: Array[Ingress]
 
 func _init(init: Dictionary) -> void:
 	max_ingress_energy = init.max_ingress_energy

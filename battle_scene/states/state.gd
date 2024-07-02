@@ -23,6 +23,7 @@ var choosing_action_state: ChoosingAction
 var choosing_ally_state: ChoosingAlly
 var choosing_enemy_all_state: ChoosingEnemyAll
 var choosing_enemy_state: ChoosingEnemy
+var choosing_self_state: ChoosingSelf
 var choosing_skill_state: ChoosingSkill
 var is_battling_state: IsBattling
 
@@ -32,6 +33,7 @@ func _init() -> void:
 	choosing_ally_state = ChoosingAlly.new()
 	choosing_enemy_all_state = ChoosingEnemyAll.new()
 	choosing_enemy_state = ChoosingEnemy.new()
+	choosing_self_state = ChoosingSelf.new()
 	choosing_skill_state = ChoosingSkill.new()
 	is_battling_state = IsBattling.new()
 
@@ -50,6 +52,8 @@ func change_state(new_state_id: Type) -> void:
 			_update_state_vars(choosing_enemy_state)
 		Type.CHOOSING_ENEMY_ALL:
 			_update_state_vars(choosing_enemy_all_state)
+		Type.CHOOSING_SELF:
+			_update_state_vars(choosing_self_state)
 		Type.CHOOSING_SKILL:
 			_update_state_vars(choosing_skill_state)
 		Type.IS_BATTLING:

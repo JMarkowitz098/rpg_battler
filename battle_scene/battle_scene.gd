@@ -137,7 +137,7 @@ func _reset_turn() -> void:
 func _reset_dodges() -> void:
 	for player: Node2D in player_group.members:
 		player.stats.is_dodging = false
-		player.base_sprite.self_modulate = Color("ffffff")
+		if not player.stats.is_eth_dodging: player.set_dodge_animation(false)
 	for enemy: Node2D in enemy_group.members:
 		enemy.stats.is_dodging = false
 	
@@ -150,7 +150,7 @@ func _is_victory() -> bool:
 func _set_dodging_animation() -> void:
 	for item: ActionQueueItem in action_queue.items:
 		if item.action.skill.id == Ingress.Id.DODGE:
-			item.action.actor.base_sprite.self_modulate = Color("ffffff9b")
+			item.action.actor.set_dodge_animation(true)
 
 # ----------------------
 # Helper Functions
@@ -166,7 +166,10 @@ func _handle_choose_skill(skill: Ingress) -> void:
 		Ingress.Target.ALLY:
 			state.change_state.call(State.Type.CHOOSING_ALLY)
 			return
-		Ingress.Target.SELF, Ingress.Target.ALL_ALLIES:
+		Ingress.Target.SELF: 
+			state.change_state.call(State.Type.CHOOSING_SELF)
+			return
+		Ingress.Target.ALL_ALLIES:
 			action_queue.update_player_action_with_skill(
 				player_group.get_current_member(), 
 				enemy_group.get_current_member(),

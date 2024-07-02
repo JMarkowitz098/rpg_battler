@@ -24,6 +24,10 @@ func calucluate_skill_damage(action: Action) -> int:
 			if action.target.stats.is_dodging:
 				var dodged :=  randi() % 2 == 1
 				if(dodged): return 0
+
+			if action.target.stats.is_eth_dodging:
+				var dodged :=  randi() % 4 == 1
+				if(dodged): return 0
 				
 			if action.target.stats.has_small_refrain_open:
 				action.target.stats.has_small_refrain_open = false

@@ -49,6 +49,15 @@ func set_triangle_focus_size(size: Vector2) -> void:
 func set_skills() -> void:
 	skills = stats.level_stats.skills
 
+func set_is_eth_dodging(val: bool) -> void:
+	stats.is_eth_dodging = val
+
+func set_dodge_animation(val: bool) -> void:
+	if val:
+		base_sprite.self_modulate = Color("ffffff9b")
+	else:
+		base_sprite.self_modulate = Color("White")
+
 func update_energy_bar() -> void:
 	ingress_energy.text = str(stats.current_ingress) + "/" + str(stats.level_stats.max_ingress)
 

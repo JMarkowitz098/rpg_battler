@@ -122,6 +122,12 @@ func _process_skill(action: Action, tree: SceneTree, players: Array[Node2D], ene
 			for player: Node2D in target_players:
 				# if player == Node2D:
 				_set_refrain(player, action.skill.element)
+
+		Ingress.Id.MOVEMENT:
+			await _play_refrain_animation(action)
+			action.actor.stats.level_stats.agility *= 2
+			action.actor.set_is_eth_dodging(true)
+			action.actor.set_dodge_animation(true)
 				
 	if action.skill.id != Ingress.Id.DODGE:
 		await tree.create_timer(2).timeout

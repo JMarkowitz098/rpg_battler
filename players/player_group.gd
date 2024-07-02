@@ -6,11 +6,12 @@ func _ready() -> void:
 	_connect_signals()
 
 func _connect_signals() -> void:
-	Events.choosing_action_state_entered.connect(_on_choosing_action_state_entered)
 	Events.choosing_action_queue_state_entered.connect(_on_choosing_action_queue_state_entered)
-	Events.is_battling_state_entered.connect(_on_is_battling_state_entered)
+	Events.choosing_action_state_entered.connect(_on_choosing_action_state_entered)
 	Events.choosing_ally_state_entered.connect(_on_choosing_ally_state_entered)
+	Events.choosing_self_state_entered.connect(_on_choosing_self_state_entered)
 	Events.enter_action_queue_handle_input.connect(_on_enter_action_queue_handle_input) # Defined in Group
+	Events.is_battling_state_entered.connect(_on_is_battling_state_entered)
 	Events.update_player_group_current.connect(_on_update_current) # Defined in Group
 	
 # ----------------
@@ -67,5 +68,9 @@ func _on_is_battling_state_entered() -> void:
 	unfocus_all(Focus.Type.ALL)
 
 func _on_choosing_ally_state_entered() -> void:
+	unfocus_all(Focus.Type.ALL)
+	get_current_member().focus(Focus.Type.FINGER)
+
+func _on_choosing_self_state_entered() -> void:
 	unfocus_all(Focus.Type.ALL)
 	get_current_member().focus(Focus.Type.FINGER)

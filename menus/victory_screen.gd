@@ -118,6 +118,6 @@ func _on_next_button_pressed() -> void:
 	screen_1.hide()
 	screen_2.show()
 	next_battle_button.focus()
-
+	
 func _on_next_battle_button_pressed() -> void:
 	get_tree().change_scene_to_file("res://battle_scene/battle_scene.tscn")
