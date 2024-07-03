@@ -127,19 +127,16 @@ func _process_turn() -> void:
 		set_process
 	)
 	state.change_state(State.Type.IS_BATTLING)
-	action_queue.reset_current_member()
 
 func _reset_turn() -> void:
+	action_queue.reset_current_member()
+	player_group.reset_current_member_and_turn()
+	enemy_group.reset_current_member()
 	action_queue.fill_initial_turn_items(player_group.members, enemy_group.members)
 	state.change_state(State.Type.CHOOSING_ACTION)
-	_reset_dodges()
-	
-func _reset_dodges() -> void:
-	for player: Node2D in player_group.members:
-		player.stats.is_dodging = false
-		if not player.stats.is_eth_dodging: player.set_dodge_animation(false)
-	for enemy: Node2D in enemy_group.members:
-		enemy.stats.is_dodging = false
+	player_group.reset_dodges()
+	enemy_group.reset_dodges()
+
 	
 func _is_game_over() -> bool:
 	return player_group.members.size() == 0
@@ -185,7 +182,7 @@ func _handle_done_choosing() -> void:
 		player_group.next_player()
 		state.change_state(State.Type.CHOOSING_ACTION)
 	else:
-		player_group.reset_current()
+		player_group.reset_current_member_and_turn()
 		state.change_state(State.Type.IS_BATTLING)
 
 # -------
@@ -196,10 +193,12 @@ func _on_enemy_no_ingress_energy(enemy_id: String) -> void:
 	defeated.append(enemy_id)
 	action_queue.remove_action_by_character_id(enemy_id)
 	enemy_group.remove_member_by_id(enemy_id)
+	enemy_group.reset_current_member()
 	
 func _on_player_no_ingress_energy(player_id: String) -> void:
 	action_queue.remove_action_by_character_id(player_id)
 	player_group.remove_member_by_id(player_id)
+	player_group.reset_current_member()
 
 # func _on_help_button_pressed():
 # 	get_tree().paused = true

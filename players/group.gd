@@ -49,8 +49,14 @@ func remove_member_by_id(id: String) -> void:
 	members = members.filter(func(player: Node2D) -> bool: return player.stats.unique_id != id)
 	#TODO: Do they queue_free? Check
 
-func reset_current() -> void:
+func reset_current_member() -> void:
 	current_member = 0
+
+func reset_dodges() -> void:
+	for member in members:
+		member.set_dodge_flag(false)
+		if not member.stats.is_eth_dodging: 
+			member.set_dodge_animation(false)
 
 
 # ----------------

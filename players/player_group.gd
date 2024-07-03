@@ -34,7 +34,7 @@ func load_members_from_save_data() -> void:
 
 	instantiate_members(new_player_data)
 
-func reset_current() -> void:
+func reset_current_member_and_turn() -> void:
 	current_member = 0
 	current_members_turn = 0
 

@@ -17,29 +17,44 @@ func calucluate_attack_damage(actor_stats: Stats, target_stats: Stats) -> int:
 	
 func calucluate_skill_damage(action: Action) -> int:
 	match action.skill.id:
-		Ingress.Id.INCURSION, Ingress.Id.DOUBLE_INCURSION, Ingress.Id.GROUP_INCURSION:
-			var actor_power: int = action.actor.stats.level_stats.incursion + action.skill.ingress
-			var target_power: int = action.target.stats.level_stats.refrain
+		Ingress.Id.INCURSION, Ingress.Id.DOUBLE_INCURSION, Ingress.Id.GROUP_INCURSION, Ingress.Id.PIERCING_INCURSION:
+			var incursion_power: int = action.actor.stats.level_stats.incursion + action.skill.ingress
+			var target_refrain: int = action.target.stats.level_stats.refrain
 			
-			if action.target.stats.is_dodging:
-				var dodged :=  randi() % 2 == 1
-				if(dodged): return 0
-
-			if action.target.stats.is_eth_dodging:
-				var dodged :=  randi() % 4 == 1
-				if(dodged): return 0
+			if _is_dodged(action): return 0
 				
 			if action.target.stats.has_small_refrain_open:
-				action.target.stats.has_small_refrain_open = false
-				action.target.refrain_aura.hide()
-				if action.skill.element == action.target.stats.current_refrain_element:
-					return actor_power * -1
-				else:
-					return 0
-				
-			return _clamped_damage(actor_power - target_power)
+				return _get_refrain_damage(action, incursion_power)
+	
+			return _clamped_damage(incursion_power - target_refrain)
 		_:
 			return 0
+
+func _is_dodged(action: Action) -> bool:
+	if action.target.stats.is_dodging:
+		return randi() % 2 == 1
+	elif action.target.stats.is_eth_dodging:
+		return randi() % 4 == 1
+
+	return false
+
+func _get_refrain_damage(action: Action, incursion_power: int) -> int:
+	action.target.stats.has_small_refrain_open = false #TODO: This should be somewhere else
+	action.target.refrain_aura.hide() #TODO: This should be somewhere else
+
+	var multiplier: int
+	if action.skill.id == Ingress.Id.PIERCING_INCURSION:
+		multiplier = 2
+	else:
+		multiplier = 1
+
+	if action.skill.element == action.target.stats.current_refrain_element:
+		return incursion_power * multiplier * -1
+	elif action.skill.id == Ingress.Id.PIERCING_INCURSION:
+		return incursion_power * multiplier
+	else:
+		return 0
+
 
 func change_scene(next_scene: String, params: Dictionary) -> void:
 	_params = params
@@ -58,7 +73,7 @@ func next_round() -> void:
 			current_round = Round.Number.THREE
 	
 func _clamped_damage(value: int) -> int:
-	return clamp(value, 0, INF)
+	return clamp(value, 1, INF)
 
 func get_player_portrait(player_id: Stats.PlayerId) -> Texture:
 	match(player_id):

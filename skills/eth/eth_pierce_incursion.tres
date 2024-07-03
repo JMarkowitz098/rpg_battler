@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="Eth" load_steps=2 format=3 uid="uid://bw41tny11ikek"]
+
+[ext_resource type="Script" path="res://skills/eth/eth_ingress.gd" id="1_hkw01"]
+
+[resource]
+script = ExtResource("1_hkw01")
+element = 0
+id = 5
+label = "Eth Piercing Incursion"
+ingress = 5
+type = 0
+target = 1
+description = "2x damage. Does damage even if the target has a refrain. Cannot pierce Eth refrains."

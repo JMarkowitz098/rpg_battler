@@ -95,7 +95,7 @@ func _process_skill(action: Action, tree: SceneTree, players: Array[Node2D], ene
 		return
 
 	match action.skill.id: 
-		Ingress.Id.INCURSION:
+		Ingress.Id.INCURSION, Ingress.Id.PIERCING_INCURSION:
 			await _use_incursion(action)
 			
 		Ingress.Id.DOUBLE_INCURSION:
