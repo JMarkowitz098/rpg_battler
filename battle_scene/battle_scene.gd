@@ -254,9 +254,12 @@ func _on_game_paused(current_state: int) -> void:
 
 	get_tree().paused = true
 	help_menu.show()
-	help_menu.close_button.focus()
+	help_menu.close_button.focus(true)
+	Music.set_from()
+	Music.play(Music.menu_theme)
 
 func _on_help_menu_hidden() -> void:
 	# Need to figure out how to return focus. Check heartbest tutorials on pausing probably
 	get_tree().paused = false
-	before_pause_focus.focus()
+	before_pause_focus.focus(true)
+	Music.play(Music.battle_theme, Music.get_from())

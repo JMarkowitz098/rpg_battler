@@ -1,7 +1,9 @@
 extends Node
 
-@export var focus: AudioStream
 @export var confirm: AudioStream
+@export var decline: AudioStream
+@export var denied: AudioStream
+@export var focus: AudioStream
 
 @onready var sound_players := get_children()
 
