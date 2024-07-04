@@ -11,10 +11,12 @@ extends Panel
 var players_stats := []
 
 func _ready() -> void:
-	next_screen_button.focus()
+	next_screen_button.focus(true)
 	_render_summary()
 	_level_up_player_and_save()
 	_render_level_up_columns()
+	await Music.fade()
+	Music.play(Music.menu_theme)
 
 func _render_summary() -> void:
 	var defeated: Array[String] = Utils.get_param("defeated")
@@ -115,9 +117,11 @@ func _render_column_skills(column: VBoxContainer, stats: Dictionary) -> void:
 	column.find_child("SkillsData").text = message
 
 func _on_next_button_pressed() -> void:
+	Sound.play(Sound.confirm)
 	screen_1.hide()
 	screen_2.show()
 	next_battle_button.focus()
 	
 func _on_next_battle_button_pressed() -> void:
+	Sound.play(Sound.confirm)
 	get_tree().change_scene_to_file("res://battle_scene/battle_scene.tscn")

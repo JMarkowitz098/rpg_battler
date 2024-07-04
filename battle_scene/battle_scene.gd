@@ -11,7 +11,6 @@ var skill_index := 0
 
 @onready var action_queue := $CanvasLayer/ActionQueue
 @onready var action_choice := $CanvasLayer/ActionChoice
-@onready var audio_stream_player_2d := $AudioStreamPlayer2D
 @onready var dodge := $CanvasLayer/ActionChoice/Dodge
 @onready var enemy_group := $EnemyGroup
 @onready var help_menu := $CanvasLayer/HelpMenu
@@ -29,12 +28,13 @@ var skill_index := 0
 # ----------------------
 
 func _ready() -> void:
-	Music.play(Music.battle_theme)
 	player_group.load_members_from_save_data()
 	enemy_group.load_members_from_round_data(Utils.current_round)
 	_connect_signals()
 	action_queue.fill_initial_turn_items(player_group.members, enemy_group.members)
 	state.change_state(State.Type.CHOOSING_ACTION)
+	# await Music.fade()
+	Music.play(Music.battle_theme)
 	
 func _process(_delta: float) -> void:
 	state.current.handle_input()
