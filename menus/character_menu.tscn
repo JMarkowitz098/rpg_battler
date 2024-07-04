@@ -50,7 +50,7 @@ expand_mode = 5
 [node name="SlotOneButton" parent="VBoxContainer/HBoxContainer/SlotOneContainer" instance=ExtResource("2_tksjq")]
 custom_minimum_size = Vector2(80, 20)
 layout_mode = 2
-text = "Slot 1"
+text = "Character 1"
 
 [node name="SlotTwoContainer" type="VBoxContainer" parent="VBoxContainer/HBoxContainer"]
 layout_mode = 2
@@ -63,7 +63,7 @@ expand_mode = 5
 [node name="SlotTwoButton" parent="VBoxContainer/HBoxContainer/SlotTwoContainer" instance=ExtResource("2_tksjq")]
 custom_minimum_size = Vector2(80, 20)
 layout_mode = 2
-text = "Slot 2"
+text = "Character 2"
 
 [node name="StartButton" parent="VBoxContainer" instance=ExtResource("2_tksjq")]
 custom_minimum_size = Vector2(2.08165e-12, 20)

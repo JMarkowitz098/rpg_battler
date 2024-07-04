@@ -18,7 +18,7 @@ extends Panel
 var current := 0
 
 func _ready() -> void:
-	close_button.focus(true)
+	close_button.focus_no_sound()
 
 func _process(_delta: float) -> void:
 	if Input.is_action_just_pressed("menu_back"):

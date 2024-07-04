@@ -20,11 +20,11 @@ func _process(_delta: float) -> void:
 func _set_focus() -> void:
 	match Utils.get_param("slot"):
 		0:
-			slot_one_button.focus(true)
+			slot_one_button.focus_no_sound()
 		1: 
-			slot_two_button.focus(true)
+			slot_two_button.focus_no_sound()
 		_:
-			slot_one_button.focus(true)
+			slot_one_button.focus_no_sound()
 	
 func _render_player_slots() -> void:
 	for player_slot_index in MAX_SLOTS:

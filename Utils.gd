@@ -1,5 +1,10 @@
 extends Node
 
+enum GameOver {
+	VICTORY,
+	DEFEAT
+}
+
 const TALON_PORTRAIT := preload("res://players/Talon/TalonPortrait.jpeg")
 const TALON_PLAYER_DETAILS := preload("res://players/Talon/talon_player_details.tres")
 const NASH_PORTRAIT := preload("res://players/Nash/NashPortrait.jpeg")

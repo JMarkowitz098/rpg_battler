@@ -11,7 +11,7 @@ extends Panel
 var players_stats := []
 
 func _ready() -> void:
-	next_screen_button.focus(true)
+	next_screen_button.focus_no_sound()
 	_render_summary()
 	_level_up_player_and_save()
 	_render_level_up_columns()

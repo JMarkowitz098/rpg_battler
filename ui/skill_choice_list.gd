@@ -66,7 +66,7 @@ func _create_skill_desciption(skill: Ingress) -> String:
 
 func show_list() -> void:
 	show()
-	get_children()[0].focus(true)
+	get_children()[0].focus_no_sound()
 
 # -------
 # Signals

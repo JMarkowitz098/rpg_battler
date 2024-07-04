@@ -24,6 +24,9 @@ func focus(set_ignore := false) -> void:
 	icon_focus.focus()
 	grab_focus()
 
+func focus_no_sound() -> void:
+	focus(true)
+
 func unfocus() -> void:
 	icon_focus.unfocus()
 	release_focus()

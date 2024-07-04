@@ -45,11 +45,10 @@ func _process(_delta: float) -> void:
 		set_process(true)
 
 		if _is_game_over():
-			get_tree().change_scene_to_file("res://menus/start_menu.tscn")
-			#get_tree().change_scene_to_file("res://world/battle_scene.tscn")
+			Utils.change_scene("res://menus/game_completion_screen.tscn", { "status": Utils.GameOver.DEFEAT })
 		elif _is_victory():
 			if Utils.current_round == Utils.FINAL_ROUND:
-				get_tree().change_scene_to_file("res://menus/start_menu.tscn")
+				Utils.change_scene("res://menus/game_completion_screen.tscn", { "status": Utils.GameOver.VICTORY })
 			else:
 				Utils.next_round()
 				Utils.change_scene("res://menus/victory_screen.tscn", { "defeated": defeated })

@@ -6,7 +6,7 @@ extends ColorRect
 
 func _ready() -> void:
 	# Input.set_mouse_mode(Input.MOUSE_MODE_HIDDEN)
-	start_game_button.focus(true)
+	start_game_button.focus_no_sound()
 	Music.play(Music.menu_theme)
 
 func _on_start_game_button_pressed() -> void:
@@ -20,10 +20,10 @@ func _on_exit_game_button_pressed() -> void:
 func _on_controls_button_pressed() -> void:
 	Sound.play(Sound.confirm)
 	help_menu.show()
-	help_menu.close_button.focus(true)
+	help_menu.close_button.focus_no_sound()
 	help_menu.restart_battle_button.hide()
 	help_menu.restart_game_button.hide()
 
 
 func _on_help_menu_hidden() -> void:
-	controls_button.focus(true)
+	controls_button.focus_no_sound()

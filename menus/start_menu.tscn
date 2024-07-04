@@ -53,7 +53,7 @@ text = "Start Game"
 custom_minimum_size = Vector2(80, 2.08165e-12)
 layout_mode = 2
 size_flags_horizontal = 4
-text = "Controls"
+text = "How to play"
 
 [node name="ExitGameButton" parent="CenterContainer/VBoxContainer" instance=ExtResource("2_8rb45")]
 custom_minimum_size = Vector2(80, 0)

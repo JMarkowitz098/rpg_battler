@@ -22,7 +22,7 @@ var player_slot: int
 
 func _ready() -> void:
 	player_slot = Utils.get_param("slot")
-	talon_button.focus(true)
+	talon_button.focus_no_sound()
 
 func _process(_delta: float) -> void:
 	if Input.is_action_just_pressed("menu_back"):
