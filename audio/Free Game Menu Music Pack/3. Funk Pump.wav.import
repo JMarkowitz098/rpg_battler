@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://cxe83d0y5n5ir"
+path="res://.godot/imported/3. Funk Pump.wav-9b5485909f85df494bbc171e0ef5cb7e.sample"
+
+[deps]
+
+source_file="res://audio/Free Game Menu Music Pack/3. Funk Pump.wav"
+dest_files=["res://.godot/imported/3. Funk Pump.wav-9b5485909f85df494bbc171e0ef5cb7e.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=0

@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://bh0pe5mbjildo"
+path="res://.godot/imported/1. Palm Tree Shade.wav-90a2740fe0f7d580645c86af4151ff7f.sample"
+
+[deps]
+
+source_file="res://audio/Free Game Menu Music Pack/1. Palm Tree Shade.wav"
+dest_files=["res://.godot/imported/1. Palm Tree Shade.wav-90a2740fe0f7d580645c86af4151ff7f.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=0

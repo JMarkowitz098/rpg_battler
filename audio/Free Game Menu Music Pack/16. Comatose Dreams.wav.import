@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://bkipfrio6afjl"
+path="res://.godot/imported/16. Comatose Dreams.wav-04be4c7b41084c371697ef060686ec20.sample"
+
+[deps]
+
+source_file="res://audio/Free Game Menu Music Pack/16. Comatose Dreams.wav"
+dest_files=["res://.godot/imported/16. Comatose Dreams.wav-04be4c7b41084c371697ef060686ec20.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=0

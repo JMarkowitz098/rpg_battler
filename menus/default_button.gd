@@ -1,5 +1,7 @@
 extends Button
 
+var ignore_sound := false
+
 @onready var icon_focus := $Focus
 
 @export var focus_offset_x := 0
@@ -17,10 +19,16 @@ func _process(_delta: float) -> void:
 	else:
 		unfocus()
 	
-func focus() -> void:
+func focus(set_ignore := false) -> void:
+	if set_ignore: ignore_sound = true
 	icon_focus.focus()
 	grab_focus()
 
 func unfocus() -> void:
 	icon_focus.unfocus()
 	release_focus()
+	if ignore_sound: ignore_sound = false
+
+func _on_focus_entered() -> void:
+	if not ignore_sound:
+		Sound.play(Sound.focus)

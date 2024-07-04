@@ -11,3 +11,6 @@ text = "Lorem Ipsum Lorem Ipsum"
 script = ExtResource("1_fvlow")
 
 [node name="Focus" parent="." instance=ExtResource("2_iroba")]
+visible = false
+
+[connection signal="focus_entered" from="." to="." method="_on_focus_entered"]

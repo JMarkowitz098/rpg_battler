@@ -20,6 +20,10 @@ func _ready() -> void:
 	set_skills()
 	stats.unique_id = Stats.create_unique_id(stats.player_details.player_id)
 
+# ----------------
+# Public Functions
+# ----------------
+
 func focus(type: Focus.Type) -> void:
 	match type:
 		Focus.Type.FINGER:
@@ -52,6 +56,12 @@ func set_skills() -> void:
 func set_is_eth_dodging(val: bool) -> void:
 	stats.is_eth_dodging = val
 
+func set_dodge_flag(val: bool) -> void:
+	if val:
+		stats.is_dodging = true
+	else:
+		stats.is_dodging = false
+
 func set_dodge_animation(val: bool) -> void:
 	if val:
 		base_sprite.self_modulate = Color("ffffff9b")
@@ -60,6 +70,11 @@ func set_dodge_animation(val: bool) -> void:
 
 func update_energy_bar() -> void:
 	ingress_energy.text = str(stats.current_ingress) + "/" + str(stats.level_stats.max_ingress)
+
+
+# ----------------
+# Helper Functions
+# ----------------
 
 func _on_character_stats_took_damage() -> void:
 	update_energy_bar()

@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://dqtpyhs6wgejk"
+path="res://.godot/imported/4. Spaceship Hangar.wav-be87832e0b45f42f85bf88213d2ed9c2.sample"
+
+[deps]
+
+source_file="res://audio/Free Game Menu Music Pack/4. Spaceship Hangar.wav"
+dest_files=["res://.godot/imported/4. Spaceship Hangar.wav-be87832e0b45f42f85bf88213d2ed9c2.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=0

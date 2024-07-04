@@ -22,21 +22,29 @@ var player_slot: int
 
 func _ready() -> void:
 	player_slot = Utils.get_param("slot")
-	talon_button.focus()
+	talon_button.focus(true)
+
+func _process(_delta: float) -> void:
+	if Input.is_action_just_pressed("menu_back"):
+		Sound.play(Sound.focus)
+		Utils.change_scene("res://menus/character_menu.tscn", { "slot": player_slot })
 	
 # -------
 # Signals
 # -------
 
 func _on_talon_button_pressed() -> void:
+	Sound.play(Sound.confirm)
 	_create_and_save_new_player()
 	Utils.change_scene("res://menus/character_menu.tscn", { "slot": player_slot })
 
 func _on_nash_button_pressed() -> void:
+	Sound.play(Sound.confirm)
 	_create_and_save_new_player()
 	Utils.change_scene("res://menus/character_menu.tscn", { "slot": player_slot })
 
 func _on_esen_button_pressed() -> void:
+	Sound.play(Sound.confirm)
 	_create_and_save_new_player()
 	Utils.change_scene("res://menus/character_menu.tscn", { "slot": player_slot })
 

@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://c8eacgkbe0r7l"
+path="res://.godot/imported/20. Diving into Spring.wav-e27eeba2f2d02f9b9f5d9952eb678751.sample"
+
+[deps]
+
+source_file="res://audio/Free Game Menu Music Pack/20. Diving into Spring.wav"
+dest_files=["res://.godot/imported/20. Diving into Spring.wav-e27eeba2f2d02f9b9f5d9952eb678751.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=0

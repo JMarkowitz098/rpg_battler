@@ -12,14 +12,19 @@ func _ready() -> void:
 	_set_focus()
 	_render_player_slots()
 
+func _process(_delta: float) -> void:
+	if Input.is_action_just_pressed("menu_back"):
+		Sound.play(Sound.focus)
+		Utils.change_scene("res://menus/start_menu.tscn", {})
+
 func _set_focus() -> void:
 	match Utils.get_param("slot"):
 		0:
-			slot_one_button.focus()
+			slot_one_button.focus(true)
 		1: 
-			slot_two_button.focus()
+			slot_two_button.focus(true)
 		_:
-			slot_one_button.focus()
+			slot_one_button.focus(true)
 	
 func _render_player_slots() -> void:
 	for player_slot_index in MAX_SLOTS:
@@ -58,6 +63,7 @@ func _render_slot(slot_index: int) -> void:
 			#slot_four_button_container.text = slot.label
 			
 func _change_to_character_creation(slot: int) -> void:
+	Sound.play(Sound.confirm)
 	Utils.change_scene("res://menus/character_creation_menu.tscn", { "slot": slot })
 
 func _on_slot_one_button_pressed() -> void:
@@ -67,4 +73,5 @@ func _on_slot_two_button_pressed() -> void:
 	_change_to_character_creation(1)
 
 func _on_start_button_pressed() -> void:
+	Sound.play(Sound.confirm)
 	get_tree().change_scene_to_file("res://battle_scene/battle_scene.tscn")

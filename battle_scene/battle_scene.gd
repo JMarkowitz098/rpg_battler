@@ -29,7 +29,7 @@ var skill_index := 0
 # ----------------------
 
 func _ready() -> void:
-	audio_stream_player_2d.play()
+	Music.play(Music.battle_theme)
 	player_group.load_members_from_save_data()
 	enemy_group.load_members_from_round_data(Utils.current_round)
 	_connect_signals()
@@ -81,16 +81,19 @@ func _on_dodge_focus_entered() -> void:
 	if info_label: info_label.draw_action_button_description(2)
 	
 func _on_incursion_pressed() -> void:
+	Sound.play(Sound.confirm)
 	current_skill_type = Ingress.Type.INCURSION
 	state.change_state(State.Type.CHOOSING_SKILL)
 	current_skill = skill_choice_list.current_skills[0]
 
 func _on_refrain_pressed() -> void:
+	Sound.play(Sound.confirm)
 	current_skill_type = Ingress.Type.REFRAIN
 	state.change_state(State.Type.CHOOSING_SKILL)
 	current_skill = skill_choice_list.current_skills[0]
 	
 func _on_dodge_pressed() -> void:
+	Sound.play(Sound.confirm)
 	var unique_id: String = player_group.get_current_member().stats.unique_id
 	var current_players_action_id: int = action_queue.get_action_index_by_unique_id(unique_id)
 	var current_action: Action = action_queue.items[current_players_action_id].action
@@ -154,6 +157,7 @@ func _set_dodging_animation() -> void:
 # ----------------------
 
 func _handle_choose_skill(skill: Ingress) -> void:
+	Sound.play(Sound.confirm)
 	current_skill = skill
 		
 	match current_skill.target:
@@ -206,7 +210,7 @@ func _on_player_no_ingress_energy(player_id: String) -> void:
 # 	help_menu.close_button.focus()
 
 func _on_choosing_action_state_entered() -> void:
-	current_action_button.focus()
+	current_action_button.focus(true)
 	var current_player: Node2D = player_group.get_current_member_turn()
 	current_player.focus(Focus.Type.TRIANGLE) # move to player group
 	action_queue.set_turn_on_player(current_player.stats.unique_id)
@@ -215,7 +219,7 @@ func _on_choosing_skill_state_entered() -> void:
 	var current_player: Node2D = player_group.get_current_member_turn()
 	skill_choice_list.set_current_skills(current_player, current_skill_type)
 	skill_choice_list.prepare_skill_menu(_handle_choose_skill)
-	skill_choice_list.get_children()[0].focus()
+	skill_choice_list.get_children()[0].focus(true)
 	current_player.focus(Focus.Type.TRIANGLE) # move to player group
 	action_queue.set_turn_on_player(current_player.stats.unique_id)
 
