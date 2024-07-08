@@ -44,8 +44,8 @@ text = "Controls"
 [node name="ControlsLabel" type="Label" parent="VBoxContainer/ScreensAndMenuButtons/ScreenOne"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 8
-text = "WASD/Arrow Keys: Move Cursor
-X / Enter: Menu accept
+text = "Arrow Keys: Move Cursor
+Enter: Menu accept
 Z: Menu Back
 Q: Toggle Action Queue
 H: Open help menu"
