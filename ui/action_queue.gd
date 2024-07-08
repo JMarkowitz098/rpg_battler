@@ -258,7 +258,7 @@ func set_focuses() -> void:
 			Ingress.Id.INCURSION, Ingress.Id.DOUBLE_INCURSION, Ingress.Id.PIERCING_INCURSION:
 				action.target.focus(Focus.Type.TRIANGLE)
 				action.target.set_triangle_focus_color(Color.RED)
-			Ingress.Id.REFRAIN:
+			Ingress.Id.REFRAIN, Ingress.Id.MOVEMENT:
 				action.target.focus(Focus.Type.TRIANGLE)
 				action.target.set_triangle_focus_color(Color.GREEN)
 			Ingress.Id.GROUP_REFRAIN:
@@ -266,6 +266,11 @@ func set_focuses() -> void:
 					Events.action_queue_focus_all_allies.emit(Focus.Type.TRIANGLE, Color.GREEN)
 				else:
 					Events.action_queue_focus_all_enemies.emit(Focus.Type.TRIANGLE, Color.GREEN)
+			Ingress.Id.GROUP_INCURSION:
+				if action.actor.stats.player_details.icon_type == Stats.IconType.PLAYER:
+					Events.action_queue_focus_all_enemies.emit(Focus.Type.TRIANGLE, Color.RED)
+				else:
+					Events.action_queue_focus_all_allies.emit(Focus.Type.TRIANGLE, Color.RED)
 
 func get_action_index_by_unique_id(unique_id: String) -> int:
 	for i in items.size():
