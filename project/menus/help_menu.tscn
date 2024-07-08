@@ -67,7 +67,8 @@ theme_override_font_sizes/font_size = 8
 text = "Ingress: Your energy. 
 Run out and it's game over!
 Incursion: Your attack power 
-Refrain: Your defense power"
+Refrain: Your defense power
+Agility: Determines turn order"
 
 [node name="ScreenThree" type="VBoxContainer" parent="VBoxContainer/ScreensAndMenuButtons"]
 visible = false
