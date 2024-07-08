@@ -26,10 +26,12 @@ func set_dodge() -> void:
 	var dodge := load("res://skills/dodge.tres")
 	set_target(null, dodge)
 
-func set_enemy_skill(incoming_skill: Ingress, players: Array[Node2D], enemies: Array[Node2D]) -> void:
+func set_enemy_skill(incoming_skill: Ingress, players: Array[Node2D], enemies: Array[Node2D], skill_actor: Node2D) -> void:
 	var incoming_target: Node2D = null
 	if incoming_skill.target == Ingress.Target.ENEMY:
 		incoming_target = players[randi() % players.size()]
 	elif incoming_skill.target == Ingress.Target.ALLY:
 		incoming_target = enemies[randi() % enemies.size()]
+	elif incoming_skill.target == Ingress.Target.SELF:
+		incoming_target = skill_actor
 	set_target(incoming_target, incoming_skill)

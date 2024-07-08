@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="Shor" load_steps=2 format=3 uid="uid://blbvhqwnbmpoj"]
+
+[ext_resource type="Script" path="res://skills/shor/shor_ingress.gd" id="1_gw0p2"]
+
+[resource]
+script = ExtResource("1_gw0p2")
+element = 2
+id = 1
+label = "Group Shor Incursion"
+ingress = 5
+type = 0
+target = 3
+description = "Attack all enemies with an Shor Incursion"

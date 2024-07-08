@@ -11,7 +11,7 @@
 [resource]
 script = ExtResource("1_qclnb")
 level = 3
-max_ingress = 30
+max_ingress = 16
 incursion = 6
 refrain = 6
 agility = 5

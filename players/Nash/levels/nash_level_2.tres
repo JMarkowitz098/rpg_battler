@@ -11,7 +11,7 @@
 [resource]
 script = ExtResource("1_law8u")
 level = 2
-max_ingress = 20
+max_ingress = 12
 incursion = 4
 refrain = 4
 agility = 3

@@ -7,7 +7,7 @@
 [resource]
 script = ExtResource("1_blf78")
 level = 1
-max_ingress = 15
+max_ingress = 10
 incursion = 3
 refrain = 1
 agility = 2

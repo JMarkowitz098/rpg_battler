@@ -9,7 +9,7 @@
 [resource]
 script = ExtResource("1_lrldw")
 level = 1
-max_ingress = 10
+max_ingress = 8
 incursion = 2
 refrain = 2
 agility = 2

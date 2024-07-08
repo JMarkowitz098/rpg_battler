@@ -9,8 +9,8 @@
 [resource]
 script = ExtResource("1_a3iu8")
 level = 2
-max_ingress = 25
+max_ingress = 14
 incursion = 5
 refrain = 3
-agility = 3
+agility = 4
 skills = Array[Resource("res://skills/ingress.gd")]([ExtResource("2_jen76"), ExtResource("3_51w4q"), ExtResource("4_xfq6b"), ExtResource("5_qpblu")])

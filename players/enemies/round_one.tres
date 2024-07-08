@@ -11,7 +11,7 @@
 [sub_resource type="Resource" id="Resource_nfre6"]
 script = ExtResource("1_te4cn")
 level = 1
-max_ingress = 5
+max_ingress = 8
 incursion = 3
 refrain = 1
 agility = 2
@@ -20,7 +20,7 @@ skills = Array[Resource("res://skills/ingress.gd")]([ExtResource("2_4ykh2"), Ext
 [sub_resource type="Resource" id="Resource_lj4o7"]
 script = ExtResource("1_te4cn")
 level = 1
-max_ingress = 5
+max_ingress = 8
 incursion = 3
 refrain = 1
 agility = 2

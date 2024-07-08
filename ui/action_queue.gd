@@ -5,6 +5,7 @@ var items: Array[ActionQueueItem] = []
 var current_member: int = 0
 
 const ACTION_QUEUE_ITEM := preload("res://ui/action_queue_item.tscn")
+const INGRESS_ANIMATION = preload("res://skills/ingress_animation.tscn")
 
 func _ready() -> void:
 	Events.choosing_action_queue_state_entered.connect(_on_choosing_action_queue_state_entered)
@@ -46,7 +47,7 @@ func is_turn_over() -> bool:
 func update_player_action_with_skill(player: Node2D, target: Node2D, skill: Ingress) -> void:
 	var action_to_update: Action = items.filter(func(item: ActionQueueItem)-> bool: 
 		return item.action.actor.stats.unique_id == player.stats.unique_id)[0].action
-	if skill.target == Ingress.Target.SELF or skill.target == Ingress.Target.ALL_ENEMIES:
+	if skill.target == Ingress.Target.ALL_ENEMIES:
 		action_to_update.set_target(null, skill)
 	else:
 		action_to_update.set_target(target, skill)
@@ -83,16 +84,24 @@ func _fill_enemy_actions(players: Array[Node2D], enemies: Array[Node2D]) -> void
 				action.set_dodge()
 			else:
 				var enemy_skill := _select_enemy_skill(action.actor.stats.level_stats.skills)
-				action.set_enemy_skill(enemy_skill, players, enemies)
+				action.set_enemy_skill(enemy_skill, players, enemies, action.actor)
 
 func _select_enemy_skill(skills: Array) -> Ingress:
-	var rand_skill_i := randi() % skills.size()
-	return skills[rand_skill_i]
+	var use_refrain := randi() % 4 == 1
+	var filtered_skills: Array[Ingress]
+	if use_refrain:
+		filtered_skills = skills.filter(func(skill: Ingress) -> bool: return skill.type == Ingress.Type.REFRAIN)
+	else:
+		filtered_skills = skills.filter(func(skill: Ingress) -> bool: return skill.type == Ingress.Type.INCURSION)
+
+	var rand_skill_i := randi() % filtered_skills.size()
+	return filtered_skills[rand_skill_i]
 				
 func _process_skill(action: Action, tree: SceneTree, players: Array[Node2D], enemies: Array[Node2D]) -> void:
-	action.actor.stats.use_ingress_energy(action.skill.ingress)
-	if action.actor.stats.current_ingress <= 0:
+	if action.actor.stats.current_ingress - action.skill.ingress <= 0:
+		print("Not enough Ingress")
 		return
+	action.actor.stats.use_ingress_energy(action.skill.ingress)
 
 	match action.skill.id: 
 		Ingress.Id.INCURSION, Ingress.Id.PIERCING_INCURSION:
@@ -120,20 +129,25 @@ func _process_skill(action: Action, tree: SceneTree, players: Array[Node2D], ene
 			await _play_refrain_animation(action)
 			var target_players := players if action.actor.stats.player_details.icon_type == Stats.IconType.PLAYER else enemies
 			for player: Node2D in target_players:
-				# if player == Node2D:
-				_set_refrain(player, action.skill.element)
+				if player == Node2D:
+					_set_refrain(player, action.skill.element)
 
 		Ingress.Id.MOVEMENT:
 			await _play_refrain_animation(action)
 			action.actor.stats.level_stats.agility *= 2
 			action.actor.set_is_eth_dodging(true)
 			action.actor.set_dodge_animation(true)
+
+		Ingress.Id.DODGE:
+			await _play_refrain_animation(action)
+			action.actor.stats.use_ingress_energy(-1)
 				
-	if action.skill.id != Ingress.Id.DODGE:
-		await tree.create_timer(2).timeout
+	# if action.skill.id != Ingress.Id.DODGE:
+	await tree.create_timer(2).timeout
 		
 func _use_incursion(action: Action) -> void:
 	await _play_attack_animation(action)
+	await _play_ingress_animation(action)
 	var damage := Utils.calucluate_skill_damage(action)
 	action.target.stats.take_damage(damage)
 		
@@ -148,6 +162,32 @@ func _play_attack_animation(action: Action) -> void:
 		action.actor.base_sprite.show()
 		action.actor.attack_sprite.hide()
 		action.actor.animation_player.play("idle")
+
+func _play_ingress_animation(action: Action) -> void:
+	var element: Element.Type = action.skill.element
+	var world := get_tree().get_root()
+	var ingress := INGRESS_ANIMATION.instantiate()
+	world.add_child(ingress)
+
+	ingress.global_position = action.target.global_position
+	if action.target.stats.player_details.icon_type == Stats.IconType.PLAYER:
+		ingress.global_position.x += 10
+	else:
+		ingress.global_position.x -= 20
+
+	match element:
+		Element.Type.SHOR:
+			ingress.self_modulate = Color("Blue")
+		Element.Type.SCOR:
+			ingress.self_modulate = Color(100, 1, 1) # Red
+		Element.Type.ETH:
+			ingress.self_modulate = Color("Green")
+		Element.Type.ENH:
+			ingress.self_modulate = Color(37, 1, 0) # Orange
+
+	ingress.play()
+	await ingress.animation_finished
+	ingress.queue_free()
 
 func _play_refrain_animation(action: Action) -> void:
 	action.actor.animation_player.play("refrain")
