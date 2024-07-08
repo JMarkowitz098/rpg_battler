@@ -91,7 +91,7 @@ func _on_refrain_pressed() -> void:
 	state.change_state(State.Type.CHOOSING_SKILL)
 	current_skill = skill_choice_list.current_skills[0]
 	
-func _on_dodge_pressed() -> void:
+func _on_recover_pressed() -> void:
 	Sound.play(Sound.confirm)
 	var unique_id: String = player_group.get_current_member().stats.unique_id
 	var current_players_action_id: int = action_queue.get_action_index_by_unique_id(unique_id)
@@ -170,12 +170,8 @@ func _handle_choose_skill(skill: Ingress) -> void:
 			state.change_state.call(State.Type.CHOOSING_SELF)
 			return
 		Ingress.Target.ALL_ALLIES:
-			action_queue.update_player_action_with_skill(
-				player_group.get_current_member(), 
-				enemy_group.get_current_member(),
-				current_skill
-			)
-			_handle_done_choosing()
+			state.change_state.call(State.Type.CHOOSING_ALLY_ALL)
+			return
 		Ingress.Target.ALL_ENEMIES:
 			state.change_state.call(State.Type.CHOOSING_ENEMY_ALL)
 			return

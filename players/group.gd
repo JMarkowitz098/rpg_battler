@@ -33,7 +33,7 @@ func unfocus_all(type: Focus.Type) -> void:
 	for member in members:
 		member.unfocus(type)
 
-func set_triangle_focus_color_all(color: String) -> void:
+func set_triangle_focus_color_all(color: Color) -> void:
 	for member in members:
 		member.set_triangle_focus_color(color)
 
@@ -114,3 +114,7 @@ func _on_enter_action_queue_handle_input() -> void:
 	unfocus_all(Focus.Type.ALL)
 	set_triangle_focus_color_all("White")
 	set_triangle_focus_size_all(Vector2(.4, .4))
+
+func _on_action_queue_focus_all_members(type: Focus.Type, color: Color) -> void:
+	focus_all(type)
+	set_triangle_focus_color_all(color)

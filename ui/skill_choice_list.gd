@@ -9,6 +9,7 @@ func _ready() -> void:
 	Events.choosing_action_queue_state_entered.connect(_on_choosing_action_queue_state_entered)
 	Events.choosing_action_state_entered.connect(_on_choosing_action_state_entered)
 	Events.choosing_ally_state_entered.connect(_on_choosing_ally_state_entered)
+	Events.choosing_ally_all_state_entered.connect(_on_choosing_ally_all_state_entered)
 	Events.choosing_enemy_all_state_entered.connect(_on_choosing_enemy_all_state_entered)
 	Events.choosing_enemy_state_entered.connect(_on_choosing_enemy_state_entered)
 	Events.choosing_self_state_entered.connect(_on_choosing_self_state_entered)
@@ -102,4 +103,7 @@ func _on_choosing_ally_state_entered() -> void:
 	release_focus_from_all_buttons()
 
 func _on_choosing_self_state_entered() -> void:
+	release_focus_from_all_buttons()
+
+func _on_choosing_ally_all_state_entered() -> void:
 	release_focus_from_all_buttons()

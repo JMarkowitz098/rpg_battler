@@ -21,6 +21,7 @@ var previous: Variant
 var choosing_action_queue_state: ChoosingActionQueue
 var choosing_action_state: ChoosingAction
 var choosing_ally_state: ChoosingAlly
+var choosing_ally_all_state: ChoosingAllyAll
 var choosing_enemy_all_state: ChoosingEnemyAll
 var choosing_enemy_state: ChoosingEnemy
 var choosing_self_state: ChoosingSelf
@@ -31,6 +32,7 @@ func _init() -> void:
 	choosing_action_queue_state = ChoosingActionQueue.new()
 	choosing_action_state = ChoosingAction.new()
 	choosing_ally_state = ChoosingAlly.new()
+	choosing_ally_all_state = ChoosingAllyAll.new()
 	choosing_enemy_all_state = ChoosingEnemyAll.new()
 	choosing_enemy_state = ChoosingEnemy.new()
 	choosing_self_state = ChoosingSelf.new()
@@ -48,6 +50,8 @@ func change_state(new_state_id: Type) -> void:
 			_update_state_vars(choosing_action_queue_state)
 		Type.CHOOSING_ALLY:
 			_update_state_vars(choosing_ally_state)
+		Type.CHOOSING_ALLY_ALL:
+			_update_state_vars(choosing_ally_all_state)
 		Type.CHOOSING_ENEMY:
 			_update_state_vars(choosing_enemy_state)
 		Type.CHOOSING_ENEMY_ALL:

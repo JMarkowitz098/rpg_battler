@@ -20,6 +20,7 @@ func load_members_from_round_data(round_number: Round.Number) -> void:
 	_flip_members_direction()
 
 func _connect_signals() -> void:
+	Events.action_queue_focus_all_enemies.connect(_on_action_queue_focus_all_members)
 	Events.choosing_action_queue_state_entered.connect(_on_choosing_action_queue_state_entered)
 	Events.choosing_action_state_entered.connect(_on_choosing_action_state_entered)
 	Events.choosing_enemy_all_state_entered.connect(_on_choosing_enemy_state_all_entered)

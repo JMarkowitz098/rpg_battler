@@ -1,5 +1,8 @@
 extends Node
 
+signal action_queue_focus_all_allies(type: Focus.Type, color: Color)
+signal action_queue_focus_all_enemies(type: Focus.Type, color: Color)
+
 signal change_state(new_state: int)
 signal change_to_previous_state
 
@@ -11,6 +14,7 @@ signal enter_action_queue_handle_input
 signal choosing_action_queue_state_entered
 signal choosing_action_state_entered
 signal choosing_ally_state_entered
+signal choosing_ally_all_state_entered
 signal choosing_enemy_all_state_entered
 signal choosing_enemy_state_entered
 signal choosing_self_state_entered

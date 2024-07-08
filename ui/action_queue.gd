@@ -47,7 +47,7 @@ func is_turn_over() -> bool:
 func update_player_action_with_skill(player: Node2D, target: Node2D, skill: Ingress) -> void:
 	var action_to_update: Action = items.filter(func(item: ActionQueueItem)-> bool: 
 		return item.action.actor.stats.unique_id == player.stats.unique_id)[0].action
-	if skill.target == Ingress.Target.ALL_ENEMIES:
+	if skill.target == Ingress.Target.ALL_ENEMIES or skill.target == Ingress.Target.ALL_ALLIES:
 		action_to_update.set_target(null, skill)
 	else:
 		action_to_update.set_target(target, skill)
@@ -129,7 +129,7 @@ func _process_skill(action: Action, tree: SceneTree, players: Array[Node2D], ene
 			await _play_refrain_animation(action)
 			var target_players := players if action.actor.stats.player_details.icon_type == Stats.IconType.PLAYER else enemies
 			for player: Node2D in target_players:
-				if player == Node2D:
+				if player is Node2D:
 					_set_refrain(player, action.skill.element)
 
 		Ingress.Id.MOVEMENT:
@@ -255,12 +255,17 @@ func set_focuses() -> void:
 
 	if action.skill:
 		match action.skill.id:
-			Ingress.Id.INCURSION:
+			Ingress.Id.INCURSION, Ingress.Id.DOUBLE_INCURSION, Ingress.Id.PIERCING_INCURSION:
 				action.target.focus(Focus.Type.TRIANGLE)
 				action.target.set_triangle_focus_color(Color.RED)
 			Ingress.Id.REFRAIN:
 				action.target.focus(Focus.Type.TRIANGLE)
 				action.target.set_triangle_focus_color(Color.GREEN)
+			Ingress.Id.GROUP_REFRAIN:
+				if action.actor.stats.player_details.icon_type == Stats.IconType.PLAYER:
+					Events.action_queue_focus_all_allies.emit(Focus.Type.TRIANGLE, Color.GREEN)
+				else:
+					Events.action_queue_focus_all_enemies.emit(Focus.Type.TRIANGLE, Color.GREEN)
 
 func get_action_index_by_unique_id(unique_id: String) -> int:
 	for i in items.size():
