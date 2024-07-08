@@ -1,0 +1,51 @@
+[gd_scene load_steps=3 format=3 uid="uid://cnuxip5820u4y"]
+
+[ext_resource type="Script" path="res://menus/game_completion_screen.gd" id="1_2wrm2"]
+[ext_resource type="PackedScene" uid="uid://ch51mvl5giece" path="res://menus/default_button.tscn" id="1_fk634"]
+
+[node name="GameCompletionScreen" type="Panel"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_2wrm2")
+
+[node name="CenterContainer" type="CenterContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer"]
+layout_mode = 2
+
+[node name="Title" type="Label" parent="CenterContainer/VBoxContainer"]
+custom_minimum_size = Vector2(2.08165e-12, 2.08165e-12)
+layout_mode = 2
+text = "TITLE"
+horizontal_alignment = 1
+
+[node name="Message" type="Label" parent="CenterContainer/VBoxContainer"]
+custom_minimum_size = Vector2(2.08165e-12, 30)
+layout_mode = 2
+theme_override_font_sizes/font_size = 8
+text = "Lorem ipsum elsum Lorem ipsum elsum"
+horizontal_alignment = 1
+
+[node name="StartOverButton" parent="CenterContainer/VBoxContainer" instance=ExtResource("1_fk634")]
+custom_minimum_size = Vector2(80, 20)
+layout_mode = 2
+size_flags_horizontal = 4
+text = "Start Over"
+
+[node name="ExitGameButton" parent="CenterContainer/VBoxContainer" instance=ExtResource("1_fk634")]
+custom_minimum_size = Vector2(80, 20)
+layout_mode = 2
+size_flags_horizontal = 4
+text = "Exit Game"
+
+[connection signal="pressed" from="CenterContainer/VBoxContainer/StartOverButton" to="." method="_on_start_over_button_pressed"]
+[connection signal="pressed" from="CenterContainer/VBoxContainer/ExitGameButton" to="." method="_on_exit_game_button_pressed"]

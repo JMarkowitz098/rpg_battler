@@ -1,0 +1,119 @@
+[gd_scene load_steps=5 format=3 uid="uid://ce6xc1pkv7oxj"]
+
+[ext_resource type="Script" path="res://menus/character_creation_menu.gd" id="1_1w2ob"]
+[ext_resource type="PackedScene" uid="uid://ch51mvl5giece" path="res://menus/default_button.tscn" id="2_ps3th"]
+[ext_resource type="Texture2D" uid="uid://8wg3032ohbg6" path="res://players/Talon/TalonPortrait.jpeg" id="3_obvwn"]
+[ext_resource type="LabelSettings" uid="uid://cjxpiibvc0pb" path="res://menus/char_creation_labels.tres" id="4_wbxnf"]
+
+[node name="CharacterCreationMenu" type="ColorRect"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+script = ExtResource("1_1w2ob")
+
+[node name="Panel" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 1
+
+[node name="Title" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+text = "Choose Character"
+horizontal_alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+alignment = 1
+
+[node name="CharacterButtons" type="VBoxContainer" parent="VBoxContainer/HBoxContainer"]
+layout_mode = 2
+
+[node name="TalonButton" parent="VBoxContainer/HBoxContainer/CharacterButtons" instance=ExtResource("2_ps3th")]
+custom_minimum_size = Vector2(80, 2.08165e-12)
+layout_mode = 2
+size_flags_horizontal = 4
+text = "Talon"
+
+[node name="NashButton" parent="VBoxContainer/HBoxContainer/CharacterButtons" instance=ExtResource("2_ps3th")]
+custom_minimum_size = Vector2(80, 2.08165e-12)
+layout_mode = 2
+size_flags_horizontal = 4
+text = "Nash"
+
+[node name="EsenButton" parent="VBoxContainer/HBoxContainer/CharacterButtons" instance=ExtResource("2_ps3th")]
+custom_minimum_size = Vector2(80, 2.08165e-12)
+layout_mode = 2
+size_flags_horizontal = 4
+text = "Esen"
+
+[node name="CharacterDetails" type="VBoxContainer" parent="VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(120, 150)
+layout_mode = 2
+
+[node name="Control" type="HBoxContainer" parent="VBoxContainer/HBoxContainer/CharacterDetails"]
+custom_minimum_size = Vector2(2.08165e-12, 50)
+layout_mode = 2
+alignment = 1
+
+[node name="Portrait" type="TextureRect" parent="VBoxContainer/HBoxContainer/CharacterDetails/Control"]
+layout_mode = 2
+texture = ExtResource("3_obvwn")
+expand_mode = 2
+
+[node name="CharacterName" type="Label" parent="VBoxContainer/HBoxContainer/CharacterDetails"]
+layout_mode = 2
+text = "Name"
+label_settings = ExtResource("4_wbxnf")
+horizontal_alignment = 1
+
+[node name="Ingress" type="Label" parent="VBoxContainer/HBoxContainer/CharacterDetails"]
+layout_mode = 2
+text = "Ingress: 0
+"
+label_settings = ExtResource("4_wbxnf")
+
+[node name="Incursion" type="Label" parent="VBoxContainer/HBoxContainer/CharacterDetails"]
+layout_mode = 2
+text = "Incursion: 0
+"
+label_settings = ExtResource("4_wbxnf")
+
+[node name="Refrain" type="Label" parent="VBoxContainer/HBoxContainer/CharacterDetails"]
+layout_mode = 2
+text = "Refrain: 0
+"
+label_settings = ExtResource("4_wbxnf")
+
+[node name="Agility" type="Label" parent="VBoxContainer/HBoxContainer/CharacterDetails"]
+layout_mode = 2
+text = "Agility: 0
+"
+label_settings = ExtResource("4_wbxnf")
+
+[node name="Elements" type="Label" parent="VBoxContainer/HBoxContainer/CharacterDetails"]
+layout_mode = 2
+text = "Elements: 
+lorem ipsum, lorem ipsum"
+label_settings = ExtResource("4_wbxnf")
+
+[connection signal="focus_entered" from="VBoxContainer/HBoxContainer/CharacterButtons/TalonButton" to="." method="_on_talon_button_focus_entered"]
+[connection signal="pressed" from="VBoxContainer/HBoxContainer/CharacterButtons/TalonButton" to="." method="_on_talon_button_pressed"]
+[connection signal="focus_entered" from="VBoxContainer/HBoxContainer/CharacterButtons/NashButton" to="." method="_on_nash_button_focus_entered"]
+[connection signal="pressed" from="VBoxContainer/HBoxContainer/CharacterButtons/NashButton" to="." method="_on_nash_button_pressed"]
+[connection signal="focus_entered" from="VBoxContainer/HBoxContainer/CharacterButtons/EsenButton" to="." method="_on_esen_button_focus_entered"]
+[connection signal="pressed" from="VBoxContainer/HBoxContainer/CharacterButtons/EsenButton" to="." method="_on_esen_button_pressed"]

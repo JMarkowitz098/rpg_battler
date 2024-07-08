@@ -1,0 +1,15 @@
+[gd_scene load_steps=4 format=3 uid="uid://bkcjen0d6wndn"]
+
+[ext_resource type="Script" path="res://audio/music.gd" id="1_tgvem"]
+[ext_resource type="AudioStream" uid="uid://cv14aal5v4fcr" path="res://audio/Free Game Menu Music Pack/15. Star Rock.wav" id="2_w1qt6"]
+[ext_resource type="AudioStream" uid="uid://dy4h0826wa26i" path="res://audio/kim-lightyear-just-a-dream-wake-up-153991.mp3" id="3_8ddaf"]
+
+[node name="Music" type="Node"]
+process_mode = 3
+script = ExtResource("1_tgvem")
+menu_theme = ExtResource("2_w1qt6")
+battle_theme = ExtResource("3_8ddaf")
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+volume_db = 10.0
+bus = &"Music"

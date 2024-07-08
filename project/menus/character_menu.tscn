@@ -1,0 +1,76 @@
+[gd_scene load_steps=4 format=3 uid="uid://jejvfbw65n0x"]
+
+[ext_resource type="Script" path="res://menus/character_menu.gd" id="1_tcw72"]
+[ext_resource type="Texture2D" uid="uid://n58duguylnib" path="res://icon.svg" id="2_gutw5"]
+[ext_resource type="PackedScene" uid="uid://ch51mvl5giece" path="res://menus/default_button.tscn" id="2_tksjq"]
+
+[node name="CharacterMenu" type="ColorRect"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+script = ExtResource("1_tcw72")
+
+[node name="Panel" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 1
+
+[node name="Label" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+text = "Create your party"
+horizontal_alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+alignment = 1
+
+[node name="SlotOneContainer" type="VBoxContainer" parent="VBoxContainer/HBoxContainer"]
+layout_mode = 2
+
+[node name="SlotOnePortrait" type="TextureRect" parent="VBoxContainer/HBoxContainer/SlotOneContainer"]
+layout_mode = 2
+texture = ExtResource("2_gutw5")
+expand_mode = 5
+
+[node name="SlotOneButton" parent="VBoxContainer/HBoxContainer/SlotOneContainer" instance=ExtResource("2_tksjq")]
+custom_minimum_size = Vector2(80, 20)
+layout_mode = 2
+text = "Character 1"
+
+[node name="SlotTwoContainer" type="VBoxContainer" parent="VBoxContainer/HBoxContainer"]
+layout_mode = 2
+
+[node name="SlotTwoPortrait" type="TextureRect" parent="VBoxContainer/HBoxContainer/SlotTwoContainer"]
+layout_mode = 2
+texture = ExtResource("2_gutw5")
+expand_mode = 5
+
+[node name="SlotTwoButton" parent="VBoxContainer/HBoxContainer/SlotTwoContainer" instance=ExtResource("2_tksjq")]
+custom_minimum_size = Vector2(80, 20)
+layout_mode = 2
+text = "Character 2"
+
+[node name="StartButton" parent="VBoxContainer" instance=ExtResource("2_tksjq")]
+custom_minimum_size = Vector2(2.08165e-12, 20)
+layout_mode = 2
+size_flags_horizontal = 4
+text = "Start Game"
+
+[connection signal="pressed" from="VBoxContainer/HBoxContainer/SlotOneContainer/SlotOneButton" to="." method="_on_slot_one_button_pressed"]
+[connection signal="pressed" from="VBoxContainer/HBoxContainer/SlotTwoContainer/SlotTwoButton" to="." method="_on_slot_two_button_pressed"]
+[connection signal="pressed" from="VBoxContainer/StartButton" to="." method="_on_start_button_pressed"]

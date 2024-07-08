@@ -1,0 +1,39 @@
+[gd_scene load_steps=5 format=3 uid="uid://cir0hf6b30mxx"]
+
+[ext_resource type="Script" path="res://players/enemies/enemy_group_old.gd" id="1_khrov"]
+[ext_resource type="PackedScene" uid="uid://sgl44boffmsf" path="res://players/Talon/talon.tscn" id="3_8pgww"]
+[ext_resource type="Resource" uid="uid://dlct7yltan56j" path="res://players/enemies/talon_enemy_player_details.tres" id="3_vg3hm"]
+[ext_resource type="Resource" uid="uid://cl0cwnv02jif8" path="res://players/Talon/levels/talon_level_1.tres" id="4_rk7qd"]
+
+[node name="EnemyGroup" type="Node2D"]
+script = ExtResource("1_khrov")
+
+[node name="Talon" parent="." instance=ExtResource("3_8pgww")]
+
+[node name="BaseSprite" parent="Talon" index="1"]
+position = Vector2(0, 3)
+scale = Vector2(-0.798, 0.6)
+
+[node name="AttackSprite" parent="Talon" index="2"]
+scale = Vector2(-0.798, 0.6)
+
+[node name="Stats" parent="Talon" index="6"]
+player_details = ExtResource("3_vg3hm")
+level_stats = ExtResource("4_rk7qd")
+
+[node name="Talon2" parent="." instance=ExtResource("3_8pgww")]
+position = Vector2(42, 0)
+
+[node name="BaseSprite" parent="Talon2" index="1"]
+position = Vector2(0, 3)
+scale = Vector2(-0.798, 0.6)
+
+[node name="AttackSprite" parent="Talon2" index="2"]
+scale = Vector2(-0.798, 0.6)
+
+[node name="Stats" parent="Talon2" index="6"]
+player_details = ExtResource("3_vg3hm")
+level_stats = ExtResource("4_rk7qd")
+
+[editable path="Talon"]
+[editable path="Talon2"]

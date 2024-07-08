@@ -1,0 +1,153 @@
+[gd_scene load_steps=17 format=3 uid="uid://sgl44boffmsf"]
+
+[ext_resource type="Script" path="res://players/player.gd" id="1_syi0g"]
+[ext_resource type="PackedScene" uid="uid://b5b42noos8pd3" path="res://players/player_info.tscn" id="2_v0cl7"]
+[ext_resource type="PackedScene" uid="uid://bno3iriedun4j" path="res://players/base_character_sprite.tscn" id="2_x7fak"]
+[ext_resource type="Texture2D" uid="uid://df7pcvc8u0ug1" path="res://players/Talon/sprite_sheets/noBKG_KnightIdle_strip.png" id="3_bgm7c"]
+[ext_resource type="Texture2D" uid="uid://b3eiyyx4skdd2" path="res://players/Talon/sprite_sheets/noBKG_KnightAttack_strip.png" id="4_so0p2"]
+[ext_resource type="PackedScene" uid="uid://dl4d2stn4lshh" path="res://players/refrain_aura.tscn" id="5_ahw2m"]
+[ext_resource type="PackedScene" uid="uid://bqyh4pkeog5r5" path="res://ui/triangle_focus.tscn" id="7_clngs"]
+[ext_resource type="PackedScene" uid="uid://2evhn0npdxi4" path="res://ui/finger_focus.tscn" id="8_l8hxc"]
+[ext_resource type="PackedScene" uid="uid://cyi2g62l2egia" path="res://players/stats.tscn" id="10_nfyao"]
+[ext_resource type="Resource" uid="uid://ber4ixqhnh8bj" path="res://players/Talon/talon_player_details.tres" id="11_34duj"]
+
+[sub_resource type="Animation" id="Animation_x6vl1"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AttackSprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("BaseSprite:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_530mv"]
+resource_name = "attack"
+length = 2.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AttackSprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1, 1.1, 1.2, 1.3, 1.4, 1.5, 1.6, 1.7, 1.8, 1.9),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19]
+}
+
+[sub_resource type="Animation" id="Animation_fe73s"]
+resource_name = "hurt"
+length = 0.6
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("BaseSprite:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4, 0.6),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Color(100, 1, 1, 1), Color(1, 1, 1, 1), Color(100, 1, 1, 1), Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_4eibr"]
+resource_name = "idle"
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("BaseSprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4, 5, 6, 7, 8, 14]
+}
+
+[sub_resource type="Animation" id="Animation_at5fo"]
+resource_name = "refrain"
+length = 0.6
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("BaseSprite:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4, 0.6),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Color(0.00392157, 1, 0.12549, 1), Color(1, 1, 1, 1), Color(0.00392157, 1, 0.12549, 1), Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_6fabj"]
+_data = {
+"RESET": SubResource("Animation_x6vl1"),
+"attack": SubResource("Animation_530mv"),
+"hurt": SubResource("Animation_fe73s"),
+"idle": SubResource("Animation_4eibr"),
+"refrain": SubResource("Animation_at5fo")
+}
+
+[node name="Talon" type="Node2D"]
+script = ExtResource("1_syi0g")
+metadata/_edit_group_ = true
+
+[node name="Info" parent="." instance=ExtResource("2_v0cl7")]
+
+[node name="BaseSprite" parent="." instance=ExtResource("2_x7fak")]
+position = Vector2(-4, 0)
+texture = ExtResource("3_bgm7c")
+hframes = 15
+frame = 14
+
+[node name="AttackSprite" type="Sprite2D" parent="."]
+visible = false
+position = Vector2(6, 0)
+scale = Vector2(0.798, 0.6)
+texture = ExtResource("4_so0p2")
+hframes = 22
+
+[node name="RefrainAura" parent="." instance=ExtResource("5_ahw2m")]
+
+[node name="TriangleFocus" parent="." instance=ExtResource("7_clngs")]
+position = Vector2(-2, -13)
+
+[node name="FingerFocus" parent="." instance=ExtResource("8_l8hxc")]
+visible = false
+position = Vector2(4, 8)
+scale = Vector2(0.15, 0.15)
+
+[node name="Stats" parent="." instance=ExtResource("10_nfyao")]
+player_details = ExtResource("11_34duj")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_6fabj")
+}
+
+[connection signal="no_ingress_energy" from="Stats" to="." method="_on_character_stats_no_ingress_energy"]
+[connection signal="took_damage" from="Stats" to="." method="_on_character_stats_took_damage"]
+[connection signal="used_skill" from="Stats" to="." method="_on_character_stats_used_skill"]

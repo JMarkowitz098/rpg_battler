@@ -1,0 +1,7 @@
+[gd_scene load_steps=3 format=3 uid="uid://cgok3ungpxl0x"]
+
+[ext_resource type="PackedScene" uid="uid://bdhgmwwhyk3x1" path="res://players/group.tscn" id="1_2yaly"]
+[ext_resource type="Script" path="res://players/enemies/enemy_group.gd" id="2_ixcnv"]
+
+[node name="EnemyGroup" instance=ExtResource("1_2yaly")]
+script = ExtResource("2_ixcnv")

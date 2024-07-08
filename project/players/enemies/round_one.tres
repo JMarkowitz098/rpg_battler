@@ -1,0 +1,33 @@
+[gd_resource type="Resource" script_class="Round" load_steps=10 format=3 uid="uid://bvb763g7vwiqs"]
+
+[ext_resource type="Script" path="res://players/enemies/round.gd" id="1_csxtt"]
+[ext_resource type="Script" path="res://players/level_stats.gd" id="1_te4cn"]
+[ext_resource type="Resource" uid="uid://bsia6bqru68qu" path="res://skills/eth/eth_incursion.tres" id="2_4ykh2"]
+[ext_resource type="Resource" uid="uid://dupsoy6eqmyu5" path="res://skills/eth/eth_refrain.tres" id="3_udvn4"]
+[ext_resource type="Resource" uid="uid://ctdusg70hieyd" path="res://skills/shor/shor_incursion.tres" id="4_s5lby"]
+[ext_resource type="Resource" uid="uid://y81nh2ijcjeq" path="res://skills/shor/shor_refrain.tres" id="5_g5qi6"]
+[ext_resource type="Resource" uid="uid://dlct7yltan56j" path="res://players/enemies/talon_enemy_player_details.tres" id="6_u4vtn"]
+
+[sub_resource type="Resource" id="Resource_nfre6"]
+script = ExtResource("1_te4cn")
+level = 1
+max_ingress = 8
+incursion = 3
+refrain = 1
+agility = 2
+skills = Array[Resource("res://skills/ingress.gd")]([ExtResource("2_4ykh2"), ExtResource("3_udvn4"), ExtResource("4_s5lby"), ExtResource("5_g5qi6")])
+
+[sub_resource type="Resource" id="Resource_lj4o7"]
+script = ExtResource("1_te4cn")
+level = 1
+max_ingress = 8
+incursion = 3
+refrain = 1
+agility = 2
+skills = Array[Resource("res://skills/ingress.gd")]([ExtResource("4_s5lby"), ExtResource("5_g5qi6"), ExtResource("2_4ykh2"), ExtResource("3_udvn4")])
+
+[resource]
+script = ExtResource("1_csxtt")
+round_number = 0
+players_details = Array[Resource("res://players/player_details.gd")]([ExtResource("6_u4vtn"), ExtResource("6_u4vtn")])
+levels = Array[ExtResource("1_te4cn")]([SubResource("Resource_nfre6"), SubResource("Resource_lj4o7")])

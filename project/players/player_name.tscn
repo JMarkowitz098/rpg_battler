@@ -1,0 +1,13 @@
+[gd_scene load_steps=2 format=3 uid="uid://d17rqlb1hgubs"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_soesg"]
+font_size = 8
+
+[node name="PlayerName" type="Label"]
+offset_left = -11.0
+offset_top = 7.0
+offset_right = 13.0
+offset_bottom = 19.0
+text = "Name"
+label_settings = SubResource("LabelSettings_soesg")
+horizontal_alignment = 1
