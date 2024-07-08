@@ -14,7 +14,7 @@ func draw_action_button_description(action_type_index: int) -> void:
 		1: 
 			text = "Use a refrain"
 		2: 
-			text = "Attempt to dodge an attack"
+			text = "Recover 1 Ingress. Small chance to dodge attack."
 	
 func _on_is_battling_state_entered() -> void:
 	clear()

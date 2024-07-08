@@ -108,8 +108,7 @@ position = Vector2(190, 55)
 [connection signal="pressed" from="CanvasLayer/ActionChoice/Incursion" to="." method="_on_incursion_pressed"]
 [connection signal="focus_entered" from="CanvasLayer/ActionChoice/Refrain" to="." method="_on_refrain_focus_entered"]
 [connection signal="pressed" from="CanvasLayer/ActionChoice/Refrain" to="." method="_on_refrain_pressed"]
-[connection signal="focus_entered" from="CanvasLayer/ActionChoice/Dodge" to="." method="_on_dodge_focus_entered"]
-[connection signal="pressed" from="CanvasLayer/ActionChoice/Dodge" to="." method="_on_dodge_pressed"]
+[connection signal="focus_entered" from="CanvasLayer/ActionChoice/Recover" to="." method="_on_recover_focus_entered"]
 [connection signal="pressed" from="HelpButton" to="." method="_on_help_button_pressed"]
 
 [editable path="CanvasLayer/HelpMenu"]

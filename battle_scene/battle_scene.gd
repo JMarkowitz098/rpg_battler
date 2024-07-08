@@ -11,7 +11,7 @@ var skill_index := 0
 
 @onready var action_queue := $CanvasLayer/ActionQueue
 @onready var action_choice := $CanvasLayer/ActionChoice
-@onready var dodge := $CanvasLayer/ActionChoice/Dodge
+@onready var dodge := $CanvasLayer/ActionChoice/Recover
 @onready var enemy_group := $EnemyGroup
 @onready var help_menu := $CanvasLayer/HelpMenu
 @onready var incursion := $CanvasLayer/ActionChoice/Incursion
@@ -76,7 +76,7 @@ func _on_incursion_focus_entered() -> void:
 func _on_refrain_focus_entered() -> void:
 	if info_label: info_label.draw_action_button_description(1)
 	
-func _on_dodge_focus_entered() -> void:
+func _on_recover_focus_entered() -> void:
 	if info_label: info_label.draw_action_button_description(2)
 	
 func _on_incursion_pressed() -> void:
@@ -262,3 +262,4 @@ func _on_help_menu_hidden() -> void:
 	get_tree().paused = false
 	before_pause_focus.focus(true)
 	Music.play(Music.battle_theme, Music.get_from())
+

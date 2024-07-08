@@ -26,6 +26,6 @@ layout_mode = 2
 text = "Refrain
 "
 
-[node name="Dodge" parent="." instance=ExtResource("1_clth5")]
+[node name="Recover" parent="." instance=ExtResource("1_clth5")]
 layout_mode = 2
-text = "Dodge"
+text = "Recover"
