@@ -91,11 +91,12 @@ scale = Vector2(0.221786, 0.194805)
 texture = ExtResource("2_2y8pj")
 metadata/_edit_lock_ = true
 
-[node name="HelpButton" type="Button" parent="."]
+[node name="HelpButton" type="Label" parent="."]
 offset_right = 8.0
 offset_bottom = 8.0
-theme_override_font_sizes/font_size = 8
-text = "H"
+theme_override_font_sizes/font_size = 4
+text = "Press H for Help. 
+Press Q to see turn order."
 
 [node name="PlayerGroup" parent="." instance=ExtResource("13_av40a")]
 position = Vector2(24, 53)
@@ -110,7 +111,6 @@ position = Vector2(190, 55)
 [connection signal="pressed" from="CanvasLayer/ActionChoice/Refrain" to="." method="_on_refrain_pressed"]
 [connection signal="focus_entered" from="CanvasLayer/ActionChoice/Recover" to="." method="_on_recover_focus_entered"]
 [connection signal="pressed" from="CanvasLayer/ActionChoice/Recover" to="." method="_on_recover_pressed"]
-[connection signal="pressed" from="HelpButton" to="." method="_on_help_button_pressed"]
 
 [editable path="CanvasLayer/HelpMenu"]
 [editable path="CanvasLayer/ActionChoice"]
