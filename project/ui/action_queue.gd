@@ -78,13 +78,21 @@ func _queue_empty_items(players: Array[Node2D]) -> void:
 
 func _fill_enemy_actions(players: Array[Node2D], enemies: Array[Node2D]) -> void:
 	for item in items:
+		if(item.action.actor.stats.player_details.icon_type != Stats.IconType.ENEMY): 
+			return
+
 		var action := item.action
-		if(action.actor.stats.player_details.icon_type == Stats.IconType.ENEMY):
-			if action.actor.stats.current_ingress == 1:
+		var stats: Stats = action.actor.stats
+		var usable_skills := _get_useable_skills(stats.current_ingress, stats.level_stats.skills)
+
+		if usable_skills.size() == 0:
 				action.set_dodge()
-			else:
-				var enemy_skill := _select_enemy_skill(action.actor.stats.level_stats.skills)
-				action.set_enemy_skill(enemy_skill, players, enemies, action.actor)
+		else:
+			var enemy_skill := _select_enemy_skill(usable_skills)
+			action.set_enemy_skill(enemy_skill, players, enemies, action.actor)
+
+func _get_useable_skills(current_ingress: int, skills: Array[Ingress]) -> Array[Ingress]:
+	return skills.filter(func(skill: Ingress) -> bool: return skill.ingress < current_ingress)
 
 func _select_enemy_skill(skills: Array) -> Ingress:
 	var use_refrain := randi() % 4 == 1
