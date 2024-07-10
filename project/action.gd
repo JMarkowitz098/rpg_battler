@@ -26,6 +26,10 @@ func set_dodge() -> void:
 	var dodge := load("res://skills/dodge.tres")
 	set_target(null, dodge)
 
+func set_recover() -> void:
+	var recover := load("res://skills/recover.tres")
+	set_target(null, recover)
+
 func set_enemy_skill(incoming_skill: Ingress, players: Array[Node2D], enemies: Array[Node2D], skill_actor: Node2D) -> void:
 	var incoming_target: Node2D = null
 	if incoming_skill.target == Ingress.Target.ENEMY:

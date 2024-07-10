@@ -146,7 +146,7 @@ func _process_skill(action: Action, tree: SceneTree, players: Array[Node2D], ene
 			action.actor.set_is_eth_dodging(true)
 			action.actor.set_dodge_animation(true)
 
-		Ingress.Id.DODGE:
+		Ingress.Id.RECOVER:
 			await _play_refrain_animation(action)
 			action.actor.stats.use_ingress_energy(-1)
 				

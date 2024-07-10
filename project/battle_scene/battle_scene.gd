@@ -96,7 +96,7 @@ func _on_recover_pressed() -> void:
 	var unique_id: String = player_group.get_current_member().stats.unique_id
 	var current_players_action_id: int = action_queue.get_action_index_by_unique_id(unique_id)
 	var current_action: Action = action_queue.items[current_players_action_id].action
-	current_action.set_dodge()
+	current_action.set_recover()
 
 	if !action_queue.is_turn_over():
 		player_group.next_player()
