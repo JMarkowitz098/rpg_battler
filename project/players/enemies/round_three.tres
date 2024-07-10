@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="Round" load_steps=4 format=3 uid="uid://douj1evsbuttc"]
 
-[ext_resource type="Resource" uid="uid://dc4b2yw8xaigx" path="res://players/Esen/levels/esen_level_3.tres" id="1_2utx2"]
+[ext_resource type="Resource" uid="uid://obs4p4d3s7ou" path="res://players/enemies/round_three_esen.tres" id="1_n0db7"]
 [ext_resource type="Resource" uid="uid://csw3bdkuvjwfb" path="res://players/enemies/esen_enemy_player_details.tres" id="2_cmp5m"]
 [ext_resource type="Script" path="res://players/enemies/round.gd" id="3_sjiu4"]
 
@@ -8,4 +8,4 @@
 script = ExtResource("3_sjiu4")
 round_number = 0
 players_details = Array[Resource("res://players/player_details.gd")]([ExtResource("2_cmp5m"), ExtResource("2_cmp5m")])
-levels = Array[Resource("res://players/level_stats.gd")]([ExtResource("1_2utx2"), ExtResource("1_2utx2")])
+levels = Array[Resource("res://players/level_stats.gd")]([ExtResource("1_n0db7"), ExtResource("1_n0db7")])
