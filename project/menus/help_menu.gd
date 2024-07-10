@@ -19,6 +19,7 @@ var current := 0
 
 func _ready() -> void:
 	close_button.focus_no_sound()
+	screens[current].find_child("PageNum").text = _render_page_number_text()
 
 func _process(_delta: float) -> void:
 	if Input.is_action_just_pressed("menu_back"):
@@ -53,6 +54,7 @@ func _on_next_button_pressed() -> void:
 	current += 1
 	screens[current].show()
 	previous_button.focus()
+	_update_page_number()
 
 	if current == screens.size() - 1: next_button.hide()
 	
@@ -65,7 +67,12 @@ func _on_previous_button_pressed() -> void:
 	current -= 1
 	screens[current].show()
 	next_button.focus()
+	_update_page_number()
 
 	if current == 0: previous_button.hide()
-		
 
+func _update_page_number() -> void:
+	screens[current].find_child("PageNum").text = _render_page_number_text()
+
+func _render_page_number_text() -> String:
+	return "Page: " + str(current + 1) + " / " + str(screens.size())
