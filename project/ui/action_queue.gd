@@ -125,7 +125,7 @@ func _fill_enemy_actions(players: Array[Node2D], enemies: Array[Node2D]) -> void
 		var usable_skills := _get_useable_skills(stats.current_ingress, stats.level_stats.skills)
 
 		if usable_skills.size() == 0:
-				action.set_dodge()
+				action.set_recover()
 		else:
 			var enemy_skill := _select_enemy_skill(usable_skills)
 			action.set_enemy_skill(enemy_skill, players, enemies, action.actor)
