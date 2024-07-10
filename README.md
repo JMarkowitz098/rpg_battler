@@ -5,7 +5,7 @@ Live Game: https://jmarkowitz098.github.io/rpg_battler/
 Documentation: https://gut.readthedocs.io/en/latest/Command-Line.html
 
 1. Must be in project/
-2. Must change Untyped Declaration Error to a Warning
+2. Must change Untyped Declaration Error to a Warning or doubles will fail
     - Project Settings -> Debug -> GDScript -> Untyped Declaration
 3. Set alias with `alias gut='/Applications/Godot.app/Contents/MacOS/Godot -s addons/gut/gut_cmdln.gd'`
 4. Run tests with `gut`
