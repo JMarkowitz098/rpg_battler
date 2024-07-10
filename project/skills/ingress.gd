@@ -9,13 +9,15 @@ enum Id {
   MOVEMENT,
   PIERCING_INCURSION,
   REFRAIN,
-	DODGE
+	DODGE,
+	RECOVER
 }
 
 enum Type {
 	INCURSION,
 	REFRAIN,
-	DODGE
+	DODGE,
+	RECOVER
 }
 
 enum Target {

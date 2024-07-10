@@ -16,6 +16,15 @@ func _init(
 	if(init_target): target = init_target
 	skill = init_skill
 
+func get_actor_unique_id() -> String:
+	return actor.stats.unique_id
+
+func get_target_unique_id() -> String:
+	if target: 
+		return target.stats.unique_id
+	else:
+		return ""
+
 func set_target(attack_target: Node2D = null, attack_skill: Ingress = null) -> void:
 	if (attack_target): target = attack_target
 	skill = attack_skill
@@ -25,6 +34,10 @@ func set_dodge() -> void:
 	actor.stats.is_dodging = true
 	var dodge := load("res://skills/dodge.tres")
 	set_target(null, dodge)
+
+func set_recover() -> void:
+	var recover := load("res://skills/recover.tres")
+	set_target(null, recover)
 
 func set_enemy_skill(incoming_skill: Ingress, players: Array[Node2D], enemies: Array[Node2D], skill_actor: Node2D) -> void:
 	var incoming_target: Node2D = null

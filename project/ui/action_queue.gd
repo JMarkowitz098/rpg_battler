@@ -41,7 +41,7 @@ func process_action_queue(tree: SceneTree, players: Array[Node2D], enemies: Arra
 		set_battle_process.call(true)
 
 func is_turn_over() -> bool:
-	return items.all(func(item: ActionQueueItem)-> bool: 
+	return items.all(func(item: ActionQueueItem)-> bool:
 		return item.action.action_chosen)
 
 func update_player_action_with_skill(player: Node2D, target: Node2D, skill: Ingress) -> void:
@@ -63,9 +63,48 @@ func remove_action_by_character_id(id: String) -> void:
 				action_matches = true
 			return !action_matches)
 
+func update_actions_with_targets_with_removed_id(
+	removed_id: String,
+	groups: BattleGroups
+	) -> void:
+	var actions := get_actions_by_unique_id(removed_id)
+	for action in actions:
+		if not action.target or not _is_targeting_removed_id(action, removed_id): continue
+
+		if action.actor.stats.player_details.icon_type == Stats.IconType.PLAYER and groups.enemies.size() > 0:
+			var rand_enemy_i := randi() % groups.enemies.size()
+			action.target = groups.enemies[rand_enemy_i]
+		elif action.actor.stats.player_details.icon_type == Stats.IconType.ENEMY and groups.players.size() > 0:
+			var rand_player_i := randi() % groups.players.size()
+			action.target = groups.players[rand_player_i]
+		else:
+			remove_action_by_character_id(removed_id)
+
+func remove_actions_without_target_with_removed_id(unique_id: String) -> void:
+	for item in items:
+		var action := item.action
+		if not action.target and action.get_actor_unique_id() == unique_id:
+			items.erase(item)
+
+func get_actions_by_unique_id(unique_id: String) -> Array[Action]:
+	var filtered_items := items.filter(func(item: ActionQueueItem) -> bool: 
+		return _action_has_unique_id(item.action, unique_id))
+	var actions: Array[Action] = []
+	for item: ActionQueueItem in filtered_items: actions.append(item.action)
+	return actions
+
 # -----------------
 # Private Functions
 # -----------------
+
+func _action_has_unique_id(action: Action, unique_id: String) -> bool:
+	if action.get_actor_unique_id() == unique_id or action.get_target_unique_id() == unique_id:
+		return true
+	else:
+		return false
+
+func _is_targeting_removed_id(action: Action, unique_id: String) -> bool:
+	return action.get_target_unique_id() == unique_id
 
 func _queue_empty_items(players: Array[Node2D]) -> void:
 	for player in players:
@@ -78,13 +117,21 @@ func _queue_empty_items(players: Array[Node2D]) -> void:
 
 func _fill_enemy_actions(players: Array[Node2D], enemies: Array[Node2D]) -> void:
 	for item in items:
+		if(item.action.actor.stats.player_details.icon_type != Stats.IconType.ENEMY): 
+			continue
+
 		var action := item.action
-		if(action.actor.stats.player_details.icon_type == Stats.IconType.ENEMY):
-			if action.actor.stats.current_ingress == 1:
-				action.set_dodge()
-			else:
-				var enemy_skill := _select_enemy_skill(action.actor.stats.level_stats.skills)
-				action.set_enemy_skill(enemy_skill, players, enemies, action.actor)
+		var stats: Stats = action.actor.stats
+		var usable_skills := _get_useable_skills(stats.current_ingress, stats.level_stats.skills)
+
+		if usable_skills.size() == 0:
+				action.set_recover()
+		else:
+			var enemy_skill := _select_enemy_skill(usable_skills)
+			action.set_enemy_skill(enemy_skill, players, enemies, action.actor)
+
+func _get_useable_skills(current_ingress: int, skills: Array[Ingress]) -> Array[Ingress]:
+	return skills.filter(func(skill: Ingress) -> bool: return skill.ingress < current_ingress)
 
 func _select_enemy_skill(skills: Array) -> Ingress:
 	var use_refrain := randi() % 4 == 1
@@ -98,6 +145,7 @@ func _select_enemy_skill(skills: Array) -> Ingress:
 	return filtered_skills[rand_skill_i]
 				
 func _process_skill(action: Action, tree: SceneTree, players: Array[Node2D], enemies: Array[Node2D]) -> void:
+	if not action.actor: return
 	if action.actor.stats.current_ingress - action.skill.ingress <= 0:
 		print("Not enough Ingress")
 		return
@@ -138,7 +186,7 @@ func _process_skill(action: Action, tree: SceneTree, players: Array[Node2D], ene
 			action.actor.set_is_eth_dodging(true)
 			action.actor.set_dodge_animation(true)
 
-		Ingress.Id.DODGE:
+		Ingress.Id.RECOVER:
 			await _play_refrain_animation(action)
 			action.actor.stats.use_ingress_energy(-1)
 				
