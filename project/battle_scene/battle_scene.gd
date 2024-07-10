@@ -6,6 +6,7 @@ var current_skill: Ingress
 var defeated: Array[String]
 var prev_state: State.Type
 var before_pause_focus: Variant
+var battle_groups: BattleGroups
 
 var skill_index := 0
 
@@ -33,6 +34,7 @@ func _ready() -> void:
 	_connect_signals()
 	action_queue.fill_initial_turn_items(player_group.members, enemy_group.members)
 	state.change_state(State.Type.CHOOSING_ACTION)
+	battle_groups = BattleGroups.new(player_group.members, enemy_group.members)
 	# await Music.fade()
 	Music.play(Music.battle_theme)
 	
@@ -188,16 +190,21 @@ func _handle_done_choosing() -> void:
 # Signals
 # -------
 	
-func _on_enemy_no_ingress_energy(enemy_id: String) -> void:
-	defeated.append(enemy_id)
-	action_queue.remove_action_by_character_id(enemy_id)
-	enemy_group.remove_member_by_id(enemy_id)
+func _on_enemy_no_ingress_energy(enemy_unique_id: String) -> void:
+	defeated.append(enemy_unique_id)
+
+	enemy_group.remove_member_by_id(enemy_unique_id)
 	enemy_group.reset_current_member()
-	
-func _on_player_no_ingress_energy(player_id: String) -> void:
-	action_queue.remove_action_by_character_id(player_id)
-	player_group.remove_member_by_id(player_id)
+
+	action_queue.update_actions_with_targets_with_removed_id(enemy_unique_id, battle_groups)
+	action_queue.remove_actions_without_target_with_removed_id(enemy_unique_id)
+
+func _on_player_no_ingress_energy(player_unique_id: String) -> void:
+	player_group.remove_member_by_id(player_unique_id)
 	player_group.reset_current_member()
+
+	action_queue.update_actions_with_targets_with_removed_id(player_unique_id, battle_groups)
+	action_queue.remove_actions_without_target_with_removed_id(player_unique_id)
 
 # func _on_help_button_pressed():
 # 	get_tree().paused = true

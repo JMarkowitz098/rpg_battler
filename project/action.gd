@@ -16,6 +16,15 @@ func _init(
 	if(init_target): target = init_target
 	skill = init_skill
 
+func get_actor_unique_id() -> String:
+	return actor.stats.unique_id
+
+func get_target_unique_id() -> String:
+	if target: 
+		return target.stats.unique_id
+	else:
+		return ""
+
 func set_target(attack_target: Node2D = null, attack_skill: Ingress = null) -> void:
 	if (attack_target): target = attack_target
 	skill = attack_skill
