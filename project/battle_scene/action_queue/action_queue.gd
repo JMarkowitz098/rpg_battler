@@ -7,7 +7,6 @@ var current_member: int = 0
 var process_queue := ProcessQueue.new()
 
 const ACTION_QUEUE_ITEM := preload("res://battle_scene/action_queue/action_queue_item.tscn")
-const INGRESS_ANIMATION = preload("res://skills/ingress_animation.tscn")
 
 func _ready() -> void:
 	_connect_signals()
@@ -38,33 +37,28 @@ func fill_initial_turn_items(players: Array[Node2D], enemies: Array[Node2D]) -> 
 	_queue_empty_items(enemies)
 	_sort_items_by_agility()
 	_fill_enemy_actions(players, enemies)
-	
+
 	for item in items:
 		add_child(item)
 
 func process_action_queue(tree: SceneTree, battle_groups: BattleGroups, set_battle_process: Callable) -> void:
-	await process_queue.process_action_queue(
-		items,
-		tree,
-		battle_groups,
-		set_battle_process
-	)
+	await process_queue.process_action_queue(items, tree, battle_groups, set_battle_process)
 
 func is_turn_over() -> bool:
 	return items.all(func(item: ActionQueueItem)-> bool:
 		return item.action.action_chosen)
 
 func update_player_action_with_skill(player: Node2D, target: Node2D, skill: Ingress) -> void:
-	var action_to_update: Action = items.filter(func(item: ActionQueueItem)-> bool: 
+	var action_to_update: Action = items.filter(func(item: ActionQueueItem)-> bool:
 		return item.action.actor.stats.unique_id == player.stats.unique_id)[0].action
 	if skill.target == Ingress.Target.ALL_ENEMIES or skill.target == Ingress.Target.ALL_ALLIES:
 		action_to_update.set_target(null, skill)
 	else:
 		action_to_update.set_target(target, skill)
-	
+
 func remove_action_by_character_id(id: String) -> void:
 	items = items.filter(
-		func(item: ActionQueueItem) -> bool: 
+		func(item: ActionQueueItem) -> bool:
 			var action: Action = item.action
 			var action_matches := false
 			if action.target and action.target.stats.unique_id == id:
@@ -97,7 +91,7 @@ func remove_actions_without_target_with_removed_id(unique_id: String) -> void:
 			items.erase(item)
 
 func get_actions_by_unique_id(unique_id: String) -> Array[Action]:
-	var filtered_items := items.filter(func(item: ActionQueueItem) -> bool: 
+	var filtered_items := items.filter(func(item: ActionQueueItem) -> bool:
 		return _action_has_unique_id(item.action, unique_id))
 	var actions: Array[Action] = []
 	for item: ActionQueueItem in filtered_items: actions.append(item.action)
@@ -127,7 +121,7 @@ func _queue_empty_items(players: Array[Node2D]) -> void:
 
 func _fill_enemy_actions(players: Array[Node2D], enemies: Array[Node2D]) -> void:
 	for item in items:
-		if(item.action.actor.stats.player_details.icon_type != Stats.IconType.ENEMY): 
+		if(item.action.actor.stats.player_details.icon_type != Stats.IconType.ENEMY):
 			continue
 
 		var action := item.action
@@ -156,26 +150,26 @@ func _select_enemy_skill(skills: Array) -> Ingress:
 
 func _sort_items_by_agility() -> void:
 	for item in items:
-		item.action.actor.stats.rand_agi = item.action.actor.stats.level_stats.agility + randi() % 10 
-	items.sort_custom(func(a: ActionQueueItem, b: ActionQueueItem) -> bool: 
+		item.action.actor.stats.rand_agi = item.action.actor.stats.level_stats.agility + randi() % 10
+	items.sort_custom(func(a: ActionQueueItem, b: ActionQueueItem) -> bool:
 		return a.action.actor.stats.rand_agi  > b.action.actor.stats.rand_agi )
 
 # ------------------
 # Action Queue Focus
 # ------------------
-		
+
 func reset_current_member() -> void:
 	current_member = 0
-	
+
 func size() -> int:
 	return items.size()
-	
+
 func get_current_item() -> ActionQueueItem:
 	return items[current_member]
 
 func set_item_focus(index: int, type: Focus.Type) -> void:
 	items[index].focus(type)
-			
+
 func create_action_message(action: Action) -> String:
 	var message: String = "Player: " + action.actor.player_name.text
 	if action.skill:
@@ -187,7 +181,6 @@ func create_action_message(action: Action) -> String:
 func unfocus_all(type: Focus.Type) -> void:
 	for item in items:
 		item.unfocus(type)
-	
 
 func set_focuses() -> void:
 	var item := get_current_item()
@@ -229,7 +222,6 @@ func set_turn_on_player(unique_id: String) -> void:
 	var index := get_action_index_by_unique_id(unique_id)
 	set_item_focus(index, Focus.Type.TRIANGLE)
 
-
 # -------
 # Signals
 # -------
@@ -257,7 +249,7 @@ func _on_update_action_index(direction: Direction.Type) -> void:
 				current_member = size() - 1
 			else:
 				current_member = current_member - 1
-		
+
 	var action := get_current_item().action
 	Events.update_info_label.emit(create_action_message(action))
 
