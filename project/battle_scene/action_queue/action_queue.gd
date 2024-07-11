@@ -5,6 +5,7 @@ var items: Array[ActionQueueItem] = []
 var current_member: int = 0
 
 var process_queue := ProcessQueue.new()
+var item_manager := ActionQueueItemManager.new(self)
 
 const ACTION_QUEUE_ITEM := preload("res://battle_scene/action_queue/action_queue_item.tscn")
 
@@ -29,17 +30,8 @@ func _connect_signals() -> void:
 # Process Queue
 # -------------
 
-func fill_initial_turn_items(players: Array[Node2D], enemies: Array[Node2D]) -> void:
-	for child in get_children():
-		child.queue_free()
-
-	_queue_empty_items(players)
-	_queue_empty_items(enemies)
-	_sort_items_by_agility()
-	_fill_enemy_actions(players, enemies)
-
-	for item in items:
-		add_child(item)
+func fill_initial_turn_items(battle_groups: BattleGroups) -> void:
+	item_manager.fill_initial_turn_items(battle_groups)
 
 func process_action_queue(tree: SceneTree, battle_groups: BattleGroups, set_battle_process: Callable) -> void:
 	await process_queue.process_action_queue(items, tree, battle_groups, set_battle_process)
@@ -52,9 +44,9 @@ func update_player_action_with_skill(player: Node2D, target: Node2D, skill: Ingr
 	var action_to_update: Action = items.filter(func(item: ActionQueueItem)-> bool:
 		return item.action.actor.stats.unique_id == player.stats.unique_id)[0].action
 	if skill.target == Ingress.Target.ALL_ENEMIES or skill.target == Ingress.Target.ALL_ALLIES:
-		action_to_update.set_target(null, skill)
+		action_to_update.set_skill(null, skill)
 	else:
-		action_to_update.set_target(target, skill)
+		action_to_update.set_skill(target, skill)
 
 func remove_action_by_character_id(id: String) -> void:
 	items = items.filter(
@@ -75,10 +67,10 @@ func update_actions_with_targets_with_removed_id(
 	for action in actions:
 		if not action.target or not _is_targeting_removed_id(action, removed_id): continue
 
-		if action.actor.stats.player_details.icon_type == Stats.IconType.PLAYER and groups.enemies.size() > 0:
+		if action.is_player_action() and groups.enemies.size() > 0:
 			var rand_enemy_i := randi() % groups.enemies.size()
 			action.target = groups.enemies[rand_enemy_i]
-		elif action.actor.stats.player_details.icon_type == Stats.IconType.ENEMY and groups.players.size() > 0:
+		elif action.is_enemy_action() and groups.players.size() > 0:
 			var rand_player_i := randi() % groups.players.size()
 			action.target = groups.players[rand_player_i]
 		else:
@@ -109,50 +101,6 @@ func _action_has_unique_id(action: Action, unique_id: String) -> bool:
 
 func _is_targeting_removed_id(action: Action, unique_id: String) -> bool:
 	return action.get_target_unique_id() == unique_id
-
-func _queue_empty_items(players: Array[Node2D]) -> void:
-	for player in players:
-		var new_item := ACTION_QUEUE_ITEM.instantiate()
-		new_item.set_empty_action(player)
-		new_item.texture = Utils.get_player_portrait(player.stats.player_details.player_id)
-		if(player.stats.player_details.icon_type == Stats.IconType.ENEMY):
-			new_item.self_modulate = Color("Red")
-		items.push_back(new_item)
-
-func _fill_enemy_actions(players: Array[Node2D], enemies: Array[Node2D]) -> void:
-	for item in items:
-		if(item.action.actor.stats.player_details.icon_type != Stats.IconType.ENEMY):
-			continue
-
-		var action := item.action
-		var stats: Stats = action.actor.stats
-		var usable_skills := _get_useable_skills(stats.current_ingress, stats.level_stats.skills)
-
-		if usable_skills.size() == 0:
-				action.set_recover()
-		else:
-			var enemy_skill := _select_enemy_skill(usable_skills)
-			action.set_enemy_skill(enemy_skill, players, enemies, action.actor)
-
-func _get_useable_skills(current_ingress: int, skills: Array[Ingress]) -> Array[Ingress]:
-	return skills.filter(func(skill: Ingress) -> bool: return skill.ingress < current_ingress)
-
-func _select_enemy_skill(skills: Array) -> Ingress:
-	var use_refrain := randi() % 4 == 1
-	var filtered_skills: Array[Ingress]
-	if use_refrain:
-		filtered_skills = skills.filter(func(skill: Ingress) -> bool: return skill.type == Ingress.Type.REFRAIN)
-	else:
-		filtered_skills = skills.filter(func(skill: Ingress) -> bool: return skill.type == Ingress.Type.INCURSION)
-
-	var rand_skill_i := randi() % filtered_skills.size()
-	return filtered_skills[rand_skill_i]
-
-func _sort_items_by_agility() -> void:
-	for item in items:
-		item.action.actor.stats.rand_agi = item.action.actor.stats.level_stats.agility + randi() % 10
-	items.sort_custom(func(a: ActionQueueItem, b: ActionQueueItem) -> bool:
-		return a.action.actor.stats.rand_agi  > b.action.actor.stats.rand_agi )
 
 # ------------------
 # Action Queue Focus

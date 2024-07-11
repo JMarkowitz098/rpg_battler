@@ -27,7 +27,7 @@ func _process_skill(action: Action, tree: SceneTree, battle_groups: BattleGroups
 	match action.skill.id:
 		Ingress.Id.INCURSION, Ingress.Id.PIERCING_INCURSION, Ingress.Id.DOUBLE_INCURSION:
 			await _use_incursion(action, tree)
-			if action.skill.id == Ingress.Id.DOUBLE_INCURSION and action.target:
+			if action.skill.id == Ingress.Id.DOUBLE_INCURSION and action.target.is_alive():
 				await tree.create_timer(2).timeout
 				await _use_incursion(action, tree)
 		Ingress.Id.GROUP_INCURSION:
