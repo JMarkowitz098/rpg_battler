@@ -20,6 +20,15 @@ func fill_initial_turn_items(battle_groups: BattleGroups) -> void:
 	_add_queue_children()
 
 
+func is_turn_over() -> bool:
+	return queue.items.all(_action_chosen_filter)
+
+
+func remove_actions_without_target_with_removed_id(unique_id: String) -> void:
+	for item in queue.items:
+		_remove_action_from_queue_without_target_with_removed_id(unique_id, item)
+
+
 func update_player_action_with_skill(player: Node2D, target: Node2D, skill: Ingress) -> void:
 	var action_to_update := _get_item_by_player(player).action
 	if skill.has_target():
@@ -109,7 +118,7 @@ func _fill_enemy_action(action: Action, battle_groups: BattleGroups) -> void:
 	var usable_skills: Array[Ingress] = action.actor.get_usable_skills()
 
 	if usable_skills.size() == 0:
-			action.set_recover()
+		action.set_recover()
 	else:
 		action.set_enemy_skill(_select_enemy_skill(usable_skills), battle_groups, action.actor)
 
@@ -147,3 +156,16 @@ func _action_needs_update(action: Action, removed_id: String) -> bool:
 func _remove_actions_from_queue_by_unique_id(removed_id: String) -> void:
 	queue.items = queue.items.filter(func(item: ActionQueueItem) -> bool:
 		return item.action_has_unique_id(removed_id))
+
+
+func _remove_action_from_queue_without_target_with_removed_id(
+	unique_id: String, item: ActionQueueItem) -> void:
+	var action := item.action
+	if _is_no_target_and_removed(action, unique_id): queue.items.erase(item)
+
+
+func _is_no_target_and_removed(action: Action, unique_id: String) -> bool:
+	return not action.target and action.get_actor_unique_id() == unique_id
+
+
+func _action_chosen_filter(item: ActionQueueItem)-> bool: return item.action.action_chosen

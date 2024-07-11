@@ -77,8 +77,8 @@ func is_player() -> bool:
 func is_enemy() -> bool:
 	return stats.player_details.icon_type == Stats.IconType.ENEMY
 
-func get_usable_skills() -> Array[Ingress]:
-	return skills.filter(func(skill: Ingress) -> bool: return _is_usable_skill(skill))
+func get_usable_skills() -> Array[Ingress]: 
+	return skills.filter(_usable_skill_filter)
 
 func is_alive() -> bool:
 	return stats.current_ingress > 0
@@ -105,3 +105,6 @@ func _on_character_stats_no_ingress_energy(_id: String) -> void:
 
 func _is_usable_skill(skill: Ingress) -> bool:
 	return skill.ingress < stats.current_ingress
+
+
+func _usable_skill_filter(skill: Ingress) -> bool: return _is_usable_skill(skill)

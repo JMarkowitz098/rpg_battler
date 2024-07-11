@@ -9,8 +9,10 @@ var item_manager := ActionQueueItemManager.new(self)
 
 const ACTION_QUEUE_ITEM := preload("res://battle_scene/action_queue/action_queue_item.tscn")
 
+
 func _ready() -> void:
 	_connect_signals()
+
 
 func _connect_signals() -> void:
 	var signals := [
@@ -23,6 +25,7 @@ func _connect_signals() -> void:
 		["update_action_queue_focuses", _on_update_action_queue_focuses]
 	]
 
+
 	for new_signal: Array in signals:
 		Events[new_signal[0]].connect(new_signal[1])
 
@@ -30,29 +33,25 @@ func _connect_signals() -> void:
 # Process Queue
 # -------------
 
-func fill_initial_turn_items(battle_groups: BattleGroups) -> void:
-	item_manager.fill_initial_turn_items(battle_groups)
 
 func process_action_queue(tree: SceneTree, battle_groups: BattleGroups, set_battle_process: Callable) -> void:
 	await process_queue.process_action_queue(items, tree, battle_groups, set_battle_process)
 
+# -------------
+# Item Manager
+# -------------
+
+func fill_initial_turn_items(battle_groups: BattleGroups) -> void:
+	item_manager.fill_initial_turn_items(battle_groups)
+
+
 func is_turn_over() -> bool:
-	return items.all(func(item: ActionQueueItem)-> bool:
-		return item.action.action_chosen)
+	return item_manager.is_turn_over()
+
 
 func update_player_action_with_skill(player: Node2D, target: Node2D, skill: Ingress) -> void:
 	item_manager.update_player_action_with_skill(player, target, skill)
 
-func remove_action_by_character_id(id: String) -> void:
-	items = items.filter(
-		func(item: ActionQueueItem) -> bool:
-			var action: Action = item.action
-			var action_matches := false
-			if action.target and action.target.stats.unique_id == id:
-				action_matches = true
-			if action.actor.stats.unique_id == id:
-				action_matches = true
-			return !action_matches)
 
 func update_actions_with_targets_with_removed_id(
 	removed_id: String,
@@ -62,30 +61,12 @@ func update_actions_with_targets_with_removed_id(
 
 
 func remove_actions_without_target_with_removed_id(unique_id: String) -> void:
-	for item in items:
-		var action := item.action
-		if not action.target and action.get_actor_unique_id() == unique_id:
-			items.erase(item)
+	item_manager.remove_actions_without_target_with_removed_id(unique_id)
 
-func get_actions_by_unique_id(unique_id: String) -> Array[Action]:
-	var filtered_items := items.filter(func(item: ActionQueueItem) -> bool:
-		return _action_has_unique_id(item.action, unique_id))
-	var actions: Array[Action] = []
-	for item: ActionQueueItem in filtered_items: actions.append(item.action)
-	return actions
 
 # -----------------
 # Private Functions
 # -----------------
-
-func _action_has_unique_id(action: Action, unique_id: String) -> bool:
-	if action.get_actor_unique_id() == unique_id or action.get_target_unique_id() == unique_id:
-		return true
-	else:
-		return false
-
-func _is_targeting_removed_id(action: Action, unique_id: String) -> bool:
-	return action.get_target_unique_id() == unique_id
 
 # ------------------
 # Action Queue Focus
@@ -94,8 +75,6 @@ func _is_targeting_removed_id(action: Action, unique_id: String) -> bool:
 func reset_current_member() -> void:
 	current_member = 0
 
-func size() -> int:
-	return items.size()
 
 func get_current_item() -> ActionQueueItem:
 	return items[current_member]
@@ -179,7 +158,7 @@ func _on_update_action_index(direction: Direction.Type) -> void:
 			current_member = (current_member + 1) % items.size()
 		Direction.Type.LEFT:
 			if current_member == 0:
-				current_member = size() - 1
+				current_member = items.size() - 1
 			else:
 				current_member = current_member - 1
 
