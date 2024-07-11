@@ -218,7 +218,7 @@ func _on_choosing_action_state_entered() -> void:
 	current_action_button.focus(true)
 	var current_player: Node2D = player_group.get_current_member_turn()
 	current_player.focus(Focus.Type.TRIANGLE) # move to player group
-	action_queue.set_turn_on_player(current_player.stats.unique_id)
+	action_queue.set_triangle_focus_on_player(current_player.stats.unique_id)
 
 func _on_choosing_skill_state_entered() -> void:
 	var current_player: Node2D = player_group.get_current_member_turn()
@@ -226,7 +226,7 @@ func _on_choosing_skill_state_entered() -> void:
 	skill_choice_list.prepare_skill_menu(_handle_choose_skill)
 	skill_choice_list.get_children()[0].focus(true)
 	current_player.focus(Focus.Type.TRIANGLE) # move to player group
-	action_queue.set_turn_on_player(current_player.stats.unique_id)
+	action_queue.set_triangle_focus_on_player(current_player.stats.unique_id)
 
 func _on_choose_enemy() -> void:
 	action_queue.update_player_action_with_skill(

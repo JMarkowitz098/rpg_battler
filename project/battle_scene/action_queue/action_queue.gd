@@ -6,6 +6,7 @@ var current_member: int = 0
 
 var process_queue := ProcessQueue.new()
 var item_manager := ActionQueueItemManager.new(self)
+var focus_manager := ActionQueueFocusManager.new(self)
 
 const ACTION_QUEUE_ITEM := preload("res://battle_scene/action_queue/action_queue_item.tscn")
 
@@ -69,70 +70,38 @@ func remove_actions_without_target_with_removed_id(unique_id: String) -> void:
 # -----------------
 
 # ------------------
-# Action Queue Focus
+# Focus Manager
 # ------------------
 
 func reset_current_member() -> void:
-	current_member = 0
+	focus_manager.reset_current_member()
 
 
 func get_current_item() -> ActionQueueItem:
-	return items[current_member]
+	return focus_manager.get_current_item()
+
 
 func set_item_focus(index: int, type: Focus.Type) -> void:
-	items[index].focus(type)
+	focus_manager.set_item_focus(index, type)
+
 
 func create_action_message(action: Action) -> String:
-	var message: String = "Player: " + action.actor.player_name.text
-	if action.skill:
-		message += "\nAction: " + action.skill.label
-	if action.target:
-		message += "\nTarget -> " + action.target.player_name.text
-	return message
+	return focus_manager.create_action_message(action)
 
-func unfocus_all(type: Focus.Type) -> void:
-	for item in items:
-		item.unfocus(type)
 
-func set_focuses() -> void:
-	var item := get_current_item()
-	var action: Action = item.action
+func unfocus_all(type: Focus.Type) -> void: focus_manager.unfocus_all(type)
 
-	action.actor.focus(Focus.Type.TRIANGLE)
-	action.actor.set_triangle_focus_color(Color.GRAY)
-	action.actor.set_triangle_focus_size(Vector2(.6, .6))
 
-	item.focus(Focus.Type.FINGER)
+func set_focuses() -> void: focus_manager.set_focuses()
 
-	if action.skill:
-		match action.skill.id:
-			Ingress.Id.INCURSION, Ingress.Id.DOUBLE_INCURSION, Ingress.Id.PIERCING_INCURSION:
-				action.target.focus(Focus.Type.TRIANGLE)
-				action.target.set_triangle_focus_color(Color.RED)
-			Ingress.Id.REFRAIN, Ingress.Id.MOVEMENT:
-				action.target.focus(Focus.Type.TRIANGLE)
-				action.target.set_triangle_focus_color(Color.GREEN)
-			Ingress.Id.GROUP_REFRAIN:
-				if action.actor.stats.player_details.icon_type == Stats.IconType.PLAYER:
-					Events.action_queue_focus_all_allies.emit(Focus.Type.TRIANGLE, Color.GREEN)
-				else:
-					Events.action_queue_focus_all_enemies.emit(Focus.Type.TRIANGLE, Color.GREEN)
-			Ingress.Id.GROUP_INCURSION:
-				if action.actor.stats.player_details.icon_type == Stats.IconType.PLAYER:
-					Events.action_queue_focus_all_enemies.emit(Focus.Type.TRIANGLE, Color.RED)
-				else:
-					Events.action_queue_focus_all_allies.emit(Focus.Type.TRIANGLE, Color.RED)
 
 func get_action_index_by_unique_id(unique_id: String) -> int:
-	for i in items.size():
-		var action := items[i].action
-		if action.actor.stats.unique_id == unique_id:
-			return i
-	return 0
+	return focus_manager.get_action_index_by_unique_id(unique_id)
 
-func set_turn_on_player(unique_id: String) -> void:
-	var index := get_action_index_by_unique_id(unique_id)
-	set_item_focus(index, Focus.Type.TRIANGLE)
+
+func set_triangle_focus_on_player(unique_id: String) -> void:
+	focus_manager.set_triangle_focus_on_player(unique_id)
+
 
 # -------
 # Signals
