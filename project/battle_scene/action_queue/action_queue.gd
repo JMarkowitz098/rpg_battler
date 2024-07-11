@@ -4,6 +4,8 @@ class_name ActionQueue
 var items: Array[ActionQueueItem] = []
 var current_member: int = 0
 
+var process_queue := ProcessQueue.new()
+
 const ACTION_QUEUE_ITEM := preload("res://battle_scene/action_queue/action_queue_item.tscn")
 const INGRESS_ANIMATION = preload("res://skills/ingress_animation.tscn")
 
@@ -40,14 +42,13 @@ func fill_initial_turn_items(players: Array[Node2D], enemies: Array[Node2D]) -> 
 	for item in items:
 		add_child(item)
 
-func process_action_queue(tree: SceneTree, players: Array[Node2D], enemies: Array[Node2D], set_battle_process: Callable) -> void:
-	while items.size() > 0:
-		var action: Action = items.pop_front().action
-
-		# For some reason, have to stop process to trigger await in loops
-		set_battle_process.call(false)
-		await _process_skill(action, tree, players, enemies)
-		set_battle_process.call(true)
+func process_action_queue(tree: SceneTree, battle_groups: BattleGroups, set_battle_process: Callable) -> void:
+	await process_queue.process_action_queue(
+		items,
+		tree,
+		battle_groups,
+		set_battle_process
+	)
 
 func is_turn_over() -> bool:
 	return items.all(func(item: ActionQueueItem)-> bool:
@@ -152,118 +153,6 @@ func _select_enemy_skill(skills: Array) -> Ingress:
 
 	var rand_skill_i := randi() % filtered_skills.size()
 	return filtered_skills[rand_skill_i]
-				
-func _process_skill(action: Action, tree: SceneTree, players: Array[Node2D], enemies: Array[Node2D]) -> void:
-	if not action.actor: return
-	if action.actor.stats.current_ingress - action.skill.ingress <= 0:
-		print("Not enough Ingress")
-		return
-	action.actor.stats.use_ingress_energy(action.skill.ingress)
-
-	match action.skill.id: 
-		Ingress.Id.INCURSION, Ingress.Id.PIERCING_INCURSION:
-			await _use_incursion(action)
-			
-		Ingress.Id.DOUBLE_INCURSION:
-			await _use_incursion(action)
-			await tree.create_timer(2).timeout
-			if action.target != null:
-				_use_incursion(action)
-				await tree.create_timer(2).timeout
-
-		Ingress.Id.GROUP_INCURSION:
-			await _play_attack_animation(action)
-			for enemy in enemies:
-				action.target = enemy
-				var damage := Utils.calucluate_skill_damage(action)
-				enemy.stats.take_damage(damage)
-				
-		Ingress.Id.REFRAIN:
-			await _play_refrain_animation(action)
-			_set_refrain(action.target, action.skill.element)
-			
-		Ingress.Id.GROUP_REFRAIN:
-			await _play_refrain_animation(action)
-			var target_players := players if action.actor.stats.player_details.icon_type == Stats.IconType.PLAYER else enemies
-			for player: Node2D in target_players:
-				if player is Node2D:
-					_set_refrain(player, action.skill.element)
-
-		Ingress.Id.MOVEMENT:
-			await _play_refrain_animation(action)
-			action.actor.stats.level_stats.agility *= 2
-			action.actor.set_is_eth_dodging(true)
-			action.actor.set_dodge_animation(true)
-
-		Ingress.Id.RECOVER:
-			await _play_refrain_animation(action)
-			action.actor.stats.use_ingress_energy(-1)
-				
-	# if action.skill.id != Ingress.Id.DODGE:
-	await tree.create_timer(2).timeout
-		
-func _use_incursion(action: Action) -> void:
-	await _play_attack_animation(action)
-	await _play_ingress_animation(action)
-	var damage := Utils.calucluate_skill_damage(action)
-	action.target.stats.take_damage(damage)
-		
-func _play_attack_animation(action: Action) -> void:
-	action.actor.base_sprite.hide()
-	action.actor.attack_sprite.show()
-
-	action.actor.animation_player.play("attack")
-	await action.actor.animation_player.animation_finished
-
-	if(action.actor != null):
-		action.actor.base_sprite.show()
-		action.actor.attack_sprite.hide()
-		action.actor.animation_player.play("idle")
-
-func _play_ingress_animation(action: Action) -> void:
-	var element: Element.Type = action.skill.element
-	var world := get_tree().get_root()
-	var ingress := INGRESS_ANIMATION.instantiate()
-	world.add_child(ingress)
-
-	ingress.global_position = action.target.global_position
-	if action.target.stats.player_details.icon_type == Stats.IconType.PLAYER:
-		ingress.global_position.x += 10
-	else:
-		ingress.global_position.x -= 20
-
-	match element:
-		Element.Type.SHOR:
-			ingress.self_modulate = Color("Blue")
-		Element.Type.SCOR:
-			ingress.self_modulate = Color(100, 1, 1) # Red
-		Element.Type.ETH:
-			ingress.self_modulate = Color("Green")
-		Element.Type.ENH:
-			ingress.self_modulate = Color(37, 1, 0) # Orange
-
-	ingress.play()
-	await ingress.animation_finished
-	ingress.queue_free()
-
-func _play_refrain_animation(action: Action) -> void:
-	action.actor.animation_player.play("refrain")
-	await action.actor.animation_player.animation_finished
-	action.actor.animation_player.play("idle")
-		
-func _set_refrain(player: Node2D, skill_element: Element.Type) -> void:
-	player.stats.has_small_refrain_open = true
-	player.stats.current_refrain_element = skill_element
-	player.refrain_aura.show()
-	match skill_element:
-		Element.Type.ETH:
-			player.refrain_aura.modulate = Color("Green")
-		Element.Type.ENH:
-			player.refrain_aura.modulate = Color("Orange")
-		Element.Type.SCOR:
-			player.refrain_aura.modulate = Color("Red")
-		Element.Type.SHOR:
-			player.refrain_aura.modulate = Color("Blue")
 
 func _sort_items_by_agility() -> void:
 	for item in items:

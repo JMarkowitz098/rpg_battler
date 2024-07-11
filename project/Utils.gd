@@ -21,7 +21,7 @@ var current_round := Round.Number.ONE
 func calucluate_attack_damage(actor_stats: Stats, target_stats: Stats) -> int:
 	return _clamped_damage(actor_stats.level_stats.incursion - target_stats.level_stats.refrain)
 	
-func calucluate_skill_damage(action: Action) -> int:
+func calculate_skill_damage(action: Action) -> int:
 	match action.skill.id:
 		Ingress.Id.INCURSION, Ingress.Id.DOUBLE_INCURSION, Ingress.Id.GROUP_INCURSION, Ingress.Id.PIERCING_INCURSION:
 			var incursion_power: int = action.actor.stats.level_stats.incursion

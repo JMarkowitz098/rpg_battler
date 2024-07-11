@@ -126,8 +126,7 @@ func _process_turn() -> void:
 	await get_tree().create_timer(1).timeout
 	await action_queue.process_action_queue(
 		get_tree(), 
-		player_group.members, 
-		enemy_group.members, 
+		battle_groups,
 		set_process
 	)
 	state.change_state(State.Type.IS_BATTLING)

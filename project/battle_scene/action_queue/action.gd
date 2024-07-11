@@ -25,6 +25,12 @@ func get_target_unique_id() -> String:
 	else:
 		return ""
 
+func get_actor_icon() -> Stats.IconType:
+	return actor.stats.player_details.icon_type
+
+func get_target_icon() -> Stats.IconType:
+	return target.stats.player_details.icon_type
+
 func set_target(attack_target: Node2D = null, attack_skill: Ingress = null) -> void:
 	if (attack_target): target = attack_target
 	skill = attack_skill
