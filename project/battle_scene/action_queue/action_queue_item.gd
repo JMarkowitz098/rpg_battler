@@ -29,6 +29,8 @@ func set_rand_agi() -> void:
 func set_empty_action(player: Node2D) -> void:
 	action = Action.new(player)
 
+func action_has_unique_id(unique_id: String) -> bool:
+	return action.has_unique_id(unique_id)
 
 func set_portrait(player: Node2D) -> void:
 	texture = Utils.get_player_portrait(player.stats.player_details.player_id)

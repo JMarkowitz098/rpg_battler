@@ -56,20 +56,10 @@ func remove_action_by_character_id(id: String) -> void:
 
 func update_actions_with_targets_with_removed_id(
 	removed_id: String,
-	groups: BattleGroups
+	battle_groups: BattleGroups
 	) -> void:
-	var actions := get_actions_by_unique_id(removed_id)
-	for action in actions:
-		if not action.target or not _is_targeting_removed_id(action, removed_id): continue
+		item_manager.update_actions_with_targets_with_removed_id(removed_id, battle_groups)
 
-		if action.is_player_action() and groups.enemies.size() > 0:
-			var rand_enemy_i := randi() % groups.enemies.size()
-			action.target = groups.enemies[rand_enemy_i]
-		elif action.is_enemy_action() and groups.players.size() > 0:
-			var rand_player_i := randi() % groups.players.size()
-			action.target = groups.players[rand_player_i]
-		else:
-			remove_action_by_character_id(removed_id)
 
 func remove_actions_without_target_with_removed_id(unique_id: String) -> void:
 	for item in items:

@@ -33,6 +33,12 @@ func get_target_icon() -> Stats.IconType:
 	return target.stats.player_details.icon_type
 
 
+func has_unique_id(unique_id: String) -> bool:
+	if actor.stats.unique_id == unique_id: return true
+	elif target and target.stats.unique_id == unique_id: return true
+	else: return false
+
+
 func is_player_action() -> bool:
 	return get_actor_icon() == Stats.IconType.PLAYER
 
