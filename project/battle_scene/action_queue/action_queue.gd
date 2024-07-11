@@ -38,6 +38,7 @@ func _connect_signals() -> void:
 func process_action_queue(tree: SceneTree, battle_groups: BattleGroups, set_battle_process: Callable) -> void:
 	await process_queue.process_action_queue(items, tree, battle_groups, set_battle_process)
 
+
 # -------------
 # Item Manager
 # -------------
@@ -110,16 +111,20 @@ func set_triangle_focus_on_player(unique_id: String) -> void:
 func _on_choosing_action_state_entered() -> void:
 	unfocus_all(Focus.Type.ALL)
 
+
 func _on_choosing_action_queue_state_entered() -> void:
 	set_item_focus(0, Focus.Type.FINGER)
 	var action := get_current_item().action
 	Events.update_info_label.emit(create_action_message(action))
 
+
 func _on_is_battling_state_entered() -> void:
 	unfocus_all(Focus.Type.ALL)
 
+
 func _on_enter_action_queue_handle_input() -> void:
 	unfocus_all(Focus.Type.ALL)
+
 
 func _on_update_action_index(direction: Direction.Type) -> void:
 	match direction:
@@ -134,8 +139,10 @@ func _on_update_action_index(direction: Direction.Type) -> void:
 	var action := get_current_item().action
 	Events.update_info_label.emit(create_action_message(action))
 
+
 func _on_update_action_queue_focuses() -> void:
 	set_focuses()
+
 
 func _on_choosing_ally_state_entered() -> void:
 	unfocus_all(Focus.Type.ALL)
