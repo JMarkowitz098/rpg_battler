@@ -4,17 +4,25 @@ class_name ActionQueue
 var items: Array[ActionQueueItem] = []
 var current_member: int = 0
 
-const ACTION_QUEUE_ITEM := preload("res://ui/action_queue_item.tscn")
+const ACTION_QUEUE_ITEM := preload("res://battle_scene/action_queue/action_queue_item.tscn")
 const INGRESS_ANIMATION = preload("res://skills/ingress_animation.tscn")
 
 func _ready() -> void:
-	Events.choosing_action_queue_state_entered.connect(_on_choosing_action_queue_state_entered)
-	Events.choosing_action_state_entered.connect(_on_choosing_action_state_entered)
-	Events.choosing_ally_state_entered.connect(_on_choosing_ally_state_entered)
-	Events.enter_action_queue_handle_input.connect(_on_enter_action_queue_handle_input)
-	Events.is_battling_state_entered.connect(_on_is_battling_state_entered)
-	Events.update_action_index.connect(_on_update_action_index)
-	Events.update_action_queue_focuses.connect(_on_update_action_queue_focuses)
+	_connect_signals()
+
+func _connect_signals() -> void:
+	var signals := [
+		["choosing_action_queue_state_entered", _on_choosing_action_queue_state_entered],
+		["choosing_action_state_entered", _on_choosing_action_state_entered],
+		["choosing_ally_state_entered", _on_choosing_ally_state_entered],
+		["enter_action_queue_handle_input", _on_enter_action_queue_handle_input],
+		["is_battling_state_entered", _on_is_battling_state_entered],
+		["update_action_index", _on_update_action_index],
+		["update_action_queue_focuses", _on_update_action_queue_focuses]
+	]
+
+	for new_signal: Array in signals:
+		Events[new_signal[0]].connect(new_signal[1])
 
 # -------------
 # Process Queue
@@ -28,6 +36,7 @@ func fill_initial_turn_items(players: Array[Node2D], enemies: Array[Node2D]) -> 
 	_queue_empty_items(enemies)
 	_sort_items_by_agility()
 	_fill_enemy_actions(players, enemies)
+	
 	for item in items:
 		add_child(item)
 
