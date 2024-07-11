@@ -41,12 +41,7 @@ func is_turn_over() -> bool:
 		return item.action.action_chosen)
 
 func update_player_action_with_skill(player: Node2D, target: Node2D, skill: Ingress) -> void:
-	var action_to_update: Action = items.filter(func(item: ActionQueueItem)-> bool:
-		return item.action.actor.stats.unique_id == player.stats.unique_id)[0].action
-	if skill.target == Ingress.Target.ALL_ENEMIES or skill.target == Ingress.Target.ALL_ALLIES:
-		action_to_update.set_skill(null, skill)
-	else:
-		action_to_update.set_skill(target, skill)
+	item_manager.update_player_action_with_skill(player, target, skill)
 
 func remove_action_by_character_id(id: String) -> void:
 	items = items.filter(

@@ -17,6 +17,14 @@ func fill_initial_turn_items(battle_groups: BattleGroups) -> void:
 	_add_queue_children()
 
 
+func update_player_action_with_skill(player: Node2D, target: Node2D, skill: Ingress) -> void:
+	var action_to_update := _get_item_by_player(player).action
+	if skill.has_target():
+		action_to_update.set_skill(target, skill)
+	else:
+		action_to_update.set_skill(null, skill)
+
+
 func _remove_queue_children() -> void:
 	for child in queue.get_children(): child.queue_free()
 
@@ -68,6 +76,11 @@ func _select_enemy_skill(skills: Array) -> Ingress:
 	else:
 		filtered_skills = skills.filter(func(skill: Ingress) -> bool: return skill.is_incursion())
 
-
 	var rand_skill_i := randi() % filtered_skills.size()
 	return filtered_skills[rand_skill_i]
+
+
+func _get_item_by_player(player: Node2D) -> ActionQueueItem:
+	var items := queue.items.filter(func(item: ActionQueueItem)-> bool:
+		return item.get_actor_unique_id() == player.stats.unique_id)
+	return items[0]

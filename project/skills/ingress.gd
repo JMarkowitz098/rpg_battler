@@ -42,3 +42,11 @@ func is_incursion() -> bool:
 
 func is_refrain() -> bool:
 	return type == Type.REFRAIN
+
+
+func has_target() -> bool:
+	match target:
+		Target.SELF, Target.ENEMY, Target.ALLY:
+			return true
+		_:
+			return false

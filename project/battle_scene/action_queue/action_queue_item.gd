@@ -14,6 +14,10 @@ func get_rand_agi() -> int:
 	return action.actor.stats.rand_agi
 
 
+func get_actor_unique_id() -> String:
+	return action.get_actor_unique_id()
+
+
 func is_player_action() -> bool:
 	return action.actor.is_player()
 
