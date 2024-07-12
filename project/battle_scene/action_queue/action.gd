@@ -25,11 +25,11 @@ func get_target_unique_id() -> String:
 		return ""
 
 
-func get_actor_icon() -> Stats.IconType:
+func get_actor_icon() -> Player.Type:
 	return actor.stats.player_details.icon_type
 
 
-func get_target_icon() -> Stats.IconType:
+func get_target_icon() -> Player.Type:
 	return target.stats.player_details.icon_type
 
 
@@ -48,11 +48,11 @@ func has_unique_id(unique_id: String) -> bool:
 
 
 func is_player_action() -> bool:
-	return get_actor_icon() == Stats.IconType.PLAYER
+	return get_actor_icon() == Player.Type.PLAYER
 
 
 func is_enemy_action() -> bool:
-	return get_actor_icon() == Stats.IconType.ENEMY
+	return get_actor_icon() == Player.Type.ENEMY
 
 
 func set_skill(attack_target: Node2D = null, attack_skill: Ingress = null) -> void:

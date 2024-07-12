@@ -10,7 +10,7 @@ class_name LevelStats
 
 static func load_level_data(player_id: int, new_level: int) -> Resource:
 	match player_id: 
-		Stats.PlayerId.TALON:
+		Player.Id.TALON:
 			match new_level:
 				1:
 					return load("res://players/Talon/levels/talon_level_1.tres")
@@ -20,7 +20,7 @@ static func load_level_data(player_id: int, new_level: int) -> Resource:
 					return load("res://players/Talon/levels/talon_level_3.tres")
 				_:
 					return null
-		Stats.PlayerId.NASH:
+		Player.Id.NASH:
 			match new_level:
 				1:
 					return load("res://players/Nash/levels/nash_level_1.tres")
@@ -30,7 +30,7 @@ static func load_level_data(player_id: int, new_level: int) -> Resource:
 					return load("res://players/Nash/levels/nash_level_3.tres")
 				_:
 					return null
-		Stats.PlayerId.ESEN:
+		Player.Id.ESEN:
 			match new_level:
 				1:
 					return load("res://players/Esen/levels/esen_level_1.tres")

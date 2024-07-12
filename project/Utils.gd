@@ -87,24 +87,24 @@ func next_round() -> void:
 func _clamped_damage(value: int) -> int:
 	return clamp(value, 1, INF)
 
-func get_player_portrait(player_id: Stats.PlayerId) -> Texture:
+func get_player_portrait(player_id: Player.Id) -> Texture:
 	match(player_id):
-		Stats.PlayerId.TALON:
+		Player.Id.TALON:
 			return TALON_PORTRAIT
-		Stats.PlayerId.NASH:
+		Player.Id.NASH:
 			return NASH_PORTRAIT
-		Stats.PlayerId.ESEN:
+		Player.Id.ESEN:
 			return ESEN_PORTRAIT
 		_:
 			return null
 
-func get_player_details(player_id: Stats.PlayerId) -> Resource:
+func get_player_details(player_id: Player.Id) -> Resource:
 	match(player_id):
-		Stats.PlayerId.TALON:
+		Player.Id.TALON:
 			return TALON_PLAYER_DETAILS
-		Stats.PlayerId.NASH:
+		Player.Id.NASH:
 			return NASH_PLAYER_DETAILS
-		Stats.PlayerId.ESEN:
+		Player.Id.ESEN:
 			return ESEN_PLAYER_DETAILS
 		_:
 			return null

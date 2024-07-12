@@ -1,4 +1,5 @@
 extends Node
+class_name Modifiers
 
 signal ingress_updated
 signal no_ingress
