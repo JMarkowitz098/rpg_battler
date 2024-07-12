@@ -4,7 +4,7 @@ var TestPlayer := load("res://players/player.gd")
 var player: Player
 
 func before_each() -> void:
-	player = Player.new()
+	player = TestPlayer.new()
 
 func after_each() -> void:
 	player.free()
