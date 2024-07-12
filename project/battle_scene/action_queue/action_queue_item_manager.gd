@@ -125,11 +125,13 @@ func _fill_enemy_action(action: Action, battle_groups: BattleGroups) -> void:
 
 func _select_enemy_skill(skills: Array) -> Ingress:
 	var use_refrain := randi() % 4 == 1
-	var filtered_skills: Array[Ingress]
-	if use_refrain:
+	var filtered_skills: Array[Ingress] = skills
+
+	if use_refrain and skills.any(_is_refrain_filter):
 		filtered_skills = skills.filter(_is_refrain_filter)
-	else:
+	elif skills.any(_is_incursion_filter):
 		filtered_skills = skills.filter(_is_incursion_filter)
+		
 	return filtered_skills[randi() % filtered_skills.size()]
 
 
