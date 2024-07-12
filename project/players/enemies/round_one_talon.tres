@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="LevelStats" load_steps=6 format=3 uid="uid://brf3xwwtlo3hn"]
+
+[ext_resource type="Script" path="res://players/level_stats.gd" id="1_an4h3"]
+[ext_resource type="Resource" uid="uid://bsia6bqru68qu" path="res://skills/eth/eth_incursion.tres" id="2_606f7"]
+[ext_resource type="Resource" uid="uid://dupsoy6eqmyu5" path="res://skills/eth/eth_refrain.tres" id="3_5jiua"]
+[ext_resource type="Resource" uid="uid://ctdusg70hieyd" path="res://skills/shor/shor_incursion.tres" id="4_mtgyd"]
+[ext_resource type="Resource" uid="uid://y81nh2ijcjeq" path="res://skills/shor/shor_refrain.tres" id="5_cxa52"]
+
+[resource]
+script = ExtResource("1_an4h3")
+level = 1
+max_ingress = 2
+incursion = 3
+refrain = 1
+agility = 2
+skills = Array[Resource("res://skills/ingress.gd")]([ExtResource("2_606f7"), ExtResource("3_5jiua"), ExtResource("4_mtgyd"), ExtResource("5_cxa52")])
