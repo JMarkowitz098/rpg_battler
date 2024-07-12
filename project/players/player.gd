@@ -1,6 +1,8 @@
 extends Node2D
 class_name Player
 
+enum Id { TALON, NASH, ESEN, NONE }
+
 @onready var animation_player := $AnimationPlayer
 @onready var attack_sprite := $AttackSprite
 @onready var base_sprite := $BaseSprite
