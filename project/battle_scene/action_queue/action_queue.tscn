@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://c7d1vt1bnige2"]
 
-[ext_resource type="Script" path="res://ui/action_queue.gd" id="1_ns805"]
-[ext_resource type="PackedScene" uid="uid://o7b5jel0np5b" path="res://ui/action_queue_item.tscn" id="2_nbgru"]
+[ext_resource type="Script" path="res://battle_scene/action_queue/action_queue.gd" id="1_ns805"]
+[ext_resource type="PackedScene" uid="uid://o7b5jel0np5b" path="res://battle_scene/action_queue/action_queue_item.tscn" id="2_nbgru"]
 
 [node name="ActionQueue" type="HBoxContainer"]
 offset_left = 60.0

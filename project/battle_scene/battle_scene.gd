@@ -31,10 +31,10 @@ var skill_index := 0
 func _ready() -> void:
 	player_group.load_members_from_save_data()
 	enemy_group.load_members_from_round_data(Utils.current_round)
-	_connect_signals()
-	action_queue.fill_initial_turn_items(player_group.members, enemy_group.members)
-	state.change_state(State.Type.CHOOSING_ACTION)
 	battle_groups = BattleGroups.new(player_group.members, enemy_group.members)
+	_connect_signals()
+	action_queue.fill_initial_turn_items(battle_groups)
+	state.change_state(State.Type.CHOOSING_ACTION)
 	# await Music.fade()
 	Music.play(Music.battle_theme)
 	
@@ -126,8 +126,7 @@ func _process_turn() -> void:
 	await get_tree().create_timer(1).timeout
 	await action_queue.process_action_queue(
 		get_tree(), 
-		player_group.members, 
-		enemy_group.members, 
+		battle_groups,
 		set_process
 	)
 	state.change_state(State.Type.IS_BATTLING)
@@ -136,7 +135,7 @@ func _reset_turn() -> void:
 	action_queue.reset_current_member()
 	player_group.reset_current_member_and_turn()
 	enemy_group.reset_current_member()
-	action_queue.fill_initial_turn_items(player_group.members, enemy_group.members)
+	action_queue.fill_initial_turn_items(battle_groups)
 	state.change_state(State.Type.CHOOSING_ACTION)
 	player_group.reset_dodges()
 	enemy_group.reset_dodges()
@@ -194,17 +193,21 @@ func _on_enemy_no_ingress_energy(enemy_unique_id: String) -> void:
 	defeated.append(enemy_unique_id)
 
 	enemy_group.remove_member_by_id(enemy_unique_id)
+	battle_groups.enemies = enemy_group.members
 	enemy_group.reset_current_member()
 
-	action_queue.update_actions_with_targets_with_removed_id(enemy_unique_id, battle_groups)
-	action_queue.remove_actions_without_target_with_removed_id(enemy_unique_id)
+	if enemy_group.members.size() > 0:
+		action_queue.update_actions_with_targets_with_removed_id(enemy_unique_id, battle_groups)
+		action_queue.remove_actions_without_target_with_removed_id(enemy_unique_id)
 
 func _on_player_no_ingress_energy(player_unique_id: String) -> void:
 	player_group.remove_member_by_id(player_unique_id)
+	battle_groups.players = player_group.members
 	player_group.reset_current_member()
 
-	action_queue.update_actions_with_targets_with_removed_id(player_unique_id, battle_groups)
-	action_queue.remove_actions_without_target_with_removed_id(player_unique_id)
+	if player_group.members.size() > 0:
+		action_queue.update_actions_with_targets_with_removed_id(player_unique_id, battle_groups)
+		action_queue.remove_actions_without_target_with_removed_id(player_unique_id)
 
 # func _on_help_button_pressed():
 # 	get_tree().paused = true
@@ -215,7 +218,7 @@ func _on_choosing_action_state_entered() -> void:
 	current_action_button.focus(true)
 	var current_player: Node2D = player_group.get_current_member_turn()
 	current_player.focus(Focus.Type.TRIANGLE) # move to player group
-	action_queue.set_turn_on_player(current_player.stats.unique_id)
+	action_queue.set_triangle_focus_on_player(current_player.stats.unique_id)
 
 func _on_choosing_skill_state_entered() -> void:
 	var current_player: Node2D = player_group.get_current_member_turn()
@@ -223,7 +226,7 @@ func _on_choosing_skill_state_entered() -> void:
 	skill_choice_list.prepare_skill_menu(_handle_choose_skill)
 	skill_choice_list.get_children()[0].focus(true)
 	current_player.focus(Focus.Type.TRIANGLE) # move to player group
-	action_queue.set_turn_on_player(current_player.stats.unique_id)
+	action_queue.set_triangle_focus_on_player(current_player.stats.unique_id)
 
 func _on_choose_enemy() -> void:
 	action_queue.update_player_action_with_skill(

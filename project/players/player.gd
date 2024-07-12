@@ -71,6 +71,18 @@ func set_dodge_animation(val: bool) -> void:
 func update_energy_bar() -> void:
 	ingress_energy.text = str(stats.current_ingress) + "/" + str(stats.level_stats.max_ingress)
 
+func is_player() -> bool:
+	return stats.player_details.icon_type == Stats.IconType.PLAYER
+
+func is_enemy() -> bool:
+	return stats.player_details.icon_type == Stats.IconType.ENEMY
+
+func get_usable_skills() -> Array[Ingress]: 
+	return skills.filter(_usable_skill_filter)
+
+func is_alive() -> bool:
+	return stats.current_ingress > 0
+
 
 # ----------------
 # Helper Functions
@@ -82,8 +94,17 @@ func _on_character_stats_took_damage() -> void:
 	await get_tree().create_timer(1.4).timeout
 	animation_player.play("idle")
 
+
 func _on_character_stats_used_skill() -> void:
 	update_energy_bar()
 
+
 func _on_character_stats_no_ingress_energy(_id: String) -> void:
 	queue_free()
+
+
+func _is_usable_skill(skill: Ingress) -> bool:
+	return skill.ingress < stats.current_ingress
+
+
+func _usable_skill_filter(skill: Ingress) -> bool: return _is_usable_skill(skill)
