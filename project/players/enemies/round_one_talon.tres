@@ -9,7 +9,7 @@
 [resource]
 script = ExtResource("1_an4h3")
 level = 1
-max_ingress = 2
+max_ingress = 8
 incursion = 3
 refrain = 1
 agility = 2
