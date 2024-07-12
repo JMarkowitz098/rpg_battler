@@ -4,7 +4,8 @@ enum Type {
   ETH,
   ENH,
   SHOR,
-  SCOR
+  SCOR,
+  NONE
 }
 
 static func get_label(type: Type) -> String:
