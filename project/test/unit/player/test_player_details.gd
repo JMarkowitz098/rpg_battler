@@ -8,7 +8,7 @@ func before_each() -> void:
 	player_details = TestPlayerDetails.new()
 
 
-func test_can_create_modifiers() -> void:
+func test_can_create_player_details() -> void:
 	assert_not_null(player_details)
 
 
