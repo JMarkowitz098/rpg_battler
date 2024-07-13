@@ -50,3 +50,8 @@ static func create_refrain() -> MockIngress:
 		"target": Ingress.Target.ALLY,
 		"ingress": 1
 	})
+
+
+static func create_array() -> Array[Ingress]:
+	var skills: Array[Ingress] = [create_incursion(), create_refrain()]
+	return skills

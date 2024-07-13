@@ -29,6 +29,24 @@ func test_can_create_player() -> void:
 	assert_not_null(player.modifiers, "modifiers")
 
 
+func test_talon() -> void:
+	var talon: Node2D = load("res://players/Talon/talon.tscn").instantiate()
+	add_child_autoqfree(talon)
+	_test_player_scene(talon)
+
+
+func test_nash() -> void:
+	var nash: Node2D = load("res://players/Nash/nash.tscn").instantiate()
+	add_child_autoqfree(nash)
+	_test_player_scene(nash)
+
+
+func test_esen() -> void:
+	var esen: Node2D = load("res://players/Esen/esen.tscn").instantiate()
+	add_child_autoqfree(esen)
+	_test_player_scene(esen)
+
+
 func test_get_usable_skills() -> void:
 	var skill_1 := MockIngress.create_incursion()
 	var skill_2 := MockIngress.create_refrain()
@@ -65,3 +83,9 @@ func test_get_usable_skills() -> void:
 	actual = player.get_usable_skills()
 	assert_eq_deep(actual, expected)
 	
+
+func _test_player_scene(member: Node2D) -> void:
+	assert_not_null(member.details, "player_details")
+	assert_not_null(member.modifiers, "modifiers")
+	assert_connected(member.modifiers, member, 'ingress_updated', "_on_modifiers_ingress_updated")
+	assert_connected(member.modifiers, member, 'no_ingress', "_on_modifiers_no_ingress")

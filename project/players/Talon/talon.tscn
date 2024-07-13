@@ -148,3 +148,6 @@ scale = Vector2(0.15, 0.15)
 libraries = {
 "": SubResource("AnimationLibrary_6fabj")
 }
+
+[connection signal="ingress_updated" from="Modifiers" to="." method="_on_modifiers_ingress_updated"]
+[connection signal="no_ingress" from="Modifiers" to="." method="_on_modifiers_no_ingress"]

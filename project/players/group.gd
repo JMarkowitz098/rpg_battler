@@ -76,12 +76,13 @@ func _instantiate_member(data: NewPlayerData, slot_index: int) -> void:
 	add_child(new_member)
 	members.append(new_member)
 
-	new_member.stats.player_details = data.player_details
-	new_member.stats.level_stats = data.level_stats
-	new_member.stats.current_ingress = data.level_stats.max_ingress
-	new_member.update_energy_bar()
-	new_member.set_skills()
+	new_member.slot = slot_index
+	new_member.stats = data.stats
+	new_member.type = data.type
+	new_member.unique_id = data.unique_id
 
+	new_member.set_skills(data.skills)
+	new_member.set_current_ingress(new_member.stats.max_ingress)
 	_set_location(slot_index, new_member)
 
 func _set_location(slot_index: int, player: Node2D) -> void:

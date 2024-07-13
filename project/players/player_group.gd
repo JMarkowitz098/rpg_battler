@@ -53,7 +53,7 @@ func _create_new_player_data(save_data: PlayerSaveData) -> NewPlayerData:
 		"player_id": save_data.player_id,
 		"player_details": Utils.get_player_details(save_data.player_id),
 		"level_stats": LevelStats.load_level_data(save_data.player_id, save_data.level),
-		"unique_id": Stats.create_unique_id(save_data.player_id)
+		"unique_id": UniqueId.new()
 	})
 
 # -------

@@ -100,23 +100,20 @@ func is_alive() -> bool:
 	return stats.current_ingress > 0
 
 
+func set_current_ingress(new_value: int) -> void:
+	modifiers.set_current_ingress(new_value, stats.max_ingress)
+
 # ----------------
 # Helper Functions
 # ----------------
 
+# Need to replace with modifiers on took damage or something
 func _on_character_stats_took_damage() -> void:
 	update_energy_bar()
 	animation_player.play("hurt")
 	await get_tree().create_timer(1.4).timeout
 	animation_player.play("idle")
-
-
-func _on_character_stats_used_skill() -> void:
-	update_energy_bar()
-
-
-func _on_character_stats_no_ingress_energy(_id: String) -> void:
-	queue_free()
+	
 
 
 func _is_usable_skill(skill: Ingress) -> bool:
@@ -124,3 +121,11 @@ func _is_usable_skill(skill: Ingress) -> bool:
 
 
 func _usable_skill_filter(skill: Ingress) -> bool: return _is_usable_skill(skill)
+
+
+func _on_modifiers_ingress_updated() -> void:
+	update_energy_bar()
+
+
+func _on_modifiers_no_ingress() -> void:
+	queue_free()
