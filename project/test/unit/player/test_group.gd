@@ -14,23 +14,21 @@ func test_can_create_new_group() -> void:
 
 
 func test_can_instantiate_member() -> void:
-	var data: Array[NewPlayerData] = [
-			NewPlayerData.new({
-			"player_id": Player.Id.TALON,
-			"player_details": MockPlayerDetails.new(),
-			"stats": MockStats.new(),
-			"unique_id": UniqueId.new(),
-			"skills": MockIngress.create_array(),
-			"type": Player.Type.PLAYER
-		}),
-			NewPlayerData.new({
-			"player_id": Player.Id.TALON,
-			"player_details": MockPlayerDetails.new(),
-			"stats": MockStats.new(),
-			"unique_id": UniqueId.new(),
-			"skills": MockIngress.create_array(),
-			"type": Player.Type.ENEMY
-		}),
+	var data: Array[PlayerData] = [
+		PlayerData.new(
+			MockPlayerDetails.new(),
+			MockStats.new(),
+			UniqueId.new(),
+			MockIngress.create_array(),
+			Player.Type.PLAYER
+		),
+		PlayerData.new(
+			MockPlayerDetails.new(),
+			MockStats.new(),
+			UniqueId.new(),
+			MockIngress.create_array(),
+			Player.Type.ENEMY
+		),
 
 	]
 

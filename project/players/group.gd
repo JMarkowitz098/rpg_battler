@@ -17,7 +17,7 @@ var current_member: int = 0
 # Public Functions
 # ----------------
 
-func instantiate_members(data_array: Array[NewPlayerData]) -> void:
+func instantiate_members(data_array: Array[PlayerData]) -> void:
 	for slot_index in data_array.size():
 		var data := data_array[slot_index]
 		_instantiate_member(data, slot_index)
@@ -63,9 +63,9 @@ func reset_dodges() -> void:
 # Helper Functions
 # ----------------
 
-func _instantiate_member(data: NewPlayerData, slot_index: int) -> void:
+func _instantiate_member(data: PlayerData, slot_index: int) -> void:
 	var new_member: Node2D
-	match data.player_id:
+	match data.player_details.player_id:
 		PlayerId.Id.TALON:
 			new_member = TALON.instantiate()
 		PlayerId.Id.NASH:
@@ -80,6 +80,8 @@ func _instantiate_member(data: NewPlayerData, slot_index: int) -> void:
 	new_member.stats = data.stats
 	new_member.type = data.type
 	new_member.unique_id = data.unique_id
+	new_member.details = data.player_details
+	new_member.player_name.text = data.player_details.label
 
 	new_member.set_skills(data.skills)
 	new_member.set_current_ingress(new_member.stats.max_ingress)

@@ -56,9 +56,7 @@ func _set_data(id: String, type: String, key: String, val: Variant) -> void:
 
 func _load_player_data(id: String) -> Array[Dictionary]:
 	var players_data: Array[Dictionary] = []
-	print("Get sections section: ", id + "_" + PLAYER_DATA)
 	var section_keys := config.get_section_keys(id + "_" + PLAYER_DATA)
-	print(section_keys)
 
 	for key in section_keys:
 		players_data.append(_load_data(id, PLAYER_DATA, key))
@@ -67,9 +65,6 @@ func _load_player_data(id: String) -> Array[Dictionary]:
 
 
 func _load_data(id: String, type: String, key: String) -> Variant:
-	# print("id: ", id)
-	# print("type: ", type)
-	# print("key: ", key)
 	return config.get_value(id + "_" + type, key)
 
 

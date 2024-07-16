@@ -108,3 +108,7 @@ func get_player_details(player_id: Player.Id) -> Resource:
 			return ESEN_PLAYER_DETAILS
 		_:
 			return null
+
+func connect_signals(signals: Array) -> void:
+	for new_signal: Array in signals:
+		Events[new_signal[0]].connect(new_signal[1])
