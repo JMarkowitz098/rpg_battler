@@ -37,7 +37,7 @@ func _set_default(key: String) -> void:
 		"description":
 			default_value = "This is a mock"
 		"element":
-			element = Element.Type.ETH
+			default_value = Element.Type.ETH
 	self[key] = default_value
 
 

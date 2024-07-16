@@ -25,5 +25,5 @@ func format_for_save() -> Dictionary:
 		"label": label,
 		"elements": elements as Array,
 		"learnable_skills":
-		learnable_skills.map(func(skill: Ingress) -> Ingress.Id: return skill.id)
+			learnable_skills.map(func(skill: Ingress) -> Array: return skill.format_for_save())
 	}

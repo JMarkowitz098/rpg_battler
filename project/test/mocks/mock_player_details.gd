@@ -9,4 +9,4 @@ func _init() -> void:
 	player_id = Player.Id.TALON
 	label = "Mock player label"
 	elements = mock_elements
-	skills = skills
+	learnable_skills = skills
