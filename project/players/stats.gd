@@ -7,6 +7,22 @@ var incursion: int
 var refrain: int
 var agility: int
 
+func _init(_level: int, _max_ingress: int, _incursion: int, _refrain: int, _agility: int) -> void:
+	level = _level
+	max_ingress = _max_ingress
+	incursion = _incursion
+	refrain = _refrain
+	agility = _agility
+
+func format_for_save() -> Dictionary:
+	return {
+		"level": level,
+		"max_ingress": max_ingress,
+		"incursion": incursion,
+		"refrain": refrain,
+		"agility": agility
+	}
+
 # Legacy - TO BE DELETED
 
 # signal no_ingress_energy(id: String)
