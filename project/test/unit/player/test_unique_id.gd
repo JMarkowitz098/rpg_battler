@@ -10,5 +10,8 @@ func before_each() -> void:
 
 func test_can_create_unique_id() -> void:
 	assert_not_null(unique_id)
-	assert_not_null(unique_id.id)
+	assert_ne(unique_id.id, "")
+
+	unique_id = TestUniqueId.new("1111")
+	assert_eq(unique_id.id, "1111")
   

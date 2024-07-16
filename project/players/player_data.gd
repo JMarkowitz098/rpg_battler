@@ -22,9 +22,9 @@ func _init(
 
 func format_for_save() -> Dictionary:
   return {
-    "player_details": player_details.format_for_save(),
-    "stats": stats._format_for_save(),
-    "unique_id": unique_id.id,
-    "skills": skills.map(func(ingress: Ingress) -> Array: return ingress.format_for_save()),
-    "type": type,
+	"player_details": player_details.format_for_save(),
+	"stats": stats.format_for_save(),
+	"unique_id": unique_id.id,
+	"skills": skills.map(func(ingress: Ingress) -> Array: return ingress.format_for_save()),
+	"type": type,
   }
