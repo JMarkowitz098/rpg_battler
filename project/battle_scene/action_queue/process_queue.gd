@@ -68,7 +68,7 @@ func _use_group_refrain(action: Action, battle_groups: BattleGroups) -> void:
 	await _play_refrain_animation(action)
 	var targets := (
 		battle_groups.players
-		if action.get_actor_icon() == Stats.IconType.PLAYER
+		if action.get_actor_icon() == Player.Type.PLAYER
 		else battle_groups.enemies
 	)
 	for target in targets:
@@ -104,7 +104,7 @@ func _play_ingress_animation(action: Action, tree: SceneTree) -> void:
 	tree.get_root().add_child(ingress)
 
 	ingress.global_position = action.target.global_position
-	if action.target.stats.player_details.icon_type == Stats.IconType.PLAYER:
+	if action.target.stats.player_details.icon_type == Player.Type.PLAYER:
 		ingress.global_position.x += 10
 	else:
 		ingress.global_position.x -= 20

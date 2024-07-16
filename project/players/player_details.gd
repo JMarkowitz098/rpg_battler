@@ -8,10 +8,10 @@ class_name PlayerDetails
 
 
 func _init(
-	_player_id: Player.Id,
-	_label: String,
-	_elements: Array[Element.Type],
-	_learnable_skills: Array[Ingress],
+	_player_id: Player.Id = Player.Id.TALON,
+	_label: String = "",
+	_elements: Array[Element.Type] = [],
+	_learnable_skills: Array[Ingress] = [],
 ) -> void:
 	player_id = _player_id
 	label = _label
