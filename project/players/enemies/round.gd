@@ -8,3 +8,6 @@ enum Number {
 	FOUR,
 	FIVE
 }
+
+@export var round_number: Number
+@export var enemies: Array[EnemyPlayerData]

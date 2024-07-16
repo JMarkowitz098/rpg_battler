@@ -1,13 +1,13 @@
 extends Resource
 class_name Stats
 
-var level: int
-var max_ingress: int
-var incursion: int
-var refrain: int
-var agility: int
+@export var level: int
+@export var max_ingress: int
+@export var incursion: int
+@export var refrain: int
+@export var agility: int
 
-func _init(_level: int, _max_ingress: int, _incursion: int, _refrain: int, _agility: int) -> void:
+func _init(_level: int = 0, _max_ingress: int = 0, _incursion: int = 0, _refrain: int = 0, _agility: int = 0) -> void:
 	level = _level
 	max_ingress = _max_ingress
 	incursion = _incursion
