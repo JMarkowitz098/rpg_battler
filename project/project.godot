@@ -18,7 +18,6 @@ config/icon="res://icon.svg"
 [autoload]
 
 Utils="*res://Utils.gd"
-SaveAndLoadPlayer="*res://menus/save_and_load_player.gd"
 Events="*res://ui/events.gd"
 Sound="*res://audio/sound.tscn"
 Music="*res://audio/music.tscn"

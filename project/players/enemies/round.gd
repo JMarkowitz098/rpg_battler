@@ -8,7 +8,3 @@ enum Number {
 	FOUR,
 	FIVE
 }
-
-@export var round_number: Number
-@export var players_details: Array[PlayerDetails]
-@export var levels: Array[LevelStats]

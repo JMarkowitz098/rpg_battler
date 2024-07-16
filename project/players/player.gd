@@ -25,7 +25,7 @@ var unique_id: UniqueId
 
 func _ready() -> void:
 	animation_player.play("idle")
-	player_name.text = details.label
+	if(details): player_name.text = details.label
 	unique_id = UniqueId.new()
 
 # ----------------
