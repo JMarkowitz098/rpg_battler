@@ -33,6 +33,7 @@ enum Target {
 @export var ingress: int
 @export var type: Type
 @export var target: Target
+@export var element: Element.Type
 @export_multiline var description: String
 
 
@@ -50,3 +51,38 @@ func has_target() -> bool:
 			return true
 		_:
 			return false
+
+
+func format_for_save() -> Array:
+	return [id, element]
+
+
+static func load_ingress(skill_data: Array) -> Ingress:
+	var data_id: Id = skill_data[0]
+	var data_element: Element.Type = skill_data[1]
+	
+	match(data_element):
+		Element.Type.ETH:
+			return _load_skill(data_id, "eth")
+		Element.Type.SHOR:
+			return _load_skill(data_id, "shor")
+		_:
+			return null
+		
+
+static func _load_skill(data_id: Id, element_string: String) -> Ingress:
+	var path := "res://skills/" + element_string + "/"
+
+	match(data_id):
+		Ingress.Id.INCURSION:
+			path += element_string + "_incursion.tres"
+		Ingress.Id.REFRAIN:
+			path += element_string + "_refrain.tres"
+		Ingress.Id.GROUP_INCURSION:
+			path += element_string + "_group_incursion.tres"
+		Ingress.Id.GROUP_REFRAIN:
+			path += element_string + "_group_refrain.tres"
+		_:
+			return null
+
+	return load(path)
