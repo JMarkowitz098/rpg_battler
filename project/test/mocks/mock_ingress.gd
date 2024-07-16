@@ -8,7 +8,8 @@ func _init(init: Dictionary) -> void:
 		"ingress",
 		"type",
 		"target",
-		"description"
+		"description",
+		"element"
 	]
 
 	for key in keys:
@@ -35,6 +36,8 @@ func _set_default(key: String) -> void:
 			default_value = 2
 		"description":
 			default_value = "This is a mock"
+		"element":
+			element = Element.Type.ETH
 	self[key] = default_value
 
 
