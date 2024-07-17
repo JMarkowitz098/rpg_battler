@@ -27,3 +27,15 @@ func format_for_save() -> Dictionary:
 		"learnable_skills":
 			learnable_skills.map(func(skill: Ingress) -> Array: return skill.format_for_save())
 	}
+
+
+static func get_player_label(incoming_player_id: Player.Id) -> String:
+	match incoming_player_id:
+		Player.Id.TALON:
+			return "Talon"
+		Player.Id.NASH:
+			return "Nash"
+		Player.Id.ESEN:
+			return "Esen"
+		_:
+			return "No match"

@@ -1,5 +1,12 @@
 class_name SaveAndLoad
 
+enum Path {
+	GAME,
+	TEST,
+	EMPTY,
+	VICTORY_SCREEN
+}
+
 const SAVE_PATH = "res://save.cfg"
 const TEST_SAVE_PATH = "res://test.cfg"
 var save_path: String
@@ -10,9 +17,13 @@ var config := ConfigFile.new()
 const GAME_DATA := "game_data"
 const PLAYER_DATA := "player_data"
 
-func _init(is_test: bool = false) -> void:
-	if(is_test): save_path = TEST_SAVE_PATH
-	else: save_path = SAVE_PATH
+func _init(path: Path = Path.GAME) -> void:
+	match(path):
+		Path.GAME:
+			save_path = SAVE_PATH
+		Path.TEST:
+			save_path = TEST_SAVE_PATH
+
 
 	config.load(save_path)
 

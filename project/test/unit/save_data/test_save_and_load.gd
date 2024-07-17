@@ -5,7 +5,7 @@ var save_and_load: SaveAndLoad
 
 
 func before_each() -> void:
-	save_and_load = autofree(TestSaveAndLoad.new(true))
+	save_and_load = autofree(TestSaveAndLoad.new(SaveAndLoad.Path.TEST))
 	save_and_load.config.clear()
 
 func after_each() -> void:

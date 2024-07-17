@@ -72,6 +72,59 @@ static func load_ingress(skill_data: Array) -> Ingress:
 			return _load_skill(data_id, "enh")
 		_:
 			return null
+
+static func get_new_skills(player_id: Player.Id, new_level: int) -> Array[Ingress]:
+	match player_id:
+		Player.Id.TALON:
+			return _get_talon_skills(new_level)
+		Player.Id.NASH:
+			return _get_nash_skills(new_level)
+		Player.Id.ESEN:
+			return _get_esen_skills(new_level)
+		_:
+			return []
+
+static func _get_talon_skills(new_level: int) -> Array[Ingress]:
+	var skills: Array[Ingress] = [
+		load_ingress([Ingress.Id.INCURSION, Element.Type.ETH]),
+		load_ingress([Ingress.Id.INCURSION, Element.Type.SHOR]),
+		load_ingress([Ingress.Id.REFRAIN, Element.Type.ETH]),
+		load_ingress([Ingress.Id.REFRAIN, Element.Type.SHOR])
+	]
+
+	if new_level > 1:
+		skills.append(load_ingress([Ingress.Id.DOUBLE_INCURSION, Element.Type.ETH]))
+		skills.append(load_ingress([Ingress.Id.DOUBLE_INCURSION, Element.Type.SHOR]))
+
+	return skills
+
+static func _get_nash_skills(new_level: int) -> Array[Ingress]:
+	var skills: Array[Ingress] = [
+		load_ingress([Ingress.Id.INCURSION, Element.Type.SCOR]),
+		load_ingress([Ingress.Id.INCURSION, Element.Type.SHOR]),
+		load_ingress([Ingress.Id.REFRAIN, Element.Type.SCOR]),
+		load_ingress([Ingress.Id.REFRAIN, Element.Type.SHOR])
+	]
+
+	if new_level > 1:
+		skills.append(load_ingress([Ingress.Id.GROUP_REFRAIN, Element.Type.SCOR]))
+		skills.append(load_ingress([Ingress.Id.GROUP_REFRAIN, Element.Type.SHOR]))
+
+	return skills
+
+
+static func _get_esen_skills(new_level: int) -> Array[Ingress]:
+	var skills: Array[Ingress] = [
+		load_ingress([Ingress.Id.INCURSION, Element.Type.ETH]),
+		load_ingress([Ingress.Id.REFRAIN, Element.Type.ETH])
+	]
+
+	if new_level > 1:
+		skills.append(load_ingress([Ingress.Id.GROUP_REFRAIN, Element.Type.ETH]))
+		skills.append(load_ingress([Ingress.Id.DOUBLE_INCURSION, Element.Type.ETH]))
+
+	return skills
+
 		
 
 static func _load_skill(data_id: Id, element_string: String) -> Ingress:
@@ -80,6 +133,8 @@ static func _load_skill(data_id: Id, element_string: String) -> Ingress:
 	match(data_id):
 		Ingress.Id.INCURSION:
 			path += element_string + "_incursion.tres"
+		Ingress.Id.DOUBLE_INCURSION:
+			path += element_string + "_double_incursion.tres"
 		Ingress.Id.REFRAIN:
 			path += element_string + "_refrain.tres"
 		Ingress.Id.GROUP_INCURSION:
@@ -90,3 +145,4 @@ static func _load_skill(data_id: Id, element_string: String) -> Ingress:
 			return null
 
 	return load(path)
+

@@ -97,7 +97,7 @@ func get_usable_skills() -> Array[Ingress]:
 	return skills.filter(_usable_skill_filter)
 
 func is_alive() -> bool:
-	return stats.current_ingress > 0
+	return modifiers.current_ingress > 0
 
 
 func set_current_ingress(new_value: int) -> void:

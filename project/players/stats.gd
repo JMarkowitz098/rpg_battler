@@ -23,54 +23,40 @@ func format_for_save() -> Dictionary:
 		"agility": agility
 	}
 
-# Legacy - TO BE DELETED
+static func get_new_stats(player_id: Player.Id, new_level: int) -> Stats:
+	match player_id:
+		Player.Id.TALON:
+			return Stats._get_talon_stats(new_level)
+		Player.Id.NASH:
+			return Stats._get_nash_stats(new_level)
+		Player.Id.ESEN:
+			return Stats._get_esen_stats(new_level)
+		_:
+			return null
 
-# signal no_ingress_energy(id: String)
-# signal took_damage
-# signal used_skill
+static func _get_talon_stats(new_level: int) -> Stats:
+	match(new_level):
+		1:
+			return load("res://players/Talon/levels/talon_level_one.tres")
+		2:
+			return load("res://players/Talon/levels/talon_level_two.tres")
+		_:
+			return null
 
-# enum IconType { PLAYER, ENEMY }
+static func _get_nash_stats(new_level: int) -> Stats:
+	match(new_level):
+		1:
+			return load("res://players/Nash/levels/nash_level_one.tres")
+		2:
+			return load("res://players/Nash/levels/nash_level_two.tres")
+		_:
+			return null
 
-# @export var player_details: PlayerDetails
-# @export var level_stats: LevelStats
-
-# @onready var current_ingress := level_stats.max_ingress: 
-# 	set = set_ingress_energy
-
-# var has_small_refrain_open := false
-# var is_dodging := false
-# var is_eth_dodging := false
-
-# var current_refrain_element: Element.Type
-# var slot: int
-# var rand_agi: int
-# var unique_id: String
-
-# func set_ingress_energy(value: float) -> void:
-# 	current_ingress = clamp(value, 0, level_stats.max_ingress)
-# 	if current_ingress <= 0: 
-# 		no_ingress_energy.emit(unique_id)
-
-# func take_damage(value: int) -> void:
-# 	current_ingress -= value
-# 	took_damage.emit()
-	
-# func use_ingress_energy(value: int) -> void:
-# 	current_ingress -= value
-# 	used_skill.emit()
-
-# static func create_unique_id(new_player_id: int) -> String:
-# 	var rand_player_i := randi() % 1000
-# 	return str(new_player_id) + "_" + str(rand_player_i)
-	
-
-# static func get_player_label(incoming_player_id: Stats.PlayerId) -> String:
-# 	match incoming_player_id:
-# 		Stats.PlayerId.TALON:
-# 			return "Talon"
-# 		Stats.PlayerId.NASH:
-# 			return "Nash"
-# 		Stats.PlayerId.ESEN:
-# 			return "Esen"
-# 		_:
-# 			return "No match"
+static func _get_esen_stats(new_level: int) -> Stats:
+	match(new_level):
+		1:
+			return load("res://players/Esen/levels/esen_level_one.tres")
+		2:
+			return load("res://players/Esen/levels/esen_level_two.tres")
+		_:
+			return null

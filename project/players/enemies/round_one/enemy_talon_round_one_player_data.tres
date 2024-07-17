@@ -5,7 +5,7 @@
 [ext_resource type="Script" path="res://skills/skill_group.gd" id="3_bjnva"]
 [ext_resource type="Resource" uid="uid://bsia6bqru68qu" path="res://skills/eth/eth_incursion.tres" id="4_vxt2w"]
 [ext_resource type="Resource" uid="uid://dupsoy6eqmyu5" path="res://skills/eth/eth_refrain.tres" id="5_knoky"]
-[ext_resource type="Resource" uid="uid://cuw61iy5ef73y" path="res://players/enemies/round_one_talon.tres" id="6_7xg8q"]
+[ext_resource type="Resource" uid="uid://cuw61iy5ef73y" path="res://players/enemies/round_one/enemy_talon_round_one_stats.tres" id="6_7xg8q"]
 
 [sub_resource type="Resource" id="Resource_seyre"]
 script = ExtResource("3_bjnva")
