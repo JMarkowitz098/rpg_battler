@@ -6,6 +6,9 @@ var modifiers: Node
 
 func before_each() -> void:
 	modifiers = TestModifiers.new()
+	var parent: Node2D = autoqfree(load("res://players/Talon/talon.tscn").instantiate())
+	parent.unique_id = UniqueId.new()
+	parent.add_child(modifiers)
 
 
 func after_each() -> void:

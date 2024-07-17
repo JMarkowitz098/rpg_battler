@@ -2,7 +2,7 @@ extends Node
 class_name Modifiers
 
 signal ingress_updated
-signal no_ingress
+signal no_ingress(unique_id: String)
 
 var has_small_refrain_open := false
 var is_dodging := false
@@ -18,4 +18,4 @@ var current_ingress := 1
 func set_current_ingress(new_value: int, max_ingress: int) -> void:
   current_ingress = clamp(new_value, 0, max_ingress)
   ingress_updated.emit()
-  if current_ingress == 0: no_ingress.emit()
+  if current_ingress == 0: no_ingress.emit(get_parent().unique_id.id)

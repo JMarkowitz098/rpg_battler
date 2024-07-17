@@ -46,7 +46,7 @@ func switch_focus(type: Focus.Type, old_index: int, new_index: int) -> void:
 	members[new_index].focus(type)
 
 func remove_member_by_id(id: String) -> void:
-	members = members.filter(func(player: Node2D) -> bool: return player.stats.unique_id != id)
+	members = members.filter(func(player: Node2D) -> bool: return player.unique_id.id != id)
 	#TODO: Do they queue_free? Check
 
 func reset_current_member() -> void:
@@ -55,7 +55,7 @@ func reset_current_member() -> void:
 func reset_dodges() -> void:
 	for member in members:
 		member.set_dodge_flag(false)
-		if not member.stats.is_eth_dodging: 
+		if not member.modifiers.is_eth_dodging: 
 			member.set_dodge_animation(false)
 
 

@@ -66,6 +66,10 @@ static func load_ingress(skill_data: Array) -> Ingress:
 			return _load_skill(data_id, "eth")
 		Element.Type.SHOR:
 			return _load_skill(data_id, "shor")
+		Element.Type.SCOR:
+			return _load_skill(data_id, "scor")
+		Element.Type.ENH:
+			return _load_skill(data_id, "enh")
 		_:
 			return null
 		

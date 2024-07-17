@@ -15,44 +15,44 @@ func _init(init_actor: Node2D, init_target: Node2D = null, init_skill: Ingress =
 
 
 func get_actor_unique_id() -> String:
-	return actor.stats.unique_id
+	return actor.unique_id.id
 
 
 func get_target_unique_id() -> String:
 	if target:
-		return target.stats.unique_id
+		return target.unique_id.id
 	else:
 		return ""
 
 
-func get_actor_icon() -> Player.Type:
-	return actor.stats.player_details.icon_type
+func get_actor_type() -> Player.Type:
+	return actor.type
 
 
-func get_target_icon() -> Player.Type:
-	return target.stats.player_details.icon_type
+func get_target_type() -> Player.Type:
+	return target.type
 
 
 func get_actor_label() -> String:
-	return actor.stats.player_details.label
+	return actor.details.label
 
 
 func get_target_label() -> String:
-	return target.stats.player_details.label
+	return target.details.label
 
 
 func has_unique_id(unique_id: String) -> bool:
-	if actor.stats.unique_id == unique_id: return true
+	if actor.unique_id.id == unique_id: return true
 	elif target and target.stats.unique_id == unique_id: return true
 	else: return false
 
 
 func is_player_action() -> bool:
-	return get_actor_icon() == Player.Type.PLAYER
+	return get_actor_type() == Player.Type.PLAYER
 
 
 func is_enemy_action() -> bool:
-	return get_actor_icon() == Player.Type.ENEMY
+	return get_actor_type() == Player.Type.ENEMY
 
 
 func set_skill(attack_target: Node2D = null, attack_skill: Ingress = null) -> void:
@@ -62,7 +62,7 @@ func set_skill(attack_target: Node2D = null, attack_skill: Ingress = null) -> vo
 
 
 func set_dodge() -> void:
-	actor.stats.is_dodging = true
+	actor.modifiers.is_dodging = true
 	var dodge := load("res://skills/dodge.tres")
 	set_skill(null, dodge)
 

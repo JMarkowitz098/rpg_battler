@@ -74,9 +74,9 @@ func set_is_eth_dodging(val: bool) -> void:
 
 func set_dodge_flag(val: bool) -> void:
 	if val:
-		stats.is_dodging = true
+		modifiers.is_dodging = true
 	else:
-		stats.is_dodging = false
+		modifiers.is_dodging = false
 
 func set_dodge_animation(val: bool) -> void:
 	if val:
@@ -103,6 +103,17 @@ func is_alive() -> bool:
 func set_current_ingress(new_value: int) -> void:
 	modifiers.set_current_ingress(new_value, stats.max_ingress)
 
+
+func use_ingress(amount: int) -> void:
+	set_current_ingress(modifiers.current_ingress - amount)
+
+
+func take_damage(amount: int) -> void:
+	animation_player.play("hurt")
+	set_current_ingress(modifiers.current_ingress - amount)
+	await get_tree().create_timer(1.4).timeout
+	animation_player.play("idle")
+
 # ----------------
 # Helper Functions
 # ----------------
@@ -127,5 +138,5 @@ func _on_modifiers_ingress_updated() -> void:
 	update_energy_bar()
 
 
-func _on_modifiers_no_ingress() -> void:
+func _on_modifiers_no_ingress(_unique_id: String) -> void:
 	queue_free()
