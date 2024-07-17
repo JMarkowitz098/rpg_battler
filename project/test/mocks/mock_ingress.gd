@@ -8,7 +8,8 @@ func _init(init: Dictionary) -> void:
 		"ingress",
 		"type",
 		"target",
-		"description"
+		"description",
+		"element"
 	]
 
 	for key in keys:
@@ -35,6 +36,8 @@ func _set_default(key: String) -> void:
 			default_value = 2
 		"description":
 			default_value = "This is a mock"
+		"element":
+			default_value = Element.Type.ETH
 	self[key] = default_value
 
 
@@ -50,3 +53,8 @@ static func create_refrain() -> MockIngress:
 		"target": Ingress.Target.ALLY,
 		"ingress": 1
 	})
+
+
+static func create_array() -> Array[Ingress]:
+	var skills: Array[Ingress] = [create_incursion(), create_refrain()]
+	return skills

@@ -8,14 +8,18 @@ const MAX_SLOTS := 2
 @onready var slot_two_portrait := $VBoxContainer/HBoxContainer/SlotTwoContainer/SlotTwoPortrait
 @onready var start_button := $VBoxContainer/StartButton
 
+var players_data: Array[PlayerData]
+
 func _ready() -> void:
+	_load_players_data()
 	_set_focus()
-	_render_player_slots()
+	if players_data: _render_player_slots()
 
 func _process(_delta: float) -> void:
 	if Input.is_action_just_pressed("menu_back"):
 		Sound.play(Sound.focus)
 		Utils.change_scene("res://menus/start_menu.tscn", {})
+
 
 func _set_focus() -> void:
 	match Utils.get_param("slot"):
@@ -25,31 +29,33 @@ func _set_focus() -> void:
 			slot_two_button.focus_no_sound()
 		_:
 			slot_one_button.focus_no_sound()
-	
-func _render_player_slots() -> void:
-	for player_slot_index in MAX_SLOTS:
-		_render_slot(player_slot_index)
-	
-func _render_slot(slot_index: int) -> void:
-	var save_data := SaveAndLoadPlayer.load_player(slot_index)
+
+
+func _load_players_data() -> void:
+	var save_and_load := SaveAndLoad.new()
+	var save_data := save_and_load.load_data("0")
 	if not save_data:
 		return
-		
-	var player_details: Resource
+	players_data = save_data.players_data
+
+	
+func _render_player_slots() -> void:
+	for data in players_data:
+		_render_slot(data)
+	
+func _render_slot(player_data: PlayerData) -> void:
+	var player_details := player_data.player_details
 	var player_portrait: Texture2D
 	
-	match save_data.player_id:
-		Stats.PlayerId.TALON:
-			player_details = Utils.get_player_details(Stats.PlayerId.TALON)
-			player_portrait = Utils.get_player_portrait(Stats.PlayerId.TALON)
-		Stats.PlayerId.NASH:
-			player_details = Utils.get_player_details(Stats.PlayerId.NASH)
-			player_portrait = Utils.get_player_portrait(Stats.PlayerId.NASH)
-		Stats.PlayerId.ESEN:
-			player_details = Utils.get_player_details(Stats.PlayerId.ESEN)
-			player_portrait = Utils.get_player_portrait(Stats.PlayerId.ESEN)
+	match player_data.player_details.player_id:
+		Player.Id.TALON:
+			player_portrait = Utils.get_player_portrait(Player.Id.TALON)
+		Player.Id.NASH:
+			player_portrait = Utils.get_player_portrait(Player.Id.NASH)
+		Player.Id.ESEN:
+			player_portrait = Utils.get_player_portrait(Player.Id.ESEN)
 	
-	match slot_index:
+	match player_data.slot:
 		0:
 			slot_one_button.text = player_details.label
 			slot_one_portrait.texture = player_portrait

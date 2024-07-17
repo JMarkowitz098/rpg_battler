@@ -4,19 +4,19 @@ enum Type {
   ETH,
   ENH,
   SHOR,
-  SCOR
+  SCOR,
+  NONE
 }
 
 static func get_label(type: Type) -> String:
-  # Can't use member variable in static function, so manually set match statement
   match type:
-    0:
+    Element.Type.ETH:
       return "Eth"
-    1:
+    Element.Type.ENH:
       return "Enh"
-    2:
+    Element.Type.SHOR:
       return "Shor"
-    3: 
+    Element.Type.SCOR: 
       return "Scor"
     _:
       return ""

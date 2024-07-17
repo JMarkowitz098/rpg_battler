@@ -1,31 +1,44 @@
 extends Node2D
 class_name Player
 
+enum Id { TALON, NASH, ESEN, NONE }
+enum Type { PLAYER, ENEMY }
+
 @onready var animation_player := $AnimationPlayer
 @onready var attack_sprite := $AttackSprite
 @onready var base_sprite := $BaseSprite
 @onready var finger_focus := $FingerFocus
 @onready var ingress_energy := $Info/IngressEnergy
+@onready var modifiers := $Modifiers
 @onready var player_name := $Info/PlayerName
 @onready var refrain_aura := $RefrainAura
-@onready var stats := $Stats
 @onready var triangle_focus := $TriangleFocus
 
-@onready var skills: Array[Ingress] = []
+@export var details: PlayerDetails
+
+var stats: Stats
+var skills: Array[Ingress]
+
+var slot: int
+var type: Type
+var unique_id: UniqueId
 
 func _ready() -> void:
 	animation_player.play("idle")
-	update_energy_bar()
-	player_name.text = stats.player_details.label
-	set_skills()
-	stats.unique_id = Stats.create_unique_id(stats.player_details.player_id)
+	if(details): player_name.text = details.label
+	unique_id = UniqueId.new()
 
 # ----------------
 # Public Functions
 # ----------------
 
-func focus(type: Focus.Type) -> void:
-	match type:
+func load_stats(incoming_stats: Stats) -> void:
+	stats = incoming_stats
+	update_energy_bar()
+
+
+func focus(focus_type: Focus.Type) -> void:
+	match focus_type:
 		Focus.Type.FINGER:
 			finger_focus.focus()
 		Focus.Type.TRIANGLE:
@@ -34,8 +47,8 @@ func focus(type: Focus.Type) -> void:
 			finger_focus.focus()
 			triangle_focus.focus()
 
-func unfocus(type: Focus.Type) -> void:
-	match type:
+func unfocus(focus_type: Focus.Type) -> void:
+	match focus_type:
 		Focus.Type.FINGER:
 			finger_focus.unfocus()
 		Focus.Type.TRIANGLE:
@@ -50,17 +63,20 @@ func set_triangle_focus_color(color: Color) -> void:
 func set_triangle_focus_size(size: Vector2) -> void:
 	triangle_focus.scale = size
 
-func set_skills() -> void:
-	skills = stats.level_stats.skills
+func set_skills(incoming_skills: Array[Ingress]) -> void:
+	skills = incoming_skills
+
+func set_unique_id(incoming_unique_id: UniqueId) -> void:
+	unique_id = incoming_unique_id
 
 func set_is_eth_dodging(val: bool) -> void:
 	stats.is_eth_dodging = val
 
 func set_dodge_flag(val: bool) -> void:
 	if val:
-		stats.is_dodging = true
+		modifiers.is_dodging = true
 	else:
-		stats.is_dodging = false
+		modifiers.is_dodging = false
 
 func set_dodge_animation(val: bool) -> void:
 	if val:
@@ -69,42 +85,58 @@ func set_dodge_animation(val: bool) -> void:
 		base_sprite.self_modulate = Color("White")
 
 func update_energy_bar() -> void:
-	ingress_energy.text = str(stats.current_ingress) + "/" + str(stats.level_stats.max_ingress)
+	ingress_energy.text = str(modifiers.current_ingress) + "/" + str(stats.max_ingress)
 
 func is_player() -> bool:
-	return stats.player_details.icon_type == Stats.IconType.PLAYER
+	return type == Type.PLAYER
 
 func is_enemy() -> bool:
-	return stats.player_details.icon_type == Stats.IconType.ENEMY
+	return type == Type.ENEMY
 
 func get_usable_skills() -> Array[Ingress]: 
 	return skills.filter(_usable_skill_filter)
 
 func is_alive() -> bool:
-	return stats.current_ingress > 0
+	return modifiers.current_ingress > 0
 
+
+func set_current_ingress(new_value: int) -> void:
+	modifiers.set_current_ingress(new_value, stats.max_ingress)
+
+
+func use_ingress(amount: int) -> void:
+	set_current_ingress(modifiers.current_ingress - amount)
+
+
+func take_damage(amount: int) -> void:
+	animation_player.play("hurt")
+	set_current_ingress(modifiers.current_ingress - amount)
+	await get_tree().create_timer(1.4).timeout
+	animation_player.play("idle")
 
 # ----------------
 # Helper Functions
 # ----------------
 
+# Need to replace with modifiers on took damage or something
 func _on_character_stats_took_damage() -> void:
 	update_energy_bar()
 	animation_player.play("hurt")
 	await get_tree().create_timer(1.4).timeout
 	animation_player.play("idle")
-
-
-func _on_character_stats_used_skill() -> void:
-	update_energy_bar()
-
-
-func _on_character_stats_no_ingress_energy(_id: String) -> void:
-	queue_free()
+	
 
 
 func _is_usable_skill(skill: Ingress) -> bool:
-	return skill.ingress < stats.current_ingress
+	return skill.ingress < modifiers.current_ingress
 
 
 func _usable_skill_filter(skill: Ingress) -> bool: return _is_usable_skill(skill)
+
+
+func _on_modifiers_ingress_updated() -> void:
+	update_energy_bar()
+
+
+func _on_modifiers_no_ingress(_unique_id: String) -> void:
+	queue_free()

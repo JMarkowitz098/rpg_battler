@@ -17,13 +17,16 @@ var current_member: int = 0
 # Public Functions
 # ----------------
 
-func instantiate_members(data_array: Array[NewPlayerData]) -> void:
+func instantiate_members(data_array: Array[PlayerData]) -> void:
 	for slot_index in data_array.size():
 		var data := data_array[slot_index]
 		_instantiate_member(data, slot_index)
 
 func get_current_member() -> Node2D:
 	return members[current_member]
+
+func get_member_by_unique_id(unique_id: String) -> Node2D:
+	return members.filter(func(member: Node2D) -> bool: return member.unique_id.id == unique_id)[0]
 
 func focus_all(type: Focus.Type) -> void:
 	for member in members:
@@ -46,7 +49,7 @@ func switch_focus(type: Focus.Type, old_index: int, new_index: int) -> void:
 	members[new_index].focus(type)
 
 func remove_member_by_id(id: String) -> void:
-	members = members.filter(func(player: Node2D) -> bool: return player.stats.unique_id != id)
+	members = members.filter(func(player: Node2D) -> bool: return player.unique_id.id != id)
 	#TODO: Do they queue_free? Check
 
 func reset_current_member() -> void:
@@ -55,7 +58,7 @@ func reset_current_member() -> void:
 func reset_dodges() -> void:
 	for member in members:
 		member.set_dodge_flag(false)
-		if not member.stats.is_eth_dodging: 
+		if not member.modifiers.is_eth_dodging: 
 			member.set_dodge_animation(false)
 
 
@@ -63,9 +66,9 @@ func reset_dodges() -> void:
 # Helper Functions
 # ----------------
 
-func _instantiate_member(data: NewPlayerData, slot_index: int) -> void:
+func _instantiate_member(data: PlayerData, slot_index: int) -> void:
 	var new_member: Node2D
-	match data.player_id:
+	match data.player_details.player_id:
 		PlayerId.Id.TALON:
 			new_member = TALON.instantiate()
 		PlayerId.Id.NASH:
@@ -76,12 +79,15 @@ func _instantiate_member(data: NewPlayerData, slot_index: int) -> void:
 	add_child(new_member)
 	members.append(new_member)
 
-	new_member.stats.player_details = data.player_details
-	new_member.stats.level_stats = data.level_stats
-	new_member.stats.current_ingress = data.level_stats.max_ingress
-	new_member.update_energy_bar()
-	new_member.set_skills()
+	new_member.slot = slot_index
+	new_member.stats = data.stats
+	new_member.type = data.type
+	new_member.unique_id = data.unique_id
+	new_member.details = data.player_details
+	new_member.player_name.text = data.player_details.label
 
+	new_member.set_skills(data.skills)
+	new_member.set_current_ingress(new_member.stats.max_ingress)
 	_set_location(slot_index, new_member)
 
 func _set_location(slot_index: int, player: Node2D) -> void:

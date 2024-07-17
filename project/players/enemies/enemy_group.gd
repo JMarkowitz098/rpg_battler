@@ -1,45 +1,50 @@
 extends Group
 
+# @export var round_data: Round
+
 func _ready() -> void:
 	_connect_signals()
 
 func load_members_from_round_data(round_number: Round.Number) -> void:
-	var new_enemy_data: Array[NewPlayerData] = []
-	var round_data: Resource
+	var new_enemy_data: Array[PlayerData] = []
+	var round_data: Round
 
 	match round_number:
 		Round.Number.ONE:
-			round_data = load("res://players/enemies/round_one.tres")
+			round_data = load("res://players/enemies/round_one/round_one.tres")
 		Round.Number.TWO:
-			round_data = load("res://players/enemies/round_two.tres")
+			round_data = load("res://players/enemies/round_two/round_two.tres")
 		Round.Number.THREE:
-			round_data = load("res://players/enemies/round_three.tres")
+			round_data = load("res://players/enemies/round_three/round_three.tres")
 
-	_create_new_player_data(new_enemy_data, round_data)
+	_create_player_data(new_enemy_data, round_data)
 	instantiate_members(new_enemy_data)
 	_flip_members_direction()
 
 func _connect_signals() -> void:
-	Events.action_queue_focus_all_enemies.connect(_on_action_queue_focus_all_members)
-	Events.choosing_action_queue_state_entered.connect(_on_choosing_action_queue_state_entered)
-	Events.choosing_action_state_entered.connect(_on_choosing_action_state_entered)
-	Events.choosing_enemy_all_state_entered.connect(_on_choosing_enemy_state_all_entered)
-	Events.choosing_enemy_state_entered.connect(_on_choosing_enemy_state_entered)
-	Events.choosing_skill_state_entered.connect(_on_choosing_skill_state_entered)
-	Events.is_battling_state_entered.connect(_on_is_battling_state_entered)
-	Events.enter_action_queue_handle_input.connect(_on_enter_action_queue_handle_input) # Defined in Group
-	Events.update_enemy_group_current.connect(_on_update_current) # Defined in Group
+	var signals := [
+		["action_queue_focus_all_enemies", _on_action_queue_focus_all_members],
+		["choosing_action_queue_state_entered", _on_choosing_action_queue_state_entered],
+		["choosing_action_state_entered", _on_choosing_action_state_entered],
+		["choosing_enemy_all_state_entered", _on_choosing_enemy_state_all_entered],
+		["choosing_enemy_state_entered", _on_choosing_enemy_state_entered],
+		["choosing_skill_state_entered", _on_choosing_skill_state_entered],
+		["is_battling_state_entered", _on_is_battling_state_entered],
+		["enter_action_queue_handle_input", _on_enter_action_queue_handle_input], # Defined in Group
+		["update_enemy_group_current", _on_update_current] # Defined in Group
+	]
 
-func _create_new_player_data(new_enemy_data: Array[NewPlayerData], round_data: Round) -> void:
-	for i: int in round_data.players_details.size():
-		var player_details := round_data.players_details[i]
+	Utils.connect_signals(signals)
 
-		new_enemy_data.append(NewPlayerData.new({
-			"player_id": player_details.player_id,
-			"player_details": player_details,
-			"level_stats": round_data.levels[i],
-			"unique_id": Stats.create_unique_id(player_details.player_id)
-		}))
+func _create_player_data(new_enemy_data: Array[PlayerData], round_data: Round) -> void:
+	for data: EnemyPlayerData in round_data.enemies:
+		new_enemy_data.append(PlayerData.new(
+			data.details,
+			data.stats,
+			UniqueId.new(),
+			data.skills.skills,
+			Player.Type.ENEMY
+		))
 
 func _flip_members_direction() -> void:
 	for member in members:

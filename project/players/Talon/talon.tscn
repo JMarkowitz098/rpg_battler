@@ -1,6 +1,7 @@
 [gd_scene load_steps=17 format=3 uid="uid://sgl44boffmsf"]
 
 [ext_resource type="Script" path="res://players/player.gd" id="1_syi0g"]
+[ext_resource type="Resource" uid="uid://ber4ixqhnh8bj" path="res://players/Talon/talon_player_details.tres" id="2_ca6kd"]
 [ext_resource type="PackedScene" uid="uid://b5b42noos8pd3" path="res://players/player_info.tscn" id="2_v0cl7"]
 [ext_resource type="PackedScene" uid="uid://bno3iriedun4j" path="res://players/base_character_sprite.tscn" id="2_x7fak"]
 [ext_resource type="Texture2D" uid="uid://df7pcvc8u0ug1" path="res://players/Talon/sprite_sheets/noBKG_KnightIdle_strip.png" id="3_bgm7c"]
@@ -8,8 +9,7 @@
 [ext_resource type="PackedScene" uid="uid://dl4d2stn4lshh" path="res://players/refrain_aura.tscn" id="5_ahw2m"]
 [ext_resource type="PackedScene" uid="uid://bqyh4pkeog5r5" path="res://ui/triangle_focus.tscn" id="7_clngs"]
 [ext_resource type="PackedScene" uid="uid://2evhn0npdxi4" path="res://ui/finger_focus.tscn" id="8_l8hxc"]
-[ext_resource type="PackedScene" uid="uid://cyi2g62l2egia" path="res://players/stats.tscn" id="10_nfyao"]
-[ext_resource type="Resource" uid="uid://ber4ixqhnh8bj" path="res://players/Talon/talon_player_details.tres" id="11_34duj"]
+[ext_resource type="PackedScene" uid="uid://bseiija1l41li" path="res://players/modifiers.tscn" id="9_jhaql"]
 
 [sub_resource type="Animation" id="Animation_x6vl1"]
 length = 0.001
@@ -112,7 +112,9 @@ _data = {
 }
 
 [node name="Talon" type="Node2D"]
+position = Vector2(75, 39)
 script = ExtResource("1_syi0g")
+details = ExtResource("2_ca6kd")
 metadata/_edit_group_ = true
 
 [node name="Info" parent="." instance=ExtResource("2_v0cl7")]
@@ -140,14 +142,12 @@ visible = false
 position = Vector2(4, 8)
 scale = Vector2(0.15, 0.15)
 
-[node name="Stats" parent="." instance=ExtResource("10_nfyao")]
-player_details = ExtResource("11_34duj")
+[node name="Modifiers" parent="." instance=ExtResource("9_jhaql")]
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
 "": SubResource("AnimationLibrary_6fabj")
 }
 
-[connection signal="no_ingress_energy" from="Stats" to="." method="_on_character_stats_no_ingress_energy"]
-[connection signal="took_damage" from="Stats" to="." method="_on_character_stats_took_damage"]
-[connection signal="used_skill" from="Stats" to="." method="_on_character_stats_used_skill"]
+[connection signal="ingress_updated" from="Modifiers" to="." method="_on_modifiers_ingress_updated"]
+[connection signal="no_ingress" from="Modifiers" to="." method="_on_modifiers_no_ingress"]

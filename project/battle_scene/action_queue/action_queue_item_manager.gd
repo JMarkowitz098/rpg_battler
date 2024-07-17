@@ -143,7 +143,8 @@ func _is_incursion_filter(skill: Ingress) -> bool: return skill.is_incursion()
 
 func _get_item_by_player(player: Node2D) -> ActionQueueItem:
 	var items := queue.items.filter(func(item: ActionQueueItem)-> bool:
-		return item.get_actor_unique_id() == player.stats.unique_id)
+		return item.get_actor_unique_id() == player.unique_id.id
+		)
 	return items[0]
 
 

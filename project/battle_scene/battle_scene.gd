@@ -3,7 +3,7 @@ extends Node2D
 var current_skill_button: Button
 var current_skill_type: Ingress.Type
 var current_skill: Ingress
-var defeated: Array[String]
+var defeated: Array[Player.Id]
 var prev_state: State.Type
 var before_pause_focus: Variant
 var battle_groups: BattleGroups
@@ -29,7 +29,7 @@ var skill_index := 0
 # ----------------------
 
 func _ready() -> void:
-	player_group.load_members_from_save_data()
+	player_group.load_members_from_save_data("0")
 	enemy_group.load_members_from_round_data(Utils.current_round)
 	battle_groups = BattleGroups.new(player_group.members, enemy_group.members)
 	_connect_signals()
@@ -60,14 +60,19 @@ func _process(_delta: float) -> void:
 		
 func _connect_signals() -> void:
 	for enemy: Node2D in enemy_group.members:
-		enemy.stats.no_ingress_energy.connect(_on_enemy_no_ingress_energy)
+		enemy.modifiers.no_ingress.connect(_on_enemy_no_ingress)
 	for player: Node2D in player_group.members:
-		player.stats.no_ingress_energy.connect(_on_player_no_ingress_energy)
-	Events.choosing_action_state_entered.connect(_on_choosing_action_state_entered)
-	Events.choosing_skill_state_entered.connect(_on_choosing_skill_state_entered)
-	Events.choose_enemy.connect(_on_choose_enemy)
-	Events.choose_ally.connect(_on_choose_ally)
-	Events.pause_game.connect(_on_game_paused)
+		player.modifiers.no_ingress.connect(_on_player_no_ingress)
+
+	var signals := [
+		["choosing_action_state_entered", _on_choosing_action_state_entered],
+		["choosing_skill_state_entered", _on_choosing_skill_state_entered],
+		["choose_enemy", _on_choose_enemy],
+		["choose_ally", _on_choose_ally],
+		["pause_game", _on_game_paused],
+	]
+
+	Utils.connect_signals(signals)
 
 # -------------------
 # Action Buttons
@@ -95,7 +100,7 @@ func _on_refrain_pressed() -> void:
 	
 func _on_recover_pressed() -> void:
 	Sound.play(Sound.confirm)
-	var unique_id: String = player_group.get_current_member().stats.unique_id
+	var unique_id: String = player_group.get_current_member().unique_id.id
 	var current_players_action_id: int = action_queue.get_action_index_by_unique_id(unique_id)
 	var current_action: Action = action_queue.items[current_players_action_id].action
 	current_action.set_recover()
@@ -189,8 +194,9 @@ func _handle_done_choosing() -> void:
 # Signals
 # -------
 	
-func _on_enemy_no_ingress_energy(enemy_unique_id: String) -> void:
-	defeated.append(enemy_unique_id)
+func _on_enemy_no_ingress(enemy_unique_id: String) -> void:
+	var enemy: Node2D = enemy_group.get_member_by_unique_id(enemy_unique_id)
+	defeated.append(enemy.details.player_id)
 
 	enemy_group.remove_member_by_id(enemy_unique_id)
 	battle_groups.enemies = enemy_group.members
@@ -200,7 +206,7 @@ func _on_enemy_no_ingress_energy(enemy_unique_id: String) -> void:
 		action_queue.update_actions_with_targets_with_removed_id(enemy_unique_id, battle_groups)
 		action_queue.remove_actions_without_target_with_removed_id(enemy_unique_id)
 
-func _on_player_no_ingress_energy(player_unique_id: String) -> void:
+func _on_player_no_ingress(player_unique_id: String) -> void:
 	player_group.remove_member_by_id(player_unique_id)
 	battle_groups.players = player_group.members
 	player_group.reset_current_member()
@@ -218,7 +224,7 @@ func _on_choosing_action_state_entered() -> void:
 	current_action_button.focus(true)
 	var current_player: Node2D = player_group.get_current_member_turn()
 	current_player.focus(Focus.Type.TRIANGLE) # move to player group
-	action_queue.set_triangle_focus_on_player(current_player.stats.unique_id)
+	action_queue.set_triangle_focus_on_player(current_player.unique_id.id)
 
 func _on_choosing_skill_state_entered() -> void:
 	var current_player: Node2D = player_group.get_current_member_turn()
@@ -226,7 +232,7 @@ func _on_choosing_skill_state_entered() -> void:
 	skill_choice_list.prepare_skill_menu(_handle_choose_skill)
 	skill_choice_list.get_children()[0].focus(true)
 	current_player.focus(Focus.Type.TRIANGLE) # move to player group
-	action_queue.set_triangle_focus_on_player(current_player.stats.unique_id)
+	action_queue.set_triangle_focus_on_player(current_player.unique_id.id)
 
 func _on_choose_enemy() -> void:
 	action_queue.update_player_action_with_skill(

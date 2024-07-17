@@ -6,16 +6,20 @@ func _ready() -> void:
 	_connect_signals()
 
 func _connect_signals() -> void:
-	Events.action_queue_focus_all_allies.connect(_on_action_queue_focus_all_members) # Defined in Group
-	Events.choosing_action_queue_state_entered.connect(_on_choosing_action_queue_state_entered)
-	Events.choosing_action_state_entered.connect(_on_choosing_action_state_entered)
-	Events.choosing_ally_state_entered.connect(_on_choosing_ally_state_entered)
-	Events.choosing_ally_all_state_entered.connect(_on_choosing_ally_all_state_entered)
-	Events.choosing_self_state_entered.connect(_on_choosing_self_state_entered)
-	Events.choosing_skill_state_entered.connect(_on_choosing_skill_state_entered)
-	Events.enter_action_queue_handle_input.connect(_on_enter_action_queue_handle_input) # Defined in Group
-	Events.is_battling_state_entered.connect(_on_is_battling_state_entered)
-	Events.update_player_group_current.connect(_on_update_current) # Defined in Group
+	var signals := [
+		["action_queue_focus_all_allies", _on_action_queue_focus_all_members], # Defined in Group
+		["choosing_action_queue_state_entered", _on_choosing_action_queue_state_entered],
+		["choosing_action_state_entered", _on_choosing_action_state_entered],
+		["choosing_ally_all_state_entered", _on_choosing_ally_all_state_entered],
+		["choosing_ally_state_entered", _on_choosing_ally_state_entered],
+		["choosing_self_state_entered", _on_choosing_self_state_entered],
+		["choosing_skill_state_entered", _on_choosing_skill_state_entered],
+		["enter_action_queue_handle_input", _on_enter_action_queue_handle_input], # Defined in Group
+		["is_battling_state_entered", _on_is_battling_state_entered],
+		["update_player_group_current", _on_update_current], # Defined in Group
+	]
+	Utils.connect_signals(signals)
+
 	
 # ----------------
 # Public Functions
@@ -26,16 +30,11 @@ func next_player() -> void:
 		current_members_turn += 1
 		current_member = current_members_turn
 
-func load_members_from_save_data() -> void:
-	var all_save_data := SaveAndLoadPlayer.load_all_players()
-	var new_player_data: Array[NewPlayerData] = []
+func load_members_from_save_data(id: String) -> void:
+	var save_and_load := SaveAndLoad.new()
+	var save_data := save_and_load.load_data(id)
 	
-	for player_save_data: PlayerSaveData in all_save_data:
-		if(player_save_data):
-			var new_player_data_object := _create_new_player_data(player_save_data)
-			new_player_data.append(new_player_data_object)
-
-	instantiate_members(new_player_data)
+	instantiate_members(save_data.players_data)
 
 func reset_current_member_and_turn() -> void:
 	current_member = 0
@@ -48,13 +47,6 @@ func get_current_member_turn() -> Node2D:
 # Private Functions
 # -----------------
 
-func _create_new_player_data(save_data: PlayerSaveData) -> NewPlayerData:
-	return NewPlayerData.new({
-		"player_id": save_data.player_id,
-		"player_details": Utils.get_player_details(save_data.player_id),
-		"level_stats": LevelStats.load_level_data(save_data.player_id, save_data.level),
-		"unique_id": Stats.create_unique_id(save_data.player_id)
-	})
 
 # -------
 # Signals

@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://cu24uqyrl005o"]
+[gd_scene load_steps=16 format=3 uid="uid://cu24uqyrl005o"]
 
 [ext_resource type="Script" path="res://players/player.gd" id="1_g2afx"]
 [ext_resource type="PackedScene" uid="uid://b5b42noos8pd3" path="res://players/player_info.tscn" id="2_n4v6u"]
@@ -7,9 +7,8 @@
 [ext_resource type="PackedScene" uid="uid://dl4d2stn4lshh" path="res://players/refrain_aura.tscn" id="4_tstkc"]
 [ext_resource type="PackedScene" uid="uid://bqyh4pkeog5r5" path="res://ui/triangle_focus.tscn" id="5_slrna"]
 [ext_resource type="PackedScene" uid="uid://2evhn0npdxi4" path="res://ui/finger_focus.tscn" id="6_h6ckf"]
-[ext_resource type="PackedScene" uid="uid://cyi2g62l2egia" path="res://players/stats.tscn" id="7_ecqjf"]
+[ext_resource type="PackedScene" uid="uid://bseiija1l41li" path="res://players/modifiers.tscn" id="8_2mlms"]
 [ext_resource type="Resource" uid="uid://bfb5d4e0qvg6p" path="res://players/Esen/esen_player_details.tres" id="9_hcqt7"]
-[ext_resource type="Resource" uid="uid://myum07vddj6i" path="res://players/Esen/levels/esen_level_1.tres" id="9_sr07u"]
 
 [sub_resource type="Animation" id="Animation_upenk"]
 length = 0.001
@@ -114,6 +113,7 @@ _data = {
 
 [node name="Esen" type="Node2D"]
 script = ExtResource("1_g2afx")
+details = ExtResource("9_hcqt7")
 
 [node name="Info" parent="." instance=ExtResource("2_n4v6u")]
 
@@ -142,9 +142,7 @@ visible = false
 position = Vector2(9, 12)
 scale = Vector2(0.15, 0.15)
 
-[node name="Stats" parent="." instance=ExtResource("7_ecqjf")]
-player_details = ExtResource("9_hcqt7")
-level_stats = ExtResource("9_sr07u")
+[node name="Modifiers" parent="." instance=ExtResource("8_2mlms")]
 
 [node name="Skills" type="Node" parent="."]
 
@@ -153,6 +151,5 @@ libraries = {
 "": SubResource("AnimationLibrary_jplbi")
 }
 
-[connection signal="no_ingress_energy" from="Stats" to="." method="_on_character_stats_no_ingress_energy"]
-[connection signal="took_damage" from="Stats" to="." method="_on_character_stats_took_damage"]
-[connection signal="used_skill" from="Stats" to="." method="_on_character_stats_used_skill"]
+[connection signal="ingress_updated" from="Modifiers" to="." method="_on_modifiers_ingress_updated"]
+[connection signal="no_ingress" from="Modifiers" to="." method="_on_modifiers_no_ingress"]

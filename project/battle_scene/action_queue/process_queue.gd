@@ -19,10 +19,10 @@ func process_action_queue(
 func _process_skill(action: Action, tree: SceneTree, battle_groups: BattleGroups) -> void:
 	if not action.actor:
 		return
-	if action.actor.stats.current_ingress - action.skill.ingress <= 0:
+	if action.actor.modifiers.current_ingress - action.skill.ingress <= 0:
 		print("Not enough Ingress")
 		return
-	action.actor.stats.use_ingress_energy(action.skill.ingress)
+	action.actor.use_ingress(action.skill.ingress)
 
 	match action.skill.id:
 		Ingress.Id.INCURSION, Ingress.Id.PIERCING_INCURSION, Ingress.Id.DOUBLE_INCURSION:
@@ -48,7 +48,7 @@ func _use_incursion(action: Action, tree: SceneTree) -> void:
 	await _play_attack_animation(action)
 	await _play_ingress_animation(action, tree)
 	var damage := Utils.calculate_skill_damage(action)
-	action.target.stats.take_damage(damage)
+	action.target.take_damage(damage)
 
 
 func _use_group_incursion(action: Action, enemies: Array[Node2D]) -> void:
@@ -56,7 +56,7 @@ func _use_group_incursion(action: Action, enemies: Array[Node2D]) -> void:
 	for enemy in enemies:
 		action.target = enemy
 		var damage := Utils.calculate_skill_damage(action)
-		enemy.stats.take_damage(damage)
+		enemy.take_damage(damage)
 
 
 func _use_refrain(action: Action) -> void:
@@ -68,7 +68,7 @@ func _use_group_refrain(action: Action, battle_groups: BattleGroups) -> void:
 	await _play_refrain_animation(action)
 	var targets := (
 		battle_groups.players
-		if action.get_actor_icon() == Stats.IconType.PLAYER
+		if action.get_actor_type() == Player.Type.PLAYER
 		else battle_groups.enemies
 	)
 	for target in targets:
@@ -77,14 +77,14 @@ func _use_group_refrain(action: Action, battle_groups: BattleGroups) -> void:
 
 func _use_movement(action: Action) -> void:
 	await _play_refrain_animation(action)
-	action.actor.stats.level_stats.agility *= 2
+	action.actor.modifiers.plus_agility += action.actor.stats.agility
 	action.actor.set_is_eth_dodging(true)
 	action.actor.set_dodge_animation(true)
 
 
 func _use_recover(action: Action) -> void:
 	await _play_refrain_animation(action)
-	action.actor.stats.use_ingress_energy(-1)
+	action.actor.use_ingress(-1)
 
 
 func _play_attack_animation(action: Action) -> void:
@@ -104,7 +104,7 @@ func _play_ingress_animation(action: Action, tree: SceneTree) -> void:
 	tree.get_root().add_child(ingress)
 
 	ingress.global_position = action.target.global_position
-	if action.target.stats.player_details.icon_type == Stats.IconType.PLAYER:
+	if action.target.is_player():
 		ingress.global_position.x += 10
 	else:
 		ingress.global_position.x -= 20
@@ -131,8 +131,8 @@ func _play_refrain_animation(action: Action) -> void:
 
 
 func _set_refrain(player: Node2D, skill_element: Element.Type) -> void:
-	player.stats.has_small_refrain_open = true
-	player.stats.current_refrain_element = skill_element
+	player.modifiers.has_small_refrain_open = true
+	player.modifiers.current_refrain_element = skill_element
 	player.refrain_aura.show()
 
 	var refrain_color: Color

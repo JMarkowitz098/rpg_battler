@@ -45,7 +45,7 @@ func set_focuses() -> void:
 func get_action_index_by_unique_id(unique_id: String) -> int:
 	for i in items.size():
 		var action := items[i].action
-		if action.actor.stats.unique_id == unique_id:
+		if action.actor.unique_id.id == unique_id:
 			return i
 	return 0
 

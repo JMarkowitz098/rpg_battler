@@ -24,18 +24,18 @@ func calucluate_attack_damage(actor_stats: Stats, target_stats: Stats) -> int:
 func calculate_skill_damage(action: Action) -> int:
 	match action.skill.id:
 		Ingress.Id.INCURSION, Ingress.Id.DOUBLE_INCURSION, Ingress.Id.GROUP_INCURSION, Ingress.Id.PIERCING_INCURSION:
-			var incursion_power: int = action.actor.stats.level_stats.incursion
+			var incursion_power: int = action.actor.stats.incursion
 			if action.skill.id == Ingress.Id.INCURSION:
 				incursion_power += action.skill.ingress
 			else:
 				incursion_power += action.skill.ingress / 2
 
 
-			var target_refrain: int = action.target.stats.level_stats.refrain
+			var target_refrain: int = action.target.stats.refrain
 			
 			if _is_dodged(action): return 0
 				
-			if action.target.stats.has_small_refrain_open:
+			if action.target.modifiers.has_small_refrain_open:
 				return _get_refrain_damage(action, incursion_power)
 	
 			return _clamped_damage(incursion_power - target_refrain)
@@ -43,15 +43,15 @@ func calculate_skill_damage(action: Action) -> int:
 			return 0
 
 func _is_dodged(action: Action) -> bool:
-	if action.target.stats.is_dodging:
+	if action.target.modifiers.is_dodging:
 		return randi() % 2 == 1
-	elif action.target.stats.is_eth_dodging:
+	elif action.target.modifiers.is_eth_dodging:
 		return randi() % 4 == 1
 
 	return false
 
 func _get_refrain_damage(action: Action, incursion_power: int) -> int:
-	action.target.stats.has_small_refrain_open = false #TODO: This should be somewhere else
+	action.target.modifiers.has_small_refrain_open = false #TODO: This should be somewhere else
 	action.target.refrain_aura.hide() #TODO: This should be somewhere else
 
 	var multiplier: int
@@ -60,7 +60,7 @@ func _get_refrain_damage(action: Action, incursion_power: int) -> int:
 	else:
 		multiplier = 1
 
-	if action.skill.element == action.target.stats.current_refrain_element:
+	if action.skill.element == action.target.modifiers.current_refrain_element:
 		return incursion_power * multiplier * -1
 	elif action.skill.id == Ingress.Id.PIERCING_INCURSION:
 		return incursion_power * multiplier
@@ -87,24 +87,28 @@ func next_round() -> void:
 func _clamped_damage(value: int) -> int:
 	return clamp(value, 1, INF)
 
-func get_player_portrait(player_id: Stats.PlayerId) -> Texture:
+func get_player_portrait(player_id: Player.Id) -> Texture:
 	match(player_id):
-		Stats.PlayerId.TALON:
+		Player.Id.TALON:
 			return TALON_PORTRAIT
-		Stats.PlayerId.NASH:
+		Player.Id.NASH:
 			return NASH_PORTRAIT
-		Stats.PlayerId.ESEN:
+		Player.Id.ESEN:
 			return ESEN_PORTRAIT
 		_:
 			return null
 
-func get_player_details(player_id: Stats.PlayerId) -> Resource:
+func get_player_details(player_id: Player.Id) -> Resource:
 	match(player_id):
-		Stats.PlayerId.TALON:
+		Player.Id.TALON:
 			return TALON_PLAYER_DETAILS
-		Stats.PlayerId.NASH:
+		Player.Id.NASH:
 			return NASH_PLAYER_DETAILS
-		Stats.PlayerId.ESEN:
+		Player.Id.ESEN:
 			return ESEN_PLAYER_DETAILS
 		_:
 			return null
+
+func connect_signals(signals: Array) -> void:
+	for new_signal: Array in signals:
+		Events[new_signal[0]].connect(new_signal[1])

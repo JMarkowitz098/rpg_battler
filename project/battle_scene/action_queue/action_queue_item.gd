@@ -7,11 +7,11 @@ class_name ActionQueueItem
 var action: Action
 
 func get_actor_agi() -> int:
-	return action.actor.stats.level_stats.agility
+	return action.actor.stats.agility
 
 
 func get_rand_agi() -> int:
-	return action.actor.stats.rand_agi
+	return action.actor.modifiers.rand_agi
 
 
 func get_actor_unique_id() -> String:
@@ -23,7 +23,7 @@ func is_player_action() -> bool:
 
 
 func set_rand_agi() -> void:
-	action.actor.stats.rand_agi = get_actor_agi() + randi() % 10
+	action.actor.modifiers.rand_agi = get_actor_agi() + randi() % 10
 
 
 func set_empty_action(player: Node2D) -> void:
@@ -33,7 +33,7 @@ func action_has_unique_id(unique_id: String) -> bool:
 	return action.has_unique_id(unique_id)
 
 func set_portrait(player: Node2D) -> void:
-	texture = Utils.get_player_portrait(player.stats.player_details.player_id)
+	texture = Utils.get_player_portrait(player.details.player_id)
 	if(player.is_enemy()): self_modulate = Color("Red")
 
 
