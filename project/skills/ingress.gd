@@ -95,6 +95,10 @@ static func _get_talon_skills(new_level: int) -> Array[Ingress]:
 	if new_level > 1:
 		skills.append(load_ingress([Ingress.Id.DOUBLE_INCURSION, Element.Type.ETH]))
 		skills.append(load_ingress([Ingress.Id.DOUBLE_INCURSION, Element.Type.SHOR]))
+	if new_level > 2:
+		skills.append(load_ingress([Ingress.Id.GROUP_INCURSION, Element.Type.ETH]))
+		skills.append(load_ingress([Ingress.Id.GROUP_INCURSION, Element.Type.SHOR]))
+		skills.append(load_ingress([Ingress.Id.MOVEMENT, Element.Type.ETH]))
 
 	return skills
 
@@ -109,7 +113,8 @@ static func _get_nash_skills(new_level: int) -> Array[Ingress]:
 	if new_level > 1:
 		skills.append(load_ingress([Ingress.Id.GROUP_REFRAIN, Element.Type.SCOR]))
 		skills.append(load_ingress([Ingress.Id.GROUP_REFRAIN, Element.Type.SHOR]))
-
+	if new_level > 2:
+		pass
 	return skills
 
 
@@ -122,6 +127,10 @@ static func _get_esen_skills(new_level: int) -> Array[Ingress]:
 	if new_level > 1:
 		skills.append(load_ingress([Ingress.Id.GROUP_REFRAIN, Element.Type.ETH]))
 		skills.append(load_ingress([Ingress.Id.DOUBLE_INCURSION, Element.Type.ETH]))
+	if new_level > 2:
+		skills.append(load_ingress([Ingress.Id.GROUP_INCURSION, Element.Type.ETH]))
+		skills.append(load_ingress([Ingress.Id.PIERCING_INCURSION, Element.Type.ETH]))
+		skills.append(load_ingress([Ingress.Id.MOVEMENT, Element.Type.ETH]))
 
 	return skills
 
@@ -135,12 +144,16 @@ static func _load_skill(data_id: Id, element_string: String) -> Ingress:
 			path += element_string + "_incursion.tres"
 		Ingress.Id.DOUBLE_INCURSION:
 			path += element_string + "_double_incursion.tres"
+		Ingress.Id.PIERCING_INCURSION:
+			path += element_string + "_pierce_incursion.tres"
 		Ingress.Id.REFRAIN:
 			path += element_string + "_refrain.tres"
 		Ingress.Id.GROUP_INCURSION:
 			path += element_string + "_group_incursion.tres"
 		Ingress.Id.GROUP_REFRAIN:
 			path += element_string + "_group_refrain.tres"
+		Ingress.Id.MOVEMENT:
+			path += element_string + "_movement.tres"
 		_:
 			return null
 

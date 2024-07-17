@@ -3,7 +3,7 @@ extends Node2D
 var current_skill_button: Button
 var current_skill_type: Ingress.Type
 var current_skill: Ingress
-var defeated: Array[String]
+var defeated: Array[Player.Id]
 var prev_state: State.Type
 var before_pause_focus: Variant
 var battle_groups: BattleGroups
@@ -195,7 +195,8 @@ func _handle_done_choosing() -> void:
 # -------
 	
 func _on_enemy_no_ingress(enemy_unique_id: String) -> void:
-	defeated.append(enemy_unique_id)
+	var enemy: Node2D = enemy_group.get_member_by_unique_id(enemy_unique_id)
+	defeated.append(enemy.details.player_id)
 
 	enemy_group.remove_member_by_id(enemy_unique_id)
 	battle_groups.enemies = enemy_group.members

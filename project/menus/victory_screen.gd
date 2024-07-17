@@ -62,6 +62,7 @@ func _save_and_return_new_stats(loaded_player_data: PlayerData) -> Stats:
 		loaded_player_data.player_details.player_id, 
 		loaded_player_data.stats.level + 1
 	)
+
 	loaded_player_data.stats = new_stats
 	save_and_load.save_player("0", loaded_player_data.slot, loaded_player_data)
 	return new_stats
@@ -69,7 +70,7 @@ func _save_and_return_new_stats(loaded_player_data: PlayerData) -> Stats:
 func _save_and_return_new_skills(loaded_player_data: PlayerData) -> Array[Ingress]:
 	var new_skills := Ingress.get_new_skills(
 		loaded_player_data.player_details.player_id, 
-		loaded_player_data.stats.level + 1
+		loaded_player_data.stats.level # Level already updated
 	)
 	loaded_player_data.skills = new_skills
 	save_and_load.save_player("0", loaded_player_data.slot, loaded_player_data)

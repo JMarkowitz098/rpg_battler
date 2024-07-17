@@ -40,6 +40,8 @@ static func _get_talon_stats(new_level: int) -> Stats:
 			return load("res://players/Talon/levels/talon_level_one.tres")
 		2:
 			return load("res://players/Talon/levels/talon_level_two.tres")
+		3:
+			return load("res://players/Talon/levels/talon_level_three.tres")
 		_:
 			return null
 
@@ -49,6 +51,8 @@ static func _get_nash_stats(new_level: int) -> Stats:
 			return load("res://players/Nash/levels/nash_level_one.tres")
 		2:
 			return load("res://players/Nash/levels/nash_level_two.tres")
+		3:
+			return load("res://players/Nash/levels/nash_level_three.tres")
 		_:
 			return null
 
@@ -58,5 +62,7 @@ static func _get_esen_stats(new_level: int) -> Stats:
 			return load("res://players/Esen/levels/esen_level_one.tres")
 		2:
 			return load("res://players/Esen/levels/esen_level_two.tres")
+		3:
+			return load("res://players/Esen/levels/esen_level_three.tres")
 		_:
 			return null

@@ -49,3 +49,11 @@ func test_remove_member_by_id() -> void:
 	group.remove_member_by_id("1234")
 
 	assert_eq(group.members.size(), 1)
+
+
+func test_get_member_by_unique_id() -> void:
+	group.instantiate_members(data)
+	var expected := group.members[1]
+	var actual := group.get_member_by_unique_id("5678")
+
+	assert_eq_deep(expected, actual)
