@@ -22,11 +22,18 @@ func save_data(data: SaveFileData) -> void:
 
 	config.save(save_path)
 
+
+func save_player(save_file_id: String, index: int, data: PlayerData) -> void:
+	_set_data(save_file_id, PLAYER_DATA, "player_" + str(index), data.format_for_save())
+	config.save(save_path)
+
+
 func load_data(id: String) -> SaveFileData:
 	var error := config.load(save_path)
 	if error:
 		print("An error happened while loading data: ", error)
 		return
+	if (config.get_sections().size() == 0): return null
 
 	var players_data: Array[Dictionary] = _load_player_data(id)
 
@@ -36,6 +43,11 @@ func load_data(id: String) -> SaveFileData:
 		 _load_data(id, GAME_DATA, "save_time"),
 		 _load_data(id, GAME_DATA, "round_number"),
 	)
+
+
+func clear_data() -> void:
+	config.clear()
+	config.save(save_path)
 
 
 func _set_game_data(data: SaveFileData) -> void:
@@ -56,6 +68,7 @@ func _set_data(id: String, type: String, key: String, val: Variant) -> void:
 
 func _load_player_data(id: String) -> Array[Dictionary]:
 	var players_data: Array[Dictionary] = []
+	if not config.has_section(id + "_" + PLAYER_DATA): return players_data
 	var section_keys := config.get_section_keys(id + "_" + PLAYER_DATA)
 
 	for key in section_keys:
@@ -103,7 +116,8 @@ func _create_player_data(data: Dictionary) -> PlayerData:
 		stats,
 		UniqueId.new(data.unique_id),
 		_create_skills_array(data.skills),
-		data.type
+		data.type,
+		data.slot
 	)
 
 

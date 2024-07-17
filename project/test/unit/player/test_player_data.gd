@@ -10,7 +10,7 @@ var skills := MockIngress.create_array()
 
 
 func before_each() -> void:
-	data = TestPlayerData.new(player_details, stats, unique_id, skills, Player.Type.PLAYER)
+	data = TestPlayerData.new(player_details, stats, unique_id, skills, Player.Type.PLAYER, 1)
 
 
 func test_can_create_player_data() -> void:
@@ -39,6 +39,7 @@ func test_format_for_save() -> void:
 		"unique_id": "1234",
 		"skills": [[3, 0], [6, 0]],
 		"type": 0,
+		"slot": 1
 	}
 	var actual := data.format_for_save()
 

@@ -7,18 +7,22 @@ class_name PlayerData
 @export var skills: Array[Ingress]
 @export var type: Player.Type
 
+var slot := 0
+
 func _init(
-  _player_details: PlayerDetails, 
-  _stats: Stats, 
-  _unique_id: UniqueId, 
-  _skills: Array[Ingress], 
-  _type: Player.Type
+  _player_details: PlayerDetails = null, 
+  _stats: Stats = null, 
+  _unique_id: UniqueId = null, 
+  _skills: Array[Ingress] = [], 
+  _type: Player.Type = Player.Type.PLAYER,
+  _slot: int = 0
 ) -> void:
   player_details = _player_details
   stats = _stats
   unique_id = _unique_id
   skills = _skills
   type = _type
+  slot = _slot
 
 func format_for_save() -> Dictionary:
   return {
@@ -27,4 +31,5 @@ func format_for_save() -> Dictionary:
 	"unique_id": unique_id.id,
 	"skills": skills.map(func(ingress: Ingress) -> Array: return ingress.format_for_save()),
 	"type": type,
+  "slot": slot
   }

@@ -31,3 +31,12 @@ func test_can_load_data() -> void:
 	assert_ne(loaded.save_time, "")
 	assert_eq(loaded.round_number, Round.Number.ONE)
 	assert_ne([], loaded.players_data)
+
+
+func test_can_load_when_no_data() -> void:
+	var mock_save_file_data := MockSaveFileData.new()
+	save_and_load.save_data(mock_save_file_data)
+	save_and_load.clear_data()
+	var loaded := save_and_load.load_data("mock_id")
+
+	assert_null(loaded)
