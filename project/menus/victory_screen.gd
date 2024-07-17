@@ -29,7 +29,6 @@ func _render_summary() -> void:
 		defeated_portraits.add_child(_create_portrait_texture_rec(player_id))
 		
 	summary_data.text = summary_data_text.trim_suffix(" and ")
-	print(summary_data.text)
 
 func _create_portrait_texture_rec(player_id: Player.Id) -> TextureRect:
 	var new_texture_rect := TextureRect.new()
