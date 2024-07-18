@@ -5,8 +5,8 @@ enum GameOver {
 	DEFEAT
 }
 
-const TALON_PORTRAIT := preload("res://players/Talon/TalonPortrait.jpeg")
-const TALON_PLAYER_DETAILS := preload("res://players/Talon/talon_player_details.tres")
+const TALON_PORTRAIT := preload("res://players/Talon/details/TalonPortrait.jpeg")
+const TALON_PLAYER_DETAILS := preload("res://players/Talon/details/talon_player_details.tres")
 const NASH_PORTRAIT := preload("res://players/Nash/NashPortrait.jpeg")
 const NASH_PLAYER_DETAILS = preload("res://players/Nash/nash_player_details.tres")
 const ESEN_PORTRAIT := preload("res://players/Esen/esen_portrait.jpeg")

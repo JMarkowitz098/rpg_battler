@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://8wg3032ohbg6"
-path="res://.godot/imported/TalonPortrait.jpeg-7a9b649a5e3715ffa033e1f70c31047d.ctex"
+path="res://.godot/imported/TalonPortrait.jpeg-064859c0dcbb508580f944d1a51ff741.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://players/Talon/TalonPortrait.jpeg"
-dest_files=["res://.godot/imported/TalonPortrait.jpeg-7a9b649a5e3715ffa033e1f70c31047d.ctex"]
+source_file="res://players/Talon/details/TalonPortrait.jpeg"
+dest_files=["res://.godot/imported/TalonPortrait.jpeg-064859c0dcbb508580f944d1a51ff741.ctex"]
 
 [params]
 

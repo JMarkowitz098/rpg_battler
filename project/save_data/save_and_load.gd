@@ -98,13 +98,14 @@ func _create_players_data(players_data: Array[Dictionary]) -> Array[PlayerData]:
 	return players
 
 
-func _create_skills_array(skills: Array) -> Array[NewIngress]:
-	var ingress: Array[NewIngress] = []
+func _create_skills_array(skills: Array) -> SkillGroup:
+	var new_skill_group := SkillGroup.new()
 
 	for skill_data: Array in skills:
 		var new_ingress := NewIngress.load_ingress(skill_data)
-		ingress.append(new_ingress)
-	return ingress
+		new_skill_group.add_skill(new_ingress)
+
+	return new_skill_group
 
 
 func _create_player_data(data: Dictionary) -> PlayerData:

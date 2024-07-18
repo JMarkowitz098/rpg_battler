@@ -21,7 +21,7 @@ func test_values() -> void:
 	assert_eq(data.player_details, player_details, "player_details")
 	assert_eq(data.stats, stats, "stats")
 	assert_eq(data.unique_id, unique_id, "unique_id")
-	assert_eq(data.skills, skills, "skills")
+	assert_eq(data.skill_group, skills, "skills")
 	assert_eq(data.type, Player.Type.PLAYER, "type")
 
 

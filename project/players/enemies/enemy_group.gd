@@ -42,7 +42,7 @@ func _create_player_data(new_enemy_data: Array[PlayerData], round_data: Round) -
 			data.details,
 			data.stats,
 			UniqueId.new(),
-			data.skills.skills,
+			data.skills,
 			Player.Type.ENEMY
 		))
 

@@ -1,6 +1,6 @@
 extends ColorRect
 
-const TALON_STARTING_DATA := preload("res://players/Talon/talon_starting_data.tres")
+const TALON_STARTING_DATA := preload("res://players/Talon/details/talon_starting_data.tres")
 const NASH_STARTING_DATA := preload("res://players/Nash/nash_starting_data.tres")
 const ESEN_STARTING_DATA := preload("res://players/Esen/esen_starting_data.tres")
 

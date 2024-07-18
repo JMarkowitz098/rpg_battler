@@ -21,5 +21,4 @@ script = ExtResource("1_3h21i")
 player_details = ExtResource("1_8ffim")
 stats = SubResource("Resource_tm5oe")
 unique_id = SubResource("Resource_3khxu")
-skills = Array[Resource("res://skills/new_ingress.gd")]([])
 type = 0

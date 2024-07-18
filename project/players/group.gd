@@ -86,7 +86,7 @@ func _instantiate_member(data: PlayerData, slot_index: int) -> void:
 	new_member.details = data.player_details
 	new_member.player_name.text = data.player_details.label
 
-	new_member.set_skills(data.skills)
+	new_member.set_skills(data.skill_group)
 	new_member.set_current_ingress(new_member.stats.max_ingress)
 	_set_location(slot_index, new_member)
 

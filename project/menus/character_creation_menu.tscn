@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://menus/character_creation_menu.gd" id="1_1w2ob"]
 [ext_resource type="PackedScene" uid="uid://ch51mvl5giece" path="res://menus/default_button.tscn" id="2_ps3th"]
-[ext_resource type="Texture2D" uid="uid://8wg3032ohbg6" path="res://players/Talon/TalonPortrait.jpeg" id="3_obvwn"]
+[ext_resource type="Texture2D" uid="uid://8wg3032ohbg6" path="res://players/Talon/details/TalonPortrait.jpeg" id="3_obvwn"]
 [ext_resource type="LabelSettings" uid="uid://cjxpiibvc0pb" path="res://menus/char_creation_labels.tres" id="4_wbxnf"]
 
 [node name="CharacterCreationMenu" type="ColorRect"]

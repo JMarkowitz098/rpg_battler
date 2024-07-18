@@ -1,18 +1,12 @@
-[gd_resource type="Resource" script_class="EnemyPlayerData" load_steps=8 format=3 uid="uid://dq1isdamktdto"]
+[gd_resource type="Resource" script_class="EnemyPlayerData" load_steps=5 format=3 uid="uid://dq1isdamktdto"]
 
-[ext_resource type="Resource" uid="uid://ber4ixqhnh8bj" path="res://players/Talon/talon_player_details.tres" id="1_hwi7a"]
+[ext_resource type="Resource" uid="uid://ber4ixqhnh8bj" path="res://players/Talon/details/talon_player_details.tres" id="1_hwi7a"]
 [ext_resource type="Script" path="res://players/enemies/enemy_player_data.gd" id="2_ixjmr"]
-[ext_resource type="Script" path="res://skills/skill_group.gd" id="3_4d6js"]
-[ext_resource type="Resource" uid="uid://bx4arvsly282v" path="res://skills/eth/eth_incursion.tres" id="4_xclb7"]
-[ext_resource type="Resource" uid="uid://cbnykd334tn68" path="res://skills/eth/eth_refrain.tres" id="5_nk8ff"]
+[ext_resource type="Resource" uid="uid://ceb2pia8to802" path="res://players/Talon/details/talon_starting_skills.tres" id="3_63fmw"]
 [ext_resource type="Resource" uid="uid://cuw61iy5ef73y" path="res://players/enemies/round_one/enemy_talon_round_one_stats.tres" id="8_qdy7h"]
-
-[sub_resource type="Resource" id="Resource_seyre"]
-script = ExtResource("3_4d6js")
-skills = Array[Resource("res://skills/new_ingress.gd")]([ExtResource("4_xclb7"), ExtResource("5_nk8ff")])
 
 [resource]
 script = ExtResource("2_ixjmr")
 details = ExtResource("1_hwi7a")
 stats = ExtResource("8_qdy7h")
-skills = SubResource("Resource_seyre")
+skills = ExtResource("3_63fmw")
