@@ -25,7 +25,7 @@ func test_can_create_player() -> void:
 	assert_not_null(player.unique_id, "unique_id")
 	assert_not_null(player.slot, "slot")
 	assert_not_null(player.type, "type")
-	assert_not_null(player.skill_group, "skills")
+	assert_not_null(player.learned_skills, "skills")
 	assert_not_null(player.modifiers, "modifiers")
 
 
@@ -60,7 +60,7 @@ func test_get_usable_skills() -> void:
 	var actual: Array[NewIngress]
 	var expected: Array[NewIngress]
 
-	player.skill_group = skills
+	player.learned_skills = skills
 	player.modifiers.current_ingress = 10
 
 	gut.p("All skills are available when player has high enough ingress")
@@ -88,7 +88,7 @@ func test_get_usable_skills() -> void:
 	
 
 func _test_player_scene(member: Node2D) -> void:
-	# assert_not_null(member.details, "player_details") # Not sure why details aren't created
+	assert_not_null(member.details, "player_details")
 	assert_not_null(member.modifiers, "modifiers")
 	assert_connected(member.modifiers, member, 'ingress_updated', "_on_modifiers_ingress_updated")
 	assert_connected(member.modifiers, member, 'no_ingress', "_on_modifiers_no_ingress")

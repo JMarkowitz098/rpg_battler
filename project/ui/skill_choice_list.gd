@@ -18,7 +18,7 @@ func _ready() -> void:
 	Events.update_info_label_with_skill_description.connect(_on_update_info_label_with_skill_description)
 
 func set_current_skills(player: Node2D, type: Ingress.Type) -> void:
-	current_skills = player.skill_group.filter_by_type(type)
+	current_skills = player.learned_skills.filter_by_type(type)
 
 func prepare_skill_menu(_handle_choose_skill: Callable) -> void:
 	_fill_skill_menu_with_current_skills()

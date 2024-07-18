@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="SkillGroup" load_steps=6 format=3 uid="uid://ceb2pia8to802"]
+
+[ext_resource type="Script" path="res://skills/skill_group.gd" id="1_tbv4b"]
+[ext_resource type="Resource" uid="uid://bx4arvsly282v" path="res://skills/eth/eth_incursion.tres" id="2_uibwp"]
+[ext_resource type="Resource" uid="uid://cbnykd334tn68" path="res://skills/eth/eth_refrain.tres" id="3_q6cnu"]
+[ext_resource type="Resource" uid="uid://bifhs7i0ivint" path="res://skills/shor/shor_incursion.tres" id="4_1scnp"]
+[ext_resource type="Resource" uid="uid://b4wfage7tji0c" path="res://skills/shor/shor_refrain.tres" id="5_gto2v"]
+
+[resource]
+script = ExtResource("1_tbv4b")
+skills = Array[Resource("res://skills/new_ingress.gd")]([ExtResource("2_uibwp"), ExtResource("3_q6cnu"), ExtResource("4_1scnp"), ExtResource("5_gto2v")])

@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="PlayerDetails" load_steps=3 format=3 uid="uid://bfb5d4e0qvg6p"]
+
+[ext_resource type="Resource" uid="uid://m78v2hqb27be" path="res://players/Esen/details/esen_learnable_skills.tres" id="1_8q7om"]
+[ext_resource type="Script" path="res://players/player_details.gd" id="2_y6ctm"]
+
+[resource]
+script = ExtResource("2_y6ctm")
+player_id = 2
+label = "Esen"
+elements = Array[int]([0])
+learnable_skills = ExtResource("1_8q7om")

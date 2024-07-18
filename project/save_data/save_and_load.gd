@@ -127,7 +127,7 @@ func _create_player_data(data: Dictionary) -> PlayerData:
 		player_details,
 		stats,
 		UniqueId.new(data.unique_id),
-		_create_skills_array(data.skills),
+		_create_skills_array(data.learned_skills),
 		data.type,
 		data.slot
 	)

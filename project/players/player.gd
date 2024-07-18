@@ -17,7 +17,7 @@ enum Type { PLAYER, ENEMY }
 @export var details: PlayerDetails
 
 var stats: Stats
-var skill_group: SkillGroup
+var learned_skills: SkillGroup
 
 var slot: int
 var type: Type
@@ -64,7 +64,7 @@ func set_triangle_focus_size(size: Vector2) -> void:
 	triangle_focus.scale = size
 
 func set_skills(incoming_skills: SkillGroup) -> void:
-	skill_group = incoming_skills
+	learned_skills = incoming_skills
 
 func set_unique_id(incoming_unique_id: UniqueId) -> void:
 	unique_id = incoming_unique_id
@@ -94,7 +94,7 @@ func is_enemy() -> bool:
 	return type == Type.ENEMY
 
 func get_usable_skills() -> Array[NewIngress]: 
-	return skill_group.filter_by_usable(modifiers.current_ingress)
+	return learned_skills.filter_by_usable(modifiers.current_ingress)
 
 
 func is_alive() -> bool:

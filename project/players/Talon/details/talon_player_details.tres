@@ -1,11 +1,11 @@
 [gd_resource type="Resource" script_class="PlayerDetails" load_steps=3 format=3 uid="uid://ber4ixqhnh8bj"]
 
 [ext_resource type="Script" path="res://players/player_details.gd" id="1_paxr0"]
-[ext_resource type="Resource" uid="uid://ceb2pia8to802" path="res://players/Talon/details/talon_starting_skills.tres" id="1_uhawx"]
+[ext_resource type="Resource" uid="uid://by7lr03pkqy44" path="res://players/Talon/details/talon_learnable_skills.tres" id="1_tyocy"]
 
 [resource]
 script = ExtResource("1_paxr0")
 player_id = 0
 label = "Talon"
 elements = Array[int]([0, 2])
-learnable_skills = ExtResource("1_uhawx")
+learnable_skills = ExtResource("1_tyocy")

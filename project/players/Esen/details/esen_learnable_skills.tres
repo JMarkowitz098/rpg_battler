@@ -1,0 +1,7 @@
+[gd_resource type="Resource" script_class="SkillGroup" load_steps=2 format=3 uid="uid://m78v2hqb27be"]
+
+[ext_resource type="Script" path="res://skills/skill_group.gd" id="1_seemo"]
+
+[resource]
+script = ExtResource("1_seemo")
+skills = Array[Resource("res://skills/new_ingress.gd")]([])

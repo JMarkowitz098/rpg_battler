@@ -21,7 +21,7 @@ func test_values() -> void:
 	assert_eq(data.player_details, player_details, "player_details")
 	assert_eq(data.stats, stats, "stats")
 	assert_eq(data.unique_id, unique_id, "unique_id")
-	assert_eq(data.skill_group, skills, "skills")
+	assert_eq(data.learned_skills, skills, "skills")
 	assert_eq(data.type, Player.Type.PLAYER, "type")
 
 
@@ -37,7 +37,7 @@ func test_format_for_save() -> void:
 		"player_details": e_player_details,
 		"stats": e_stats,
 		"unique_id": "1234",
-		"skills": [[3, 0], [6, 0]],
+		"learned_skills": [[3, 0], [6, 0]],
 		"type": 0,
 		"slot": 1
 	}

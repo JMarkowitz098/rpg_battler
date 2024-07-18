@@ -8,6 +8,7 @@ func add_skill(skill: NewIngress) -> void:
 
 
 func format_for_save() -> Array:
+	if skills.size() == 0: print("No skills to format for save")
 	return skills.map(func(ingress: NewIngress) -> Array: return ingress.format_for_save())
 
 

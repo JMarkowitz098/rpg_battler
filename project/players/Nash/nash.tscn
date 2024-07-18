@@ -8,7 +8,7 @@
 [ext_resource type="PackedScene" uid="uid://bqyh4pkeog5r5" path="res://ui/triangle_focus.tscn" id="6_gu3rd"]
 [ext_resource type="PackedScene" uid="uid://2evhn0npdxi4" path="res://ui/finger_focus.tscn" id="7_4wh2y"]
 [ext_resource type="PackedScene" uid="uid://bseiija1l41li" path="res://players/modifiers.tscn" id="8_hhwcw"]
-[ext_resource type="Resource" uid="uid://pue3uw4dj1e3" path="res://players/Nash/nash_player_details.tres" id="9_3oase"]
+[ext_resource type="Resource" uid="uid://pue3uw4dj1e3" path="res://players/Nash/details/nash_player_details.tres" id="9_3oase"]
 
 [sub_resource type="Animation" id="Animation_dgrtl"]
 length = 0.001

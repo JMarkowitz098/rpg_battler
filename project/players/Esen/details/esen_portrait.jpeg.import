@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://de4i510mqqaie"
-path="res://.godot/imported/esen_portrait.jpeg-23e9f3d8d67f34228f495b61e7f5a365.ctex"
+path="res://.godot/imported/esen_portrait.jpeg-ab02a44562b2b4c9ed8a6ee175eae79c.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://players/Esen/esen_portrait.jpeg"
-dest_files=["res://.godot/imported/esen_portrait.jpeg-23e9f3d8d67f34228f495b61e7f5a365.ctex"]
+source_file="res://players/Esen/details/esen_portrait.jpeg"
+dest_files=["res://.godot/imported/esen_portrait.jpeg-ab02a44562b2b4c9ed8a6ee175eae79c.ctex"]
 
 [params]
 

@@ -2,7 +2,7 @@
 
 [ext_resource type="Resource" uid="uid://ber4ixqhnh8bj" path="res://players/Talon/details/talon_player_details.tres" id="1_hwi7a"]
 [ext_resource type="Script" path="res://players/enemies/enemy_player_data.gd" id="2_ixjmr"]
-[ext_resource type="Resource" uid="uid://ceb2pia8to802" path="res://players/Talon/details/talon_starting_skills.tres" id="3_63fmw"]
+[ext_resource type="Resource" uid="uid://ceb2pia8to802" path="res://players/Talon/levels/talon_1_skills.tres" id="3_63fmw"]
 [ext_resource type="Resource" uid="uid://cuw61iy5ef73y" path="res://players/enemies/round_one/enemy_talon_round_one_stats.tres" id="8_qdy7h"]
 
 [resource]
