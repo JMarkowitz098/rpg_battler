@@ -7,10 +7,10 @@ enum Path {
 	VICTORY_SCREEN
 }
 
-const SAVE_PATH = "res://save.cfg"
+# const SAVE_PATH = "res://save.cfg"
 const TEST_SAVE_PATH = "res://test.cfg"
 var save_path: String
-#const SAVE_PATH = "user://save.cfg"
+const SAVE_PATH = "user://save.cfg"
 
 var config := ConfigFile.new()
 
