@@ -4,14 +4,14 @@ class_name PlayerDetails
 @export var player_id: Player.Id
 @export var label: String
 @export var elements: Array[Element.Type]
-@export var learnable_skills: Array[Ingress]
+@export var learnable_skills: Array[NewIngress]
 
 
 func _init(
 	_player_id: Player.Id = Player.Id.TALON,
 	_label: String = "",
 	_elements: Array[Element.Type] = [],
-	_learnable_skills: Array[Ingress] = [],
+	_learnable_skills: Array[ NewIngress ] = [],
 ) -> void:
 	player_id = _player_id
 	label = _label
@@ -25,7 +25,7 @@ func format_for_save() -> Dictionary:
 		"label": label,
 		"elements": elements as Array,
 		"learnable_skills":
-			learnable_skills.map(func(skill: Ingress) -> Array: return skill.format_for_save())
+			learnable_skills.map(func(skill: NewIngress) -> Array: return skill.format_for_save())
 	}
 
 

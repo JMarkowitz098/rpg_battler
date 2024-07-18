@@ -35,8 +35,8 @@ func _connect_signals() -> void:
 # -------------
 
 
-func process_action_queue(tree: SceneTree, battle_groups: BattleGroups, set_battle_process: Callable) -> void:
-	await process_queue.process_action_queue(items, tree, battle_groups, set_battle_process)
+func process_action_queue(tree: SceneTree, battle_groups: BattleGroups) -> void:
+	await process_queue.process_action_queue(items, tree, battle_groups)
 
 
 # -------------
@@ -51,7 +51,7 @@ func is_turn_over() -> bool:
 	return item_manager.is_turn_over()
 
 
-func update_player_action_with_skill(player: Node2D, target: Node2D, skill: Ingress) -> void:
+func update_player_action_with_skill(player: Node2D, target: Node2D, skill: NewIngress) -> void:
 	item_manager.update_player_action_with_skill(player, target, skill)
 
 

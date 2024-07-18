@@ -1,21 +1,11 @@
-[gd_resource type="Resource" script_class="PlayerData" load_steps=11 format=3 uid="uid://bhs7aguhh7rp4"]
+[gd_resource type="Resource" script_class="PlayerData" load_steps=8 format=3 uid="uid://bhs7aguhh7rp4"]
 
 [ext_resource type="Script" path="res://players/player_data.gd" id="1_a44iu"]
 [ext_resource type="Resource" uid="uid://ber4ixqhnh8bj" path="res://players/Talon/talon_player_details.tres" id="1_l4lmr"]
-[ext_resource type="Resource" uid="uid://bsia6bqru68qu" path="res://skills/eth/eth_incursion.tres" id="3_t8plj"]
-[ext_resource type="Resource" uid="uid://dupsoy6eqmyu5" path="res://skills/eth/eth_refrain.tres" id="4_312sv"]
-[ext_resource type="Resource" uid="uid://ctdusg70hieyd" path="res://skills/shor/shor_incursion.tres" id="5_u6yum"]
-[ext_resource type="Resource" uid="uid://y81nh2ijcjeq" path="res://skills/shor/shor_refrain.tres" id="6_a6ivn"]
-[ext_resource type="Script" path="res://players/stats.gd" id="7_8ag6u"]
+[ext_resource type="Resource" uid="uid://bx4arvsly282v" path="res://skills/eth/eth_incursion.tres" id="3_njb4x"]
+[ext_resource type="Resource" uid="uid://cbnykd334tn68" path="res://skills/eth/eth_refrain.tres" id="4_pghm0"]
+[ext_resource type="Resource" uid="uid://3k7oaij4vf2k" path="res://players/Talon/levels/talon_level_one.tres" id="5_nbkox"]
 [ext_resource type="Script" path="res://players/unique_id.gd" id="8_k6is2"]
-
-[sub_resource type="Resource" id="Resource_dcndp"]
-script = ExtResource("7_8ag6u")
-level = 1
-max_ingress = 8
-incursion = 3
-refrain = 1
-agility = 2
 
 [sub_resource type="Resource" id="Resource_wq0yb"]
 script = ExtResource("8_k6is2")
@@ -23,7 +13,7 @@ script = ExtResource("8_k6is2")
 [resource]
 script = ExtResource("1_a44iu")
 player_details = ExtResource("1_l4lmr")
-stats = SubResource("Resource_dcndp")
+stats = ExtResource("5_nbkox")
 unique_id = SubResource("Resource_wq0yb")
-skills = Array[Resource("res://skills/ingress.gd")]([ExtResource("3_t8plj"), ExtResource("4_312sv"), ExtResource("5_u6yum"), ExtResource("6_a6ivn")])
+skills = Array[Resource("res://skills/new_ingress.gd")]([ExtResource("3_njb4x"), ExtResource("4_pghm0")])
 type = 0

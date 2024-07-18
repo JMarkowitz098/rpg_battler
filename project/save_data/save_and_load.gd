@@ -7,10 +7,10 @@ enum Path {
 	VICTORY_SCREEN
 }
 
-# const SAVE_PATH = "res://save.cfg"
+const SAVE_PATH = "res://save.cfg"
 const TEST_SAVE_PATH = "res://test.cfg"
 var save_path: String
-const SAVE_PATH = "user://save.cfg"
+# const SAVE_PATH = "user://save.cfg"
 
 var config := ConfigFile.new()
 
@@ -98,11 +98,11 @@ func _create_players_data(players_data: Array[Dictionary]) -> Array[PlayerData]:
 	return players
 
 
-func _create_skills_array(skills: Array) -> Array[Ingress]:
-	var ingress: Array[Ingress] = []
+func _create_skills_array(skills: Array) -> Array[NewIngress]:
+	var ingress: Array[NewIngress] = []
 
 	for skill_data: Array in skills:
-		var new_ingress := Ingress.load_ingress(skill_data)
+		var new_ingress := NewIngress.load_ingress(skill_data)
 		ingress.append(new_ingress)
 	return ingress
 

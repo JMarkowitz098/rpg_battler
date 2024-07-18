@@ -2,7 +2,7 @@ extends Node2D
 
 var current_skill_button: Button
 var current_skill_type: Ingress.Type
-var current_skill: Ingress
+var current_skill: NewIngress
 var defeated: Array[Player.Id]
 var prev_state: State.Type
 var before_pause_focus: Variant
@@ -127,13 +127,8 @@ func _draw_action_button_description(action_choice_index: int) -> void:
 	
 func _process_turn() -> void:
 	_set_dodging_animation()
-
 	await get_tree().create_timer(1).timeout
-	await action_queue.process_action_queue(
-		get_tree(), 
-		battle_groups,
-		set_process
-	)
+	await action_queue.process_action_queue(get_tree(), battle_groups)
 	state.change_state(State.Type.IS_BATTLING)
 
 func _reset_turn() -> void:
@@ -161,7 +156,7 @@ func _set_dodging_animation() -> void:
 # Helper Functions
 # ----------------------
 
-func _handle_choose_skill(skill: Ingress) -> void:
+func _handle_choose_skill(skill: NewIngress) -> void:
 	Sound.play(Sound.confirm)
 	current_skill = skill
 		

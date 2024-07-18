@@ -2,7 +2,7 @@ extends GridContainer
 
 const BATTLE_SCENE_BUTTON := preload("res://menus/battle_scene_button.tscn")
 
-var current_skills: Array[Ingress]
+var current_skills: Array[NewIngress]
 var current_skill_index := 0
 
 func _ready() -> void:
@@ -18,7 +18,7 @@ func _ready() -> void:
 	Events.update_info_label_with_skill_description.connect(_on_update_info_label_with_skill_description)
 
 func set_current_skills(player: Node2D, type: Ingress.Type) -> void:
-	current_skills = player.skills.filter(func(skill: Ingress) -> bool: return skill.type == type)
+	current_skills = player.skills.filter(func(skill: NewIngress) -> bool: return skill.type == type)
 
 func prepare_skill_menu(_handle_choose_skill: Callable) -> void:
 	_fill_skill_menu_with_current_skills()
@@ -28,7 +28,7 @@ func release_focus_from_all_buttons() -> void:
 	for child in get_children():
 		child.release_focus()
 
-func get_current_skill() -> Ingress:
+func get_current_skill() -> NewIngress:
 	return current_skills[current_skill_index]
 
 func get_current_skill_button() -> Button:
@@ -57,7 +57,7 @@ func _connect_skill_button_signals(_handle_choose_skill: Callable) -> void:
 		var skill_button := skill_buttons[i]
 		skill_button.pressed.connect(_handle_choose_skill.bind(skill))
 
-func _create_skill_desciption(skill: Ingress) -> String:
+func _create_skill_desciption(skill: NewIngress) -> String:
 	return "{0}\nIngress Energy Cost: {1}\nElement: {2}\n{3}".format([
 		skill.label,
 		skill.ingress,

@@ -17,7 +17,7 @@ enum Type { PLAYER, ENEMY }
 @export var details: PlayerDetails
 
 var stats: Stats
-var skills: Array[Ingress]
+var skills: Array[NewIngress]
 
 var slot: int
 var type: Type
@@ -63,7 +63,7 @@ func set_triangle_focus_color(color: Color) -> void:
 func set_triangle_focus_size(size: Vector2) -> void:
 	triangle_focus.scale = size
 
-func set_skills(incoming_skills: Array[Ingress]) -> void:
+func set_skills(incoming_skills: Array[NewIngress]) -> void:
 	skills = incoming_skills
 
 func set_unique_id(incoming_unique_id: UniqueId) -> void:
@@ -93,7 +93,7 @@ func is_player() -> bool:
 func is_enemy() -> bool:
 	return type == Type.ENEMY
 
-func get_usable_skills() -> Array[Ingress]: 
+func get_usable_skills() -> Array[NewIngress]: 
 	return skills.filter(_usable_skill_filter)
 
 func is_alive() -> bool:
@@ -127,11 +127,11 @@ func _on_character_stats_took_damage() -> void:
 	
 
 
-func _is_usable_skill(skill: Ingress) -> bool:
+func _is_usable_skill(skill: NewIngress) -> bool:
 	return skill.ingress < modifiers.current_ingress
 
 
-func _usable_skill_filter(skill: Ingress) -> bool: return _is_usable_skill(skill)
+func _usable_skill_filter(skill: NewIngress) -> bool: return _is_usable_skill(skill)
 
 
 func _on_modifiers_ingress_updated() -> void:
