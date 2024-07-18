@@ -1,5 +1,9 @@
-extends Ingress
+extends NewIngress
 class_name MockIngress
+
+var id: Id
+var type: Type
+var target: Target
 
 func _init(init: Dictionary) -> void:
 	var keys: Array[String] = [
@@ -41,6 +45,26 @@ func _set_default(key: String) -> void:
 	self[key] = default_value
 
 
+func is_incursion() -> bool:
+	return type == Type.INCURSION
+
+
+func is_refrain() -> bool:
+	return type == Type.REFRAIN
+
+
+func has_target() -> bool:
+	match target:
+		Target.SELF, Target.ENEMY, Target.ALLY:
+			return true
+		_:
+			return false
+
+
+func format_for_save() -> Array:
+	return [id, element]
+
+
 static func create_incursion() -> MockIngress:
 	return MockIngress.new({"label": "Mock Incursion"})
 	
@@ -55,6 +79,6 @@ static func create_refrain() -> MockIngress:
 	})
 
 
-static func create_array() -> Array[Ingress]:
-	var skills: Array[Ingress] = [create_incursion(), create_refrain()]
+static func create_array() -> Array[NewIngress]:
+	var skills: Array[NewIngress] = [create_incursion(), create_refrain()]
 	return skills

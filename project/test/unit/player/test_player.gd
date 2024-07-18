@@ -10,7 +10,7 @@ func before_each() -> void:
 	player.details = MockPlayerDetails.new() # Normally loaded in from Node
 	player.load_stats(MockStats.new())
 	player.set_unique_id(UniqueId.new())
-	player.set_skills([MockIngress.create_incursion(), MockIngress.create_refrain()] as Array[Ingress])
+	player.set_skills([MockIngress.create_incursion(), MockIngress.create_refrain()] as Array[NewIngress])
 
 
 func after_each() -> void:
@@ -53,9 +53,9 @@ func test_get_usable_skills() -> void:
 	var skill_3 := MockIngress.create_incursion()
 	skill_3.ingress = 4
 
-	var skills: Array[Ingress] = [ skill_1, skill_2, skill_3 ]
-	var actual: Array[Ingress]
-	var expected: Array[Ingress]
+	var skills: Array[NewIngress] = [ skill_1, skill_2, skill_3 ]
+	var actual: Array[NewIngress]
+	var expected: Array[NewIngress]
 
 	player.skills = skills
 	player.modifiers.current_ingress = 10

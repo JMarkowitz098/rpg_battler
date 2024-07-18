@@ -4,7 +4,7 @@ var TestActionQueueItemManager := load("res://battle_scene/action_queue/action_q
 var manager: ActionQueueItemManager
 
 var expected: Variant
-var actual: Ingress
+var actual: NewIngress
 
 func before_each() -> void:
 	manager = ActionQueueItemManager.new(MockActionQueue.new())
@@ -18,7 +18,7 @@ func test_can_item_manager() -> void:
 func test_select_enemy_skill() -> void:
 	var skill_1 := MockIngress.create_incursion()
 	var skill_2 := MockIngress.create_refrain()
-	var skills: Array[Ingress] = [skill_1, skill_2]
+	var skills: Array[NewIngress] = [skill_1, skill_2]
 
 	gut.p("Selected skill is from list of passed in skills")
 	expected = skills
