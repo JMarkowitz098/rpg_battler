@@ -6,7 +6,8 @@ class_name Refrain
 @export var target: Target = Target.SELF
 
 func process(action: Action, _tree: SceneTree, _battle_groups: BattleGroups) -> void:
-	await _play_refrain_animation(action)
+	action.actor.use_ingress(action.skill.ingress)
+	if not Utils.is_test: await _play_refrain_animation(action)
 	_set_refrain(action.target, action.skill.element)
 
 

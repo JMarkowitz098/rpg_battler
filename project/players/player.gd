@@ -109,6 +109,10 @@ func use_ingress(amount: int) -> void:
 	set_current_ingress(modifiers.current_ingress - amount)
 
 
+func current_ingress() -> int:
+	return modifiers.current_ingress
+
+
 func take_damage(amount: int) -> void:
 	animation_player.play("hurt")
 	set_current_ingress(modifiers.current_ingress - amount)

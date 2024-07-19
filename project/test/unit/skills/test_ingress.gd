@@ -10,8 +10,10 @@ func before_each() -> void:
 	skill = autofree(TestIngress.new(true))
 	util = autofree(TestIngressUtil.new(true))
 
+
 func test_can_create_ingress() -> void:
 	assert_not_null(skill)
+
 
 func test_can_create_each_element() -> void:
 	skill = util.load_ingress([Ingress.Id.INCURSION, Element.Type.ETH])
