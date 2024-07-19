@@ -1,7 +1,7 @@
 [gd_resource type="Resource" script_class="Round" load_steps=3 format=3 uid="uid://bvb763g7vwiqs"]
 
 [ext_resource type="Script" path="res://players/enemies/round.gd" id="1_csxtt"]
-[ext_resource type="Resource" uid="uid://dq1isdamktdto" path="res://players/enemies/round_one/enemy_talon_round_one_player_data.tres" id="1_hjsmk"]
+[ext_resource type="Resource" uid="uid://dq1isdamktdto" path="res://players/enemies/round_1/round_1_player_data.tres" id="1_hjsmk"]
 
 [resource]
 script = ExtResource("1_csxtt")

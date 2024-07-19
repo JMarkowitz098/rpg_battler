@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="EnemyPlayerData" load_steps=4 format=3 uid="uid://bvps00axayp5o"]
+
+[ext_resource type="Resource" uid="uid://bfb5d4e0qvg6p" path="res://players/Esen/details/esen_player_details.tres" id="1_bgvod"]
+[ext_resource type="Script" path="res://players/enemies/enemy_player_data.gd" id="1_fbphe"]
+[ext_resource type="Resource" uid="uid://d38ywmow2lo1" path="res://players/enemies/round_3/round_3_stats.tres" id="3_llvhn"]
+
+[resource]
+script = ExtResource("1_fbphe")
+details = ExtResource("1_bgvod")
+stats = ExtResource("3_llvhn")

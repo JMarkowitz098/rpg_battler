@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="Round" load_steps=3 format=3 uid="uid://0fr67mehrlfp"]
+
+[ext_resource type="Resource" uid="uid://drgq0j72ux6v0" path="res://players/enemies/round_2/round_2_player_data.tres" id="1_wrmft"]
+[ext_resource type="Script" path="res://players/enemies/round.gd" id="2_ybinl"]
+
+[resource]
+script = ExtResource("2_ybinl")
+round_number = 1
+enemies = Array[Resource("res://players/enemies/enemy_player_data.gd")]([ExtResource("1_wrmft"), ExtResource("1_wrmft")])

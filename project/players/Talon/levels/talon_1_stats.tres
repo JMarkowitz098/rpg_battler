@@ -6,6 +6,6 @@
 script = ExtResource("1_rkiiy")
 level = 1
 max_ingress = 8
-incursion = 5
+incursion = 3
 refrain = 1
 agility = 2
