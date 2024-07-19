@@ -37,32 +37,32 @@ static func get_new_stats(player_id: Player.Id, new_level: int) -> Stats:
 static func _get_talon_stats(new_level: int) -> Stats:
 	match(new_level):
 		1:
-			return load("res://players/Talon/levels/talon_level_one.tres")
+			return load("res://players/Talon/levels/talon_1_stats.tres")
 		2:
-			return load("res://players/Talon/levels/talon_level_two.tres")
+			return load("res://players/Talon/levels/talon_2_stats.tres")
 		3:
-			return load("res://players/Talon/levels/talon_level_three.tres")
+			return load("res://players/Talon/levels/talon_3_stats.tres")
 		_:
 			return null
 
 static func _get_nash_stats(new_level: int) -> Stats:
 	match(new_level):
 		1:
-			return load("res://players/Nash/levels/nash_level_one.tres")
+			return load("res://players/Nash/levels/nash_1_stats.tres")
 		2:
-			return load("res://players/Nash/levels/nash_level_two.tres")
+			return load("res://players/Nash/levels/nash_2_stats.tres")
 		3:
-			return load("res://players/Nash/levels/nash_level_three.tres")
+			return load("res://players/Nash/levels/nash_3_stats.tres")
 		_:
 			return null
 
 static func _get_esen_stats(new_level: int) -> Stats:
 	match(new_level):
 		1:
-			return load("res://players/Esen/levels/esen_level_one.tres")
+			return load("res://players/Esen/levels/esen_1_stats.tres")
 		2:
-			return load("res://players/Esen/levels/esen_level_two.tres")
+			return load("res://players/Esen/levels/esen_2_stats.tres")
 		3:
-			return load("res://players/Esen/levels/esen_level_three.tres")
+			return load("res://players/Esen/levels/esen_3_stats.tres")
 		_:
 			return null

@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="PlayerDetails" load_steps=3 format=3 uid="uid://pue3uw4dj1e3"]
+
+[ext_resource type="Resource" uid="uid://pday2f1o6qmq" path="res://players/Nash/details/nash_learnable_skills.tres" id="1_jbclr"]
+[ext_resource type="Script" path="res://players/player_details.gd" id="2_jhob8"]
+
+[resource]
+script = ExtResource("2_jhob8")
+player_id = 1
+label = "Nash"
+elements = Array[int]([2, 3])
+learnable_skills = ExtResource("1_jbclr")

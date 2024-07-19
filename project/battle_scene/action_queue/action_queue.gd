@@ -35,8 +35,8 @@ func _connect_signals() -> void:
 # -------------
 
 
-func process_action_queue(tree: SceneTree, battle_groups: BattleGroups, set_battle_process: Callable) -> void:
-	await process_queue.process_action_queue(items, tree, battle_groups, set_battle_process)
+func process_action_queue(tree: SceneTree, battle_groups: BattleGroups) -> void:
+	await process_queue.process_action_queue(items, tree, battle_groups)
 
 
 # -------------

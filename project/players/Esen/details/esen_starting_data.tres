@@ -1,0 +1,26 @@
+[gd_resource type="Resource" script_class="PlayerData" load_steps=8 format=3 uid="uid://dk5e0k48h25ou"]
+
+[ext_resource type="Resource" uid="uid://djbn41naef26" path="res://players/Esen/levels/esen_1_skills.tres" id="1_gy3h2"]
+[ext_resource type="Resource" uid="uid://bfb5d4e0qvg6p" path="res://players/Esen/details/esen_player_details.tres" id="2_t7bl8"]
+[ext_resource type="Script" path="res://players/player_data.gd" id="3_tywkd"]
+[ext_resource type="Script" path="res://players/stats.gd" id="4_rs3kx"]
+[ext_resource type="Script" path="res://players/unique_id.gd" id="5_ebcfh"]
+
+[sub_resource type="Resource" id="Resource_bfumi"]
+script = ExtResource("4_rs3kx")
+level = 1
+max_ingress = 10
+incursion = 3
+refrain = 2
+agility = 2
+
+[sub_resource type="Resource" id="Resource_m0rqk"]
+script = ExtResource("5_ebcfh")
+
+[resource]
+script = ExtResource("3_tywkd")
+player_details = ExtResource("2_t7bl8")
+stats = SubResource("Resource_bfumi")
+unique_id = SubResource("Resource_m0rqk")
+learned_skills = ExtResource("1_gy3h2")
+type = 0

@@ -17,7 +17,7 @@ enum Type { PLAYER, ENEMY }
 @export var details: PlayerDetails
 
 var stats: Stats
-var skills: Array[Ingress]
+var learned_skills: SkillGroup
 
 var slot: int
 var type: Type
@@ -63,8 +63,8 @@ func set_triangle_focus_color(color: Color) -> void:
 func set_triangle_focus_size(size: Vector2) -> void:
 	triangle_focus.scale = size
 
-func set_skills(incoming_skills: Array[Ingress]) -> void:
-	skills = incoming_skills
+func set_skills(incoming_skills: SkillGroup) -> void:
+	learned_skills = incoming_skills
 
 func set_unique_id(incoming_unique_id: UniqueId) -> void:
 	unique_id = incoming_unique_id
@@ -94,7 +94,8 @@ func is_enemy() -> bool:
 	return type == Type.ENEMY
 
 func get_usable_skills() -> Array[Ingress]: 
-	return skills.filter(_usable_skill_filter)
+	return learned_skills.filter_by_usable(modifiers.current_ingress)
+
 
 func is_alive() -> bool:
 	return modifiers.current_ingress > 0
@@ -108,10 +109,14 @@ func use_ingress(amount: int) -> void:
 	set_current_ingress(modifiers.current_ingress - amount)
 
 
+func current_ingress() -> int:
+	return modifiers.current_ingress
+
+
 func take_damage(amount: int) -> void:
 	animation_player.play("hurt")
 	set_current_ingress(modifiers.current_ingress - amount)
-	await get_tree().create_timer(1.4).timeout
+	if not Utils.is_test: await get_tree().create_timer(1.4).timeout
 	animation_player.play("idle")
 
 # ----------------
@@ -122,7 +127,7 @@ func take_damage(amount: int) -> void:
 func _on_character_stats_took_damage() -> void:
 	update_energy_bar()
 	animation_player.play("hurt")
-	await get_tree().create_timer(1.4).timeout
+	if not Utils.is_test: await get_tree().create_timer(1.4).timeout
 	animation_player.play("idle")
 	
 

@@ -1,13 +1,13 @@
-[gd_resource type="Resource" script_class="Scor" load_steps=2 format=3 uid="uid://dnicarxu74e23"]
+[gd_resource type="Resource" script_class="GroupRefrain" load_steps=2 format=3 uid="uid://b4i1psndb60fq"]
 
-[ext_resource type="Script" path="res://skills/scor/scor_ingress.gd" id="1_50slx"]
+[ext_resource type="Script" path="res://skills/blueprints/group_refrain.gd" id="1_8ayb7"]
 
 [resource]
-script = ExtResource("1_50slx")
-element = 3
+script = ExtResource("1_8ayb7")
 id = 2
-label = "Group Scor Refrain"
-ingress = 3
 type = 1
 target = 4
-description = "Cover all party member with a Scor refrain"
+label = "Scor Group Refrain"
+ingress = 3
+element = 3
+description = "Activate a Scor Refrain on all party members"

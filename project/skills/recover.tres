@@ -1,12 +1,13 @@
-[gd_resource type="Resource" script_class="Ingress" load_steps=2 format=3 uid="uid://drmxqg621yjor"]
+[gd_resource type="Resource" script_class="NewRecover" load_steps=2 format=3 uid="uid://dakqxf670mahc"]
 
-[ext_resource type="Script" path="res://skills/ingress.gd" id="1_4r2kd"]
+[ext_resource type="Script" path="res://skills/blueprints/recover.gd" id="1_sit8f"]
 
 [resource]
-script = ExtResource("1_4r2kd")
+script = ExtResource("1_sit8f")
 id = 8
-label = "Recover"
-ingress = 0
 type = 3
 target = 0
-description = "Recover Ingress Energy"
+label = "Recover"
+ingress = -1
+element = 4
+description = "Recover yourself"

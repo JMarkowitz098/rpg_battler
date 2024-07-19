@@ -127,13 +127,8 @@ func _draw_action_button_description(action_choice_index: int) -> void:
 	
 func _process_turn() -> void:
 	_set_dodging_animation()
-
 	await get_tree().create_timer(1).timeout
-	await action_queue.process_action_queue(
-		get_tree(), 
-		battle_groups,
-		set_process
-	)
+	await action_queue.process_action_queue(get_tree(), battle_groups)
 	state.change_state(State.Type.IS_BATTLING)
 
 func _reset_turn() -> void:

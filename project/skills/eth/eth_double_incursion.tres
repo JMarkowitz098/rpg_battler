@@ -1,13 +1,13 @@
-[gd_resource type="Resource" script_class="Eth" load_steps=2 format=3 uid="uid://cika1mnqx80ac"]
+[gd_resource type="Resource" script_class="DoubleIncursion" load_steps=2 format=3 uid="uid://72xsuje527dh"]
 
-[ext_resource type="Script" path="res://skills/eth/eth_ingress.gd" id="1_4jt6d"]
+[ext_resource type="Script" path="res://skills/blueprints/double_incursion.gd" id="1_adhi0"]
 
 [resource]
-script = ExtResource("1_4jt6d")
-element = 0
+script = ExtResource("1_adhi0")
 id = 0
-label = "Double Eth Incursion"
-ingress = 5
 type = 0
 target = 1
-description = "Attack an enemy with two consecutive Eth Incursions"
+label = "Eth Double Incursion"
+ingress = 5
+element = 0
+description = "Use an Eth Incursion on the same enemy twice"

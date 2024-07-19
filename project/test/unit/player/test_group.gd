@@ -39,7 +39,7 @@ func test_can_instantiate_member() -> void:
 	assert_not_null(new_player.details, "player_details")
 	assert_eq(new_player.slot, 1, "slot")
 	assert_eq(new_player.unique_id.id, "5678")
-	assert_ne(new_player.skills.size(), 0, "skills")
+	assert_ne(new_player.learned_skills.skills.size(), 0, "skills")
 	assert_eq(new_player.type, Player.Type.ENEMY, "type")
 	assert_eq(group.slot_two_location.global_position, new_player.global_position, "position")
 

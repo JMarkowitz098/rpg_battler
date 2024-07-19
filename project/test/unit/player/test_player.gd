@@ -10,7 +10,7 @@ func before_each() -> void:
 	player.details = MockPlayerDetails.new() # Normally loaded in from Node
 	player.load_stats(MockStats.new())
 	player.set_unique_id(UniqueId.new())
-	player.set_skills([MockIngress.create_incursion(), MockIngress.create_refrain()] as Array[Ingress])
+	player.set_skills(MockIngress.create_array())
 
 
 func after_each() -> void:
@@ -25,7 +25,7 @@ func test_can_create_player() -> void:
 	assert_not_null(player.unique_id, "unique_id")
 	assert_not_null(player.slot, "slot")
 	assert_not_null(player.type, "type")
-	assert_not_null(player.skills, "skills")
+	assert_not_null(player.learned_skills, "skills")
 	assert_not_null(player.modifiers, "modifiers")
 
 
@@ -53,11 +53,14 @@ func test_get_usable_skills() -> void:
 	var skill_3 := MockIngress.create_incursion()
 	skill_3.ingress = 4
 
-	var skills: Array[Ingress] = [ skill_1, skill_2, skill_3 ]
+	var skills := SkillGroup.new()
+	skills.add_skill(skill_1)
+	skills.add_skill(skill_2)
+	skills.add_skill(skill_3)
 	var actual: Array[Ingress]
 	var expected: Array[Ingress]
 
-	player.skills = skills
+	player.learned_skills = skills
 	player.modifiers.current_ingress = 10
 
 	gut.p("All skills are available when player has high enough ingress")
@@ -85,7 +88,7 @@ func test_get_usable_skills() -> void:
 	
 
 func _test_player_scene(member: Node2D) -> void:
-	# assert_not_null(member.details, "player_details") # Not sure why details aren't created
+	assert_not_null(member.details, "player_details")
 	assert_not_null(member.modifiers, "modifiers")
 	assert_connected(member.modifiers, member, 'ingress_updated', "_on_modifiers_ingress_updated")
 	assert_connected(member.modifiers, member, 'no_ingress', "_on_modifiers_no_ingress")

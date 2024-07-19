@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://o7b5jel0np5b"]
 
-[ext_resource type="Texture2D" uid="uid://8wg3032ohbg6" path="res://players/Talon/TalonPortrait.jpeg" id="1_7ylrf"]
+[ext_resource type="Texture2D" uid="uid://8wg3032ohbg6" path="res://players/Talon/details/TalonPortrait.jpeg" id="1_7ylrf"]
 [ext_resource type="PackedScene" uid="uid://bqyh4pkeog5r5" path="res://ui/triangle_focus.tscn" id="2_qdccw"]
 [ext_resource type="Script" path="res://battle_scene/action_queue/action_queue_item.gd" id="2_wtqkh"]
 [ext_resource type="PackedScene" uid="uid://2evhn0npdxi4" path="res://ui/finger_focus.tscn" id="3_y1g33"]

@@ -1,13 +1,13 @@
-[gd_resource type="Resource" script_class="Scor" load_steps=2 format=3 uid="uid://dru42rhagndq5"]
+[gd_resource type="Resource" script_class="Incursion" load_steps=2 format=3 uid="uid://wkb21nusdwy3"]
 
-[ext_resource type="Script" path="res://skills/scor/scor_ingress.gd" id="1_tnj0q"]
+[ext_resource type="Script" path="res://skills/blueprints/incursion.gd" id="1_xo0ps"]
 
 [resource]
-script = ExtResource("1_tnj0q")
-element = 3
+script = ExtResource("1_xo0ps")
 id = 3
-label = "Scor Incursion"
-ingress = 2
 type = 0
 target = 1
-description = "Attack an enemy with a Scor Incursion"
+label = "Scor Incursion"
+ingress = 2
+element = 3
+description = "Use a Scor incursion"

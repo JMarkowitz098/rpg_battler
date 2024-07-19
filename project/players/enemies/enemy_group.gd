@@ -11,11 +11,11 @@ func load_members_from_round_data(round_number: Round.Number) -> void:
 
 	match round_number:
 		Round.Number.ONE:
-			round_data = load("res://players/enemies/round_one/round_one.tres")
+			round_data = load("res://players/enemies/round_1/round_1.tres")
 		Round.Number.TWO:
-			round_data = load("res://players/enemies/round_two/round_two.tres")
+			round_data = load("res://players/enemies/round_2/round_2.tres")
 		Round.Number.THREE:
-			round_data = load("res://players/enemies/round_three/round_three.tres")
+			round_data = load("res://players/enemies/round_3/round_3.tres")
 
 	_create_player_data(new_enemy_data, round_data)
 	instantiate_members(new_enemy_data)
@@ -42,7 +42,7 @@ func _create_player_data(new_enemy_data: Array[PlayerData], round_data: Round) -
 			data.details,
 			data.stats,
 			UniqueId.new(),
-			data.skills.skills,
+			data.skills,
 			Player.Type.ENEMY
 		))
 

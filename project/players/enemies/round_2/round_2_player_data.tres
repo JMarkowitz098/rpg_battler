@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="EnemyPlayerData" load_steps=5 format=3 uid="uid://drgq0j72ux6v0"]
+
+[ext_resource type="Script" path="res://players/enemies/enemy_player_data.gd" id="1_1coyl"]
+[ext_resource type="Resource" uid="uid://pue3uw4dj1e3" path="res://players/Nash/details/nash_player_details.tres" id="1_vtnwf"]
+[ext_resource type="Resource" uid="uid://dqv3062gai2ps" path="res://players/Nash/levels/nash_2_skills.tres" id="3_66o01"]
+[ext_resource type="Resource" uid="uid://bhpo37vh0h3to" path="res://players/enemies/round_2/round_2_stats.tres" id="4_en0fl"]
+
+[resource]
+script = ExtResource("1_1coyl")
+details = ExtResource("1_vtnwf")
+stats = ExtResource("4_en0fl")
+skills = ExtResource("3_66o01")

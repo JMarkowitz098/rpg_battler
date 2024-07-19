@@ -26,7 +26,9 @@ func get_current_member() -> Node2D:
 	return members[current_member]
 
 func get_member_by_unique_id(unique_id: String) -> Node2D:
-	return members.filter(func(member: Node2D) -> bool: return member.unique_id.id == unique_id)[0]
+	if members.size() > 0:
+		return members.filter(func(member: Node2D) -> bool: return member.unique_id.id == unique_id)[0]
+	else: return null
 
 func focus_all(type: Focus.Type) -> void:
 	for member in members:
@@ -86,7 +88,7 @@ func _instantiate_member(data: PlayerData, slot_index: int) -> void:
 	new_member.details = data.player_details
 	new_member.player_name.text = data.player_details.label
 
-	new_member.set_skills(data.skills)
+	new_member.set_skills(data.learned_skills)
 	new_member.set_current_ingress(new_member.stats.max_ingress)
 	_set_location(slot_index, new_member)
 
