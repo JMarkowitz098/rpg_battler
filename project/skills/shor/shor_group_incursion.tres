@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="GroupIncursion" load_steps=2 format=3 uid="uid://c6r1uv74a5bly"]
+
+[ext_resource type="Script" path="res://skills/blueprints/group_incursion.gd" id="1_gy5x6"]
+
+[resource]
+script = ExtResource("1_gy5x6")
+id = 1
+type = 0
+target = 3
+label = "Eth Group Incursion"
+ingress = 7
+element = 0
+description = "Attack all enemies with a single, Eth Incursion"

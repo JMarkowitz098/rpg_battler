@@ -18,6 +18,8 @@ var _params: Dictionary
 var current_round := Round.Number.ONE
 # var current_round := Round.Number.THREE # For testing
 
+var is_test := false
+
 func calucluate_attack_damage(actor_stats: Stats, target_stats: Stats) -> int:
 	return _clamped_damage(actor_stats.level_stats.incursion - target_stats.level_stats.refrain)
 	

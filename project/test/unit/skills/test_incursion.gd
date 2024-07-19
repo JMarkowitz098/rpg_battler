@@ -2,6 +2,9 @@ extends GutTest
 
 var skill: Ingress
 
+func before_each() -> void:
+	Utils.is_test = true
+
 func after_each() -> void:
 	skill = null
 

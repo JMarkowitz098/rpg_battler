@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="GroupIncursion" load_steps=2 format=3 uid="uid://b007ki5jrwryr"]
+
+[ext_resource type="Script" path="res://skills/blueprints/group_incursion.gd" id="1_rfjcp"]
+
+[resource]
+script = ExtResource("1_rfjcp")
+id = 1
+type = 0
+target = 3
+label = "Scor Group Incursion"
+ingress = 7
+element = 3
+description = "Attack all enemies with a single, Scor Incursion"

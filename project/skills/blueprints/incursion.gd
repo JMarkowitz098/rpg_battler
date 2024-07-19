@@ -7,8 +7,9 @@ class_name Incursion
 
 
 func process(action: Action, tree: SceneTree, _battle_groups: BattleGroups) -> void:
-	await _play_attack_animation(action)
-	await _play_ingress_animation(action, tree)
+	if not Utils.is_test: 
+		await _play_attack_animation(action)
+		await _play_ingress_animation(action, tree)
 	action.actor.use_ingress(action.skill.ingress)
 	var damage := Utils.calculate_skill_damage(action)
 	await action.target.take_damage(damage)
