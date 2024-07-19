@@ -26,7 +26,9 @@ func get_current_member() -> Node2D:
 	return members[current_member]
 
 func get_member_by_unique_id(unique_id: String) -> Node2D:
-	return members.filter(func(member: Node2D) -> bool: return member.unique_id.id == unique_id)[0]
+	if members.size() > 0:
+		return members.filter(func(member: Node2D) -> bool: return member.unique_id.id == unique_id)[0]
+	else: return null
 
 func focus_all(type: Focus.Type) -> void:
 	for member in members:

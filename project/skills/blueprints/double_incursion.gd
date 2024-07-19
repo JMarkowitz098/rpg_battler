@@ -7,15 +7,16 @@ class_name DoubleIncursion
 
 
 func process(action: Action, tree: SceneTree, _battle_groups: BattleGroups) -> void:
+	action.actor.use_ingress(action.skill.ingress)
 	await _use_incursion(action, tree)
 	if action.target:
-		await tree.create_timer(2).timeout
+		if not Utils.is_test: await tree.create_timer(2).timeout
 		await _use_incursion(action, tree)
 
 func _use_incursion(action: Action, tree: SceneTree) -> void:
-	await _play_attack_animation(action)
-	await _play_ingress_animation(action, tree)
-	action.actor.use_ingress(action.skill.ingress)
+	if not Utils.is_test:
+		await _play_attack_animation(action)
+		await _play_ingress_animation(action, tree)
 	var damage := Utils.calculate_skill_damage(action)
 	action.target.take_damage(damage)
 
