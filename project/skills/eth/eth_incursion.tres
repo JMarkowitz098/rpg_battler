@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="Incursion" load_steps=2 format=3 uid="uid://bx4arvsly282v"]
 
-[ext_resource type="Script" path="res://skills/incursion.gd" id="1_qhn18"]
+[ext_resource type="Script" path="res://skills/blueprints/incursion.gd" id="1_qhn18"]
 
 [resource]
 script = ExtResource("1_qhn18")

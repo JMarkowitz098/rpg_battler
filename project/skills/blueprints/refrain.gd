@@ -10,21 +10,7 @@ func process(action: Action, _tree: SceneTree, _battle_groups: BattleGroups) -> 
 	_set_refrain(action.target, action.skill.element)
 
 
-func is_incursion() -> bool:
-	return type == Type.INCURSION
-
-
-func is_refrain() -> bool:
-	return type == Type.REFRAIN
-
-
-func has_target() -> bool:
-	match target:
-		Target.SELF, Target.ENEMY, Target.ALLY:
-			return true
-		_:
-			return false
-
-
-func format_for_save() -> Array:
-	return [id, element]
+func is_incursion() -> bool: return Ing.is_incursion(type)
+func is_refrain() -> bool: return Ing.is_refrain(type)
+func has_target() -> bool: return Ing.has_target(target)
+func format_for_save() -> Array: return Ing.format_for_save(id, element)

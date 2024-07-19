@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="GroupRefrain" load_steps=2 format=3 uid="uid://yuk7udxhmg61"]
+
+[ext_resource type="Script" path="res://skills/blueprints/group_refrain.gd" id="1_0asj0"]
+
+[resource]
+script = ExtResource("1_0asj0")
+id = 2
+type = 1
+target = 4
+label = ""
+ingress = 0
+element = 0
+description = ""

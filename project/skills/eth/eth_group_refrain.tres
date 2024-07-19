@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="GroupRefrain" load_steps=2 format=3 uid="uid://0ad5cehh6hkr"]
+
+[ext_resource type="Script" path="res://skills/blueprints/group_refrain.gd" id="1_b7yhg"]
+
+[resource]
+script = ExtResource("1_b7yhg")
+id = 2
+type = 1
+target = 4
+label = "Eth Group Refrain"
+ingress = 3
+element = 0
+description = "Activate an Eth Refrain on all party members"

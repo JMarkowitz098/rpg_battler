@@ -94,32 +94,3 @@ func _set_refrain(player: Node2D, skill_element: Element.Type) -> void:
 	player.refrain_aura.modulate = refrain_color
 
 
-static func load_ingress(skill_data: Array) -> Ingress:
-	var data_id: Id = skill_data[0]
-	var data_element: Element.Type = skill_data[1]
-	
-	match(data_element):
-		Element.Type.ETH:
-			return _load_skill(data_id, "eth")
-		Element.Type.SHOR:
-			return _load_skill(data_id, "shor")
-		Element.Type.SCOR:
-			return _load_skill(data_id, "scor")
-		Element.Type.ENH:
-			return _load_skill(data_id, "enh")
-		_:
-			return null
-
-
-static func _load_skill(data_id: Id, element_string: String) -> Ingress:
-	var path := "res://skills/" + element_string + "/"
-
-	match(data_id):
-		Ingress.Id.INCURSION:
-			path += element_string + "_incursion.tres"
-		Ingress.Id.REFRAIN:
-			path += element_string + "_refrain.tres"
-		_:
-			return null
-
-	return load(path)

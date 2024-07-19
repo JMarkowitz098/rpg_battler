@@ -21,6 +21,7 @@ Utils="*res://Utils.gd"
 Events="*res://ui/events.gd"
 Sound="*res://audio/sound.tscn"
 Music="*res://audio/music.tscn"
+Ing="*res://skills/ingress_util.gd"
 
 [debug]
 

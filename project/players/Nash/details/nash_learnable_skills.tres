@@ -8,4 +8,4 @@
 
 [resource]
 script = ExtResource("1_uhtra")
-skills = Array[Resource("res://skills/new_ingress.gd")]([ExtResource("2_5xyrj"), ExtResource("3_wvouy"), ExtResource("4_naqst"), ExtResource("5_084eb")])
+skills = Array[Resource("res://skills/blueprints/new_ingress.gd")]([ExtResource("2_5xyrj"), ExtResource("3_wvouy"), ExtResource("4_naqst"), ExtResource("5_084eb")])

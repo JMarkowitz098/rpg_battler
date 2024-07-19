@@ -6,4 +6,4 @@
 
 [resource]
 script = ExtResource("1_dsc6u")
-skills = Array[Resource("res://skills/new_ingress.gd")]([ExtResource("2_8sprc"), ExtResource("3_f14e6")])
+skills = Array[Resource("res://skills/blueprints/new_ingress.gd")]([ExtResource("2_8sprc"), ExtResource("3_f14e6")])

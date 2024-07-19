@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="Refrain" load_steps=2 format=3 uid="uid://cbnykd334tn68"]
 
-[ext_resource type="Script" path="res://skills/refrain.gd" id="1_g6ufv"]
+[ext_resource type="Script" path="res://skills/blueprints/refrain.gd" id="1_g6ufv"]
 
 [resource]
 script = ExtResource("1_g6ufv")

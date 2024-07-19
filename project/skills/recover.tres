@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="NewRecover" load_steps=2 format=3 uid="uid://dakqxf670mahc"]
 
-[ext_resource type="Script" path="res://skills/recover.gd" id="1_sit8f"]
+[ext_resource type="Script" path="res://skills/blueprints/recover.gd" id="1_sit8f"]
 
 [resource]
 script = ExtResource("1_sit8f")
