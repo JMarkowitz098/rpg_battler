@@ -2,6 +2,7 @@ extends Node
 class_name MockCreator
 
 const TALON = preload("res://players/Talon/talon.tscn")
+const MAX_INGRESS = 8
 
 var player: Node2D
 var enemy: Node2D
@@ -32,6 +33,8 @@ func set_action_target(target: Ingress.Target) -> void:
   match target:
     Ingress.Target.ENEMY, Ingress.Target.ALL_ENEMIES:
       action.target = enemy
+    Ingress.Target.SELF:
+      action.target = player
 
 
 
@@ -45,5 +48,6 @@ func _initialize_member(safe_add_child: Callable) -> Node2D:
   var member := TALON.instantiate()
   safe_add_child.call(member)
   member.stats = load("res://players/Talon/levels/talon_1_stats.tres")
+  member.stats.max_ingress = MAX_INGRESS
   member.modifiers.current_ingress = member.stats.max_ingress
   return member

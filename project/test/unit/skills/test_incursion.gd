@@ -30,7 +30,7 @@ func test_can_process_correctly() -> void:
 
 	gut.p("----Test player can use----")
 	await skill.process(mocker.action, get_tree(), mocker.battle_groups)
-	assert_eq(mocker.player.modifiers.current_ingress, 6, "Player Ingress")
+	assert_eq(mocker.player.modifiers.current_ingress, _remaining_ingress(mocker.MAX_INGRESS,skill.ingress), "Player Ingress")
 	assert_eq(mocker.enemy.modifiers.current_ingress, 4, "Enemy Ingress")
 
 	gut.p("----Test enemy can use----")
@@ -39,4 +39,7 @@ func test_can_process_correctly() -> void:
 	mocker.action.target = mocker.player
 	await skill.process(mocker.action, get_tree(), mocker.battle_groups)
 	assert_eq(mocker.player.modifiers.current_ingress, 4, "Player Ingress")
-	assert_eq(mocker.enemy.modifiers.current_ingress, 6, "Enemy Ingress")
+	assert_eq(mocker.enemy.modifiers.current_ingress, _remaining_ingress(mocker.MAX_INGRESS, skill.ingress), "Enemy Ingress")
+
+func _remaining_ingress(max_ingress: int, skill_ingress: int) -> int:
+	return max_ingress - skill_ingress
