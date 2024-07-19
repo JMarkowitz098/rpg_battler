@@ -1,4 +1,4 @@
-extends NewIngress
+extends Ingress
 class_name Recover
 
 @export var id: Id = Id.RECOVER

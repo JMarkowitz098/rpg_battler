@@ -57,8 +57,8 @@ func test_get_usable_skills() -> void:
 	skills.add_skill(skill_1)
 	skills.add_skill(skill_2)
 	skills.add_skill(skill_3)
-	var actual: Array[NewIngress]
-	var expected: Array[NewIngress]
+	var actual: Array[Ingress]
+	var expected: Array[Ingress]
 
 	player.learned_skills = skills
 	player.modifiers.current_ingress = 10

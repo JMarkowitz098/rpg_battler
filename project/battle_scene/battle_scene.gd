@@ -2,7 +2,7 @@ extends Node2D
 
 var current_skill_button: Button
 var current_skill_type: Ingress.Type
-var current_skill: NewIngress
+var current_skill: Ingress
 var defeated: Array[Player.Id]
 var prev_state: State.Type
 var before_pause_focus: Variant
@@ -156,7 +156,7 @@ func _set_dodging_animation() -> void:
 # Helper Functions
 # ----------------------
 
-func _handle_choose_skill(skill: NewIngress) -> void:
+func _handle_choose_skill(skill: Ingress) -> void:
 	Sound.play(Sound.confirm)
 	current_skill = skill
 		

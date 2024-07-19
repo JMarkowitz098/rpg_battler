@@ -29,7 +29,7 @@ func remove_actions_without_target_with_removed_id(unique_id: String) -> void:
 		_remove_action_from_queue_without_target_with_removed_id(unique_id, item)
 
 
-func update_player_action_with_skill(player: Node2D, target: Node2D, skill: NewIngress) -> void:
+func update_player_action_with_skill(player: Node2D, target: Node2D, skill: Ingress) -> void:
 	var action_to_update := _get_item_by_player(player).action
 	if skill.has_target():
 		action_to_update.set_skill(target, skill)
@@ -115,7 +115,7 @@ func _fill_enemy_actions(battle_groups: BattleGroups) -> void:
 
 
 func _fill_enemy_action(action: Action, battle_groups: BattleGroups) -> void:
-	var usable_skills: Array[NewIngress] = action.actor.get_usable_skills()
+	var usable_skills: Array[Ingress] = action.actor.get_usable_skills()
 
 	if usable_skills.size() == 0:
 		action.set_recover()
@@ -123,9 +123,9 @@ func _fill_enemy_action(action: Action, battle_groups: BattleGroups) -> void:
 		action.set_enemy_skill(_select_enemy_skill(usable_skills), battle_groups, action.actor)
 
 
-func _select_enemy_skill(skills: Array) -> NewIngress:
+func _select_enemy_skill(skills: Array) -> Ingress:
 	var use_refrain := randi() % 4 == 1
-	var filtered_skills: Array[NewIngress] = skills
+	var filtered_skills: Array[Ingress] = skills
 
 	if use_refrain and skills.any(_is_refrain_filter):
 		filtered_skills = skills.filter(_is_refrain_filter)
@@ -135,10 +135,10 @@ func _select_enemy_skill(skills: Array) -> NewIngress:
 	return filtered_skills[randi() % filtered_skills.size()]
 
 
-func _is_refrain_filter(skill: NewIngress) -> bool: return skill.is_refrain()
+func _is_refrain_filter(skill: Ingress) -> bool: return skill.is_refrain()
 
 
-func _is_incursion_filter(skill: NewIngress) -> bool: return skill.is_incursion()
+func _is_incursion_filter(skill: Ingress) -> bool: return skill.is_incursion()
 
 
 func _get_item_by_player(player: Node2D) -> ActionQueueItem:

@@ -1,5 +1,5 @@
 extends Resource
-class_name NewIngress
+class_name Ingress
 
 const INGRESS_ANIMATION = preload("res://skills/ingress_animation.tscn")
 
@@ -94,7 +94,7 @@ func _set_refrain(player: Node2D, skill_element: Element.Type) -> void:
 	player.refrain_aura.modulate = refrain_color
 
 
-static func load_ingress(skill_data: Array) -> NewIngress:
+static func load_ingress(skill_data: Array) -> Ingress:
 	var data_id: Id = skill_data[0]
 	var data_element: Element.Type = skill_data[1]
 	
@@ -111,7 +111,7 @@ static func load_ingress(skill_data: Array) -> NewIngress:
 			return null
 
 
-static func _load_skill(data_id: Id, element_string: String) -> NewIngress:
+static func _load_skill(data_id: Id, element_string: String) -> Ingress:
 	var path := "res://skills/" + element_string + "/"
 
 	match(data_id):

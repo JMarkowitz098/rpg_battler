@@ -102,7 +102,7 @@ func _create_skills_array(skills: Array) -> SkillGroup:
 	var new_skill_group := SkillGroup.new()
 
 	for skill_data: Array in skills:
-		var new_ingress := NewIngress.load_ingress(skill_data)
+		var new_ingress := Ingress.load_ingress(skill_data)
 		new_skill_group.add_skill(new_ingress)
 
 	return new_skill_group

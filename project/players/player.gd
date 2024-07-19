@@ -93,7 +93,7 @@ func is_player() -> bool:
 func is_enemy() -> bool:
 	return type == Type.ENEMY
 
-func get_usable_skills() -> Array[NewIngress]: 
+func get_usable_skills() -> Array[Ingress]: 
 	return learned_skills.filter_by_usable(modifiers.current_ingress)
 
 
@@ -128,11 +128,11 @@ func _on_character_stats_took_damage() -> void:
 	
 
 
-func _is_usable_skill(skill: NewIngress) -> bool:
+func _is_usable_skill(skill: Ingress) -> bool:
 	return skill.ingress < modifiers.current_ingress
 
 
-func _usable_skill_filter(skill: NewIngress) -> bool: return _is_usable_skill(skill)
+func _usable_skill_filter(skill: Ingress) -> bool: return _is_usable_skill(skill)
 
 
 func _on_modifiers_ingress_updated() -> void:

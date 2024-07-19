@@ -51,7 +51,7 @@ func is_turn_over() -> bool:
 	return item_manager.is_turn_over()
 
 
-func update_player_action_with_skill(player: Node2D, target: Node2D, skill: NewIngress) -> void:
+func update_player_action_with_skill(player: Node2D, target: Node2D, skill: Ingress) -> void:
 	item_manager.update_player_action_with_skill(player, target, skill)
 
 

@@ -1,4 +1,4 @@
-extends NewIngress
+extends Ingress
 class_name Refrain
 
 @export var id: Id = Id.REFRAIN

@@ -2,13 +2,13 @@ class_name Action
 
 var actor: Node2D
 var target: Node2D
-var skill: NewIngress
+var skill: Ingress
 var is_focused := false
 var is_choosing := false
 var action_chosen := false
 
 
-func _init(init_actor: Node2D, init_target: Node2D = null, init_skill: NewIngress = null) -> void:
+func _init(init_actor: Node2D, init_target: Node2D = null, init_skill: Ingress = null) -> void:
 	actor = init_actor
 	target = init_target
 	skill = init_skill
@@ -55,7 +55,7 @@ func is_enemy_action() -> bool:
 	return get_actor_type() == Player.Type.ENEMY
 
 
-func set_skill(attack_target: Node2D = null, attack_skill: NewIngress = null) -> void:
+func set_skill(attack_target: Node2D = null, attack_skill: Ingress = null) -> void:
 	target = attack_target
 	skill = attack_skill
 	action_chosen = true
@@ -73,7 +73,7 @@ func set_recover() -> void:
 
 
 func set_enemy_skill(
-	incoming_skill: NewIngress, battle_groups: BattleGroups, skill_actor: Node2D
+	incoming_skill: Ingress, battle_groups: BattleGroups, skill_actor: Node2D
 ) -> void:
 	var incoming_target: Node2D = null
 

@@ -1,4 +1,4 @@
-extends NewIngress
+extends Ingress
 class_name MockIngress
 
 var id: Id

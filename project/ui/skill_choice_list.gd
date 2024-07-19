@@ -2,7 +2,7 @@ extends GridContainer
 
 const BATTLE_SCENE_BUTTON := preload("res://menus/battle_scene_button.tscn")
 
-var current_skills: Array[NewIngress]
+var current_skills: Array[Ingress]
 var current_skill_index := 0
 
 func _ready() -> void:
@@ -28,7 +28,7 @@ func release_focus_from_all_buttons() -> void:
 	for child in get_children():
 		child.release_focus()
 
-func get_current_skill() -> NewIngress:
+func get_current_skill() -> Ingress:
 	return current_skills[current_skill_index]
 
 func get_current_skill_button() -> Button:
@@ -57,7 +57,7 @@ func _connect_skill_button_signals(_handle_choose_skill: Callable) -> void:
 		var skill_button := skill_buttons[i]
 		skill_button.pressed.connect(_handle_choose_skill.bind(skill))
 
-func _create_skill_desciption(skill: NewIngress) -> String:
+func _create_skill_desciption(skill: Ingress) -> String:
 	return "{0}\nIngress Energy Cost: {1}\nElement: {2}\n{3}".format([
 		skill.label,
 		skill.ingress,

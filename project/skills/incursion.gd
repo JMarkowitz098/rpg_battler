@@ -1,4 +1,4 @@
-extends NewIngress
+extends Ingress
 class_name Incursion
 
 @export var id: Id = Id.INCURSION
