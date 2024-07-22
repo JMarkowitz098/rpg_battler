@@ -47,6 +47,7 @@ func save_player(save_file_id: String, index: int, data: PlayerData) -> void:
 
 func load_data(id: String) -> SaveFileData:
 	if (OS.get_name() == "Web"):
+		print("loaded using Utils")
 		return SaveFileData.new(
 			id,
 			Utils.game_data.players_data,

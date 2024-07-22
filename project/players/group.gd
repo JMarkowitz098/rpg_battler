@@ -20,7 +20,7 @@ var current_member: int = 0
 func instantiate_members(data_array: Array[PlayerData]) -> void:
 	for slot_index in data_array.size():
 		var data := data_array[slot_index]
-		_instantiate_member(data, slot_index)
+		if(data): _instantiate_member(data, slot_index)
 
 func get_current_member() -> Node2D:
 	return members[current_member]
