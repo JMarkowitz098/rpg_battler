@@ -29,7 +29,7 @@ var skill_index := 0
 # ----------------------
 
 func _ready() -> void:
-	player_group.load_members_from_save_data("0")
+	player_group.load_members_from_save_data()
 	enemy_group.load_members_from_round_data(Utils.current_round)
 	battle_groups = BattleGroups.new(player_group.members, enemy_group.members)
 	_connect_signals()

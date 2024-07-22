@@ -33,7 +33,7 @@ func _set_focus() -> void:
 
 func _load_players_data() -> void:
 	var save_and_load := SaveAndLoad.new()
-	var save_data := save_and_load.load_data("0")
+	var save_data := save_and_load.load_data()
 	if not save_data:
 		return
 	players_data = save_data.players_data
@@ -41,7 +41,7 @@ func _load_players_data() -> void:
 	
 func _render_player_slots() -> void:
 	for data in players_data:
-		_render_slot(data)
+		if (data): _render_slot(data)
 	
 func _render_slot(player_data: PlayerData) -> void:
 	var player_details := player_data.player_details

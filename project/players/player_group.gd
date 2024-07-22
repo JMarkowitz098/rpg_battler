@@ -30,9 +30,9 @@ func next_player() -> void:
 		current_members_turn += 1
 		current_member = current_members_turn
 
-func load_members_from_save_data(id: String) -> void:
+func load_members_from_save_data() -> void:
 	var save_and_load := SaveAndLoad.new()
-	var save_data := save_and_load.load_data(id)
+	var save_data := save_and_load.load_data()
 	
 	instantiate_members(save_data.players_data)
 

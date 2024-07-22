@@ -54,7 +54,7 @@ func _on_esen_button_pressed() -> void:
 func _create_and_save_new_player() -> void:
 	var save_and_load := SaveAndLoad.new()
 	player_data.slot = player_slot
-	save_and_load.save_player("0", player_slot, player_data)
+	save_and_load.save_player(player_slot, player_data)
 	
 	
 func _on_talon_button_focus_entered() -> void:

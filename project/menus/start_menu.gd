@@ -11,9 +11,13 @@ func _ready() -> void:
 
 func _on_start_game_button_pressed() -> void:
 	var save_and_load := SaveAndLoad.new()
-	save_and_load.clear_data()
-	save_and_load.save_data(SaveFileData.new(
-		"0", [], Time.get_datetime_string_from_system(), Round.Number.ONE))
+	save_and_load.save_data(
+		SaveFileData.new(
+			"my_first_file", 
+			[null, null, null, null], 
+			Time.get_datetime_string_from_system(), 
+			Round.Number.ONE
+	))
 	get_tree().change_scene_to_file("res://menus/character_menu.tscn")
 	Sound.play(Sound.confirm)
 
