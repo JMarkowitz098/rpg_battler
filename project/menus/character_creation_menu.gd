@@ -59,7 +59,9 @@ func _create_and_save_new_player() -> void:
 	
 func _on_talon_button_focus_entered() -> void:
 	# player_data = TALON_STARTING_DATA # Comment
+	print("before loading")
 	player_data = load("res://players/Talon/details/talon_starting_data.tres")
+	print("after: ", player_data)
 	print("learned skills in focus entered: ", player_data.learned_skills.skills)
 	_update_display_info(Utils.get_player_portrait(Player.Id.TALON))
 
