@@ -1,7 +1,7 @@
 extends Resource
 class_name SkillGroup
 
-@export var skills: Array[ Ingress ] = []
+@export var skills: Array[ Ingress ]
 
 func add_skill(skill: Ingress) -> void:
 	skills.append(skill)
