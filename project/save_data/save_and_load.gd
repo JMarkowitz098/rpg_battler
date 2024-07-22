@@ -25,25 +25,40 @@ func _init(path: Path = Path.GAME) -> void:
 			save_path = TEST_SAVE_PATH
 
 
-	config.load(save_path)
+	if (OS.get_name() != "Web"): config.load(save_path)
 
 func save_data(data: SaveFileData) -> void:
-	_set_game_data(data)
-	_set_player_data(data)
-
-	config.save(save_path)
+	if (OS.get_name() == "Web"):
+		if data.players_data.size() != 0: 
+			Utils.game_data.players_data = data.players_data
+	else:
+		_set_game_data(data)
+		_set_player_data(data)
+		config.save(save_path)
 
 
 func save_player(save_file_id: String, index: int, data: PlayerData) -> void:
 	_set_data(save_file_id, PLAYER_DATA, "player_" + str(index), data.format_for_save())
-	config.save(save_path)
+	if (OS.get_name() == "Web"):
+		Utils.game_data.players_data[index] = data
+	else:
+		config.save(save_path)
 
 
 func load_data(id: String) -> SaveFileData:
-	var error := config.load(save_path)
-	if error:
-		print("An error happened while loading data: ", error)
-		return
+	if (OS.get_name() == "Web"):
+		return SaveFileData.new(
+			id,
+			Utils.game_data.players_data,
+			"",
+			Round.Number.ONE,
+	)
+	else:
+		var error := config.load(save_path)
+		if error:
+			print("An error happened while loading data: ", error)
+			return
+	
 	if (config.get_sections().size() == 0): return null
 
 	var players_data: Array[Dictionary] = _load_player_data(id)

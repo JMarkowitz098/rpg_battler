@@ -41,7 +41,7 @@ func _load_players_data() -> void:
 	
 func _render_player_slots() -> void:
 	for data in players_data:
-		_render_slot(data)
+		if(data): _render_slot(data)
 	
 func _render_slot(player_data: PlayerData) -> void:
 	var player_details := player_data.player_details
