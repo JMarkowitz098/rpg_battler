@@ -58,7 +58,7 @@ func _create_and_save_new_player() -> void:
 	
 	
 func _on_talon_button_focus_entered() -> void:
-	# player_data = TALON_STARTING_DATA
+	# player_data = TALON_STARTING_DATA # Comment
 	player_data = load("res://players/Talon/details/talon_starting_data.tres")
 	_update_display_info(Utils.get_player_portrait(Player.Id.TALON))
 
