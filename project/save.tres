@@ -1,12 +1,12 @@
 [gd_resource type="Resource" script_class="SaveFileData" load_steps=4 format=3]
 
-[ext_resource type="Resource" path="res://players/Talon/details/talon_starting_data.tres" id="1_p7sqf"]
-[ext_resource type="Script" path="res://save_data/save_file_data.gd" id="1_xuvv4"]
-[ext_resource type="Resource" path="res://players/Esen/details/esen_starting_data.tres" id="2_sn431"]
+[ext_resource type="Resource" path="res://save_player_0.tres" id="1_jud2m"]
+[ext_resource type="Script" path="res://save_data/save_file_data.gd" id="1_klhfv"]
+[ext_resource type="Resource" path="res://save_player_1.tres" id="2_fbghv"]
 
 [resource]
-script = ExtResource("1_xuvv4")
+script = ExtResource("1_klhfv")
 id = "my_first_file"
-players_data = Array[Resource("res://players/player_data.gd")]([ExtResource("1_p7sqf"), ExtResource("2_sn431"), null, null])
-save_time = "2024-07-22T09:55:04"
+players_data = Array[Resource("res://players/player_data.gd")]([ExtResource("1_jud2m"), ExtResource("2_fbghv"), null, null])
+save_time = "2024-07-22T10:27:10"
 round_number = 0

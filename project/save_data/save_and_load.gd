@@ -7,8 +7,10 @@ enum Path {
 	VICTORY_SCREEN
 }
 
-const SAVE_PATH = "user://save.tres"
 # const SAVE_PATH = "res://save.tres"
+const SAVE_PATH = "user://save.tres"
+# const PLAYER_PATH_ROOT = "res://save_player_"
+const PLAYER_PATH_ROOT = "user://save_player_"
 const TEST_SAVE_PATH = "res://test.tres"
 
 var save_path: String
@@ -29,8 +31,12 @@ func save_data(data: SaveFileData) -> void:
 
 
 func save_player(index: int, data: PlayerData) -> void:
+	var player_path := PLAYER_PATH_ROOT + str(index) + ".tres"
+	data.slot = index
+	ResourceSaver.save(data, player_path)
+	var updated_player_data := load(player_path)
 	var loaded := ResourceLoader.load(save_path)
-	loaded.players_data[index] = data
+	loaded.players_data[index] = updated_player_data
 	save_data(loaded)
 
 

@@ -38,7 +38,7 @@ func _create_portrait_texture_rec(player_id: Player.Id) -> TextureRect:
 	return new_texture_rect
 	
 func _level_up_player_and_save() -> void:
-	var loaded_players := save_and_load.load_data("0").players_data
+	var loaded_players := save_and_load.load_data().players_data
 
 	for loaded_player_data in loaded_players:
 		if(loaded_player_data):
@@ -63,7 +63,7 @@ func _save_and_return_new_stats(loaded_player_data: PlayerData) -> Stats:
 	)
 
 	loaded_player_data.stats = new_stats
-	save_and_load.save_player("0", loaded_player_data.slot, loaded_player_data)
+	save_and_load.save_player(loaded_player_data.slot, loaded_player_data)
 	return new_stats
 
 func _save_and_return_new_skills(loaded_player_data: PlayerData) -> SkillGroup:
@@ -72,7 +72,7 @@ func _save_and_return_new_skills(loaded_player_data: PlayerData) -> SkillGroup:
 		loaded_player_data.stats.level # Level already updated
 	)
 	loaded_player_data.learned_skills = new_skills
-	save_and_load.save_player("0", loaded_player_data.slot, loaded_player_data)
+	save_and_load.save_player(loaded_player_data.slot, loaded_player_data)
 	return new_skills
 
 func _render_level_up_columns() -> void:

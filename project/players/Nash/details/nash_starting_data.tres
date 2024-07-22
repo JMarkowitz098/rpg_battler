@@ -24,3 +24,4 @@ stats = SubResource("Resource_tm5oe")
 unique_id = SubResource("Resource_3khxu")
 learned_skills = ExtResource("1_f14n6")
 type = 0
+slot = 0

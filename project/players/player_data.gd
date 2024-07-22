@@ -6,8 +6,7 @@ class_name PlayerData
 @export var unique_id: UniqueId
 @export var learned_skills: SkillGroup
 @export var type: Player.Type
-
-var slot := 0
+@export var slot: int
 
 func _init(
   _player_details: PlayerDetails = null, 
