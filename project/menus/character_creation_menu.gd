@@ -59,10 +59,12 @@ func _create_and_save_new_player() -> void:
 	
 func _on_talon_button_focus_entered() -> void:
 	player_data = TALON_STARTING_DATA
-	var skill_group: SkillGroup = load("res://players/Talon/levels/talon_test_skills.tres")
-	print("Manually loaded skill group: ", skill_group)
-	print("Manually loaded skill group skills: ", skill_group.skills)
-	player_data.learned_skills = skill_group
+	player_data.learned_skills.skills = [
+		Ing.load_ingress([Ingress.Id.INCURSION, Element.Type.ETH]),
+		Ing.load_ingress([Ingress.Id.REFRAIN, Element.Type.ETH]),
+		Ing.load_ingress([Ingress.Id.INCURSION, Element.Type.SHOR]),
+		Ing.load_ingress([Ingress.Id.REFRAIN, Element.Type.SHOR]),
+	]
 	_update_display_info(Utils.get_player_portrait(Player.Id.TALON))
 
 func _on_nash_button_focus_entered() -> void:
