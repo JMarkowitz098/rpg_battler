@@ -16,12 +16,12 @@ func process(action: Action, _tree: SceneTree, battle_groups: BattleGroups) -> v
 	else: 
 		targets = battle_groups.players
 	for player in targets:
-		await _damage_target(player, action)
+		_damage_target(player, action)
 
 
 func _damage_target(player: Node2D, action: Action) -> void:
 	action.target = player
-	await player.take_damage(Utils.calculate_skill_damage(action))
+	player.take_damage(Utils.calculate_skill_damage(action))
 
    
 func is_incursion() -> bool: return Ing.is_incursion(type)

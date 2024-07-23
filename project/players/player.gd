@@ -115,6 +115,7 @@ func current_ingress() -> int:
 
 func take_damage(amount: int) -> void:
 	animation_player.play("hurt")
+	await animation_player.animation_finished
 	set_current_ingress(modifiers.current_ingress - amount)
 	if not Utils.is_test: await get_tree().create_timer(1.4).timeout
 	animation_player.play("idle")
@@ -123,12 +124,6 @@ func take_damage(amount: int) -> void:
 # Helper Functions
 # ----------------
 
-# Need to replace with modifiers on took damage or something
-func _on_character_stats_took_damage() -> void:
-	update_energy_bar()
-	animation_player.play("hurt")
-	if not Utils.is_test: await get_tree().create_timer(1.4).timeout
-	animation_player.play("idle")
 	
 
 
