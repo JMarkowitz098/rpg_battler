@@ -69,10 +69,20 @@ func _on_talon_button_focus_entered() -> void:
 
 func _on_nash_button_focus_entered() -> void:
 	player_data = NASH_STARTING_DATA
+	player_data.learned_skills.skills = [
+		Ing.load_ingress([Ingress.Id.INCURSION, Element.Type.SCOR]),
+		Ing.load_ingress([Ingress.Id.REFRAIN, Element.Type.SCOR]),
+		Ing.load_ingress([Ingress.Id.INCURSION, Element.Type.SHOR]),
+		Ing.load_ingress([Ingress.Id.REFRAIN, Element.Type.SHOR]),
+	]
 	_update_display_info(Utils.get_player_portrait(Player.Id.NASH))
 	
 func _on_esen_button_focus_entered() -> void:
 	player_data = ESEN_STARTING_DATA
+	player_data.learned_skills.skills = [
+		Ing.load_ingress([Ingress.Id.INCURSION, Element.Type.ETH]),
+		Ing.load_ingress([Ingress.Id.REFRAIN, Element.Type.ETH]),
+	]
 	_update_display_info(Utils.get_player_portrait(Player.Id.ESEN))
 		
 func _update_display_info(player_portrait: Texture2D) -> void:
