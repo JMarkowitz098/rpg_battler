@@ -63,6 +63,8 @@ func _on_talon_button_focus_entered() -> void:
 	player_data = load("res://players/Talon/details/talon_starting_data.tres")
 	print("after: ", player_data.learned_skills)
 	print("learned skills in focus entered: ", player_data.learned_skills.skills)
+	var skill := load("res://skills/eth/eth_incursion.tres")
+	print("Loaded eth incursion: ", skill)
 	_update_display_info(Utils.get_player_portrait(Player.Id.TALON))
 
 func _on_nash_button_focus_entered() -> void:
