@@ -33,8 +33,6 @@ func next_player() -> void:
 func load_members_from_save_data(id: String) -> void:
 	var save_and_load := SaveAndLoad.new()
 	var save_data := save_and_load.load_data(id)
-	print("load data in player_group: ", save_data.players_data[0].learned_skills.skills)
-	
 	instantiate_members(save_data.players_data)
 
 func reset_current_member_and_turn() -> void:

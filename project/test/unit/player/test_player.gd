@@ -53,10 +53,10 @@ func test_get_usable_skills() -> void:
 	var skill_3 := MockIngress.create_incursion()
 	skill_3.ingress = 4
 
-	var skills := SkillGroup.new()
-	skills.add_skill(skill_1)
-	skills.add_skill(skill_2)
-	skills.add_skill(skill_3)
+	var skills: Array[Ingress] = []
+	skills.append(skill_1)
+	skills.append(skill_2)
+	skills.append(skill_3)
 	var actual: Array[Ingress]
 	var expected: Array[Ingress]
 

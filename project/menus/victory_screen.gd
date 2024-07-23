@@ -66,7 +66,7 @@ func _save_and_return_new_stats(loaded_player_data: PlayerData) -> Stats:
 	save_and_load.save_player("0", loaded_player_data.slot, loaded_player_data)
 	return new_stats
 
-func _save_and_return_new_skills(loaded_player_data: PlayerData) -> SkillGroup:
+func _save_and_return_new_skills(loaded_player_data: PlayerData) -> Array[Ingress]:
 	var new_skills := Ing.get_new_skills(
 		loaded_player_data.player_details.player_id, 
 		loaded_player_data.stats.level # Level already updated
@@ -106,10 +106,10 @@ func _render_column_stats(column: VBoxContainer, old_stats: Stats, new_stats: St
 func _create_stat_message(old_stats: Stats, new_stats: Stats, stat_key: String, stat_label: String) -> String:
 	return stat_label + " +" + str(new_stats[stat_key] - old_stats[stat_key]) + "\n"
 
-func _render_column_skills(column: VBoxContainer, old_skills: SkillGroup, new_skills: SkillGroup) -> void:
+func _render_column_skills(column: VBoxContainer, old_skills: Array[Ingress], new_skills: Array[Ingress]) -> void:
 	var message := ""
-	for skill: Ingress in new_skills.skills:
-		if not skill in old_skills.skills:
+	for skill: Ingress in new_skills:
+		if not skill in old_skills:
 			message += skill.label + "\n"
 
 	column.find_child("SkillsData").text = message

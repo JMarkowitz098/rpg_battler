@@ -1,12 +1,17 @@
-[gd_resource type="Resource" script_class="EnemyPlayerData" load_steps=5 format=3 uid="uid://drgq0j72ux6v0"]
+[gd_resource type="Resource" script_class="EnemyPlayerData" load_steps=10 format=3 uid="uid://drgq0j72ux6v0"]
 
 [ext_resource type="Script" path="res://players/enemies/enemy_player_data.gd" id="1_1coyl"]
 [ext_resource type="Resource" uid="uid://pue3uw4dj1e3" path="res://players/Nash/details/nash_player_details.tres" id="1_vtnwf"]
-[ext_resource type="Resource" uid="uid://dqv3062gai2ps" path="res://players/Nash/levels/nash_2_skills.tres" id="3_66o01"]
+[ext_resource type="Resource" uid="uid://bifhs7i0ivint" path="res://skills/shor/shor_incursion.tres" id="3_tg37j"]
+[ext_resource type="Resource" uid="uid://b4wfage7tji0c" path="res://skills/shor/shor_refrain.tres" id="4_brrfl"]
 [ext_resource type="Resource" uid="uid://bhpo37vh0h3to" path="res://players/enemies/round_2/round_2_stats.tres" id="4_en0fl"]
+[ext_resource type="Resource" uid="uid://yuk7udxhmg61" path="res://skills/shor/shor_group_refrain.tres" id="5_kb5r0"]
+[ext_resource type="Resource" uid="uid://wkb21nusdwy3" path="res://skills/scor/scor_incursion.tres" id="6_2sve0"]
+[ext_resource type="Resource" uid="uid://dppsbqbf3wrv1" path="res://skills/scor/scor_refrain.tres" id="7_vryab"]
+[ext_resource type="Resource" uid="uid://b4i1psndb60fq" path="res://skills/scor/scor_group_refrain.tres" id="8_gw6h2"]
 
 [resource]
 script = ExtResource("1_1coyl")
 details = ExtResource("1_vtnwf")
 stats = ExtResource("4_en0fl")
-skills = ExtResource("3_66o01")
+skills = Array[Resource("res://skills/blueprints/new_ingress.gd")]([ExtResource("3_tg37j"), ExtResource("4_brrfl"), ExtResource("5_kb5r0"), ExtResource("6_2sve0"), ExtResource("7_vryab"), ExtResource("8_gw6h2")])

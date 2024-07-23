@@ -1,8 +1,11 @@
-[gd_resource type="Resource" script_class="PlayerData" load_steps=7 format=3 uid="uid://bhs7aguhh7rp4"]
+[gd_resource type="Resource" script_class="PlayerData" load_steps=10 format=3 uid="uid://bhs7aguhh7rp4"]
 
-[ext_resource type="Resource" uid="uid://ceb2pia8to802" path="res://players/Talon/levels/talon_1_skills.tres" id="1_22bwi"]
 [ext_resource type="Script" path="res://players/player_data.gd" id="1_a44iu"]
+[ext_resource type="Resource" uid="uid://bx4arvsly282v" path="res://skills/eth/eth_incursion.tres" id="1_fnf21"]
 [ext_resource type="Resource" uid="uid://ber4ixqhnh8bj" path="res://players/Talon/details/talon_player_details.tres" id="1_l4lmr"]
+[ext_resource type="Resource" uid="uid://cbnykd334tn68" path="res://skills/eth/eth_refrain.tres" id="2_q8frv"]
+[ext_resource type="Resource" uid="uid://bifhs7i0ivint" path="res://skills/shor/shor_incursion.tres" id="3_c6wm1"]
+[ext_resource type="Resource" uid="uid://b4wfage7tji0c" path="res://skills/shor/shor_refrain.tres" id="4_f6f13"]
 [ext_resource type="Resource" uid="uid://3k7oaij4vf2k" path="res://players/Talon/levels/talon_1_stats.tres" id="4_hcxmh"]
 [ext_resource type="Script" path="res://players/unique_id.gd" id="8_k6is2"]
 
@@ -14,5 +17,5 @@ script = ExtResource("1_a44iu")
 player_details = ExtResource("1_l4lmr")
 stats = ExtResource("4_hcxmh")
 unique_id = SubResource("Resource_wq0yb")
-learned_skills = ExtResource("1_22bwi")
+learned_skills = Array[Resource("res://skills/blueprints/new_ingress.gd")]([ExtResource("1_fnf21"), ExtResource("2_q8frv"), ExtResource("3_c6wm1"), ExtResource("4_f6f13")])
 type = 0

@@ -79,8 +79,8 @@ static func create_refrain() -> MockIngress:
 	})
 
 
-static func create_array() -> SkillGroup:
-	var skills := SkillGroup.new()
-	skills.add_skill(create_incursion())
-	skills.add_skill(create_refrain())
+static func create_array() -> Array[Ingress]:
+	var skills: Array[Ingress] = []
+	skills.append(create_incursion())
+	skills.append(create_refrain())
 	return skills

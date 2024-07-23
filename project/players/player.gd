@@ -17,7 +17,7 @@ enum Type { PLAYER, ENEMY }
 @export var details: PlayerDetails
 
 var stats: Stats
-var learned_skills: SkillGroup
+var learned_skills: Array[Ingress]
 
 var slot: int
 var type: Type
@@ -63,7 +63,7 @@ func set_triangle_focus_color(color: Color) -> void:
 func set_triangle_focus_size(size: Vector2) -> void:
 	triangle_focus.scale = size
 
-func set_skills(incoming_skills: SkillGroup) -> void:
+func set_skills(incoming_skills: Array[Ingress]) -> void:
 	learned_skills = incoming_skills
 
 func set_unique_id(incoming_unique_id: UniqueId) -> void:
@@ -94,7 +94,15 @@ func is_enemy() -> bool:
 	return type == Type.ENEMY
 
 func get_usable_skills() -> Array[Ingress]: 
-	return learned_skills.filter_by_usable(modifiers.current_ingress)
+	return learned_skills.filter(_is_usable_skill)
+
+func filter_by_type(skill_type: Ingress.Type) -> Array[Ingress]:
+	return learned_skills.filter(func(skill: Ingress) -> bool: return skill.skill_ == skill_type)
+
+
+func filter_by_usable() -> Array[Ingress]:
+	return learned_skills.filter(_is_usable_skill)
+
 
 
 func is_alive() -> bool:
@@ -115,15 +123,13 @@ func current_ingress() -> int:
 
 func take_damage(amount: int) -> void:
 	animation_player.play("hurt")
-	await animation_player.animation_finished
+	if not Utils.is_test: await animation_player.animation_finished
 	set_current_ingress(modifiers.current_ingress - amount)
 	animation_player.play("idle")
 
 # ----------------
 # Helper Functions
 # ----------------
-
-	
 
 
 func _is_usable_skill(skill: Ingress) -> bool:

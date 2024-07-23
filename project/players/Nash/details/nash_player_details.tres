@@ -1,11 +1,16 @@
-[gd_resource type="Resource" script_class="PlayerDetails" load_steps=3 format=3 uid="uid://pue3uw4dj1e3"]
+[gd_resource type="Resource" script_class="PlayerDetails" load_steps=8 format=3 uid="uid://pue3uw4dj1e3"]
 
-[ext_resource type="Resource" uid="uid://pday2f1o6qmq" path="res://players/Nash/details/nash_learnable_skills.tres" id="1_jbclr"]
+[ext_resource type="Resource" uid="uid://bifhs7i0ivint" path="res://skills/shor/shor_incursion.tres" id="1_mmfim"]
+[ext_resource type="Resource" uid="uid://yuk7udxhmg61" path="res://skills/shor/shor_group_refrain.tres" id="2_ha2rm"]
 [ext_resource type="Script" path="res://players/player_details.gd" id="2_jhob8"]
+[ext_resource type="Resource" uid="uid://b4wfage7tji0c" path="res://skills/shor/shor_refrain.tres" id="3_6vbop"]
+[ext_resource type="Resource" uid="uid://wkb21nusdwy3" path="res://skills/scor/scor_incursion.tres" id="4_jn0u7"]
+[ext_resource type="Resource" uid="uid://dppsbqbf3wrv1" path="res://skills/scor/scor_refrain.tres" id="5_jvtoe"]
+[ext_resource type="Resource" uid="uid://b4i1psndb60fq" path="res://skills/scor/scor_group_refrain.tres" id="6_3hwr0"]
 
 [resource]
 script = ExtResource("2_jhob8")
 player_id = 1
 label = "Nash"
 elements = Array[int]([2, 3])
-learnable_skills = ExtResource("1_jbclr")
+learnable_skills = Array[Resource("res://skills/blueprints/new_ingress.gd")]([ExtResource("1_mmfim"), ExtResource("2_ha2rm"), ExtResource("3_6vbop"), ExtResource("4_jn0u7"), ExtResource("5_jvtoe"), ExtResource("6_3hwr0")])

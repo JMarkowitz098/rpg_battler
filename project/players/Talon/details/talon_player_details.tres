@@ -1,11 +1,18 @@
-[gd_resource type="Resource" script_class="PlayerDetails" load_steps=3 format=3 uid="uid://ber4ixqhnh8bj"]
+[gd_resource type="Resource" script_class="PlayerDetails" load_steps=10 format=3 uid="uid://ber4ixqhnh8bj"]
 
+[ext_resource type="Resource" uid="uid://bx4arvsly282v" path="res://skills/eth/eth_incursion.tres" id="1_120lk"]
 [ext_resource type="Script" path="res://players/player_details.gd" id="1_paxr0"]
-[ext_resource type="Resource" uid="uid://by7lr03pkqy44" path="res://players/Talon/details/talon_learnable_skills.tres" id="1_tyocy"]
+[ext_resource type="Resource" uid="uid://cbnykd334tn68" path="res://skills/eth/eth_refrain.tres" id="2_a4do0"]
+[ext_resource type="Resource" uid="uid://72xsuje527dh" path="res://skills/eth/eth_double_incursion.tres" id="3_ell4r"]
+[ext_resource type="Resource" uid="uid://dk8xm5avw2ed0" path="res://skills/eth/eth_group_incursion.tres" id="4_tn80s"]
+[ext_resource type="Resource" uid="uid://bifhs7i0ivint" path="res://skills/shor/shor_incursion.tres" id="5_ns7qu"]
+[ext_resource type="Resource" uid="uid://b4wfage7tji0c" path="res://skills/shor/shor_refrain.tres" id="6_15by4"]
+[ext_resource type="Resource" uid="uid://drawhwl5wptrl" path="res://skills/shor/shor_double_incursion.tres" id="7_ksl3o"]
+[ext_resource type="Resource" uid="uid://c6r1uv74a5bly" path="res://skills/shor/shor_group_incursion.tres" id="8_516ey"]
 
 [resource]
 script = ExtResource("1_paxr0")
 player_id = 0
 label = "Talon"
 elements = Array[int]([0, 2])
-learnable_skills = ExtResource("1_tyocy")
+learnable_skills = Array[Resource("res://skills/blueprints/new_ingress.gd")]([ExtResource("1_120lk"), ExtResource("2_a4do0"), ExtResource("3_ell4r"), ExtResource("4_tn80s"), ExtResource("5_ns7qu"), ExtResource("6_15by4"), ExtResource("7_ksl3o"), ExtResource("8_516ey")])

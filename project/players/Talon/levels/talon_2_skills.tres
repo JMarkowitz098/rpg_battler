@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="SkillGroup" load_steps=8 format=3 uid="uid://bsgphwt0ucxh8"]
+[gd_resource type="Resource" script_class="Array[Ingress]" load_steps=8 format=3 uid="uid://bsgphwt0ucxh8"]
 
 [ext_resource type="Script" path="res://skills/skill_group.gd" id="1_ve8df"]
 [ext_resource type="Resource" uid="uid://bx4arvsly282v" path="res://skills/eth/eth_incursion.tres" id="2_u8k2o"]

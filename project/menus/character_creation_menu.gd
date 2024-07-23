@@ -59,7 +59,7 @@ func _create_and_save_new_player() -> void:
 	
 func _on_talon_button_focus_entered() -> void:
 	player_data = TALON_STARTING_DATA
-	player_data.learned_skills.skills = [
+	player_data.learned_skills = [
 		Ing.load_ingress([Ingress.Id.INCURSION, Element.Type.ETH]),
 		Ing.load_ingress([Ingress.Id.REFRAIN, Element.Type.ETH]),
 		Ing.load_ingress([Ingress.Id.INCURSION, Element.Type.SHOR]),
@@ -69,7 +69,7 @@ func _on_talon_button_focus_entered() -> void:
 
 func _on_nash_button_focus_entered() -> void:
 	player_data = NASH_STARTING_DATA
-	player_data.learned_skills.skills = [
+	player_data.learned_skills = [
 		Ing.load_ingress([Ingress.Id.INCURSION, Element.Type.SCOR]),
 		Ing.load_ingress([Ingress.Id.REFRAIN, Element.Type.SCOR]),
 		Ing.load_ingress([Ingress.Id.INCURSION, Element.Type.SHOR]),
@@ -79,7 +79,7 @@ func _on_nash_button_focus_entered() -> void:
 	
 func _on_esen_button_focus_entered() -> void:
 	player_data = ESEN_STARTING_DATA
-	player_data.learned_skills.skills = [
+	player_data.learned_skills = [
 		Ing.load_ingress([Ingress.Id.INCURSION, Element.Type.ETH]),
 		Ing.load_ingress([Ingress.Id.REFRAIN, Element.Type.ETH]),
 	]

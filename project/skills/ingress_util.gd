@@ -38,6 +38,13 @@ func format_for_save(id: Ingress.Id, element: Element.Type) -> Array:
 	return [id, element]
 
 
+func _create_ingress_list(list: Array) -> Array[Ingress]:
+	var skills: Array[Ingress] = []
+	for skill_info: Array in list:
+		skills.append(load_ingress(skill_info))
+	return skills
+
+
 func _load_skill(data_id: Ingress.Id, element_string: String) -> Ingress:
 	var path := "res://skills/" + element_string + "/"
 
@@ -57,7 +64,7 @@ func _load_skill(data_id: Ingress.Id, element_string: String) -> Ingress:
 
 	return load(path)
 
-func get_new_skills(player_id: Player.Id, new_level: int) -> SkillGroup:
+func get_new_skills(player_id: Player.Id, new_level: int) -> Array[Ingress]:
 	match player_id:
 		Player.Id.TALON:
 			return _get_talon_skills(new_level)
@@ -66,37 +73,71 @@ func get_new_skills(player_id: Player.Id, new_level: int) -> SkillGroup:
 		Player.Id.ESEN:
 			return _get_esen_skills(new_level)
 		_:
-			return null
+			return []
 
-func _get_talon_skills(new_level: int) -> SkillGroup:
+func _get_talon_skills(new_level: int) -> Array[Ingress]:
+	var skills := _create_ingress_list([
+		[Ingress.Id.INCURSION, Element.Type.SHOR],
+		[Ingress.Id.INCURSION, Element.Type.ETH],
+		[Ingress.Id.REFRAIN, Element.Type.SHOR],
+		[Ingress.Id.REFRAIN, Element.Type.ETH],
+	])
+	
 	match(new_level):
 		1:
-			return load("res://players/Talon/levels/talon_1_skills.tres")
+			pass
 		2:
-			return load("res://players/Talon/levels/talon_2_skills.tres")
+			skills.append_array(_create_ingress_list([
+				[Ingress.Id.DOUBLE_INCURSION, Element.Type.SHOR],
+				[Ingress.Id.DOUBLE_INCURSION, Element.Type.SCOR],
+			]))
 		3:
-			return load("res://players/Talon/levels/talon_3_skills.tres")
+			pass
 		_:
-			return null
+			return []
 
-func _get_nash_skills(new_level: int) -> SkillGroup:
+	return skills
+
+func _get_nash_skills(new_level: int) -> Array[Ingress]:
+	var skills := _create_ingress_list([
+		[Ingress.Id.INCURSION, Element.Type.SHOR],
+		[Ingress.Id.INCURSION, Element.Type.SCOR],
+		[Ingress.Id.REFRAIN, Element.Type.SHOR],
+		[Ingress.Id.REFRAIN, Element.Type.SCOR],
+	])
+	
 	match(new_level):
 		1:
-			return load("res://players/Nash/levels/nash_1_skills.tres")
+			pass
 		2:
-			return load("res://players/Nash/levels/nash_2_skills.tres")
+			skills.append_array(_create_ingress_list([
+				[Ingress.Id.GROUP_REFRAIN, Element.Type.SHOR],
+				[Ingress.Id.GROUP_REFRAIN, Element.Type.SCOR],
+			]))
 		3:
-			return load("res://players/Nash/levels/nash_3_skills.tres")
+			pass
 		_:
-			return null
+			return []
+		
+	return skills
 
-func _get_esen_skills(new_level: int) -> SkillGroup:
+func _get_esen_skills(new_level: int) -> Array[Ingress]:
+	var skills := _create_ingress_list([
+		[Ingress.Id.INCURSION, Element.Type.ETH],
+		[Ingress.Id.REFRAIN, Element.Type.ETH],
+	])
+	
 	match(new_level):
 		1:
-			return load("res://players/Esen/levels/esen_1_skills.tres")
+			pass
 		2:
-			return load("res://players/Esen/levels/esen_2_skills.tres")
+			skills.append_array(_create_ingress_list([
+				[Ingress.Id.GROUP_REFRAIN, Element.Type.ETH],
+				[Ingress.Id.DOUBLE_INCURSION, Element.Type.ETH],
+			]))
 		3:
-			return load("res://players/Esen/levels/esen_3_skills.tres")
+			pass
 		_:
-			return null
+			return []
+		
+	return skills
