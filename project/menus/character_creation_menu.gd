@@ -64,7 +64,10 @@ func _on_talon_button_focus_entered() -> void:
 	print("after: ", player_data.learned_skills)
 	print("learned skills in focus entered: ", player_data.learned_skills.skills)
 	var skill := load("res://skills/eth/eth_incursion.tres")
-	print("Loaded eth incursion: ", skill)
+	var skill_2 := load("res://skills/eth/eth_refrain.tres")
+	player_data.learned_skills.skills.append(skill)
+	player_data.learned_skills.skills.append(skill_2)
+	print("learned skills in focus entered after appending: ", player_data.learned_skills.skills)
 	_update_display_info(Utils.get_player_portrait(Player.Id.TALON))
 
 func _on_nash_button_focus_entered() -> void:
