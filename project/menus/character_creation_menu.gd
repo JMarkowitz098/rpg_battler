@@ -58,16 +58,11 @@ func _create_and_save_new_player() -> void:
 	
 	
 func _on_talon_button_focus_entered() -> void:
-	# player_data = TALON_STARTING_DATA # Comment
-	print("before loading")
-	player_data = load("res://players/Talon/details/talon_starting_data.tres")
-	print("after: ", player_data.learned_skills)
-	print("learned skills in focus entered: ", player_data.learned_skills.skills)
-	var skill := load("res://skills/eth/eth_incursion.tres")
-	var skill_2 := load("res://skills/eth/eth_refrain.tres")
-	player_data.learned_skills.skills.append(skill)
-	player_data.learned_skills.skills.append(skill_2)
-	print("learned skills in focus entered after appending: ", player_data.learned_skills.skills)
+	player_data = TALON_STARTING_DATA
+	var skill_group: SkillGroup = load("res://players/Talon/levels/talon_test_skills.tres")
+	print("Manually loaded skill group: ", skill_group)
+	print("Manually loaded skill group skills: ", skill_group.skills)
+	player_data.learned_skills = skill_group
 	_update_display_info(Utils.get_player_portrait(Player.Id.TALON))
 
 func _on_nash_button_focus_entered() -> void:
