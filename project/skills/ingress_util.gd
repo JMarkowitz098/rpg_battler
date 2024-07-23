@@ -73,7 +73,6 @@ func _get_talon_skills(new_level: int) -> SkillGroup:
 		1:
 			return load("res://players/Talon/levels/talon_1_skills.tres")
 		2:
-			print("made it")
 			return load("res://players/Talon/levels/talon_2_skills.tres")
 		3:
 			return load("res://players/Talon/levels/talon_3_skills.tres")

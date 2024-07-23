@@ -40,7 +40,6 @@ func save_data(data: SaveFileData) -> void:
 func save_player(save_file_id: String, index: int, data: PlayerData) -> void:
 	if (OS.get_name() == "Web"):
 		Utils.game_data.players_data[index] = data
-		print("learned skills after util save: ", Utils.game_data.players_data[index].learned_skills.skills)
 	else:
 		_set_data(save_file_id, PLAYER_DATA, "player_" + str(index), data.format_for_save())
 		config.save(save_path)
@@ -48,7 +47,6 @@ func save_player(save_file_id: String, index: int, data: PlayerData) -> void:
 
 func load_data(id: String) -> SaveFileData:
 	if (OS.get_name() == "Web"):
-		print("loaded using Utils")
 		return SaveFileData.new(
 			id,
 			Utils.game_data.players_data,
