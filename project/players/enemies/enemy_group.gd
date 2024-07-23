@@ -37,12 +37,16 @@ func _connect_signals() -> void:
 	Utils.connect_signals(signals)
 
 func _create_player_data(new_enemy_data: Array[PlayerData], round_data: Round) -> void:
+	var enemy_level := 1
+	if round_data.round_number == Round.Number.ONE: enemy_level = 2
+	
 	for data: EnemyPlayerData in round_data.enemies:
 		new_enemy_data.append(PlayerData.new(
 			data.details,
 			data.stats,
 			UniqueId.new(),
-			data.skills,
+			Ing.get_new_skills(data.details.player_id, enemy_level),
+			# data.skills,
 			Player.Type.ENEMY
 		))
 
