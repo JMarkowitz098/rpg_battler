@@ -1,58 +1,53 @@
 class_name ActionQueueFocusManager
 
-var queue: ActionQueue
-var items: Array[ActionQueueItem]
+# var queue: ActionQueue
+# var items: Array[ActionQueueItem]
 
 
-func _init(init_queue: ActionQueue) -> void:
-	queue = init_queue
-	items = queue.items
+# func reset_current_member() -> void:
+# 	queue.current_member = 0
 
 
-func reset_current_member() -> void:
-	queue.current_member = 0
+# func get_current_item() -> ActionQueueItem:
+# 	return items[queue.current_member]
 
 
-func get_current_item() -> ActionQueueItem:
-	return items[queue.current_member]
-
-
-func set_item_focus(index: int, type: Focus.Type) -> void:
+func set_item_focus(items: Array[ActionQueueItem], index: int, type: Focus.Type) -> void:
 	items[index].focus(type)
 
 
-func create_action_message(action: Action) -> String:
-	var message: String = "Player: " + action.get_actor_label()
-	if action.skill: message += "\nAction: " + action.skill.label
-	if action.target: message += "\nTarget -> " + action.get_target_label()
-	return message
+# func create_action_message(action: Action) -> String:
+# 	var message: String = "Player: " + action.get_actor_label()
+# 	if action.skill: message += "\nAction: " + action.skill.label
+# 	if action.target: message += "\nTarget -> " + action.get_target_label()
+# 	return message
 
 
-func unfocus_all(type: Focus.Type) -> void:
-	for item in items: item.unfocus(type)
+# func unfocus_all(type: Focus.Type) -> void:
+# 	for item in items: item.unfocus(type)
 
 
-func set_focuses() -> void:
-	var item := get_current_item()
-	var action: Action = item.action
+# func set_focuses() -> void:
+# 	var item := get_current_item()
+# 	var action: Action = item.action
 
-	_focus_actor(action.actor)
-	item.focus(Focus.Type.FINGER)
+# 	_focus_actor(action.actor)
+# 	item.focus(Focus.Type.FINGER)
 
-	if action.skill: _focus_target_by_skill(action)
-
-
-func get_action_index_by_unique_id(unique_id: String) -> int:
-	for i in items.size():
-		var action := items[i].action
-		if action.actor.unique_id.id == unique_id:
-			return i
-	return 0
+# 	if action.skill: _focus_target_by_skill(action)
 
 
-func set_triangle_focus_on_player(unique_id: String) -> void:
-	var index := get_action_index_by_unique_id(unique_id)
-	set_item_focus(index, Focus.Type.TRIANGLE)
+# func get_action_index_by_unique_id(unique_id: String) -> int:
+# 	for i in items.size():
+# 		var action := items[i].action
+# 		if action.actor.unique_id.id == unique_id:
+# 			return i
+# 	return 0
+
+
+# func set_triangle_focus_on_player(unique_id: String) -> void:
+# 	var index := get_action_index_by_unique_id(unique_id)
+# 	set_item_focus(index, Focus.Type.TRIANGLE)
 
 
 # -----------------

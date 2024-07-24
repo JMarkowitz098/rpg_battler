@@ -5,8 +5,8 @@ var items: Array[ActionQueueItem] = []
 var current_member: int = 0
 
 var process_queue := ProcessQueue.new()
-var item_manager := ActionQueueItemManager.new(self)
-var focus_manager := ActionQueueFocusManager.new(self)
+var item_manager := ActionQueueItemManager.new()
+var focus_manager := ActionQueueFocusManager.new()
 
 const ACTION_QUEUE_ITEM := preload("res://battle_scene/action_queue/action_queue_item.tscn")
 
@@ -45,6 +45,7 @@ func process_action_queue(tree: SceneTree, battle_groups: BattleGroups) -> void:
 
 func fill_initial_turn_items(battle_groups: BattleGroups) -> void:
 	items = item_manager.create_items(battle_groups)
+	for item in items: add_child(item)
 
 
 func is_turn_over() -> bool:
