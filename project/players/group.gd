@@ -25,6 +25,15 @@ func instantiate_members(data_array: Array[PlayerData]) -> void:
 func get_current_member() -> Node2D:
 	return members[current_member]
 
+func get_member_index(unique_id: String) -> int:
+	var idx := 0
+	for member in members:
+		if member.unique_id.id == unique_id: 
+			return idx
+		else:
+			idx += 1
+	return idx
+
 func get_member_by_unique_id(unique_id: String) -> Node2D:
 	if members.size() > 0:
 		return members.filter(func(member: Node2D) -> bool: return member.unique_id.id == unique_id)[0]

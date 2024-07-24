@@ -41,6 +41,12 @@ func test_can_create_items() -> void:
 
 	for item in new_items: item.queue_free()
 
+func test_can_fill_enemy_actions() -> void:
+	manager.fill_enemy_actions(items, mocker.battle_groups)
+	assert_null(items[0].action.skill)
+	assert_not_null(items[1].action.skill)
+	assert_not_null(items[2].action.skill)
+
 # ----------------
 # Helper Functions
 # ----------------

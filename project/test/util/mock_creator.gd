@@ -59,6 +59,7 @@ func _initialize_member() -> Node2D:
 	var member := TALON.instantiate()
 	safe_add_child.call(member)
 	member.stats = load("res://players/Talon/levels/talon_1_stats.tres")
+	member.learned_skills = member.details.learnable_skills
 	member.stats.max_ingress = MAX_INGRESS
 	member.modifiers.current_ingress = member.stats.max_ingress
 	return member

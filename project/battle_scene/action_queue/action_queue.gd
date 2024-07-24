@@ -45,6 +45,8 @@ func process_action_queue(tree: SceneTree, battle_groups: BattleGroups) -> void:
 
 func fill_initial_turn_items(battle_groups: BattleGroups) -> void:
 	items = item_manager.create_items(battle_groups)
+	item_manager.sort_items_by_agility(items)
+	item_manager.fill_enemy_actions(items, battle_groups)
 	for item in items: add_child(item)
 
 
@@ -84,25 +86,25 @@ func get_current_item() -> ActionQueueItem:
 
 
 func set_item_focus(index: int, type: Focus.Type) -> void:
-	focus_manager.set_item_focus(index, type)
+	focus_manager.set_item_focus(items, index, type)
 
 
 func create_action_message(action: Action) -> String:
 	return focus_manager.create_action_message(action)
 
 
-func unfocus_all(type: Focus.Type) -> void: focus_manager.unfocus_all(type)
+func unfocus_all(type: Focus.Type) -> void: focus_manager.unfocus_all(items, type)
 
 
 func set_focuses() -> void: focus_manager.set_focuses()
 
 
 func get_action_index_by_unique_id(unique_id: String) -> int:
-	return focus_manager.get_action_index_by_unique_id(unique_id)
+	return focus_manager.get_action_index_by_unique_id(items, unique_id)
 
 
 func set_triangle_focus_on_player(unique_id: String) -> void:
-	focus_manager.set_triangle_focus_on_player(unique_id)
+	focus_manager.set_triangle_focus_on_player(items, unique_id)
 
 
 # -------
