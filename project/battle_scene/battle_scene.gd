@@ -1,5 +1,6 @@
 extends Node2D
 
+var current_action_item: ActionQueueItem
 var current_skill_button: Button
 var current_skill_type: Ingress.Type
 var current_skill: Ingress
@@ -29,33 +30,50 @@ var skill_index := 0
 # ----------------------
 
 func _ready() -> void:
-	player_group.load_members_from_save_data("0")
-	enemy_group.load_members_from_round_data(Utils.current_round)
-	battle_groups = BattleGroups.new(player_group.members, enemy_group.members)
+	_create_battle_groups()
 	_connect_signals()
 	action_queue.fill_initial_turn_items(battle_groups)
-	state.change_state(State.Type.CHOOSING_ACTION)
+	current_action_item = action_queue.items.front()
+	# state.change_state(State.Type.CHOOSING_ACTION)
 	# await Music.fade()
 	Music.play(Music.battle_theme)
 	
 func _process(_delta: float) -> void:
-	state.current.handle_input()
-
-	if action_queue.is_turn_over():
+	var current_action := current_action_item.action
+	if current_action.action_chosen:
+		state.change_state(State.Type.IS_BATTLING)
 		set_process(false)
-		await _process_turn()
+		await current_action.skill.process(current_action, get_tree(), battle_groups)
 		set_process(true)
-
-		if _is_game_over():
-			Utils.change_scene("res://menus/game_completion_screen.tscn", { "status": Utils.GameOver.DEFEAT })
-		elif _is_victory():
-			if Utils.current_round == Utils.FINAL_ROUND:
-				Utils.change_scene("res://menus/game_completion_screen.tscn", { "status": Utils.GameOver.VICTORY })
-			else:
-				Utils.next_round()
-				Utils.change_scene("res://menus/victory_screen.tscn", { "defeated": defeated })
+		if action_queue.items.size() > 0:
+			current_action_item.queue_free()
+			action_queue.items.pop_front()
+			current_action_item = action_queue.items.front()
 		else:
 			_reset_turn()
+	elif !current_action.is_choosing:
+		current_action.is_choosing = true
+		player_group.current_member = player_group.get_member_index(current_action.actor.unique_id.id)
+		state.change_state(State.Type.CHOOSING_ACTION)
+
+	state.current.handle_input()
+
+	
+
+		# LEGACY CODE
+		# set_process(false)
+		# await _process_turn()
+		# set_process(true)
+		# if _is_game_over():
+		# 	Utils.change_scene("res://menus/game_completion_screen.tscn", { "status": Utils.GameOver.DEFEAT })
+		# elif _is_victory():
+		# 	if Utils.current_round == Utils.FINAL_ROUND:
+		# 		Utils.change_scene("res://menus/game_completion_screen.tscn", { "status": Utils.GameOver.VICTORY })
+		# 	else:
+		# 		Utils.next_round()
+		# 		Utils.change_scene("res://menus/victory_screen.tscn", { "defeated": defeated })
+		# else:
+		# 	_reset_turn()
 
 		
 func _connect_signals() -> void:
@@ -100,10 +118,10 @@ func _on_refrain_pressed() -> void:
 	
 func _on_recover_pressed() -> void:
 	Sound.play(Sound.confirm)
-	var unique_id: String = player_group.get_current_member().unique_id.id
-	var current_players_action_id: int = action_queue.get_action_index_by_unique_id(unique_id)
-	var current_action: Action = action_queue.items[current_players_action_id].action
-	current_action.set_recover()
+	# var unique_id: String = player_group.get_current_member().unique_id.id
+	# var current_players_action_id: int = action_queue.get_action_index_by_unique_id(unique_id)
+	# var current_action_item: Action = action_queue.items[current_players_action_id].action
+	current_action_item.set_recover()
 
 	if !action_queue.is_turn_over():
 		player_group.next_player()
@@ -132,6 +150,7 @@ func _process_turn() -> void:
 	state.change_state(State.Type.IS_BATTLING)
 
 func _reset_turn() -> void:
+	current_action_item = action_queue.items.front()
 	action_queue.reset_current_member()
 	player_group.reset_current_member_and_turn()
 	enemy_group.reset_current_member()
@@ -178,12 +197,18 @@ func _handle_choose_skill(skill: Ingress) -> void:
 			return
 	
 func _handle_done_choosing() -> void:
+	action_queue.items[0].action.is_choosing = false
 	if !action_queue.is_turn_over():
 		player_group.next_player()
 		state.change_state(State.Type.CHOOSING_ACTION)
 	else:
 		player_group.reset_current_member_and_turn()
 		state.change_state(State.Type.IS_BATTLING)
+
+func _create_battle_groups() -> void:
+	player_group.load_members_from_save_data("0")
+	enemy_group.load_members_from_round_data(Utils.current_round)
+	battle_groups = BattleGroups.new(player_group.members, enemy_group.members)
 
 # -------
 # Signals
@@ -217,12 +242,12 @@ func _on_player_no_ingress(player_unique_id: String) -> void:
 
 func _on_choosing_action_state_entered() -> void:
 	current_action_button.focus(true)
-	var current_player: Node2D = player_group.get_current_member_turn()
+	var current_player: Node2D = current_action_item.get_actor()
 	current_player.focus(Focus.Type.TRIANGLE) # move to player group
-	action_queue.set_triangle_focus_on_player(current_player.unique_id.id)
+	current_action_item.focus(Focus.Type.TRIANGLE)
 
 func _on_choosing_skill_state_entered() -> void:
-	var current_player: Node2D = player_group.get_current_member_turn()
+	var current_player: Node2D = current_action_item.get_actor()
 	skill_choice_list.set_current_skills(current_player, current_skill_type)
 	skill_choice_list.prepare_skill_menu(_handle_choose_skill)
 	skill_choice_list.get_children()[0].focus(true)
@@ -231,7 +256,8 @@ func _on_choosing_skill_state_entered() -> void:
 
 func _on_choose_enemy() -> void:
 	action_queue.update_player_action_with_skill(
-		player_group.get_current_member_turn(),
+		current_action_item.action,
+		current_action_item.action.actor,
 		enemy_group.get_current_member(),
 		skill_choice_list.get_current_skill()
 	)
@@ -239,7 +265,8 @@ func _on_choose_enemy() -> void:
 
 func _on_choose_ally() -> void:
 	action_queue.update_player_action_with_skill(
-		player_group.get_current_member_turn(),
+		current_action_item.action,
+		current_action_item.action.actor,
 		player_group.get_current_member(),
 		skill_choice_list.get_current_skill()
 	)
