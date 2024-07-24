@@ -8,8 +8,8 @@
 [ext_resource type="PackedScene" uid="uid://dl4d2stn4lshh" path="res://players/refrain_aura.tscn" id="5_ahw2m"]
 [ext_resource type="PackedScene" uid="uid://bqyh4pkeog5r5" path="res://ui/triangle_focus.tscn" id="7_clngs"]
 [ext_resource type="PackedScene" uid="uid://2evhn0npdxi4" path="res://ui/finger_focus.tscn" id="8_l8hxc"]
+[ext_resource type="Resource" uid="uid://dcemq5e4028dd" path="res://players/Talon/talon_player_details.tres" id="10_72fvy"]
 [ext_resource type="PackedScene" uid="uid://cyi2g62l2egia" path="res://players/stats.tscn" id="10_nfyao"]
-[ext_resource type="Resource" uid="uid://ber4ixqhnh8bj" path="res://players/Talon/talon_player_details.tres" id="11_34duj"]
 
 [sub_resource type="Animation" id="Animation_x6vl1"]
 length = 0.001
@@ -141,7 +141,7 @@ position = Vector2(4, 8)
 scale = Vector2(0.15, 0.15)
 
 [node name="Stats" parent="." instance=ExtResource("10_nfyao")]
-player_details = ExtResource("11_34duj")
+player_details = ExtResource("10_72fvy")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
