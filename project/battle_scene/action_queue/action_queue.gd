@@ -44,15 +44,15 @@ func process_action_queue(tree: SceneTree, battle_groups: BattleGroups) -> void:
 # -------------
 
 func fill_initial_turn_items(battle_groups: BattleGroups) -> void:
-	item_manager.fill_initial_turn_items(battle_groups)
+	items = item_manager.create_items(battle_groups)
 
 
 func is_turn_over() -> bool:
 	return item_manager.is_turn_over()
 
 
-func update_player_action_with_skill(player: Node2D, target: Node2D, skill: Ingress) -> void:
-	item_manager.update_player_action_with_skill(player, target, skill)
+func update_player_action_with_skill(action: Action, player: Node2D, target: Node2D, skill: Ingress) -> void:
+	item_manager.update_player_action_with_skill(action, player, target, skill)
 
 
 func update_actions_with_targets_with_removed_id(
@@ -110,6 +110,7 @@ func set_triangle_focus_on_player(unique_id: String) -> void:
 
 func _on_choosing_action_state_entered() -> void:
 	unfocus_all(Focus.Type.ALL)
+	
 
 
 func _on_choosing_action_queue_state_entered() -> void:
