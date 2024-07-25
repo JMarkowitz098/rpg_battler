@@ -30,3 +30,15 @@ func _on_choosing_skill_state_entered() -> void:
 
 func _on_is_battling_state_entered() -> void:
 	clear_focus()
+
+
+func _on_incursion_focus_entered() -> void:
+	current_button = incursion
+
+
+func _on_refrain_focus_entered() -> void:
+	current_button = refrain
+
+
+func _on_recover_focus_entered() -> void:
+	current_button = recover

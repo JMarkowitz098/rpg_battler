@@ -35,3 +35,13 @@ func test_can_respond_to_choosing_action_state_entered_signal() -> void:
 	assert_false(action_choice.incursion.has_focus(), "incursion does not have focus")
 	assert_true(action_choice.refrain.has_focus(), "refrain does have focus")
 	assert_false(action_choice.recover.has_focus(), "recover does not have focus")
+
+
+func test_current_button_updates() -> void: 
+	action_choice.incursion.focus(true)
+	assert_eq(action_choice.incursion, action_choice.current_button, "incursion can set current button")
+	action_choice.refrain.focus(true)
+	assert_eq(action_choice.refrain, action_choice.current_button, "refrain can set current button")
+	action_choice.recover.focus(true)
+	assert_eq(action_choice.recover, action_choice.current_button, "recover can set current button")
+
