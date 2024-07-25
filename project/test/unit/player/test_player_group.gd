@@ -45,8 +45,15 @@ func test_can_respond_to_choosing_action_state_entered_signal() -> void:
 
 	gut.p("-----when member is not passed but there is previous-----")
 	Events.choosing_action_state_entered.emit()
-	assert_true(player.triangle_focus.visible, "Player has triangle focus")
-	assert_false(player_2.triangle_focus.visible, "Player has triangle focus")
+	assert_true(player.triangle_focus.visible, "Player1 has triangle focus")
+	assert_false(player_2.triangle_focus.visible, "Player2 does not have triangle focus")
+
+	gut.p("-----focus is cleared from other players-----")
+	player.focus(Focus.Type.TRIANGLE)
+	player_2.focus(Focus.Type.TRIANGLE)
+	Events.choosing_action_state_entered.emit()
+	assert_true(player.triangle_focus.visible, "Player1 has triangle focus")
+	assert_false(player_2.triangle_focus.visible, "Player2 does not have triangle focus")
 
 
 # func test_load_members_from_save_data() -> void:
