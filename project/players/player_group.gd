@@ -53,9 +53,9 @@ func get_current_member_turn() -> Node2D:
 # Signals
 # -------
 
-func _on_choosing_action_state_entered(params: StateParams) -> void:
+func _on_choosing_action_state_entered(_params: StateParams = null) -> void:
 	unfocus_all(Focus.Type.ALL)
-	if params and params.item: current_state_member = params.item.action.actor
+	if _params and _params.item: current_state_member = _params.item.action.actor
 	current_state_member.focus(Focus.Type.TRIANGLE)
 
 func _on_choosing_action_queue_state_entered() -> void:
