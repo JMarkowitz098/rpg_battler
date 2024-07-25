@@ -76,5 +76,5 @@ func _on_choosing_self_state_entered() -> void:
 	unfocus_all(Focus.Type.ALL)
 	get_current_member().focus(Focus.Type.FINGER)
 
-func _on_choosing_skill_state_entered() -> void:
+func _on_choosing_skill_state_entered(_params: StateParams = null) -> void:
 	unfocus_all(Focus.Type.ALL)

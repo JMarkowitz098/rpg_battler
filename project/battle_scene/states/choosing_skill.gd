@@ -1,7 +1,7 @@
 class_name ChoosingSkill
 
 func enter(_params: StateParams = null) -> void:
-	Events.choosing_skill_state_entered.emit()
+	Events.choosing_skill_state_entered.emit(_params)
 
 func handle_input() -> void:
 	Events.update_info_label_with_skill_description.emit()

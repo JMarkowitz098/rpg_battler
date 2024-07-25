@@ -58,7 +58,7 @@ func _on_choosing_action_state_entered(_params: StateParams = null) -> void:
 func _on_choosing_action_queue_state_entered() -> void:
 	unfocus_all(Focus.Type.ALL)
 
-func _on_choosing_skill_state_entered() -> void:
+func _on_choosing_skill_state_entered(_params: StateParams = null) -> void:
 	unfocus_all(Focus.Type.ALL)
 
 func _on_is_battling_state_entered() -> void:

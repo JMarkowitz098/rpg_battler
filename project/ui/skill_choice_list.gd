@@ -2,6 +2,7 @@ extends GridContainer
 
 const BATTLE_SCENE_BUTTON := preload("res://menus/battle_scene_button.tscn")
 
+var current_skill: Ingress
 var current_skills: Array[Ingress]
 var current_skill_index := 0
 
@@ -24,9 +25,9 @@ func _ready() -> void:
 func set_current_skills(player: Node2D, type: Ingress.Type) -> void:
 	current_skills = player.learned_skills.filter_by_type(type)
 
-func prepare_skill_menu(_handle_choose_skill: Callable) -> void:
+func prepare_skill_menu() -> void:
 	_fill_skill_menu_with_current_skills()
-	_connect_skill_button_signals(_handle_choose_skill)
+	_connect_skill_button_signals()
 	
 func release_focus_from_all_buttons() -> void:
 	for child in get_children():
@@ -54,7 +55,7 @@ func _create_button_choice(button_text: String) -> void:
 	button.text = button_text
 	button.add_theme_font_size_override("font_size", 8)
 
-func _connect_skill_button_signals(_handle_choose_skill: Callable) -> void:
+func _connect_skill_button_signals() -> void:
 	var skill_buttons := get_children()
 	for i in skill_buttons.size():
 		var skill := current_skills[i]
@@ -73,6 +74,23 @@ func show_list() -> void:
 	show()
 	get_children()[0].focus_no_sound()
 
+
+func _handle_choose_skill(skill: Ingress) -> void:
+	Sound.play(Sound.confirm)
+	current_skill = skill
+		
+	match current_skill.target:
+		Ingress.Target.ENEMY:
+			Events.change_state.emit(State.Type.CHOOSING_ENEMY)
+		Ingress.Target.ALLY:
+			Events.change_state.emit(State.Type.CHOOSING_ALLY)
+		Ingress.Target.SELF: 
+			Events.change_state.emit(State.Type.CHOOSING_SELF)
+		Ingress.Target.ALL_ALLIES:
+			Events.change_state.emit(State.Type.CHOOSING_ALLY_ALL)
+		Ingress.Target.ALL_ENEMIES:
+			Events.change_state.emit(State.Type.CHOOSING_ENEMY_ALL)
+
 # -------
 # Signals
 # -------
@@ -83,8 +101,11 @@ func _on_choosing_action_state_entered(_params: StateParams = null) -> void:
 func _on_choosing_action_queue_state_entered() -> void:
 	release_focus_from_all_buttons()
 
-func _on_choosing_skill_state_entered() -> void:
-	show_list()
+func _on_choosing_skill_state_entered(_params: StateParams = null) -> void:
+	if _params and _params.item and _params.ingress_type >= 0:
+		set_current_skills(_params.item.action.actor, _params.ingress_type)
+		prepare_skill_menu()
+		show_list()
 
 func _on_choosing_enemy_state_entered() -> void:
 	release_focus_from_all_buttons()

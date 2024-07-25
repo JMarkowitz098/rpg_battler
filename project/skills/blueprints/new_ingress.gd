@@ -19,7 +19,8 @@ enum Type {
 	INCURSION,
 	REFRAIN,
 	DODGE,
-	RECOVER
+	RECOVER,
+	NONE
 }
 
 enum Target {

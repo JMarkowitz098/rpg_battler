@@ -59,7 +59,7 @@ func change_state(new_state_id: Type, params: StateParams = null) -> void:
 		Type.CHOOSING_SELF:
 			_update_state_vars(choosing_self_state)
 		Type.CHOOSING_SKILL:
-			_update_state_vars(choosing_skill_state)
+			_update_state_vars(choosing_skill_state, params)
 		Type.IS_BATTLING:
 			_update_state_vars(is_battling_state)
 

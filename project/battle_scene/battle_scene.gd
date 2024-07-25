@@ -104,15 +104,13 @@ func _on_recover_focus_entered() -> void:
 	
 func _on_incursion_pressed() -> void:
 	Sound.play(Sound.confirm)
-	current_skill_type = Ingress.Type.INCURSION
-	state.change_state(State.Type.CHOOSING_SKILL)
-	current_skill = skill_choice_list.current_skills[0]
+	state.change_state(State.Type.CHOOSING_SKILL, StateParams.new(
+		current_action_item, null, null, Ingress.Type.INCURSION))
 
 func _on_refrain_pressed() -> void:
 	Sound.play(Sound.confirm)
-	current_skill_type = Ingress.Type.REFRAIN
-	state.change_state(State.Type.CHOOSING_SKILL)
-	current_skill = skill_choice_list.current_skills[0]
+	state.change_state(State.Type.CHOOSING_SKILL, StateParams.new(
+		current_action_item, null, null, Ingress.Type.REFRAIN))
 	
 func _on_recover_pressed() -> void:
 	Sound.play(Sound.confirm)
@@ -239,7 +237,7 @@ func _on_player_no_ingress(player_unique_id: String) -> void:
 # 	help_menu.close_button.focus()
 
 
-func _on_choosing_skill_state_entered() -> void:
+func _on_choosing_skill_state_entered(_params: StateParams = null) -> void:
 	var current_player: Node2D = current_action_item.get_actor()
 	skill_choice_list.set_current_skills(current_player, current_skill_type)
 	skill_choice_list.prepare_skill_menu(_handle_choose_skill)

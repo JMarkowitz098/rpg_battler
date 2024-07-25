@@ -18,7 +18,7 @@ signal choosing_ally_all_state_entered
 signal choosing_enemy_all_state_entered
 signal choosing_enemy_state_entered
 signal choosing_self_state_entered
-signal choosing_skill_state_entered
+signal choosing_skill_state_entered(params: StateParams)
 
 signal is_battling_state_entered
 
