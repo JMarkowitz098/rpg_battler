@@ -7,10 +7,14 @@ extends GridContainer
 var current_button: Button
 
 func _ready() -> void:
-	Events.choosing_action_state_entered.connect(_on_choosing_action_state_entered)
-	Events.choosing_action_queue_state_entered.connect(_on_choosing_action_queue_state_entered)
-	Events.choosing_skill_state_entered.connect(_on_choosing_skill_state_entered)
-	Events.is_battling_state_entered.connect(_on_is_battling_state_entered)
+	var signals := [
+		["choosing_action_state_entered",_on_choosing_action_state_entered],
+		["choosing_action_queue_state_entered",_on_choosing_action_queue_state_entered],
+		["choosing_skill_state_entered",_on_choosing_skill_state_entered],
+		["is_battling_state_entered",_on_is_battling_state_entered]
+	]
+
+	Utils.connect_signals(signals)
 
 func clear_focus() -> void:
 	for child in get_children():
