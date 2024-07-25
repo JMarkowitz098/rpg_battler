@@ -23,3 +23,19 @@ func test_can_add_initial_items() -> void:
 	assert_eq(queue.get_children().size(), 3)
 
 	for item in queue.items: item.queue_free()
+
+
+func test_can_respond_to_choosing_action_state_entered_signal() -> void:
+	queue.fill_initial_turn_items(mocker.battle_groups)
+	gut.p("-----when no paramaters are passed-----")
+	Events.choosing_action_state_entered.emit()
+	assert_true(queue.items.front().triangle_focus.is_visible(), "First item is focused")
+	assert_false(queue.items[1].triangle_focus.is_visible(), "Other items not focused")
+	assert_false(queue.items[2].triangle_focus.is_visible(), "Other items not focused")
+
+	gut.p("-----it unfocuses other items-----")
+	for item in queue.items: item.focus(Focus.Type.TRIANGLE)
+	Events.choosing_action_state_entered.emit()
+	assert_true(queue.items.front().triangle_focus.is_visible(), "First item is focused")
+	assert_false(queue.items[1].triangle_focus.is_visible(), "Other items not focused")
+	assert_false(queue.items[2].triangle_focus.is_visible(), "Other items not focused")
