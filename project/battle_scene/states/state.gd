@@ -42,10 +42,10 @@ func _init() -> void:
 	Events.change_state.connect(change_state)
 	Events.change_to_previous_state.connect(change_to_previous_state)
 
-func change_state(new_state_id: Type) -> void:
+func change_state(new_state_id: Type, params: StateParams = null) -> void:
 	match new_state_id:
 		Type.CHOOSING_ACTION:
-			_update_state_vars(choosing_action_state)
+			_update_state_vars(choosing_action_state, params)
 		Type.CHOOSING_ACTION_QUEUE:
 			_update_state_vars(choosing_action_queue_state)
 		Type.CHOOSING_ALLY:
@@ -69,7 +69,7 @@ func change_to_previous_state() -> void:
 	current = new_state
 	new_state.enter()
 
-func _update_state_vars(new_state: Variant) -> void:
+func _update_state_vars(new_state: Variant, params: StateParams = null) -> void:
 	previous = current
 	current = new_state
-	new_state.enter()
+	new_state.enter(params)

@@ -52,7 +52,7 @@ func _flip_members_direction() -> void:
 		member.attack_sprite.scale.x *= -1
 
 
-func _on_choosing_action_state_entered() -> void:
+func _on_choosing_action_state_entered(_params: StateParams = null) -> void:
 	unfocus_all(Focus.Type.ALL)
 
 func _on_choosing_action_queue_state_entered() -> void:

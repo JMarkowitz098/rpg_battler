@@ -1,6 +1,6 @@
 class_name ChoosingSelf
 
-func enter() -> void:
+func enter(_params: StateParams = null) -> void:
 	Events.choosing_self_state_entered.emit()
 
 func handle_input() -> void:

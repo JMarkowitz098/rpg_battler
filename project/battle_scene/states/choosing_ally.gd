@@ -1,6 +1,6 @@
 class_name ChoosingAlly
 
-func enter() -> void:
+func enter(_params: StateParams = null) -> void:
 	Events.choosing_ally_state_entered.emit()
 
 func handle_input() -> void:

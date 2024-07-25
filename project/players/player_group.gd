@@ -1,6 +1,7 @@
 extends Group
 
 var current_members_turn := 0
+var current_state_member: Node2D
 
 func _ready() -> void:
 	_connect_signals()
@@ -52,9 +53,10 @@ func get_current_member_turn() -> Node2D:
 # Signals
 # -------
 
-func _on_choosing_action_state_entered() -> void:
+func _on_choosing_action_state_entered(params: StateParams) -> void:
 	unfocus_all(Focus.Type.ALL)
-	get_current_member().focus(Focus.Type.TRIANGLE)
+	if params and params.item: current_state_member = params.item.action.actor
+	current_state_member.focus(Focus.Type.TRIANGLE)
 
 func _on_choosing_action_queue_state_entered() -> void:
 	unfocus_all(Focus.Type.ALL)

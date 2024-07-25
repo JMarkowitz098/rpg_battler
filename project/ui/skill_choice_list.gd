@@ -6,16 +6,20 @@ var current_skills: Array[Ingress]
 var current_skill_index := 0
 
 func _ready() -> void:
-	Events.choosing_action_queue_state_entered.connect(_on_choosing_action_queue_state_entered)
-	Events.choosing_action_state_entered.connect(_on_choosing_action_state_entered)
-	Events.choosing_ally_state_entered.connect(_on_choosing_ally_state_entered)
-	Events.choosing_ally_all_state_entered.connect(_on_choosing_ally_all_state_entered)
-	Events.choosing_enemy_all_state_entered.connect(_on_choosing_enemy_all_state_entered)
-	Events.choosing_enemy_state_entered.connect(_on_choosing_enemy_state_entered)
-	Events.choosing_self_state_entered.connect(_on_choosing_self_state_entered)
-	Events.choosing_skill_state_entered.connect(_on_choosing_skill_state_entered)
-	Events.is_battling_state_entered.connect(_on_is_battling_state_entered)
-	Events.update_info_label_with_skill_description.connect(_on_update_info_label_with_skill_description)
+	var signals := [
+		["choosing_action_queue_state_entered",_on_choosing_action_queue_state_entered],
+		["choosing_action_state_entered",_on_choosing_action_state_entered],
+		["choosing_ally_state_entered",_on_choosing_ally_state_entered],
+		["choosing_ally_all_state_entered",_on_choosing_ally_all_state_entered],
+		["choosing_enemy_all_state_entered",_on_choosing_enemy_all_state_entered],
+		["choosing_enemy_state_entered",_on_choosing_enemy_state_entered],
+		["choosing_self_state_entered",_on_choosing_self_state_entered],
+		["choosing_skill_state_entered",_on_choosing_skill_state_entered],
+		["is_battling_state_entered",_on_is_battling_state_entered],
+		["update_info_label_with_skill_description",_on_update_info_label_with_skill_description]
+	]
+
+	Utils.connect_signals(signals)
 
 func set_current_skills(player: Node2D, type: Ingress.Type) -> void:
 	current_skills = player.learned_skills.filter_by_type(type)
@@ -73,7 +77,7 @@ func show_list() -> void:
 # Signals
 # -------
 
-func _on_choosing_action_state_entered() -> void:
+func _on_choosing_action_state_entered(_params: StateParams = null) -> void:
 	hide()
 
 func _on_choosing_action_queue_state_entered() -> void:

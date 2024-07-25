@@ -12,7 +12,7 @@ signal choose_ally
 signal enter_action_queue_handle_input
 
 signal choosing_action_queue_state_entered
-signal choosing_action_state_entered
+signal choosing_action_state_entered(params: StateParams)
 signal choosing_ally_state_entered
 signal choosing_ally_all_state_entered
 signal choosing_enemy_all_state_entered

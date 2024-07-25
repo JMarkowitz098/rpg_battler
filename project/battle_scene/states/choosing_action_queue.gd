@@ -4,7 +4,7 @@ class_name ChoosingActionQueue
 var change_state: Callable
 var change_to_previous_state: Callable
 
-func enter() -> void:
+func enter(_params: StateParams = null) -> void:
 	Events.choosing_action_queue_state_entered.emit()
 	
 func handle_input() -> void:

@@ -111,11 +111,11 @@ func set_triangle_focus_on_player(unique_id: String) -> void:
 # Signals
 # -------
 
-func _on_choosing_action_state_entered() -> void:
+func _on_choosing_action_state_entered(_params: StateParams = null) -> void:
 	unfocus_all(Focus.Type.ALL)
+	items.front().focus(Focus.Type.TRIANGLE)
+
 	
-
-
 func _on_choosing_action_queue_state_entered() -> void:
 	set_item_focus(0, Focus.Type.FINGER)
 	var action := get_current_item().action

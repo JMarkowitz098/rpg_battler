@@ -1,7 +1,7 @@
 class_name ChoosingAction
 
-func enter() -> void:
-	Events.choosing_action_state_entered.emit()
+func enter(_params: StateParams = null) -> void:
+	Events.choosing_action_state_entered.emit(_params)
 
 func handle_input() -> void:
 	if Input.is_action_just_pressed("to_action_queue"):

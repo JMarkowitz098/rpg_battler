@@ -34,7 +34,6 @@ func _ready() -> void:
 	_connect_signals()
 	action_queue.fill_initial_turn_items(battle_groups)
 	current_action_item = action_queue.items.front()
-	# state.change_state(State.Type.CHOOSING_ACTION)
 	# await Music.fade()
 	Music.play(Music.battle_theme)
 	
@@ -54,7 +53,7 @@ func _process(_delta: float) -> void:
 	elif !current_action.is_choosing:
 		current_action.is_choosing = true
 		player_group.current_member = player_group.get_member_index(current_action.actor.unique_id.id)
-		state.change_state(State.Type.CHOOSING_ACTION)
+		state.change_state(State.Type.CHOOSING_ACTION, StateParams.new(current_action_item))
 
 	state.current.handle_input()
 
@@ -83,7 +82,6 @@ func _connect_signals() -> void:
 		player.modifiers.no_ingress.connect(_on_player_no_ingress)
 
 	var signals := [
-		["choosing_action_state_entered", _on_choosing_action_state_entered],
 		["choosing_skill_state_entered", _on_choosing_skill_state_entered],
 		["choose_enemy", _on_choose_enemy],
 		["choose_ally", _on_choose_ally],
@@ -240,11 +238,6 @@ func _on_player_no_ingress(player_unique_id: String) -> void:
 # 	help_menu.show()
 # 	help_menu.close_button.focus()
 
-func _on_choosing_action_state_entered() -> void:
-	current_action_button.focus(true)
-	var current_player: Node2D = current_action_item.get_actor()
-	current_player.focus(Focus.Type.TRIANGLE) # move to player group
-	current_action_item.focus(Focus.Type.TRIANGLE)
 
 func _on_choosing_skill_state_entered() -> void:
 	var current_player: Node2D = current_action_item.get_actor()
