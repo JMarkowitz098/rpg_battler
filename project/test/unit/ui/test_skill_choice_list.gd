@@ -41,12 +41,32 @@ func test_can_respond_to_choosing_skill_state_entered_signal() -> void:
 		assert_connected(button, skill_choice_list, "pressed", "_handle_choose_skill")
 	assert_true(skill_choice_list.get_children()[0].has_focus(), "First button has focus")
 
-	gut.p("-----State is remembered if no params are passed-----")
-	Events.choosing_skill_state_entered.emit()
+	gut.p("-----Can set current skills to refrain-----")
+	Events.choosing_skill_state_entered.emit(StateParams.new(
+		mocker.item_1,
+		null,
+		null,
+		Ingress.Type.REFRAIN
+	))
 	assert_eq_deep(
 		skill_choice_list.current_skills, 
-		player_1.learned_skills.filter_by_type(Ingress.Type.INCURSION),
+		player_1.learned_skills.filter_by_type(Ingress.Type.REFRAIN),
 	)
 	assert_eq(skill_choice_list.get_children().size(), skill_choice_list.current_skills.size())
 	for button in skill_choice_list.get_children():
 		assert_connected(button, skill_choice_list, "pressed", "_handle_choose_skill")
+	assert_true(skill_choice_list.get_children()[0].has_focus(), "First button has focus")
+
+	gut.p("-----State is remembered if no params are passed-----")
+	Events.choosing_skill_state_entered.emit()
+	assert_eq_deep(
+		skill_choice_list.current_skills, 
+		player_1.learned_skills.filter_by_type(Ingress.Type.REFRAIN),
+	)
+	assert_eq(skill_choice_list.get_children().size(), skill_choice_list.current_skills.size())
+	for button in skill_choice_list.get_children():
+		assert_connected(button, skill_choice_list, "pressed", "_handle_choose_skill")
+	assert_true(skill_choice_list.get_children()[0].has_focus(), "First button has focus")
+
+	gut.p("-----Focus is remembered if no params are passed-----")
+	# Need to implement current button updating on focus changed first

@@ -3,6 +3,7 @@ extends GridContainer
 const BATTLE_SCENE_BUTTON := preload("res://menus/battle_scene_button.tscn")
 
 var current_skill: Ingress
+var current_skill_button: Button
 var current_skills: Array[Ingress]
 var current_skill_index := 0
 
@@ -72,7 +73,7 @@ func _create_skill_desciption(skill: Ingress) -> String:
 
 func show_list() -> void:
 	show()
-	get_children()[0].focus_no_sound()
+	current_skill_button.focus_no_sound()
 
 
 func _handle_choose_skill(skill: Ingress) -> void:
@@ -105,7 +106,8 @@ func _on_choosing_skill_state_entered(_params: StateParams = null) -> void:
 	if _params and _params.item and _params.ingress_type >= 0:
 		set_current_skills(_params.item.action.actor, _params.ingress_type)
 		prepare_skill_menu()
-		show_list()
+		current_skill_button = get_children()[0]
+	show_list()
 
 func _on_choosing_enemy_state_entered() -> void:
 	release_focus_from_all_buttons()

@@ -1,7 +1,11 @@
 extends GutTest
 
 var TestPlayerGroup := load("res://players/player_group.tscn")
+var TestActionQueueItem := load("res://battle_scene/action_queue/action_queue_item.tscn")
 var player_group: Node2D
+var item: ActionQueueItem
+var player: Node2D
+var player_2: Node2D
 
 var data: Array[PlayerData] = [
 		PlayerData.new(
@@ -23,21 +27,21 @@ var data: Array[PlayerData] = [
 
 func before_each() -> void:
 	player_group = TestPlayerGroup.instantiate()
+	item = TestActionQueueItem.instantiate()
 	add_child_autoqfree(player_group)
-	player_group.instantiate_members(data)
+	add_child_autoqfree(item)
 
+	player_group.instantiate_members(data)
+	player = player_group.members[0]
+	player_2 = player_group.members[1]
+	item.set_empty_action(player)
+	
 
 func test_can_create_new_group() -> void:
 	assert_not_null(player_group)
 
 
 func test_can_respond_to_choosing_action_state_entered_signal() -> void:
-	var item: ActionQueueItem = load("res://battle_scene/action_queue/action_queue_item.tscn").instantiate()
-	var player: Node2D = player_group.members[0]
-	var player_2: Node2D = player_group.members[1]
-	add_child_autoqfree(item)
-	item.set_empty_action(player)
-
 	gut.p("-----when member is passed-----")
 	Events.choosing_action_state_entered.emit(StateParams.new(item))
 	assert_true(player.triangle_focus.visible, "Player1 has triangle focus")
@@ -55,6 +59,16 @@ func test_can_respond_to_choosing_action_state_entered_signal() -> void:
 	assert_true(player.triangle_focus.visible, "Player1 has triangle focus")
 	assert_false(player_2.triangle_focus.visible, "Player2 does not have triangle focus")
 
+func test_can_respond_to_choosing_skill_state_entered_signal() -> void:
+	gut.p("-----when member is passed-----")
+	Events.choosing_skill_state_entered.emit(StateParams.new(item))
+	assert_true(player.triangle_focus.visible)
+	assert_false(player_2.triangle_focus.visible)
+
+	gut.p("-----when member is not passed but there is previous-----")
+	Events.choosing_skill_state_entered.emit()
+	assert_true(player.triangle_focus.visible)
+	assert_false(player_2.triangle_focus.visible)
 
 # func test_load_members_from_save_data() -> void:
 #   player_group.load_members_from_save_data()
