@@ -34,7 +34,6 @@ func _ready() -> void:
 	_connect_signals()
 	action_queue.fill_initial_turn_items(battle_groups)
 	current_action_item = action_queue.items.front()
-	# await Music.fade()
 	Music.play(Music.battle_theme)
 	
 func _process(_delta: float) -> void:
@@ -52,7 +51,7 @@ func _process(_delta: float) -> void:
 			_reset_turn()
 	elif !current_action.is_choosing:
 		current_action.is_choosing = true
-		player_group.current_member = player_group.get_member_index(current_action.actor.unique_id.id)
+		player_group.current_member = player_group.get_member_index(current_action.get_actor_unique_id())
 		state.change_state(State.Type.CHOOSING_ACTION, StateParams.new(current_action_item))
 
 	state.current.handle_input()
@@ -169,27 +168,6 @@ func _set_dodging_animation() -> void:
 # ----------------------
 # Helper Functions
 # ----------------------
-
-func _handle_choose_skill(skill: Ingress) -> void:
-	Sound.play(Sound.confirm)
-	current_skill = skill
-		
-	match current_skill.target:
-		Ingress.Target.ENEMY:
-			state.change_state.call(State.Type.CHOOSING_ENEMY)
-			return
-		Ingress.Target.ALLY:
-			state.change_state.call(State.Type.CHOOSING_ALLY)
-			return
-		Ingress.Target.SELF: 
-			state.change_state.call(State.Type.CHOOSING_SELF)
-			return
-		Ingress.Target.ALL_ALLIES:
-			state.change_state.call(State.Type.CHOOSING_ALLY_ALL)
-			return
-		Ingress.Target.ALL_ENEMIES:
-			state.change_state.call(State.Type.CHOOSING_ENEMY_ALL)
-			return
 	
 func _handle_done_choosing() -> void:
 	action_queue.items[0].action.is_choosing = false

@@ -66,8 +66,9 @@ func _on_is_battling_state_entered() -> void:
 
 func _on_choosing_enemy_state_entered() -> void:
 	unfocus_all(Focus.Type.ALL)
-	if(members.size() > 0):
-		get_current_member().focus(Focus.Type.FINGER)
+	if !current_state_member: current_state_member = members[0]
+	current_state_member.focus(Focus.Type.FINGER)
+	
 
 func _on_choosing_enemy_state_all_entered() -> void:
 	focus_all(Focus.Type.FINGER)

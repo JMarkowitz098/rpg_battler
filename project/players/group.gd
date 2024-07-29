@@ -12,6 +12,7 @@ var ESEN := load("res://players/Esen/esen.tscn")
 
 var members: Array[Node2D] = []
 var current_member: int = 0
+var current_state_member: Node2D
 
 # ----------------
 # Public Functions

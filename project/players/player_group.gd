@@ -1,7 +1,6 @@
 extends Group
 
 var current_members_turn := 0
-var current_state_member: Node2D
 
 func _ready() -> void:
 	_connect_signals()

@@ -39,6 +39,8 @@ func before_each() -> void:
 
 func test_can_create_new_group() -> void:
 	assert_not_null(player_group)
+	assert_not_null(player)
+	assert_not_null(player_2)
 
 
 func test_can_respond_to_choosing_action_state_entered_signal() -> void:

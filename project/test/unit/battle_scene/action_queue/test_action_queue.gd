@@ -48,3 +48,12 @@ func test_can_respond_to_choosing_skill_state_entered_signal() -> void:
 	assert_true(queue.items.front().triangle_focus.is_visible(), "First item is focused")
 	assert_false(queue.items[1].triangle_focus.is_visible(), "Other items not focused")
 	assert_false(queue.items[2].triangle_focus.is_visible(), "Other items not focused")
+
+
+func test_can_respond_to_choosing_enemy_state_entered_signal() -> void:
+	queue.fill_initial_turn_items(mocker.battle_groups)
+	Events.choosing_enemy_state_entered.emit()
+	gut.p("-----All focus is cleared-----") # First enemy focus will be set by select enemy signal
+	assert_false(mocker.enemy.triangle_focus.visible, "Current enemy group member has triangle focus")
+	assert_false(mocker.enemy_2.triangle_focus.visible, "Other group member is not focused")
+

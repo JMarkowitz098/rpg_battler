@@ -20,6 +20,7 @@ func _connect_signals() -> void:
 		["choosing_action_queue_state_entered", _on_choosing_action_queue_state_entered],
 		["choosing_action_state_entered", _on_choosing_action_state_entered],
 		["choosing_ally_state_entered", _on_choosing_ally_state_entered],
+		["choosing_enemy_state_entered", _on_choosing_enemy_state_entered],
 		["choosing_skill_state_entered",_on_choosing_skill_state_entered],
 		["enter_action_queue_handle_input", _on_enter_action_queue_handle_input],
 		["is_battling_state_entered", _on_is_battling_state_entered],
@@ -153,6 +154,10 @@ func _on_choosing_ally_state_entered() -> void:
 	unfocus_all(Focus.Type.ALL)
 
 
-func _on_choosing_skill_state_entered() -> void:
+func _on_choosing_skill_state_entered(_params: StateParams = null) -> void:
 	unfocus_all(Focus.Type.ALL)
 	items.front().focus(Focus.Type.TRIANGLE)
+
+
+func _on_choosing_enemy_state_entered() -> void:
+	unfocus_all(Focus.Type.ALL)
