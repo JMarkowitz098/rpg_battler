@@ -62,6 +62,7 @@ func _connect_skill_button_signals() -> void:
 		var skill := current_skills[i]
 		var skill_button := skill_buttons[i]
 		skill_button.pressed.connect(_handle_choose_skill.bind(skill))
+		skill_button.focus_entered.connect(_handle_button_focus.bind(skill_button))
 
 func _create_skill_desciption(skill: Ingress) -> String:
 	return "{0}\nIngress Energy Cost: {1}\nElement: {2}\n{3}".format([
@@ -91,6 +92,10 @@ func _handle_choose_skill(skill: Ingress) -> void:
 			Events.change_state.emit(State.Type.CHOOSING_ALLY_ALL)
 		Ingress.Target.ALL_ENEMIES:
 			Events.change_state.emit(State.Type.CHOOSING_ENEMY_ALL)
+
+
+func _handle_button_focus(button: Button) -> void:
+	current_skill_button = button
 
 # -------
 # Signals
