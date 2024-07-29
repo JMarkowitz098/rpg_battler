@@ -82,7 +82,6 @@ func _connect_signals() -> void:
 		player.modifiers.no_ingress.connect(_on_player_no_ingress)
 
 	var signals := [
-		["choosing_skill_state_entered", _on_choosing_skill_state_entered],
 		["choose_enemy", _on_choose_enemy],
 		["choose_ally", _on_choose_ally],
 		["pause_game", _on_game_paused],
@@ -237,13 +236,6 @@ func _on_player_no_ingress(player_unique_id: String) -> void:
 # 	help_menu.close_button.focus()
 
 
-func _on_choosing_skill_state_entered(_params: StateParams = null) -> void:
-	var current_player: Node2D = current_action_item.get_actor()
-	skill_choice_list.set_current_skills(current_player, current_skill_type)
-	skill_choice_list.prepare_skill_menu(_handle_choose_skill)
-	skill_choice_list.get_children()[0].focus(true)
-	current_player.focus(Focus.Type.TRIANGLE) # move to player group
-	action_queue.set_triangle_focus_on_player(current_player.unique_id.id)
 
 func _on_choose_enemy() -> void:
 	action_queue.update_player_action_with_skill(
