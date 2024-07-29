@@ -5,7 +5,6 @@ const BATTLE_SCENE_BUTTON := preload("res://menus/battle_scene_button.tscn")
 var current_skill: Ingress
 var current_skill_button: Button
 var current_skills: Array[Ingress]
-var current_skill_index := 0
 
 func _ready() -> void:
 	var signals := [
@@ -18,27 +17,24 @@ func _ready() -> void:
 		["choosing_self_state_entered",_on_choosing_self_state_entered],
 		["choosing_skill_state_entered",_on_choosing_skill_state_entered],
 		["is_battling_state_entered",_on_is_battling_state_entered],
-		["update_info_label_with_skill_description",_on_update_info_label_with_skill_description]
 	]
 
 	Utils.connect_signals(signals)
 
+
 func set_current_skills(player: Node2D, type: Ingress.Type) -> void:
 	current_skills = player.learned_skills.filter_by_type(type)
+
 
 func prepare_skill_menu() -> void:
 	_fill_skill_menu_with_current_skills()
 	_connect_skill_button_signals()
 	
+
 func release_focus_from_all_buttons() -> void:
 	for child in get_children():
 		child.release_focus()
 
-func get_current_skill() -> Ingress:
-	return current_skills[current_skill_index]
-
-func get_current_skill_button() -> Button:
-	return get_children()[current_skill_index]
 
 func _fill_skill_menu_with_current_skills() -> void:
 	for child in get_children():
@@ -62,7 +58,7 @@ func _connect_skill_button_signals() -> void:
 		var skill := current_skills[i]
 		var skill_button := skill_buttons[i]
 		skill_button.pressed.connect(_handle_choose_skill.bind(skill))
-		skill_button.focus_entered.connect(_handle_button_focus.bind(skill_button))
+		skill_button.focus_entered.connect(_handle_button_focus.bind(skill, skill_button))
 
 func _create_skill_desciption(skill: Ingress) -> String:
 	return "{0}\nIngress Energy Cost: {1}\nElement: {2}\n{3}".format([
@@ -72,6 +68,7 @@ func _create_skill_desciption(skill: Ingress) -> String:
 		skill.description
 	])
 
+
 func show_list() -> void:
 	show()
 	current_skill_button.focus_no_sound()
@@ -79,9 +76,9 @@ func show_list() -> void:
 
 func _handle_choose_skill(skill: Ingress) -> void:
 	Sound.play(Sound.confirm)
-	current_skill = skill
+	#current_skill = skill
 		
-	match current_skill.target:
+	match skill.target:
 		Ingress.Target.ENEMY:
 			Events.change_state.emit(State.Type.CHOOSING_ENEMY)
 		Ingress.Target.ALLY:
@@ -94,8 +91,9 @@ func _handle_choose_skill(skill: Ingress) -> void:
 			Events.change_state.emit(State.Type.CHOOSING_ENEMY_ALL)
 
 
-func _handle_button_focus(button: Button) -> void:
+func _handle_button_focus(skill: Ingress, button: Button) -> void:
 	current_skill_button = button
+	Events.update_info_label.emit(_create_skill_desciption(skill))
 
 # -------
 # Signals
@@ -123,13 +121,6 @@ func _on_choosing_enemy_all_state_entered() -> void:
 func _on_is_battling_state_entered() -> void:
 	release_focus_from_all_buttons()
 	hide()
-
-func _on_update_info_label_with_skill_description() -> void:
-	var skill_buttons := get_children()
-	for i in skill_buttons.size():
-		if(skill_buttons[i].has_focus()):
-			Events.update_info_label.emit(_create_skill_desciption(current_skills[i]))
-			current_skill_index = i
 
 func _on_choosing_ally_state_entered() -> void:
 	release_focus_from_all_buttons()

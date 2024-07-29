@@ -29,4 +29,3 @@ signal update_action_queue_focuses
 signal update_enemy_group_current
 signal update_player_group_current
 signal update_info_label(new_message: String)
-signal update_info_label_with_skill_description

@@ -50,6 +50,7 @@ func test_can_prepare_skill_menu() -> void:
 
 
 func test_can_update_current_button_on_focus_change() -> void:
+	watch_signals(Events)
 	var mocker := _mocker_setup()
 	var player := mocker.player
 
@@ -57,6 +58,7 @@ func test_can_update_current_button_on_focus_change() -> void:
 	skill_choice_list.prepare_skill_menu()
 	_get_button(1).focus_no_sound()
 	assert_eq(skill_choice_list.current_skill_button, _get_button(1))
+	assert_signal_emitted(Events, "update_info_label")
 
 
 func test_can_respond_to_choosing_skill_state_entered_signal() -> void:
