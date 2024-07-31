@@ -7,13 +7,13 @@ enum Type{
 	ALL
 }
 
-func focus() -> void:
+func focus(color: Color = Color.WHITE) -> void:
+	self_modulate = color
 	show()
 	
 func unfocus() -> void:
 	hide()
 
 func clear() -> void:
-	self_modulate = Color("White")
-	# self_modulate = Color("94b0da")
+	self_modulate = Color.WHITE
 	unfocus()

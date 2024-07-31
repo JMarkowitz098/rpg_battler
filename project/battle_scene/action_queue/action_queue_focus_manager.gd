@@ -1,8 +1,13 @@
 class_name ActionQueueFocusManager
 
 
-func set_item_focus(items: Array[ActionQueueItem], index: int, type: Focus.Type) -> void:
-	items[index].focus(type)
+func set_item_focus(
+	items: Array[ActionQueueItem], 
+	index: int, 
+	type: Focus.Type, 
+	color: Color = Color.WHITE
+) -> void:
+	items[index].focus(type, color)
 
 
 func unfocus_all(items: Array[ActionQueueItem], type: Focus.Type) -> void:
@@ -17,9 +22,17 @@ func get_action_index_by_unique_id(items: Array[ActionQueueItem], unique_id: Str
 	return 0
 
 
-func set_triangle_focus_on_player(items: Array[ActionQueueItem], unique_id: String) -> void:
+func set_triangle_focus_on_player(
+	items: Array[ActionQueueItem], 
+	unique_id: String, 
+	color: Color = Color.WHITE
+) -> void:
 	var index := get_action_index_by_unique_id(items, unique_id)
-	set_item_focus(items, index, Focus.Type.TRIANGLE)
+	set_item_focus(items, index, Focus.Type.TRIANGLE, color)
+
+func remove_triangle_focus_on_player(items: Array[ActionQueueItem], unique_id: String) -> void:
+	var index := get_action_index_by_unique_id(items, unique_id)
+	items[index].unfocus(Focus.Type.ALL)
 
 
 # -----------------

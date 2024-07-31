@@ -23,3 +23,10 @@ func test_can_set_item_focus() -> void:
 	assert_false(mocker.item_1.triangle_focus.is_visible())
 	assert_false(mocker.item_3.triangle_focus.is_visible())
 	assert_true(mocker.item_2.triangle_focus.is_visible())
+
+
+func test_can_set_with_color() -> void:
+	var target_focus := mocker.item_2.triangle_focus
+	manager.set_item_focus(items, 1, Focus.Type.TRIANGLE, Color.RED)
+	assert_true(target_focus.is_visible())
+	assert_eq(target_focus.self_modulate, Color.RED)

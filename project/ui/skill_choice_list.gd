@@ -76,7 +76,6 @@ func show_list() -> void:
 
 func _handle_choose_skill(skill: Ingress) -> void:
 	Sound.play(Sound.confirm)
-	#current_skill = skill
 		
 	match skill.target:
 		Ingress.Target.ENEMY:

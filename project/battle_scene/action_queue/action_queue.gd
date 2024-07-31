@@ -25,7 +25,8 @@ func _connect_signals() -> void:
 		["enter_action_queue_handle_input", _on_enter_action_queue_handle_input],
 		["is_battling_state_entered", _on_is_battling_state_entered],
 		["update_action_index", _on_update_action_index],
-		["update_action_queue_focuses", _on_update_action_queue_focuses]
+		["update_action_queue_focuses", _on_update_action_queue_focuses],
+		["update_current_player", _on_update_current_player], 
 	]
 
 
@@ -87,8 +88,8 @@ func get_current_item() -> ActionQueueItem:
 	return focus_manager.get_current_item()
 
 
-func set_item_focus(index: int, type: Focus.Type) -> void:
-	focus_manager.set_item_focus(items, index, type)
+func set_item_focus(index: int, type: Focus.Type, color: Color = Color.WHITE) -> void:
+	focus_manager.set_item_focus(items, index, type, color)
 
 
 func create_action_message(action: Action) -> String:
@@ -161,3 +162,11 @@ func _on_choosing_skill_state_entered(_params: StateParams = null) -> void:
 
 func _on_choosing_enemy_state_entered() -> void:
 	unfocus_all(Focus.Type.ALL)
+
+
+func _on_update_current_player(player: Node2D, focused: bool) -> void:
+	if focused:
+		focus_manager.set_triangle_focus_on_player(items, player.unique_id.id, Color.RED)
+	else:
+		focus_manager.remove_triangle_focus_on_player(items, player.unique_id.id)
+

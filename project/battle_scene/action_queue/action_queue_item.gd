@@ -24,15 +24,15 @@ func set_portrait(player: Node2D) -> void:
 # --------------------
 
 
-func focus(type: Focus.Type) -> void:
+func focus(type: Focus.Type, color: Color = Color.WHITE) -> void:
 	match type:
 		Focus.Type.FINGER:
-			finger_focus.focus()
+			finger_focus.focus(color)
 		Focus.Type.TRIANGLE:
-			triangle_focus.focus()
+			triangle_focus.focus(color)
 		Focus.Type.ALL:
-			finger_focus.focus()
-			triangle_focus.focus()
+			finger_focus.focus(color)
+			triangle_focus.focus(color)
 
 
 func unfocus(type: Focus.Type) -> void:
