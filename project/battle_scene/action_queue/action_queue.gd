@@ -26,7 +26,7 @@ func _connect_signals() -> void:
 		["is_battling_state_entered", _on_is_battling_state_entered],
 		["update_action_index", _on_update_action_index],
 		["update_action_queue_focuses", _on_update_action_queue_focuses],
-		["update_current_player", _on_update_current_player], 
+		["update_current_member", _on_update_current_member], 
 	]
 
 
@@ -164,7 +164,7 @@ func _on_choosing_enemy_state_entered() -> void:
 	unfocus_all(Focus.Type.ALL)
 
 
-func _on_update_current_player(player: Node2D, focused: bool) -> void:
+func _on_update_current_member(player: Node2D, focused: bool) -> void:
 	if focused:
 		focus_manager.set_triangle_focus_on_player(items, player.unique_id.id, Color.RED)
 	else:

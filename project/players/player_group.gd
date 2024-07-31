@@ -7,14 +7,12 @@ func _ready() -> void:
 
 func _connect_signals() -> void:
 	var signals := [
-		["action_queue_focus_all_allies", _on_action_queue_focus_all_members], # Defined in Group
 		["choosing_action_queue_state_entered", _on_choosing_action_queue_state_entered],
 		["choosing_action_state_entered", _on_choosing_action_state_entered],
 		["choosing_ally_all_state_entered", _on_choosing_ally_all_state_entered],
 		["choosing_ally_state_entered", _on_choosing_ally_state_entered],
 		["choosing_self_state_entered", _on_choosing_self_state_entered],
 		["choosing_skill_state_entered", _on_choosing_skill_state_entered],
-		["enter_action_queue_handle_input", _on_enter_action_queue_handle_input], # Defined in Group
 		["is_battling_state_entered", _on_is_battling_state_entered],
 		["update_player_group_current", _on_update_current], # Defined in Group
 	]

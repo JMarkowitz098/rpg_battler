@@ -148,7 +148,7 @@ func _on_modifiers_no_ingress(_unique_id: String) -> void:
 
 func _on_finger_focus_visibility_changed() -> void:
 	if finger_focus.visible: 
-		Events.update_current_player.emit(self, true)
+		Events.update_current_member.emit(self, true)
 	else: 
-		Events.update_current_player.emit(self, false)
+		Events.update_current_member.emit(self, false)
 

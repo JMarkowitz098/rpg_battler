@@ -28,5 +28,5 @@ signal update_action_index(new_index: int)
 signal update_action_queue_focuses
 signal update_enemy_group_current
 signal update_player_group_current
-signal update_current_player(player: Node2D, focused: bool)
+signal update_current_member(member: Node2D, focused: bool)
 signal update_info_label(new_message: String)

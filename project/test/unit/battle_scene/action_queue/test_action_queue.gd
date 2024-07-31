@@ -61,7 +61,7 @@ func test_can_respond_to_choosing_enemy_state_entered_signal() -> void:
 
 func test_can_respond_to_update_current_player_signal() -> void:
 	queue.fill_initial_turn_items(mocker.battle_groups)
-	Events.update_current_player.emit(mocker.player, true)
+	Events.update_current_member.emit(mocker.player, true)
 	var item_index := queue.get_action_index_by_unique_id(mocker.player.unique_id.id)
 	var target := queue.items[item_index]
 	assert_true(target.triangle_focus.is_visible(), "First item is focused")
