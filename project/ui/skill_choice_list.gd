@@ -101,8 +101,6 @@ func _handle_button_focus(skill: Ingress, button: Button) -> void:
 func _on_choosing_action_state_entered(_params: StateParams = null) -> void:
 	hide()
 
-func _on_choosing_action_queue_state_entered() -> void:
-	release_focus_from_all_buttons()
 
 func _on_choosing_skill_state_entered(_params: StateParams = null) -> void:
 	if _params and _params.item and _params.ingress_type >= 0:
@@ -111,21 +109,16 @@ func _on_choosing_skill_state_entered(_params: StateParams = null) -> void:
 		current_skill_button = get_children()[0]
 	show_list()
 
-func _on_choosing_enemy_state_entered() -> void:
-	release_focus_from_all_buttons()
-
-func _on_choosing_enemy_all_state_entered() -> void:
-	release_focus_from_all_buttons()
 
 func _on_is_battling_state_entered() -> void:
 	release_focus_from_all_buttons()
 	hide()
 
-func _on_choosing_ally_state_entered() -> void:
-	release_focus_from_all_buttons()
 
-func _on_choosing_self_state_entered() -> void:
-	release_focus_from_all_buttons()
+func _on_choosing_action_queue_state_entered() -> void: release_focus_from_all_buttons()
+func _on_choosing_enemy_state_entered() -> void: release_focus_from_all_buttons()
+func _on_choosing_enemy_all_state_entered() -> void: release_focus_from_all_buttons()
+func _on_choosing_ally_state_entered() -> void: release_focus_from_all_buttons()
+func _on_choosing_self_state_entered() -> void: release_focus_from_all_buttons()
+func _on_choosing_ally_all_state_entered() -> void: release_focus_from_all_buttons()
 
-func _on_choosing_ally_all_state_entered() -> void:
-	release_focus_from_all_buttons()

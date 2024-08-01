@@ -8,6 +8,8 @@ var process_queue := ProcessQueue.new()
 var item_manager := ActionQueueItemManager.new()
 var focus_manager := ActionQueueFocusManager.new()
 
+var current_skill_target: Ingress.Target
+
 const ACTION_QUEUE_ITEM := preload("res://battle_scene/action_queue/action_queue_item.tscn")
 
 
@@ -21,6 +23,7 @@ func _connect_signals() -> void:
 		["choosing_action_state_entered", _on_choosing_action_state_entered],
 		["choosing_ally_state_entered", _on_choosing_ally_state_entered],
 		["choosing_enemy_state_entered", _on_choosing_enemy_state_entered],
+		["choosing_self_state_entered", _on_choosing_self_state_entered],
 		["choosing_skill_state_entered",_on_choosing_skill_state_entered],
 		["enter_action_queue_handle_input", _on_enter_action_queue_handle_input],
 		["is_battling_state_entered", _on_is_battling_state_entered],
@@ -75,6 +78,15 @@ func remove_actions_without_target_with_removed_id(unique_id: String) -> void:
 # -----------------
 # Private Functions
 # -----------------
+
+func _focus_color() -> Color:
+	match current_skill_target:
+		Ingress.Target.ENEMY, Ingress.Target.ALL_ENEMIES:
+			return Color.RED
+		Ingress.Target.SELF, Ingress.Target.ALLY, Ingress.Target.ALL_ALLIES:
+			return Color.GREEN
+		_:
+			return Color.WHITE
 
 # ------------------
 # Focus Manager
@@ -153,6 +165,12 @@ func _on_update_action_queue_focuses() -> void:
 
 func _on_choosing_ally_state_entered() -> void:
 	unfocus_all(Focus.Type.ALL)
+	current_skill_target = Ingress.Target.ALLY
+
+
+func _on_choosing_self_state_entered() -> void:
+	unfocus_all(Focus.Type.ALL)
+	current_skill_target = Ingress.Target.ALLY
 
 
 func _on_choosing_skill_state_entered(_params: StateParams = null) -> void:
@@ -162,11 +180,12 @@ func _on_choosing_skill_state_entered(_params: StateParams = null) -> void:
 
 func _on_choosing_enemy_state_entered() -> void:
 	unfocus_all(Focus.Type.ALL)
+	current_skill_target = Ingress.Target.ENEMY
 
 
 func _on_update_current_member(player: Node2D, focused: bool) -> void:
 	if focused:
-		focus_manager.set_triangle_focus_on_player(items, player.unique_id.id, Color.RED)
+		focus_manager.set_triangle_focus_on_player(items, player.unique_id.id, _focus_color())
 	else:
 		focus_manager.remove_triangle_focus_on_player(items, player.unique_id.id)
 
