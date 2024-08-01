@@ -15,11 +15,9 @@ func unfocus_all(items: Array[ActionQueueItem], type: Focus.Type) -> void:
 
 
 func get_action_index_by_unique_id(items: Array[ActionQueueItem], unique_id: String) -> int:
-	for i in items.size():
-		var action := items[i].action
-		if action.actor.unique_id.id == unique_id:
-			return i
-	return 0
+	for i in items.size(): 
+		if items[i].get_actor_unique_id() == unique_id: return i
+	return -1
 
 
 func set_triangle_focus_on_player(
@@ -28,7 +26,8 @@ func set_triangle_focus_on_player(
 	color: Color = Color.WHITE
 ) -> void:
 	var index := get_action_index_by_unique_id(items, unique_id)
-	set_item_focus(items, index, Focus.Type.TRIANGLE, color)
+	if index >= 0: set_item_focus(items, index, Focus.Type.TRIANGLE, color)
+
 
 func remove_triangle_focus_on_player(items: Array[ActionQueueItem], unique_id: String) -> void:
 	var index := get_action_index_by_unique_id(items, unique_id)
