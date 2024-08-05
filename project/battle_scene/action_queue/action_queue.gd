@@ -3,6 +3,7 @@ class_name ActionQueue
 
 var items: Array[ActionQueueItem] = []
 var current_member: int = 0
+var current_state_item: ActionQueueItem
 
 var process_queue := ProcessQueue.new()
 var item_manager := ActionQueueItemManager.new()
@@ -25,10 +26,8 @@ func _connect_signals() -> void:
 		["choosing_enemy_state_entered", _on_choosing_enemy_state_entered],
 		["choosing_self_state_entered", _on_choosing_self_state_entered],
 		["choosing_skill_state_entered",_on_choosing_skill_state_entered],
-		["enter_action_queue_handle_input", _on_enter_action_queue_handle_input],
 		["is_battling_state_entered", _on_is_battling_state_entered],
 		["update_action_index", _on_update_action_index],
-		["update_action_queue_focuses", _on_update_action_queue_focuses],
 		["update_current_member", _on_update_current_member], 
 	]
 
@@ -75,49 +74,19 @@ func remove_actions_without_target_with_removed_id(unique_id: String) -> void:
 	item_manager.remove_actions_without_target_with_removed_id(unique_id)
 
 
-# -----------------
-# Private Functions
-# -----------------
-
-func _focus_color() -> Color:
-	match current_skill_target:
-		Ingress.Target.ENEMY, Ingress.Target.ALL_ENEMIES:
-			return Color.RED
-		Ingress.Target.SELF, Ingress.Target.ALLY, Ingress.Target.ALL_ALLIES:
-			return Color.GREEN
-		_:
-			return Color.WHITE
-
 # ------------------
 # Focus Manager
 # ------------------
 
-func reset_current_member() -> void:
-	focus_manager.reset_current_member()
-
-
-func get_current_item() -> ActionQueueItem:
-	return focus_manager.get_current_item()
-
-
-func set_item_focus(index: int, type: Focus.Type, color: Color = Color.WHITE) -> void:
+func reset_current_member() -> void: focus_manager.reset_current_member()
+func get_current_item() -> ActionQueueItem: return focus_manager.get_current_item()
+func set_item_focus(index: int, type: Focus.Type, color: Color = Color.WHITE) -> void: 
 	focus_manager.set_item_focus(items, index, type, color)
-
-
-func create_action_message(action: Action) -> String:
+func create_action_message(action: Action) -> String: 
 	return focus_manager.create_action_message(action)
-
-
 func unfocus_all(type: Focus.Type) -> void: focus_manager.unfocus_all(items, type)
-
-
-func set_focuses() -> void: focus_manager.set_focuses()
-
-
 func get_action_index_by_unique_id(unique_id: String) -> int:
 	return focus_manager.get_action_index_by_unique_id(items, unique_id)
-
-
 func set_triangle_focus_on_player(unique_id: String) -> void:
 	focus_manager.set_triangle_focus_on_player(items, unique_id)
 
@@ -132,35 +101,33 @@ func _on_choosing_action_state_entered(_params: StateParams = null) -> void:
 
 	
 func _on_choosing_action_queue_state_entered() -> void:
-	set_item_focus(0, Focus.Type.FINGER)
-	var action := get_current_item().action
-	Events.update_info_label.emit(create_action_message(action))
+	if !current_state_item:
+		current_state_item = items.front()
+		current_member = 0
+	_on_update_action_index(Direction.Type.NONE)
+	Events.update_info_label.emit(create_action_message(current_state_item.action))
 
 
 func _on_is_battling_state_entered() -> void:
 	unfocus_all(Focus.Type.ALL)
 
 
-func _on_enter_action_queue_handle_input() -> void:
-	unfocus_all(Focus.Type.ALL)
-
-
 func _on_update_action_index(direction: Direction.Type) -> void:
-	match direction:
-		Direction.Type.RIGHT:
-			current_member = (current_member + 1) % items.size()
-		Direction.Type.LEFT:
-			if current_member == 0:
-				current_member = items.size() - 1
-			else:
-				current_member = current_member - 1
+	_handle_direction(direction)
 
-	var action := get_current_item().action
+	var action := current_state_item.action
+	unfocus_all(Focus.Type.ALL)
+	Events.update_action_queue_focuses.emit(current_state_item)
 	Events.update_info_label.emit(create_action_message(action))
 
-
-func _on_update_action_queue_focuses() -> void:
-	set_focuses()
+	current_state_item.focus(Focus.Type.ALL)
+	if action.target: 
+		action.target.set_triangle_focus_size(Vector2(.4, .4)) # Does not set for some reason
+		focus_manager.set_triangle_focus_on_player(
+			items,
+			action.get_target_unique_id(),
+			Focus.color(action.skill.target)
+	)
 
 
 func _on_choosing_ally_state_entered() -> void:
@@ -170,6 +137,7 @@ func _on_choosing_ally_state_entered() -> void:
 
 func _on_choosing_self_state_entered() -> void:
 	unfocus_all(Focus.Type.ALL)
+	items.front().focus(Focus.Type.TRIANGLE)
 	current_skill_target = Ingress.Target.ALLY
 
 
@@ -184,8 +152,24 @@ func _on_choosing_enemy_state_entered() -> void:
 
 
 func _on_update_current_member(player: Node2D, focused: bool) -> void:
+	unfocus_all(Focus.Type.ALL) 
 	if focused:
-		focus_manager.set_triangle_focus_on_player(items, player.unique_id.id, _focus_color())
+		focus_manager.set_triangle_focus_on_player(items, player.unique_id.id, Focus.color(current_skill_target))
 	else:
 		focus_manager.remove_triangle_focus_on_player(items, player.unique_id.id)
 
+
+# -----------------
+# Private Functions
+# -----------------
+
+func _handle_direction(direction: Direction.Type)-> void:
+	match direction:
+		Direction.Type.RIGHT:
+			current_member = (current_member + 1) % items.size()
+		Direction.Type.LEFT:
+			if current_member == 0:
+				current_member = items.size() - 1
+			else:
+				current_member = current_member - 1
+	current_state_item = items[current_member]

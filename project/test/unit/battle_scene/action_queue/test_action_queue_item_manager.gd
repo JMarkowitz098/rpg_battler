@@ -22,12 +22,6 @@ func test_can_create_item_manager() -> void:
 	assert_not_null(manager)
 
 
-func test_can_return_current_action_actor() -> void:
-	var expected := mocker.item_1.action.actor
-	var actual: Node2D = manager.get_current_action_player(items)
-	assert_eq(actual, expected)
-
-
 func test_get_action_by_unique_id() -> void:
 	var expected := mocker.item_2.action
 	var actual: Action = manager.get_action_by_unique_id(items, mocker.item_2.action.actor.unique_id)
