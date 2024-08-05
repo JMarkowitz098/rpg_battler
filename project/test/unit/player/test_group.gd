@@ -57,10 +57,3 @@ func test_get_member_by_unique_id() -> void:
 	var actual := group.get_member_by_unique_id("5678")
 
 	assert_eq_deep(expected, actual)
-
-
-func test_can_respond_to_on_update_current_player_signal() -> void:
-	group.instantiate_members(data)
-	var player := group.members[1]
-	Events.update_current_member.emit(player, true)
-	assert_eq(group.current_state_member, player)

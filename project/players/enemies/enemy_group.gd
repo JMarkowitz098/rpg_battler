@@ -24,13 +24,14 @@ func load_members_from_round_data(round_number: Round.Number) -> void:
 func _connect_signals() -> void:
 	var signals := [
 		["action_queue_focus_all_enemies", _on_action_queue_focus_all_members],
-		["choosing_action_queue_state_entered", _on_choosing_action_queue_state_entered],
 		["choosing_action_state_entered", _on_choosing_action_state_entered],
 		["choosing_enemy_all_state_entered", _on_choosing_enemy_state_all_entered],
 		["choosing_enemy_state_entered", _on_choosing_enemy_state_entered],
 		["choosing_skill_state_entered", _on_choosing_skill_state_entered],
 		["is_battling_state_entered", _on_is_battling_state_entered],
 		["update_enemy_group_current", _on_update_current], # Defined in Group
+		["update_action_queue_focuses", _on_update_action_queue_focuses], # Defined in Group
+		["update_current_member", _on_update_current_member],
 	]
 
 	Utils.connect_signals(signals)
@@ -52,10 +53,6 @@ func _flip_members_direction() -> void:
 
 
 func _on_choosing_action_state_entered(_params: StateParams = null) -> void:
-	unfocus_all(Focus.Type.ALL)
-
-
-func _on_choosing_action_queue_state_entered() -> void:
 	unfocus_all(Focus.Type.ALL)
 
 

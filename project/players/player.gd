@@ -37,15 +37,20 @@ func load_stats(incoming_stats: Stats) -> void:
 	update_energy_bar()
 
 
-func focus(focus_type: Focus.Type) -> void:
+func focus(focus_type: Focus.Type, color: Color = Color.WHITE) -> void:
 	match focus_type:
 		Focus.Type.FINGER:
 			finger_focus.focus()
+			finger_focus.self_modulate = color
 		Focus.Type.TRIANGLE:
 			triangle_focus.focus()
+			triangle_focus.self_modulate = color
 		Focus.Type.ALL:
 			finger_focus.focus()
 			triangle_focus.focus()
+			finger_focus.self_modulate = color
+			triangle_focus.self_modulate = color
+	
 
 func unfocus(focus_type: Focus.Type) -> void:
 	match focus_type:
