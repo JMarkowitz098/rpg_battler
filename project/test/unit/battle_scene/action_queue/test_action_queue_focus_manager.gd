@@ -64,6 +64,16 @@ func test_can_set_and_remove_triangle_focus_on_player() -> void:
 	_assert_items(tests) 
 
 
+func test_can_create_message() -> void:
+	mocker.item_2.action.skill = Ing.load_ingress([Ingress.Id.INCURSION, Element.Type.ETH])
+	mocker.item_2.action.target = mocker.player
+
+	var expected := "Player: Talon\nAction: Eth Incursion\nTarget -> Talon"
+	var actual := manager.create_action_message(mocker.item_2.action)
+
+	assert_eq(expected, actual)
+
+
 func _assert_items(tests: Array) -> void:
 	for test: Array in tests: _assert_item(test[0], test[1])
 
