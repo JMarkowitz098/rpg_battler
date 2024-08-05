@@ -120,7 +120,7 @@ func _on_update_action_index(direction: Direction.Type) -> void:
 	Events.update_action_queue_focuses.emit(current_state_item)
 	Events.update_info_label.emit(create_action_message(action))
 
-	current_state_item.focus(Focus.Type.ALL)
+	current_state_item.focus(Focus.Type.FINGER)
 	if action.target: 
 		action.target.set_triangle_focus_size(Vector2(.4, .4)) # Does not set for some reason
 		focus_manager.set_triangle_focus_on_player(
