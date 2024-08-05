@@ -25,7 +25,7 @@ signal is_battling_state_entered
 signal pause_game(current_state: int)
 
 signal update_action_index(new_index: int)
-signal update_action_queue_focuses
+signal update_action_queue_focuses(item: ActionQueueItem)
 signal update_enemy_group_current
 signal update_player_group_current
 signal update_current_member(member: Node2D, focused: bool)
