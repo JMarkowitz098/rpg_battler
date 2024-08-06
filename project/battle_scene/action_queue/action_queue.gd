@@ -73,6 +73,11 @@ func remove_actions_without_target_with_removed_id(unique_id: String) -> void:
 	item_manager.remove_actions_without_target_with_removed_id(items, unique_id)
 
 
+func next_item() -> void:
+	items.front().queue_free()
+	items.pop_front()
+
+
 # ------------------
 # Focus Manager
 # ------------------

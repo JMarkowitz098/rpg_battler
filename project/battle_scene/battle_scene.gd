@@ -32,61 +32,24 @@ var skill_index := 0
 func _ready() -> void:
 	_create_battle_groups()
 	_connect_signals()
-	action_queue.fill_initial_turn_items(battle_groups)
-	current_action_item = action_queue.items.front()
+	_reset_turn()
 	Music.play(Music.battle_theme)
 	
 func _process(_delta: float) -> void:
-
-	if action_queue.is_turn_over():
-		action_queue.fill_initial_turn_items(battle_groups)
-		current_action_item = action_queue.items.front()
+	if action_queue.is_turn_over(): _reset_turn()
 
 	var current_action := current_action_item.action
 	if current_action.action_chosen:
-		state.change_state(State.Type.IS_BATTLING)
-		set_process(false)
-		await current_action.skill.process(current_action, get_tree(), battle_groups)
-		set_process(true)
-
-		if _is_game_over():
-			Utils.change_scene("res://menus/game_completion_screen.tscn", { "status": Utils.GameOver.DEFEAT })
-		elif _is_victory():
-			if Utils.current_round == Utils.FINAL_ROUND:
-				Utils.change_scene("res://menus/game_completion_screen.tscn", { "status": Utils.GameOver.VICTORY })
-			else:
-				Utils.next_round()
-				Utils.change_scene("res://menus/victory_screen.tscn", { "defeated": defeated })
-
-		if action_queue.items.size() > 0:
-			current_action_item.queue_free()
-			action_queue.items.pop_front()
-			if action_queue.items.size() > 0: current_action_item = action_queue.items.front()
+		_process_action(current_action)
+		_check_for_round_end()
+		if action_queue.items.size() > 0: _to_next_queue_item()
 	elif !current_action.is_choosing:
-		current_action.is_choosing = true
-		player_group.current_member = player_group.get_member_index(current_action.get_actor_unique_id())
-		state.change_state(State.Type.CHOOSING_ACTION, StateParams.new(current_action_item))
+		_prepare_for_choosing_action(current_action)
 
 	state.current.handle_input()
 
 	
 
-		# LEGACY CODE
-		# set_process(false)
-		# await _process_turn()
-		# set_process(true)
-		# if _is_game_over():
-		# 	Utils.change_scene("res://menus/game_completion_screen.tscn", { "status": Utils.GameOver.DEFEAT })
-		# elif _is_victory():
-		# 	if Utils.current_round == Utils.FINAL_ROUND:
-		# 		Utils.change_scene("res://menus/game_completion_screen.tscn", { "status": Utils.GameOver.VICTORY })
-		# 	else:
-		# 		Utils.next_round()
-		# 		Utils.change_scene("res://menus/victory_screen.tscn", { "defeated": defeated })
-		# else:
-		# 	_reset_turn()
-
-		
 func _connect_signals() -> void:
 	for enemy: Node2D in enemy_group.members:
 		enemy.modifiers.no_ingress.connect(_on_enemy_no_ingress)
@@ -148,15 +111,49 @@ func _is_game_over() -> bool:
 func _is_victory() -> bool:
 	return enemy_group.members.size() == 0
 	
+func _process_action(action: Action) -> void:
+	if action.actor == null: return # Not sure why actions are not being removed
+	state.change_state(State.Type.IS_BATTLING)
+	set_process(false)
+	await action.skill.process(action, get_tree(), battle_groups)
+	set_process(true)
+
+
+func _check_for_round_end() -> void:
+	if _is_game_over():
+		Utils.change_scene("res://menus/game_completion_screen.tscn", { "status": Utils.GameOver.DEFEAT })
+	elif _is_victory():
+		_handle_victory()
+
+
+func _handle_victory() -> void:
+	if Utils.current_round == Utils.FINAL_ROUND:
+			Utils.change_scene("res://menus/game_completion_screen.tscn", { "status": Utils.GameOver.VICTORY })
+	else:
+		Utils.next_round()
+		Utils.change_scene("res://menus/victory_screen.tscn", { "defeated": defeated })
+
+
 func _set_dodging_animation() -> void:
 	for item: ActionQueueItem in action_queue.items:
 		if item.action.skill.id == Ingress.Id.DODGE:
 			item.action.actor.set_dodge_animation(true)
 
+
+func _to_next_queue_item() -> void:
+	action_queue.next_item()
+	if action_queue.items.size() > 0: current_action_item = action_queue.items.front()
+
+
 # ----------------------
 # Helper Functions
 # ----------------------
+
+func _reset_turn() -> void:
+	action_queue.fill_initial_turn_items(battle_groups)
+	current_action_item = action_queue.items.front()
 	
+
 func _handle_done_choosing() -> void:
 	current_action_item.action.is_choosing = false
 	if !action_queue.is_turn_over(): player_group.next_player()
@@ -166,6 +163,12 @@ func _create_battle_groups() -> void:
 	player_group.load_members_from_save_data("0")
 	enemy_group.load_members_from_round_data(Utils.current_round)
 	battle_groups = BattleGroups.new(player_group.members, enemy_group.members)
+
+
+func _prepare_for_choosing_action(action: Action) -> void:
+	action.is_choosing = true
+	player_group.current_member = player_group.get_member_index(action.get_actor_unique_id())
+	state.change_state(State.Type.CHOOSING_ACTION, StateParams.new(current_action_item))
 
 # -------
 # Signals
