@@ -71,6 +71,10 @@ func is_player_action() -> bool:
 	return action.actor.is_player()
 
 
+func is_enemy_action() -> bool:
+	return action.actor.is_enemy()
+
+
 func set_rand_agi() -> void:
 	action.actor.modifiers.rand_agi = get_actor_agi() + randi() % 10
 

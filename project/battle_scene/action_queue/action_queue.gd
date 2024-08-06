@@ -23,7 +23,9 @@ func _connect_signals() -> void:
 		["choosing_action_queue_state_entered", _on_choosing_action_queue_state_entered],
 		["choosing_action_state_entered", _on_choosing_action_state_entered],
 		["choosing_ally_state_entered", _on_choosing_ally_state_entered],
+		["choosing_ally_all_state_entered", _on_choosing_ally_all_state_entered],
 		["choosing_enemy_state_entered", _on_choosing_enemy_state_entered],
+		["choosing_enemy_all_state_entered", _on_choosing_enemy_all_state_entered],
 		["choosing_self_state_entered", _on_choosing_self_state_entered],
 		["choosing_skill_state_entered",_on_choosing_skill_state_entered],
 		["is_battling_state_entered", _on_is_battling_state_entered],
@@ -91,8 +93,8 @@ func create_action_message(action: Action) -> String:
 func unfocus_all(type: Focus.Type) -> void: focus_manager.unfocus_all(items, type)
 func get_action_index_by_unique_id(unique_id: String) -> int:
 	return focus_manager.get_action_index_by_unique_id(items, unique_id)
-func set_triangle_focus_on_player(unique_id: String) -> void:
-	focus_manager.set_triangle_focus_on_player(items, unique_id)
+func set_triangle_focuses_on_items(unique_id: String) -> void:
+	focus_manager.set_triangle_focuses_on_items(items, unique_id, current_skill_target)
 
 
 # -------
@@ -127,9 +129,10 @@ func _on_update_action_index(direction: Direction.Type) -> void:
 	current_state_item.focus(Focus.Type.FINGER)
 	if action.target: 
 		action.target.set_triangle_focus_size(Vector2(.4, .4)) # Does not set for some reason
-		focus_manager.set_triangle_focus_on_player(
+		focus_manager.set_triangle_focuses_on_items(
 			items,
 			action.get_target_unique_id(),
+			current_skill_target,
 			Focus.color(action.skill.target)
 	)
 
@@ -138,10 +141,13 @@ func _on_choosing_ally_state_entered() -> void:
 	unfocus_all(Focus.Type.ALL)
 	current_skill_target = Ingress.Target.ALLY
 
+func _on_choosing_ally_all_state_entered() -> void:
+	unfocus_all(Focus.Type.ALL)
+	current_skill_target = Ingress.Target.ALL_ALLIES
+
 
 func _on_choosing_self_state_entered() -> void:
 	unfocus_all(Focus.Type.ALL)
-	items.front().focus(Focus.Type.TRIANGLE)
 	current_skill_target = Ingress.Target.ALLY
 
 
@@ -155,10 +161,20 @@ func _on_choosing_enemy_state_entered() -> void:
 	current_skill_target = Ingress.Target.ENEMY
 
 
+func _on_choosing_enemy_all_state_entered() -> void:
+	unfocus_all(Focus.Type.ALL)
+	current_skill_target = Ingress.Target.ALL_ENEMIES
+
+
 func _on_update_current_member(player: Node2D, focused: bool) -> void:
 	unfocus_all(Focus.Type.ALL) 
 	if focused:
-		focus_manager.set_triangle_focus_on_player(items, player.unique_id.id, Focus.color(current_skill_target))
+		focus_manager.set_triangle_focuses_on_items(
+			items,
+			player.unique_id.id, 
+			current_skill_target, 
+			Focus.color(current_skill_target)
+		)
 	else:
 		focus_manager.remove_triangle_focus_on_player(items, player.unique_id.id)
 
@@ -177,3 +193,5 @@ func _handle_direction(direction: Direction.Type)-> void:
 			else:
 				current_member = current_member - 1
 	current_state_item = items[current_member]
+	if current_state_item.action.skill: 
+		current_skill_target = current_state_item.action.skill.target

@@ -20,13 +20,21 @@ func get_action_index_by_unique_id(items: Array[ActionQueueItem], unique_id: Str
 	return -1
 
 
-func set_triangle_focus_on_player(
+func set_triangle_focuses_on_items(
 	items: Array[ActionQueueItem], 
-	unique_id: String, 
+	unique_id: String,
+	current_skill_target: Ingress.Target,
 	color: Color = Color.WHITE
 ) -> void:
 	var index := get_action_index_by_unique_id(items, unique_id)
-	if index >= 0: set_item_focus(items, index, Focus.Type.TRIANGLE, color)
+
+	match current_skill_target:
+		Ingress.Target.ALL_ALLIES:
+			_focus_player_items(items, color)
+		Ingress.Target.ALL_ENEMIES:
+			_focus_enemy_items(items, color)
+		_:
+			if index >= 0: set_item_focus(items, index, Focus.Type.TRIANGLE, color)
 
 
 func remove_triangle_focus_on_player(items: Array[ActionQueueItem], unique_id: String) -> void:
@@ -45,28 +53,11 @@ func create_action_message(action: Action) -> String:
 # Private Functions
 # -----------------
 
-# Legacy code
-# var queue: ActionQueue
-# var items: Array[ActionQueueItem]
+func _focus_player_items(items: Array[ActionQueueItem], color: Color) -> void:
+	for item in items: 
+		if item.is_player_action(): item.focus(Focus.Type.TRIANGLE, color)
 
 
-# func reset_current_member() -> void:
-# 	queue.current_member = 0
-
-
-# func get_current_item() -> ActionQueueItem:
-# 	return items[queue.current_member]
-
-
-# func _emit_group_refrain_focus_event(action: Action, focus_type: Focus.Type, color: Color) -> void:
-# 	if action.is_player_action():
-# 		Events.action_queue_focus_all_allies.emit(focus_type, color)
-# 	else:
-# 		Events.action_queue_focus_all_enemies.emit(focus_type, color)
-
-
-# func _emit_group_incursion_focus_event(action: Action, focus_type: Focus.Type, color: Color) -> void:
-# 	if action.is_player_action():
-# 		Events.action_queue_focus_all_enemies.emit(focus_type, color)
-# 	else:
-# 		Events.action_queue_focus_all_allies.emit(focus_type, color)
+func _focus_enemy_items(items: Array[ActionQueueItem], color: Color) -> void:
+	for item in items: 
+		if item.is_enemy_action(): item.focus(Focus.Type.TRIANGLE, color)
