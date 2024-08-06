@@ -37,6 +37,7 @@ func _ready() -> void:
 	Music.play(Music.battle_theme)
 	
 func _process(_delta: float) -> void:
+
 	if action_queue.is_turn_over():
 		action_queue.fill_initial_turn_items(battle_groups)
 		current_action_item = action_queue.items.front()
@@ -47,6 +48,16 @@ func _process(_delta: float) -> void:
 		set_process(false)
 		await current_action.skill.process(current_action, get_tree(), battle_groups)
 		set_process(true)
+
+		if _is_game_over():
+			Utils.change_scene("res://menus/game_completion_screen.tscn", { "status": Utils.GameOver.DEFEAT })
+		elif _is_victory():
+			if Utils.current_round == Utils.FINAL_ROUND:
+				Utils.change_scene("res://menus/game_completion_screen.tscn", { "status": Utils.GameOver.VICTORY })
+			else:
+				Utils.next_round()
+				Utils.change_scene("res://menus/victory_screen.tscn", { "defeated": defeated })
+
 		if action_queue.items.size() > 0:
 			current_action_item.queue_free()
 			action_queue.items.pop_front()
