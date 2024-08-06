@@ -50,7 +50,7 @@ func _process(_delta: float) -> void:
 		if action_queue.items.size() > 0:
 			current_action_item.queue_free()
 			action_queue.items.pop_front()
-			current_action_item = action_queue.items.front()
+			if action_queue.items.size() > 0: current_action_item = action_queue.items.front()
 	elif !current_action.is_choosing:
 		current_action.is_choosing = true
 		player_group.current_member = player_group.get_member_index(current_action.get_actor_unique_id())
@@ -114,7 +114,7 @@ func _on_refrain_pressed() -> void:
 	
 func _on_recover_pressed() -> void:
 	Sound.play(Sound.confirm)
-	current_action_item.set_recover()
+	current_action_item.action.set_recover()
 	_handle_done_choosing()
 		
 func _draw_action_button_description(action_choice_index: int) -> void:

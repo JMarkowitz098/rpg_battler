@@ -66,11 +66,11 @@ func update_actions_with_targets_with_removed_id(
 	removed_id: String,
 	battle_groups: BattleGroups
 	) -> void:
-		item_manager.update_actions_with_targets_with_removed_id(removed_id, battle_groups)
+		item_manager.update_actions_with_targets_with_removed_id(items, removed_id, battle_groups)
 
 
 func remove_actions_without_target_with_removed_id(unique_id: String) -> void:
-	item_manager.remove_actions_without_target_with_removed_id(unique_id)
+	item_manager.remove_actions_without_target_with_removed_id(items, unique_id)
 
 
 # ------------------
