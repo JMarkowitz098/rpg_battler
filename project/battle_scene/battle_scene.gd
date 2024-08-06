@@ -238,11 +238,11 @@ func _on_game_paused(current_state: int) -> void:
 		State.Type.CHOOSING_ACTION:
 			before_pause_focus = current_action_button
 		State.Type.CHOOSING_SKILL:
-			before_pause_focus = skill_choice_list.get_current_skill_button()
+			before_pause_focus = skill_choice_list.current_skill_button
 		State.Type.CHOOSING_ACTION_QUEUE:
-			before_pause_focus = action_queue.get_current_item()
+			before_pause_focus = action_queue.current_state_item
 		State.Type.CHOOSING_ENEMY:
-			before_pause_focus = enemy_group.get_current_member()
+			before_pause_focus = enemy_group.current_state_member
 		State.Type.IS_BATTLING:
 			before_pause_focus = null
 
@@ -256,5 +256,6 @@ func _on_help_menu_hidden() -> void:
 	# Need to figure out how to return focus. Check heartbest tutorials on pausing probably
 	get_tree().paused = false
 	before_pause_focus.focus(true)
+	state.current.enter()
 	Music.play(Music.battle_theme, Music.get_from())
 
