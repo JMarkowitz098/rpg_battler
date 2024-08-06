@@ -37,6 +37,10 @@ func _ready() -> void:
 	Music.play(Music.battle_theme)
 	
 func _process(_delta: float) -> void:
+	if action_queue.is_turn_over():
+		action_queue.fill_initial_turn_items(battle_groups)
+		current_action_item = action_queue.items.front()
+
 	var current_action := current_action_item.action
 	if current_action.action_chosen:
 		state.change_state(State.Type.IS_BATTLING)
@@ -47,8 +51,6 @@ func _process(_delta: float) -> void:
 			current_action_item.queue_free()
 			action_queue.items.pop_front()
 			current_action_item = action_queue.items.front()
-		else:
-			_reset_turn()
 	elif !current_action.is_choosing:
 		current_action.is_choosing = true
 		player_group.current_member = player_group.get_member_index(current_action.get_actor_unique_id())
@@ -112,16 +114,8 @@ func _on_refrain_pressed() -> void:
 	
 func _on_recover_pressed() -> void:
 	Sound.play(Sound.confirm)
-	# var unique_id: String = player_group.get_current_member().unique_id.id
-	# var current_players_action_id: int = action_queue.get_action_index_by_unique_id(unique_id)
-	# var current_action_item: Action = action_queue.items[current_players_action_id].action
 	current_action_item.set_recover()
-
-	if !action_queue.is_turn_over():
-		player_group.next_player()
-		state.change_state(State.Type.CHOOSING_ACTION)
-	else:
-		state.change_state.call(State.Type.IS_BATTLING)
+	_handle_done_choosing()
 		
 func _draw_action_button_description(action_choice_index: int) -> void:
 	if !info_label: return
@@ -136,23 +130,6 @@ func _draw_action_button_description(action_choice_index: int) -> void:
 # ----------------------
 # Process Turn Functions
 # ----------------------
-	
-func _process_turn() -> void:
-	_set_dodging_animation()
-	await get_tree().create_timer(1).timeout
-	await action_queue.process_action_queue(get_tree(), battle_groups)
-	state.change_state(State.Type.IS_BATTLING)
-
-func _reset_turn() -> void:
-	current_action_item = action_queue.items.front()
-	action_queue.reset_current_member()
-	player_group.reset_current_member_and_turn()
-	enemy_group.reset_current_member()
-	action_queue.fill_initial_turn_items(battle_groups)
-	state.change_state(State.Type.CHOOSING_ACTION)
-	player_group.reset_dodges()
-	enemy_group.reset_dodges()
-
 	
 func _is_game_over() -> bool:
 	return player_group.members.size() == 0
@@ -170,13 +147,9 @@ func _set_dodging_animation() -> void:
 # ----------------------
 	
 func _handle_done_choosing() -> void:
-	action_queue.items[0].action.is_choosing = false
-	if !action_queue.is_turn_over():
-		player_group.next_player()
-		state.change_state(State.Type.CHOOSING_ACTION)
-	else:
-		player_group.reset_current_member_and_turn()
-		state.change_state(State.Type.IS_BATTLING)
+	current_action_item.action.is_choosing = false
+	if !action_queue.is_turn_over(): player_group.next_player()
+
 
 func _create_battle_groups() -> void:
 	player_group.load_members_from_save_data("0")
@@ -199,6 +172,7 @@ func _on_enemy_no_ingress(enemy_unique_id: String) -> void:
 		action_queue.update_actions_with_targets_with_removed_id(enemy_unique_id, battle_groups)
 		action_queue.remove_actions_without_target_with_removed_id(enemy_unique_id)
 
+
 func _on_player_no_ingress(player_unique_id: String) -> void:
 	player_group.remove_member_by_id(player_unique_id)
 	battle_groups.players = player_group.members
@@ -208,30 +182,24 @@ func _on_player_no_ingress(player_unique_id: String) -> void:
 		action_queue.update_actions_with_targets_with_removed_id(player_unique_id, battle_groups)
 		action_queue.remove_actions_without_target_with_removed_id(player_unique_id)
 
-# func _on_help_button_pressed():
-# 	get_tree().paused = true
-# 	help_menu.show()
-# 	help_menu.close_button.focus()
-
-
 
 func _on_choose_enemy() -> void:
 	action_queue.update_player_action_with_skill(
 		current_action_item.action,
-		current_action_item.action.actor,
-		enemy_group.get_current_member(),
-		skill_choice_list.get_current_skill()
+		skill_choice_list.current_skill,
+		enemy_group.current_state_member
 	)
 	_handle_done_choosing()
+
 
 func _on_choose_ally() -> void:
 	action_queue.update_player_action_with_skill(
 		current_action_item.action,
-		current_action_item.action.actor,
-		player_group.get_current_member(),
-		skill_choice_list.get_current_skill()
+		skill_choice_list.current_skill,
+		player_group.current_state_member
 	)
 	_handle_done_choosing()
+
 
 func _on_game_paused(current_state: int) -> void:
 	match current_state:
@@ -251,6 +219,7 @@ func _on_game_paused(current_state: int) -> void:
 	help_menu.close_button.focus(true)
 	Music.set_from()
 	Music.play(Music.menu_theme)
+
 
 func _on_help_menu_hidden() -> void:
 	# Need to figure out how to return focus. Check heartbest tutorials on pausing probably

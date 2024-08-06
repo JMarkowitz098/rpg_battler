@@ -91,6 +91,7 @@ func _handle_choose_skill(skill: Ingress) -> void:
 
 
 func _handle_button_focus(skill: Ingress, button: Button) -> void:
+	current_skill = skill
 	current_skill_button = button
 	Events.update_info_label.emit(_create_skill_desciption(skill))
 

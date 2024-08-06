@@ -34,6 +34,7 @@ func _on_choosing_skill_state_entered(_params: StateParams) -> void:
 
 func _on_is_battling_state_entered() -> void:
 	clear_focus()
+	hide()
 
 
 func _on_incursion_focus_entered() -> void:

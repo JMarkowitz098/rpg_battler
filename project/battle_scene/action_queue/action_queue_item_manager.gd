@@ -117,13 +117,8 @@ func _is_incursion_filter(skill: Ingress) -> bool: return skill.is_incursion()
 # func _add_queue_children() -> void:
 # 	for item in queue.items: queue.add_child(item)
 
-# func is_turn_over() -> bool:
-# 	var action := queue.items[0].action
-# 	if action.is_choosing: return false
-# 	if queue.items.size() > 0:
-# 		return action.action_chosen == true or action.is_player_action()
-# 	else:
-# 		return false
+func is_turn_over(items: Array[ActionQueueItem]) -> bool:
+	return items.size() <= 0
 
 
 # func remove_actions_without_target_with_removed_id(unique_id: String) -> void:
@@ -131,12 +126,10 @@ func _is_incursion_filter(skill: Ingress) -> bool: return skill.is_incursion()
 # 		_remove_action_from_queue_without_target_with_removed_id(unique_id, item)
 
 
-# func update_player_action_with_skill(action_to_update: Action, player: Node2D, target: Node2D, skill: Ingress) -> void:
-# 	#var action_to_update := _get_item_by_player(player).action
-# 	if skill.has_target():
-# 		action_to_update.set_skill(target, skill)
-# 	else:
-# 		action_to_update.set_skill(null, skill)
+func update_player_action_with_skill(action_to_update: Action, skill: Ingress, target: Node2D = null) -> void:
+	action_to_update.set_skill(skill, target)
+
+
 
 
 # func update_actions_with_targets_with_removed_id(

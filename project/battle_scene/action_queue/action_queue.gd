@@ -55,12 +55,11 @@ func fill_initial_turn_items(battle_groups: BattleGroups) -> void:
 	for item in items: add_child(item)
 
 
-func is_turn_over() -> bool:
-	return item_manager.is_turn_over()
+func is_turn_over() -> bool: return item_manager.is_turn_over(items)
 
 
-func update_player_action_with_skill(action: Action, player: Node2D, target: Node2D, skill: Ingress) -> void:
-	item_manager.update_player_action_with_skill(action, player, target, skill)
+func update_player_action_with_skill(action: Action, skill: Ingress, target: Node2D = null) -> void:
+	item_manager.update_player_action_with_skill(action, skill, target)
 
 
 func update_actions_with_targets_with_removed_id(

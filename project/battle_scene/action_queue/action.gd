@@ -55,7 +55,7 @@ func is_enemy_action() -> bool:
 	return get_actor_type() == Player.Type.ENEMY
 
 
-func set_skill(attack_target: Node2D = null, attack_skill: Ingress = null) -> void:
+func set_skill(attack_skill: Ingress, attack_target: Node2D = null) -> void:
 	target = attack_target
 	skill = attack_skill
 	action_chosen = true
@@ -64,12 +64,12 @@ func set_skill(attack_target: Node2D = null, attack_skill: Ingress = null) -> vo
 func set_dodge() -> void:
 	actor.modifiers.is_dodging = true
 	var dodge := load("res://skills/dodge.tres")
-	set_skill(null, dodge)
+	set_skill(dodge)
 
 
 func set_recover() -> void:
 	var recover := load("res://skills/recover.tres")
-	set_skill(null, recover)
+	set_skill(recover)
 
 
 func set_enemy_skill(
@@ -86,4 +86,4 @@ func set_enemy_skill(
 		Ingress.Target.SELF:
 			incoming_target = skill_actor
 
-	set_skill(incoming_target, incoming_skill)
+	set_skill(incoming_skill, incoming_target)
