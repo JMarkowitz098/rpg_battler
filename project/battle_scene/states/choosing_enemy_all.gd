@@ -1,6 +1,6 @@
 class_name ChoosingEnemyAll
 
-func enter() -> void:
+func enter(_params: StateParams = null) -> void:
 	Events.choosing_enemy_all_state_entered.emit()
 
 func handle_input() -> void:

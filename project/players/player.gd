@@ -37,15 +37,20 @@ func load_stats(incoming_stats: Stats) -> void:
 	update_energy_bar()
 
 
-func focus(focus_type: Focus.Type) -> void:
+func focus(focus_type: Focus.Type, color: Color = Color.WHITE) -> void:
 	match focus_type:
 		Focus.Type.FINGER:
 			finger_focus.focus()
+			finger_focus.self_modulate = color
 		Focus.Type.TRIANGLE:
 			triangle_focus.focus()
+			triangle_focus.self_modulate = color
 		Focus.Type.ALL:
 			finger_focus.focus()
 			triangle_focus.focus()
+			finger_focus.self_modulate = color
+			triangle_focus.self_modulate = color
+	
 
 func unfocus(focus_type: Focus.Type) -> void:
 	match focus_type:
@@ -115,8 +120,8 @@ func current_ingress() -> int:
 
 func take_damage(amount: int) -> void:
 	animation_player.play("hurt")
+	if not Utils.is_test: await animation_player.animation_finished
 	set_current_ingress(modifiers.current_ingress - amount)
-	if not Utils.is_test: await get_tree().create_timer(1.4).timeout
 	animation_player.play("idle")
 
 # ----------------
@@ -131,7 +136,6 @@ func _on_character_stats_took_damage() -> void:
 	animation_player.play("idle")
 	
 
-
 func _is_usable_skill(skill: Ingress) -> bool:
 	return skill.ingress < modifiers.current_ingress
 
@@ -145,3 +149,11 @@ func _on_modifiers_ingress_updated() -> void:
 
 func _on_modifiers_no_ingress(_unique_id: String) -> void:
 	queue_free()
+
+
+func _on_finger_focus_visibility_changed() -> void:
+	if finger_focus.visible: 
+		Events.update_current_member.emit(self, true)
+	else: 
+		Events.update_current_member.emit(self, false)
+

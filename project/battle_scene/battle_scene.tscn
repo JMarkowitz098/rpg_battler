@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://bolui7l1oisu1"]
+[gd_scene load_steps=12 format=3 uid="uid://bolui7l1oisu1"]
 
 [ext_resource type="Texture2D" uid="uid://bquypxhjqqxa0" path="res://battle_scene/battle_background.png" id="1_i0o4p"]
 [ext_resource type="Script" path="res://battle_scene/battle_scene.gd" id="1_r5piu"]
@@ -8,7 +8,6 @@
 [ext_resource type="Script" path="res://battle_scene/info_label.gd" id="4_cqd3r"]
 [ext_resource type="PackedScene" uid="uid://cgok3ungpxl0x" path="res://players/enemies/enemy_group.tscn" id="4_rbeni"]
 [ext_resource type="PackedScene" uid="uid://c7d1vt1bnige2" path="res://battle_scene/action_queue/action_queue.tscn" id="5_s0ybd"]
-[ext_resource type="Script" path="res://ui/skill_choice_list.gd" id="7_5pabf"]
 [ext_resource type="PackedScene" uid="uid://crwce2voha8mt" path="res://menus/help_menu.tscn" id="10_w6e8n"]
 [ext_resource type="PackedScene" uid="uid://uspstsj5payu" path="res://players/player_group.tscn" id="13_av40a"]
 
@@ -82,7 +81,6 @@ offset_left = 3.0
 offset_top = -69.0
 offset_right = 210.0
 offset_bottom = 31.0
-script = ExtResource("7_5pabf")
 
 [node name="Mockup" type="Sprite2D" parent="."]
 visible = false

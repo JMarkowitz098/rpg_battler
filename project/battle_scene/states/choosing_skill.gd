@@ -1,11 +1,9 @@
 class_name ChoosingSkill
 
-func enter() -> void:
-	Events.choosing_skill_state_entered.emit()
+func enter(_params: StateParams = null) -> void:
+	Events.choosing_skill_state_entered.emit(_params)
 
 func handle_input() -> void:
-	Events.update_info_label_with_skill_description.emit()
-
 	if Input.is_action_just_pressed("to_action_queue"):
 		Sound.play(Sound.focus)
 		Events.change_state.emit(State.Type.CHOOSING_ACTION_QUEUE)

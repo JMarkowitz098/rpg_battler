@@ -29,3 +29,7 @@ text = "Refrain
 [node name="Recover" parent="." instance=ExtResource("1_clth5")]
 layout_mode = 2
 text = "Recover"
+
+[connection signal="focus_entered" from="Incursion" to="." method="_on_incursion_focus_entered"]
+[connection signal="focus_entered" from="Refrain" to="." method="_on_refrain_focus_entered"]
+[connection signal="focus_entered" from="Recover" to="." method="_on_recover_focus_entered"]

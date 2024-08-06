@@ -153,5 +153,6 @@ scale = Vector2(0.15, 0.15)
 
 [node name="Modifiers" parent="." instance=ExtResource("8_hhwcw")]
 
+[connection signal="visibility_changed" from="FingerFocus" to="." method="_on_finger_focus_visibility_changed"]
 [connection signal="ingress_updated" from="Modifiers" to="." method="_on_modifiers_ingress_updated"]
 [connection signal="no_ingress" from="Modifiers" to="." method="_on_modifiers_no_ingress"]

@@ -7,16 +7,15 @@ func _ready() -> void:
 
 func _connect_signals() -> void:
 	var signals := [
-		["action_queue_focus_all_allies", _on_action_queue_focus_all_members], # Defined in Group
-		["choosing_action_queue_state_entered", _on_choosing_action_queue_state_entered],
 		["choosing_action_state_entered", _on_choosing_action_state_entered],
 		["choosing_ally_all_state_entered", _on_choosing_ally_all_state_entered],
 		["choosing_ally_state_entered", _on_choosing_ally_state_entered],
 		["choosing_self_state_entered", _on_choosing_self_state_entered],
 		["choosing_skill_state_entered", _on_choosing_skill_state_entered],
-		["enter_action_queue_handle_input", _on_enter_action_queue_handle_input], # Defined in Group
 		["is_battling_state_entered", _on_is_battling_state_entered],
 		["update_player_group_current", _on_update_current], # Defined in Group
+		["update_action_queue_focuses", _on_update_action_queue_focuses], # Defined in Group
+		["update_current_member", _on_update_current_member],
 	]
 	Utils.connect_signals(signals)
 
@@ -52,12 +51,10 @@ func get_current_member_turn() -> Node2D:
 # Signals
 # -------
 
-func _on_choosing_action_state_entered() -> void:
+func _on_choosing_action_state_entered(_params: StateParams = null) -> void:
 	unfocus_all(Focus.Type.ALL)
-	get_current_member().focus(Focus.Type.TRIANGLE)
-
-func _on_choosing_action_queue_state_entered() -> void:
-	unfocus_all(Focus.Type.ALL)
+	if _params and _params.item: current_state_member = _params.item.action.actor
+	current_state_member.focus(Focus.Type.TRIANGLE)
 
 func _on_is_battling_state_entered() -> void:
 	unfocus_all(Focus.Type.ALL)
@@ -74,5 +71,8 @@ func _on_choosing_self_state_entered() -> void:
 	unfocus_all(Focus.Type.ALL)
 	get_current_member().focus(Focus.Type.FINGER)
 
-func _on_choosing_skill_state_entered() -> void:
+func _on_choosing_skill_state_entered(_params: StateParams = null) -> void:
 	unfocus_all(Focus.Type.ALL)
+	if _params and _params.item: current_state_member = _params.item.get_actor()
+	current_state_member.focus(Focus.Type.TRIANGLE)
+

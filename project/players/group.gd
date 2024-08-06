@@ -12,6 +12,7 @@ var ESEN := load("res://players/Esen/esen.tscn")
 
 var members: Array[Node2D] = []
 var current_member: int = 0
+var current_state_member: Node2D
 
 # ----------------
 # Public Functions
@@ -24,6 +25,15 @@ func instantiate_members(data_array: Array[PlayerData]) -> void:
 
 func get_current_member() -> Node2D:
 	return members[current_member]
+
+func get_member_index(unique_id: String) -> int:
+	var idx := 0
+	for member in members:
+		if member.unique_id.id == unique_id: 
+			return idx
+		else:
+			idx += 1
+	return idx
 
 func get_member_by_unique_id(unique_id: String) -> Node2D:
 	if members.size() > 0:
@@ -118,11 +128,26 @@ func _on_update_current(direction: Direction.Type) -> void:
 		switch_focus(Focus.Type.FINGER, current_member, new_current_index)
 		current_member = new_current_index
 
-func _on_enter_action_queue_handle_input() -> void:
-	unfocus_all(Focus.Type.ALL)
-	set_triangle_focus_color_all("White")
-	set_triangle_focus_size_all(Vector2(.4, .4))
 
 func _on_action_queue_focus_all_members(type: Focus.Type, color: Color) -> void:
 	focus_all(type)
 	set_triangle_focus_color_all(color)
+
+
+func _on_update_current_member(member: Node2D, is_focused: bool) -> void:
+	if member in members and is_focused: current_state_member = member
+
+
+func _on_update_action_queue_focuses(item: ActionQueueItem) -> void:
+	unfocus_all(Focus.Type.ALL)
+	var actor_id := item.get_actor_unique_id()
+	for member in members:
+		if actor_id == member.unique_id.id:
+			member.focus(Focus.Type.TRIANGLE)
+			member.set_triangle_focus_size(Vector2(.6, .6))
+
+		if item.action.target and member.unique_id.id == item.action.target.unique_id.id:
+			member.focus(Focus.Type.TRIANGLE, Focus.color(item.action.skill.target))
+			member.set_triangle_focus_size(Vector2(.4, .4))
+
+	
