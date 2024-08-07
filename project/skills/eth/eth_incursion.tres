@@ -10,4 +10,4 @@ target = 1
 label = "Eth Incursion"
 ingress = 2
 element = 0
-description = "This is an eth incursion"
+description = "Attack target with an Eth incursion"

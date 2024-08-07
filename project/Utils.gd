@@ -27,7 +27,7 @@ func calculate_skill_damage(action: Action) -> int:
 	match action.skill.id:
 		Ingress.Id.INCURSION, Ingress.Id.DOUBLE_INCURSION, Ingress.Id.GROUP_INCURSION, Ingress.Id.PIERCING_INCURSION:
 			var incursion_power: int = action.actor.stats.incursion
-			if action.skill.id == Ingress.Id.INCURSION:
+			if action.skill.id == Ingress.Id.INCURSION or action.skill.id == Ingress.Id.PIERCING_INCURSION:
 				incursion_power += action.skill.ingress
 			else:
 				incursion_power += action.skill.ingress / 2
@@ -38,7 +38,7 @@ func calculate_skill_damage(action: Action) -> int:
 			if _is_dodged(action): return 0
 				
 			if action.target.modifiers.has_small_refrain_open:
-				return _get_refrain_damage(action, incursion_power)
+				return _get_refrain_damage(action, incursion_power, target_refrain)
 	
 			return _clamped_damage(incursion_power - target_refrain)
 		_:
@@ -52,7 +52,7 @@ func _is_dodged(action: Action) -> bool:
 
 	return false
 
-func _get_refrain_damage(action: Action, incursion_power: int) -> int:
+func _get_refrain_damage(action: Action, incursion_power: int, target_refrain: int) -> int:
 	action.target.modifiers.has_small_refrain_open = false #TODO: This should be somewhere else
 	action.target.refrain_aura.hide() #TODO: This should be somewhere else
 
@@ -66,7 +66,7 @@ func _get_refrain_damage(action: Action, incursion_power: int) -> int:
 	if action.skill.element == action.target.modifiers.current_refrain_element:
 		return incursion_power * multiplier * -1
 	elif action.skill.id == Ingress.Id.PIERCING_INCURSION:
-		return incursion_power * multiplier
+		return incursion_power * multiplier - target_refrain
 	else:
 		return 0
 

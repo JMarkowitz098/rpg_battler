@@ -4,12 +4,12 @@ class_name Ingress
 const INGRESS_ANIMATION = preload("res://skills/ingress_animation.tscn")
 
 enum Id {
-  DOUBLE_INCURSION, # 1
-  GROUP_INCURSION, # 2
-  GROUP_REFRAIN, # 3
-  INCURSION, #4
-  MOVEMENT, #5
-  PIERCING_INCURSION, #6
+  DOUBLE_INCURSION, # 0
+  GROUP_INCURSION, # 1
+  GROUP_REFRAIN, # 2
+  INCURSION, #3
+  MOVEMENT, #4
+  PIERCING_INCURSION, #5
   REFRAIN,
 	DODGE,
 	RECOVER
