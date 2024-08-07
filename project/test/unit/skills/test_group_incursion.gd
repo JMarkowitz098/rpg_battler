@@ -14,7 +14,7 @@ func after_each() -> void:
 func test_can_create_all_elements() -> void:
 	skill = Ing.load_ingress([Ingress.Id.GROUP_INCURSION, Element.Type.ETH])
 	assert_not_null(skill)
-	# skill = Ing.load_ingress([Ingress.Id.INCURSION, Element.Type.ENH])
+	# skill = Ing.load_ingress([Ingress.Id.GROUP_INCURSION, Element.Type.ENH])
 	# assert_not_null(skill)
 	skill = Ing.load_ingress([Ingress.Id.GROUP_INCURSION, Element.Type.SHOR])
 	assert_not_null(skill)
