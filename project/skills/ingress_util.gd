@@ -52,6 +52,8 @@ func _load_skill(data_id: Ingress.Id, element_string: String) -> Ingress:
 			path += element_string + "_group_refrain.tres"
 		Ingress.Id.GROUP_INCURSION:
 			path += element_string + "_group_incursion.tres"
+		Ingress.Id.PIERCING_INCURSION:
+			path += element_string + "_piercing_incursion.tres"
 		_:
 			return null
 

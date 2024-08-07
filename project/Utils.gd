@@ -16,7 +16,7 @@ const FINAL_ROUND = Round.Number.TWO
 
 var _params: Dictionary
 var current_round := Round.Number.ONE
-# var current_round := Round.Number.THREE # For testing
+# var current_round := Round.Number.TWO # For testing
 
 var is_test := false
 
@@ -58,7 +58,8 @@ func _get_refrain_damage(action: Action, incursion_power: int) -> int:
 
 	var multiplier: int
 	if action.skill.id == Ingress.Id.PIERCING_INCURSION:
-		multiplier = 2
+		# multiplier = 2
+		multiplier = 1
 	else:
 		multiplier = 1
 
