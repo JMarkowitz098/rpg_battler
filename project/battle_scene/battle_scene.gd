@@ -115,8 +115,16 @@ func _process_action(action: Action) -> void:
 	if action.actor == null: return # Not sure why actions are not being removed
 	state.change_state(State.Type.IS_BATTLING)
 	set_process(false)
-	await action.skill.process(action, get_tree(), battle_groups)
+	if _can_use_skill(action): await action.skill.process(action, get_tree(), battle_groups)
 	set_process(true)
+
+func _can_use_skill(action: Action) -> bool:
+	if not action.actor:
+		return false
+	if action.actor.modifiers.current_ingress - action.skill.ingress <= 0:
+		print("Not enough Ingress")
+		return false
+	return true
 
 
 func _check_for_round_end() -> void:
