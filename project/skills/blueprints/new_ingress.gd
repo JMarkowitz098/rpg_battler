@@ -13,7 +13,8 @@ enum Id {
   REFRAIN, # 6
 	DODGE, # 7
 	RECOVER, # 8
-	REFRAIN_BLOCK # 9
+	REFRAIN_BLOCK, # 9
+	ALLY_REFRAIN, # 10
 }
 
 enum Type {
@@ -79,10 +80,8 @@ func _play_refrain_animation(action: Action) -> void:
 	await action.actor.animation_player.animation_finished
 	action.actor.animation_player.play("idle")
 
-func _set_refrain(player: Node2D, skill_element: Element.Type) -> void:
-	player.modifiers.has_small_refrain_open = true
-	player.modifiers.current_refrain_element = skill_element
-	player.refrain_aura.show()
+func _set_refrain(actor: Node2D, target: Node2D, skill_element: Element.Type) -> void:
+	target.set_refrain(actor, skill_element)
 
 	var refrain_color: Color
 	match skill_element:
@@ -94,7 +93,7 @@ func _set_refrain(player: Node2D, skill_element: Element.Type) -> void:
 			refrain_color = Color("Red")
 		Element.Type.SHOR:
 			refrain_color = Color("Blue")
-	player.refrain_aura.self_modulate = refrain_color
+	target.refrain_aura.self_modulate = refrain_color
 
 func _set_refrain_block(actor: Node2D, target: Node2D, skill_element: Element.Type) -> void:
 	target.set_refrain_block(skill_element, actor)

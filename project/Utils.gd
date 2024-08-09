@@ -53,20 +53,10 @@ func _is_dodged(action: Action) -> bool:
 	return false
 
 func _get_refrain_damage(action: Action, incursion_power: int, target_refrain: int) -> int:
-	action.target.modifiers.has_small_refrain_open = false #TODO: This should be somewhere else
-	action.target.refrain_aura.hide() #TODO: This should be somewhere else
-
-	var multiplier: int
-	if action.skill.id == Ingress.Id.PIERCING_INCURSION:
-		# multiplier = 2
-		multiplier = 1
-	else:
-		multiplier = 1
-
 	if action.skill.element == action.target.modifiers.current_refrain_element:
-		return incursion_power * multiplier * -1
+		return incursion_power * -1
 	elif action.skill.id == Ingress.Id.PIERCING_INCURSION:
-		return incursion_power * multiplier - target_refrain
+		return incursion_power - target_refrain
 	else:
 		return 0
 

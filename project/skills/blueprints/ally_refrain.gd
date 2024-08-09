@@ -1,9 +1,9 @@
 extends Ingress
-class_name Refrain
+class_name AllyRefrain
 
-@export var id: Id = Id.REFRAIN
+@export var id: Id = Id.ALLY_REFRAIN
 @export var type: Type = Type.REFRAIN
-@export var target: Target = Target.SELF
+@export var target: Target = Target.ALLY
 
 func process(action: Action, _tree: SceneTree, _battle_groups: BattleGroups) -> void:
 	action.actor.use_ingress(action.skill.ingress)

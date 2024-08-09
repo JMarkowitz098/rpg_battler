@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="AllyRefrain" load_steps=2 format=3 uid="uid://c87vexkyllsfm"]
+
+[ext_resource type="Script" path="res://skills/blueprints/ally_refrain.gd" id="1_cyddu"]
+
+[resource]
+script = ExtResource("1_cyddu")
+id = 10
+type = 1
+target = 2
+label = "Scor Ally Refrain"
+ingress = 2
+element = 3
+description = "Create a Scor Refrain to protect 1 ally"

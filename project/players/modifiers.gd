@@ -16,7 +16,9 @@ var plus_incursion := 0
 var plus_max_ingress := 0
 var plus_refrain := 0
 var rand_agi := 1
+var refrain_actor := Node2D
 var refrain_blocker: Node2D
+
 
 func set_current_ingress(new_value: int, max_ingress: int) -> void:
   current_ingress = clamp(new_value, 0, max_ingress)

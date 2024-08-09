@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="AllyRefrain" load_steps=2 format=3 uid="uid://8cbt5luuwpn"]
+
+[ext_resource type="Script" path="res://skills/blueprints/ally_refrain.gd" id="1_0ffw3"]
+
+[resource]
+script = ExtResource("1_0ffw3")
+id = 10
+type = 1
+target = 2
+label = "Shor Ally Refrain"
+ingress = 2
+element = 2
+description = "Create a Shor Refrain to protect 1 ally"

@@ -127,6 +127,20 @@ func set_modifier(flag: String, val: Variant) -> void:
 	modifiers[flag] = val
 
 
+func set_refrain(actor: Node2D, element: Element.Type) -> void:
+	modifiers.has_small_refrain_open = true
+	modifiers.current_refrain_element = element
+	modifiers.refrain_actor = actor
+	refrain_aura.show()
+
+
+func clear_refrain() -> void:
+	modifiers.has_small_refrain_open = false
+	modifiers.current_refrain_element = Element.Type.NONE
+	modifiers.refrain_actor = null
+	refrain_aura.hide()
+
+
 func set_refrain_block(element: Element.Type, actor: Node2D) -> void:
 	modifiers.current_refrain_block_element = element
 	modifiers.refrain_blocker = actor
@@ -142,13 +156,15 @@ func clear_refrain_block() -> void:
 
 
 func take_damage(amount: int, action: Action) -> void:
-	if action.actor_can_damage(): 
+	if action.actor_can_damage() and _can_take_damage(action.skill): 
 		animation_player.play("hurt")
 		if not Utils.is_test: await animation_player.animation_finished
 		set_current_ingress(modifiers.current_ingress - amount)
 		animation_player.play("idle")
-	else:
+	elif not action.actor.can_damage():
 		_handle_refrain_block(action, amount)
+	elif not _can_take_damage(action.skill):
+		_handle_refrain(action, amount)
 
 
 # ----------------
@@ -186,6 +202,19 @@ func _on_finger_focus_visibility_changed() -> void:
 		Events.update_current_member.emit(self, false)
 
 
+func _handle_refrain(action: Action, amount: int) -> void:
+	var refrain_actor: Node2D = modifiers.refrain_actor
+	if action.skill.element == modifiers.current_refrain_element:
+		if not Utils.is_test:
+			refrain_actor.animation_player.play("refrain")
+			await refrain_actor.animation_player.animation_finished
+		refrain_actor.set_current_ingress(refrain_actor.modifiers.current_ingress - amount)
+	elif action.skill.id == Ingress.Id.PIERCING_INCURSION:
+		set_current_ingress(amount)
+
+	clear_refrain()
+
+
 func _handle_refrain_block(action: Action, amount: int) -> void:
 	if action.actor.modifiers.current_refrain_block_element == action.skill.element:
 		if not Utils.is_test:
@@ -193,4 +222,11 @@ func _handle_refrain_block(action: Action, amount: int) -> void:
 			await animation_player.animation_finished
 		set_current_ingress(modifiers.current_ingress - amount * -1)
 	action.actor.clear_refrain_block()
+
+
+func _can_take_damage(skill: Ingress) -> bool:
+	if skill.id == Ingress.Id.PIERCING_INCURSION and skill.element != modifiers.current_refrain_element:
+		return true
+	else:
+		return not modifiers.has_small_refrain_open
 

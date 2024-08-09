@@ -16,7 +16,7 @@ func process(action: Action, _tree: SceneTree, battle_groups: BattleGroups) -> v
 		targets = battle_groups.enemies
 
 	for skill_target in targets:
-		_set_refrain(skill_target, action.skill.element)
+		_set_refrain(action.actor, skill_target, action.skill.element)
 
 
 func is_incursion() -> bool: return Ing.is_incursion(type)
