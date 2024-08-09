@@ -5,7 +5,6 @@ var items: Array[ActionQueueItem] = []
 var current_member: int = 0
 var current_state_item: ActionQueueItem
 
-var process_queue := ProcessQueue.new()
 var item_manager := ActionQueueItemManager.new()
 var focus_manager := ActionQueueFocusManager.new()
 
@@ -36,14 +35,6 @@ func _connect_signals() -> void:
 
 	for new_signal: Array in signals:
 		Events[new_signal[0]].connect(new_signal[1])
-
-# -------------
-# Process Queue
-# -------------
-
-
-func process_action_queue(tree: SceneTree, battle_groups: BattleGroups) -> void:
-	await process_queue.process_action_queue(items, tree, battle_groups)
 
 
 # -------------
