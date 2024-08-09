@@ -29,7 +29,7 @@ func test_get_action_by_unique_id() -> void:
 
 
 func test_can_create_items() -> void:
-	var expected := 3
+	var expected := 4
 	var new_items: Array[ActionQueueItem] = manager.create_items(mocker.battle_groups)
 	assert_eq(new_items.size(), expected)
 

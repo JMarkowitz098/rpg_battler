@@ -7,6 +7,7 @@ const MAX_INGRESS = 8
 
 var safe_add_child: Callable
 var player: Node2D
+var player_2: Node2D
 var enemy: Node2D
 var enemy_2: Node2D
 var action: Action
@@ -19,12 +20,13 @@ var item_3: ActionQueueItem
 func initialize(_safe_add_child: Callable) -> void:
 	safe_add_child = _safe_add_child
 	player = _initialize_member()
+	player_2 = _initialize_member()
 	enemy = _initialize_member()
 	enemy.type = Player.Type.ENEMY
 	enemy_2 = _initialize_member()
 	enemy_2.type = Player.Type.ENEMY
 
-	var players: Array[Node2D] = [ player ]
+	var players: Array[Node2D] = [ player, player_2 ]
 	var enemies: Array[Node2D] = [ enemy, enemy_2 ]
 	battle_groups = BattleGroups.new(players, enemies)
 
