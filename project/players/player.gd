@@ -12,6 +12,7 @@ enum Type { PLAYER, ENEMY }
 @onready var modifiers := $Modifiers
 @onready var player_name := $Info/PlayerName
 @onready var refrain_aura := $RefrainAura
+@onready var refrain_block := $RefrainBlock
 @onready var triangle_focus := $TriangleFocus
 
 @export var details: PlayerDetails
@@ -118,11 +119,37 @@ func current_ingress() -> int:
 	return modifiers.current_ingress
 
 
-func take_damage(amount: int) -> void:
-	animation_player.play("hurt")
-	if not Utils.is_test: await animation_player.animation_finished
-	set_current_ingress(modifiers.current_ingress - amount)
-	animation_player.play("idle")
+func can_damage() -> bool:
+	return not modifiers.has_refrain_block
+
+
+func set_modifier(flag: String, val: Variant) -> void:
+	modifiers[flag] = val
+
+
+func set_refrain_block(element: Element.Type, actor: Node2D) -> void:
+	modifiers.current_refrain_block_element = element
+	modifiers.refrain_blocker = actor
+	modifiers.has_refrain_block = true
+	refrain_block.show()
+
+
+func clear_refrain_block() -> void:
+	modifiers.current_refrain_block_element = Element.Type.NONE
+	modifiers.refrain_blocker = null
+	modifiers.has_refrain_block = false
+	refrain_block.hide()
+
+
+func take_damage(amount: int, action: Action) -> void:
+	if action.actor_can_damage(): 
+		animation_player.play("hurt")
+		if not Utils.is_test: await animation_player.animation_finished
+		set_current_ingress(modifiers.current_ingress - amount)
+		animation_player.play("idle")
+	else:
+		_handle_refrain_block(action, amount)
+
 
 # ----------------
 # Helper Functions
@@ -131,8 +158,9 @@ func take_damage(amount: int) -> void:
 # Need to replace with modifiers on took damage or something
 func _on_character_stats_took_damage() -> void:
 	update_energy_bar()
-	animation_player.play("hurt")
-	if not Utils.is_test: await get_tree().create_timer(1.4).timeout
+	if not Utils.is_test: 
+		animation_player.play("hurt")
+		await animation_player.animation_finished
 	animation_player.play("idle")
 	
 
@@ -156,4 +184,13 @@ func _on_finger_focus_visibility_changed() -> void:
 		Events.update_current_member.emit(self, true)
 	else: 
 		Events.update_current_member.emit(self, false)
+
+
+func _handle_refrain_block(action: Action, amount: int) -> void:
+	if action.actor.modifiers.current_refrain_block_element == action.skill.element:
+		if not Utils.is_test:
+			animation_player.play("refrain")
+			await animation_player.animation_finished
+		set_current_ingress(modifiers.current_ingress - amount * -1)
+	action.actor.clear_refrain_block()
 

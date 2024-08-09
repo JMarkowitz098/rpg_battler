@@ -45,7 +45,7 @@ func _process_take_damage(last_index: int, targets: Array[Node2D], action: Actio
 
 func _damage_target(player: Node2D, action: Action) -> void:
 	action.target = player
-	await player.take_damage(Utils.calculate_skill_damage(action))
+	await player.take_damage(Utils.calculate_skill_damage(action), action)
 
    
 func is_incursion() -> bool: return Ing.is_incursion(type)

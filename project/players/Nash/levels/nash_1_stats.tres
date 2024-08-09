@@ -4,8 +4,8 @@
 
 [resource]
 script = ExtResource("1_boa73")
-level = 0
-max_ingress = 0
-incursion = 0
-refrain = 0
-agility = 0
+level = 1
+max_ingress = 8
+incursion = 2
+refrain = 2
+agility = 10

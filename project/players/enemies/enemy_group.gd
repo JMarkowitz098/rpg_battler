@@ -50,6 +50,8 @@ func _flip_members_direction() -> void:
 	for member in members:
 		member.base_sprite.scale.x *= -1
 		member.attack_sprite.scale.x *= -1
+		member.refrain_block.position.x *= -1
+		member.refrain_block.position.x -= 10
 
 
 func _on_choosing_action_state_entered(_params: StateParams = null) -> void:

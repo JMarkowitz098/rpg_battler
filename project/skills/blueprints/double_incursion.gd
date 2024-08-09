@@ -18,7 +18,7 @@ func _use_incursion(action: Action, tree: SceneTree) -> void:
 		await _play_attack_animation(action)
 		await _play_ingress_animation(action, tree)
 	var damage := Utils.calculate_skill_damage(action)
-	action.target.take_damage(damage)
+	action.target.take_damage(damage, action)
 
 
 func is_incursion() -> bool: return Ing.is_incursion(type)

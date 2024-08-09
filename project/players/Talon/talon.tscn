@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://sgl44boffmsf"]
+[gd_scene load_steps=18 format=3 uid="uid://sgl44boffmsf"]
 
 [ext_resource type="Script" path="res://players/player.gd" id="1_syi0g"]
 [ext_resource type="Resource" uid="uid://ber4ixqhnh8bj" path="res://players/Talon/details/talon_player_details.tres" id="2_ca6kd"]
@@ -9,6 +9,7 @@
 [ext_resource type="PackedScene" uid="uid://dl4d2stn4lshh" path="res://players/refrain_aura.tscn" id="5_ahw2m"]
 [ext_resource type="PackedScene" uid="uid://bqyh4pkeog5r5" path="res://ui/triangle_focus.tscn" id="7_clngs"]
 [ext_resource type="PackedScene" uid="uid://2evhn0npdxi4" path="res://ui/finger_focus.tscn" id="8_l8hxc"]
+[ext_resource type="PackedScene" uid="uid://dqed3mi0gd2mi" path="res://players/refrain_block.tscn" id="9_0doqy"]
 [ext_resource type="PackedScene" uid="uid://bseiija1l41li" path="res://players/modifiers.tscn" id="9_jhaql"]
 
 [sub_resource type="Animation" id="Animation_x6vl1"]
@@ -112,7 +113,6 @@ _data = {
 }
 
 [node name="Talon" type="Node2D"]
-position = Vector2(75, 39)
 script = ExtResource("1_syi0g")
 details = ExtResource("2_ca6kd")
 metadata/_edit_group_ = true
@@ -136,6 +136,8 @@ hframes = 22
 
 [node name="TriangleFocus" parent="." instance=ExtResource("7_clngs")]
 position = Vector2(-2, -13)
+
+[node name="RefrainBlock" parent="." instance=ExtResource("9_0doqy")]
 
 [node name="FingerFocus" parent="." instance=ExtResource("8_l8hxc")]
 visible = false

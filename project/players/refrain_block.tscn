@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3 uid="uid://dqed3mi0gd2mi"]
+
+[ext_resource type="Texture2D" uid="uid://n58duguylnib" path="res://icon.svg" id="1_poph0"]
+
+[node name="RefrainBlock" type="Sprite2D"]
+visible = false
+position = Vector2(12, -2)
+scale = Vector2(0.0234375, 0.164063)
+texture = ExtResource("1_poph0")

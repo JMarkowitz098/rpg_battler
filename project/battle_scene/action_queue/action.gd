@@ -14,6 +14,10 @@ func _init(init_actor: Node2D, init_target: Node2D = null, init_skill: Ingress =
 	skill = init_skill
 
 
+func actor_can_damage() -> bool:
+	return actor.can_damage()
+
+
 func get_actor_unique_id() -> String:
 	return actor.unique_id.id
 
@@ -70,6 +74,10 @@ func set_dodge() -> void:
 func set_recover() -> void:
 	var recover := load("res://skills/recover.tres")
 	set_skill(recover)
+
+
+func set_modifier(member: Node2D, flag: String, val: Variant) -> void:
+	member.set_modifier(flag, val)
 
 
 func set_enemy_skill(

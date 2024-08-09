@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="RefrainBlock" load_steps=2 format=3 uid="uid://67qxy767d8pw"]
+
+[ext_resource type="Script" path="res://skills/blueprints/refrain_block.gd" id="1_ii1qr"]
+
+[resource]
+script = ExtResource("1_ii1qr")
+id = 9
+type = 1
+target = 1
+label = "Scor Refrain Block"
+ingress = 2
+element = 3
+description = "Place a Scor refrain in front of an enemy, blocking their next attack"

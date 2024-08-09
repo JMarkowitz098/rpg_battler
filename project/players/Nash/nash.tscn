@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://dp1n7oj67su8m"]
+[gd_scene load_steps=17 format=3 uid="uid://dp1n7oj67su8m"]
 
 [ext_resource type="Script" path="res://players/player.gd" id="1_wexmg"]
 [ext_resource type="PackedScene" uid="uid://b5b42noos8pd3" path="res://players/player_info.tscn" id="2_mn3a1"]
@@ -9,6 +9,7 @@
 [ext_resource type="PackedScene" uid="uid://2evhn0npdxi4" path="res://ui/finger_focus.tscn" id="7_4wh2y"]
 [ext_resource type="PackedScene" uid="uid://bseiija1l41li" path="res://players/modifiers.tscn" id="8_hhwcw"]
 [ext_resource type="Resource" uid="uid://pue3uw4dj1e3" path="res://players/Nash/details/nash_player_details.tres" id="9_3oase"]
+[ext_resource type="PackedScene" uid="uid://dqed3mi0gd2mi" path="res://players/refrain_block.tscn" id="10_xyjbt"]
 
 [sub_resource type="Animation" id="Animation_dgrtl"]
 length = 0.001
@@ -152,6 +153,9 @@ scale = Vector2(0.15, 0.15)
 [node name="Skills" type="Node" parent="."]
 
 [node name="Modifiers" parent="." instance=ExtResource("8_hhwcw")]
+
+[node name="RefrainBlock" parent="." instance=ExtResource("10_xyjbt")]
+position = Vector2(11, 0)
 
 [connection signal="visibility_changed" from="FingerFocus" to="." method="_on_finger_focus_visibility_changed"]
 [connection signal="ingress_updated" from="Modifiers" to="." method="_on_modifiers_ingress_updated"]

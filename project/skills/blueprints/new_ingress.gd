@@ -10,9 +10,10 @@ enum Id {
   INCURSION, #3
   MOVEMENT, #4
   PIERCING_INCURSION, #5
-  REFRAIN,
-	DODGE,
-	RECOVER
+  REFRAIN, # 6
+	DODGE, # 7
+	RECOVER, # 8
+	REFRAIN_BLOCK # 9
 }
 
 enum Type {
@@ -48,6 +49,7 @@ func _play_attack_animation(action: Action) -> void:
 		action.actor.animation_player.play("idle")
 
 func _play_ingress_animation(action: Action, tree: SceneTree) -> void:
+	if action.actor.modifiers.has_refrain_block: return
 	var ingress_element: Element.Type = action.skill.element
 	var ingress_animation := INGRESS_ANIMATION.instantiate()
 	tree.get_root().add_child(ingress_animation)
@@ -92,6 +94,20 @@ func _set_refrain(player: Node2D, skill_element: Element.Type) -> void:
 			refrain_color = Color("Red")
 		Element.Type.SHOR:
 			refrain_color = Color("Blue")
-	player.refrain_aura.modulate = refrain_color
+	player.refrain_aura.self_modulate = refrain_color
 
+func _set_refrain_block(actor: Node2D, target: Node2D, skill_element: Element.Type) -> void:
+	target.set_refrain_block(skill_element, actor)
+
+	var refrain_color: Color
+	match skill_element:
+		Element.Type.ETH:
+			refrain_color = Color("Green")
+		Element.Type.ENH:
+			refrain_color = Color("Orange")
+		Element.Type.SCOR:
+			refrain_color = Color("Red")
+		Element.Type.SHOR:
+			refrain_color = Color("Blue")
+	target.refrain_block.self_modulate = refrain_color
 

@@ -12,7 +12,7 @@ func process(action: Action, tree: SceneTree, _battle_groups: BattleGroups) -> v
 		await _play_ingress_animation(action, tree)
 	action.actor.use_ingress(action.skill.ingress)
 	var damage := Utils.calculate_skill_damage(action)
-	await action.target.take_damage(damage)
+	await action.target.take_damage(damage, action)
 
 
 func is_incursion() -> bool: return Ing.is_incursion(type)
