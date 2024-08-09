@@ -31,9 +31,12 @@ func fill_enemy_actions(items: Array[ActionQueueItem], battle_groups: BattleGrou
 		_fill_enemy_action(item.action, battle_groups)
 
 
-func remove_actions_from_queue_by_unique_id(items: Array[ActionQueueItem], removed_id: String) -> Array[ActionQueueItem]:
-	return items.filter(func(item: ActionQueueItem) -> bool:
-		return item.action_has_unique_id(removed_id))
+func remove_actions_from_queue_by_unique_id(items: Array[ActionQueueItem], removed_id: String) -> void:
+	for item in items:
+		if item.get_actor_unique_id() == removed_id:
+			items.erase(item)
+			item.queue_free()
+	
 
 
 func update_player_action_with_skill(action_to_update: Action, skill: Ingress, target: Node2D = null) -> void:
