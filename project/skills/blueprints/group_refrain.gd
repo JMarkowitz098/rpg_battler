@@ -7,7 +7,8 @@ class_name GroupRefrain
 
 
 func process(action: Action, _tree: SceneTree, battle_groups: BattleGroups) -> void:
-	await _play_refrain_animation(action)
+	action.actor.use_ingress(action.skill.ingress)
+	if not Utils.is_test: await _play_refrain_animation(action)
 	var targets: Array[Node2D]
 
 	if action.get_actor_type() == Player.Type.PLAYER:
