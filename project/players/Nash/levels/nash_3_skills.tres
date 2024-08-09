@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="SkillGroup" load_steps=12 format=3 uid="uid://dxyepldl6vbtp"]
+
+[ext_resource type="Script" path="res://skills/skill_group.gd" id="1_5qsoi"]
+[ext_resource type="Resource" uid="uid://bifhs7i0ivint" path="res://skills/shor/shor_incursion.tres" id="2_2ecy2"]
+[ext_resource type="Resource" uid="uid://b4wfage7tji0c" path="res://skills/shor/shor_refrain.tres" id="3_435sr"]
+[ext_resource type="Resource" uid="uid://wkb21nusdwy3" path="res://skills/scor/scor_incursion.tres" id="4_cff7m"]
+[ext_resource type="Resource" uid="uid://dppsbqbf3wrv1" path="res://skills/scor/scor_refrain.tres" id="5_fgqyh"]
+[ext_resource type="Resource" uid="uid://ceaxi7bmssjja" path="res://skills/shor/shor_refrain_block.tres" id="6_o10fc"]
+[ext_resource type="Resource" uid="uid://8cbt5luuwpn" path="res://skills/shor/shor_ally_refrain.tres" id="7_fe57u"]
+[ext_resource type="Resource" uid="uid://67qxy767d8pw" path="res://skills/scor/scor_refrain_block.tres" id="8_04mmd"]
+[ext_resource type="Resource" uid="uid://c87vexkyllsfm" path="res://skills/scor/scor_ally_refrain.tres" id="9_c112j"]
+[ext_resource type="Resource" uid="uid://yuk7udxhmg61" path="res://skills/shor/shor_group_refrain.tres" id="10_wj5sl"]
+[ext_resource type="Resource" uid="uid://b4i1psndb60fq" path="res://skills/scor/scor_group_refrain.tres" id="11_88sls"]
+
+[resource]
+script = ExtResource("1_5qsoi")
+skills = Array[Resource("res://skills/blueprints/new_ingress.gd")]([ExtResource("2_2ecy2"), ExtResource("3_435sr"), ExtResource("4_cff7m"), ExtResource("5_fgqyh"), ExtResource("6_o10fc"), ExtResource("7_fe57u"), ExtResource("8_04mmd"), ExtResource("9_c112j"), ExtResource("10_wj5sl"), ExtResource("11_88sls")])
