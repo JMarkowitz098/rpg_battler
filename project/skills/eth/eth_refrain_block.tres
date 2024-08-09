@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="RefrainBlock" load_steps=2 format=3 uid="uid://cfdvqcg0x3utw"]
+
+[ext_resource type="Script" path="res://skills/blueprints/refrain_block.gd" id="1_a52dx"]
+
+[resource]
+script = ExtResource("1_a52dx")
+id = 9
+type = 1
+target = 1
+label = "Eth Refrain Block"
+ingress = 2
+element = 0
+description = "Place an Eth refrain in front of an enemy, blocking their next attack"

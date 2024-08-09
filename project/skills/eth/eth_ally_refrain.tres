@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="AllyRefrain" load_steps=2 format=3 uid="uid://cbp2lr0ql8ek6"]
+
+[ext_resource type="Script" path="res://skills/blueprints/ally_refrain.gd" id="1_br5kx"]
+
+[resource]
+script = ExtResource("1_br5kx")
+id = 10
+type = 1
+target = 2
+label = "Eth Ally Refrain"
+ingress = 2
+element = 0
+description = "Create an Eth Refrain to protect 1 ally"
