@@ -33,7 +33,7 @@ func _ready() -> void:
 	_create_battle_groups()
 	_connect_signals()
 	_reset_turn()
-	Music.play(Music.battle_theme)
+	if not Utils.is_test: Music.play(Music.battle_theme)
 	
 func _process(_delta: float) -> void:
 	if action_queue.is_turn_over(): _reset_turn()
@@ -168,7 +168,10 @@ func _handle_done_choosing() -> void:
 
 
 func _create_battle_groups() -> void:
-	player_group.load_members_from_save_data("0")
+	if Utils.is_test:
+		player_group.load_members_from_save_data("test")
+	else:
+		player_group.load_members_from_save_data("0")
 	enemy_group.load_members_from_round_data(Utils.current_round)
 	battle_groups = BattleGroups.new(player_group.members, enemy_group.members)
 
@@ -189,6 +192,7 @@ func _on_enemy_no_ingress(enemy_unique_id: String) -> void:
 	enemy_group.remove_member_by_id(enemy_unique_id)
 	battle_groups.enemies = enemy_group.members
 	enemy_group.reset_current_member()
+	action_queue.remove_items_with_unique_id(enemy_unique_id)
 
 	if enemy_group.members.size() > 0:
 		action_queue.update_actions_with_targets_with_removed_id(enemy_unique_id, battle_groups)

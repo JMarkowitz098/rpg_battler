@@ -31,6 +31,11 @@ func fill_enemy_actions(items: Array[ActionQueueItem], battle_groups: BattleGrou
 		_fill_enemy_action(item.action, battle_groups)
 
 
+func remove_actions_from_queue_by_unique_id(items: Array[ActionQueueItem], removed_id: String) -> Array[ActionQueueItem]:
+	return items.filter(func(item: ActionQueueItem) -> bool:
+		return item.action_has_unique_id(removed_id))
+
+
 func update_player_action_with_skill(action_to_update: Action, skill: Ingress, target: Node2D = null) -> void:
 	action_to_update.set_skill(skill, target)
 
@@ -127,11 +132,6 @@ func _action_needs_update(action: Action, removed_id: String) -> bool:
 
 func _is_targeting_removed_id(action: Action, unique_id: String) -> bool:
 	return action.get_target_unique_id() == unique_id
-
-
-func _remove_actions_from_queue_by_unique_id(items: Array[ActionQueueItem], removed_id: String) -> Array[ActionQueueItem]:
-	return items.filter(func(item: ActionQueueItem) -> bool:
-		return item.action_has_unique_id(removed_id))
 
 
 func _remove_action_from_queue_without_target_with_removed_id(

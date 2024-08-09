@@ -47,7 +47,7 @@ func get_target_label() -> String:
 
 func has_unique_id(unique_id: String) -> bool:
 	if actor.unique_id.id == unique_id: return true
-	elif target and target.stats.unique_id == unique_id: return true
+	elif target and target.unique_id.id == unique_id: return true
 	else: return false
 
 

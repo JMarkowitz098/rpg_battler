@@ -55,6 +55,10 @@ func update_player_action_with_skill(action: Action, skill: Ingress, target: Nod
 	item_manager.update_player_action_with_skill(action, skill, target)
 
 
+func remove_items_with_unique_id(unique_id: String) -> void:
+	item_manager.remove_actions_from_queue_by_unique_id(items, unique_id)
+
+
 func update_actions_with_targets_with_removed_id(
 	removed_id: String,
 	battle_groups: BattleGroups
