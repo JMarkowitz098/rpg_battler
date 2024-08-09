@@ -20,7 +20,7 @@ func test_can_create_item_manager() -> void:
 
 func test_can_add_initial_items() -> void:
 	queue.fill_initial_turn_items(mocker.battle_groups)
-	assert_eq(queue.get_children().size(), 3)
+	assert_eq(queue.get_children().size(), 4)
 
 	for item in queue.items: item.queue_free()
 

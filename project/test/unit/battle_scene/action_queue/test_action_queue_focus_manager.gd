@@ -37,7 +37,7 @@ func test_can_set_with_color() -> void:
 
 func test_can_set_and_remove_triangle_focus_on_player() -> void:
 	items = [ mocker.item_2, mocker.item_3 ]
-	manager.set_triangle_focus_on_player(items, mocker.enemy.unique_id.id)
+	manager.set_triangle_focuses_on_items(items, mocker.enemy.unique_id.id, Ingress.Target.ENEMY)
 	var tests := [
 		[mocker.item_1, false],
 		[mocker.item_2, true],
@@ -55,7 +55,7 @@ func test_can_set_and_remove_triangle_focus_on_player() -> void:
 	_assert_items(tests)
 
 	gut.p("-----It doesn't set focus if no item matches-----")
-	manager.set_triangle_focus_on_player(items, mocker.player.unique_id.id)
+	manager.set_triangle_focuses_on_items(items, mocker.player.unique_id.id, Ingress.Target.ENEMY)
 	tests = [
 		[mocker.item_1, false],
 		[mocker.item_2, false],
