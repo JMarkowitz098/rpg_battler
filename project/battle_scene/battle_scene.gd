@@ -40,7 +40,7 @@ func _process(_delta: float) -> void:
 
 	var current_action := current_action_item.action
 	if current_action.action_chosen:
-		_process_action(current_action)
+		await _process_action(current_action)
 		_check_for_round_end()
 		if action_queue.items.size() > 0: _to_next_queue_item()
 	elif !current_action.is_choosing:
@@ -109,6 +109,7 @@ func _is_game_over() -> bool:
 	return player_group.members.size() == 0
 	
 func _is_victory() -> bool:
+	print("size: ", enemy_group.members.size())
 	return enemy_group.members.size() == 0
 	
 func _process_action(action: Action) -> void:
