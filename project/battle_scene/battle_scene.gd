@@ -33,14 +33,14 @@ func _ready() -> void:
 	_create_battle_groups()
 	_connect_signals()
 	_reset_turn()
-	Music.play(Music.battle_theme)
+	if not Utils.is_test: Music.play(Music.battle_theme)
 	
 func _process(_delta: float) -> void:
 	if action_queue.is_turn_over(): _reset_turn()
 
 	var current_action := current_action_item.action
 	if current_action.action_chosen:
-		_process_action(current_action)
+		await _process_action(current_action)
 		_check_for_round_end()
 		if action_queue.items.size() > 0: _to_next_queue_item()
 	elif !current_action.is_choosing:
@@ -109,14 +109,23 @@ func _is_game_over() -> bool:
 	return player_group.members.size() == 0
 	
 func _is_victory() -> bool:
+	print("size: ", enemy_group.members.size())
 	return enemy_group.members.size() == 0
 	
 func _process_action(action: Action) -> void:
 	if action.actor == null: return # Not sure why actions are not being removed
 	state.change_state(State.Type.IS_BATTLING)
 	set_process(false)
-	await action.skill.process(action, get_tree(), battle_groups)
+	if _can_use_skill(action): await action.skill.process(action, get_tree(), battle_groups)
 	set_process(true)
+
+func _can_use_skill(action: Action) -> bool:
+	if not action.actor:
+		return false
+	if action.actor.modifiers.current_ingress - action.skill.ingress <= 0:
+		print("Not enough Ingress")
+		return false
+	return true
 
 
 func _check_for_round_end() -> void:
@@ -160,7 +169,10 @@ func _handle_done_choosing() -> void:
 
 
 func _create_battle_groups() -> void:
-	player_group.load_members_from_save_data("0")
+	if Utils.is_test:
+		player_group.load_members_from_save_data("test")
+	else:
+		player_group.load_members_from_save_data("0")
 	enemy_group.load_members_from_round_data(Utils.current_round)
 	battle_groups = BattleGroups.new(player_group.members, enemy_group.members)
 
@@ -181,6 +193,7 @@ func _on_enemy_no_ingress(enemy_unique_id: String) -> void:
 	enemy_group.remove_member_by_id(enemy_unique_id)
 	battle_groups.enemies = enemy_group.members
 	enemy_group.reset_current_member()
+	action_queue.remove_items_with_unique_id(enemy_unique_id)
 
 	if enemy_group.members.size() > 0:
 		action_queue.update_actions_with_targets_with_removed_id(enemy_unique_id, battle_groups)
