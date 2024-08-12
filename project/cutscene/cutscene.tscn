@@ -1,0 +1,117 @@
+[gd_scene load_steps=8 format=3 uid="uid://b1yg47s3e4gl7"]
+
+[ext_resource type="Texture2D" uid="uid://pqy83qhc22bq" path="res://cutscene/ddxditr-ec227bb3-7589-4803-849e-9cddcb3ec29f-2102251416.jpg" id="1_jpytd"]
+[ext_resource type="Script" path="res://cutscene/cutscene.gd" id="1_wxuy1"]
+[ext_resource type="Texture2D" uid="uid://co5l2spc3mmoi" path="res://players/Talon/details/Designer-1.png.png" id="2_6xgib"]
+[ext_resource type="Texture2D" uid="uid://7e6lt7cu3jjh" path="res://cutscene/triangle.png" id="4_0yo2r"]
+
+[sub_resource type="Animation" id="Animation_ngf6n"]
+resource_name = "blink"
+length = 0.8
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("NextButtonSprite:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_ojo1l"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("NextButtonSprite:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_llh5a"]
+_data = {
+"RESET": SubResource("Animation_ojo1l"),
+"blink": SubResource("Animation_ngf6n")
+}
+
+[node name="Cutscene" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_wxuy1")
+
+[node name="Background" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_jpytd")
+expand_mode = 2
+
+[node name="LeftPortrait" type="TextureRect" parent="."]
+layout_mode = 0
+offset_left = 1.0
+offset_top = 104.0
+offset_right = 58.0
+offset_bottom = 154.0
+texture = ExtResource("2_6xgib")
+expand_mode = 2
+
+[node name="TextBackground" type="Panel" parent="."]
+layout_mode = 0
+offset_left = 60.0
+offset_top = 97.0
+offset_right = 317.0
+offset_bottom = 170.0
+
+[node name="Text" type="Label" parent="TextBackground"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 8.0
+offset_top = 3.0
+offset_right = -5.0
+offset_bottom = -3.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 8
+text = "Lorem ipsum odor amet, consectetuer adipiscing elit. Dictumst convallis efficitur nam etiam nisl taciti vivamus pulvinar. Porta vehicula ac curae; nibh sagittis himenaeos. 
+
+"
+autowrap_mode = 2
+
+[node name="NextButton" type="Button" parent="TextBackground"]
+visible = false
+layout_mode = 0
+offset_left = 250.0
+offset_top = 65.0
+offset_right = 254.0
+offset_bottom = 69.0
+scale = Vector2(0.01, 0.01)
+
+[node name="NextButtonSprite" type="TextureRect" parent="TextBackground/NextButton"]
+layout_mode = 0
+texture = ExtResource("4_0yo2r")
+
+[node name="NextButtonAnimation" type="AnimationPlayer" parent="TextBackground/NextButton"]
+libraries = {
+"": SubResource("AnimationLibrary_llh5a")
+}
+autoplay = "blink"
+
+[connection signal="pressed" from="TextBackground/NextButton" to="." method="_on_next_button_pressed"]
