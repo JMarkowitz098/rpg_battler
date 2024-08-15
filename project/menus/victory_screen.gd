@@ -20,8 +20,8 @@ func _ready() -> void:
 	Music.play(Music.menu_theme)
 
 func _render_summary() -> void:
-	# var defeated: Array[Player.Id] = Utils.get_param("defeated")
-	var defeated: Array[Player.Id] = [Player.Id.TALON, Player.Id.NASH] # For debugging
+	var defeated: Array[Player.Id] = Utils.get_param("defeated")
+	# var defeated: Array[Player.Id] = [Player.Id.TALON, Player.Id.NASH] # For debugging
 	var summary_data_text := "You defeated "
 	
 	for player_id: Player.Id in defeated:
