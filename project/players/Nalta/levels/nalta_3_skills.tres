@@ -1,0 +1,19 @@
+[gd_resource type="Resource" script_class="SkillGroup" load_steps=14 format=3 uid="uid://bd1ka206jmleo"]
+
+[ext_resource type="Script" path="res://skills/skill_group.gd" id="1_6yos7"]
+[ext_resource type="Resource" uid="uid://wkb21nusdwy3" path="res://skills/scor/scor_incursion.tres" id="2_w33ih"]
+[ext_resource type="Resource" uid="uid://dppsbqbf3wrv1" path="res://skills/scor/scor_refrain.tres" id="3_cyq6i"]
+[ext_resource type="Resource" uid="uid://bxcmsx6m0qval" path="res://skills/enh/enh_incursion.tres" id="4_kwnt6"]
+[ext_resource type="Resource" uid="uid://cmc7wyr0fl28a" path="res://skills/enh/enh_refrain.tres" id="5_1reem"]
+[ext_resource type="Resource" uid="uid://67qxy767d8pw" path="res://skills/scor/scor_refrain_block.tres" id="6_8gp8u"]
+[ext_resource type="Resource" uid="uid://c3wv4k40e52jb" path="res://skills/enh/enh_refrain_block.tres" id="7_f21fm"]
+[ext_resource type="Resource" uid="uid://dookkx7apf06n" path="res://skills/scor/scor_double_incursion.tres" id="8_ui002"]
+[ext_resource type="Resource" uid="uid://bgvw7x2v4mgrr" path="res://skills/enh/enh_double_incursion.tres" id="9_syf4h"]
+[ext_resource type="Resource" uid="uid://b007ki5jrwryr" path="res://skills/scor/scor_group_incursion.tres" id="10_23v1n"]
+[ext_resource type="Resource" uid="uid://gy8tobcdso2u" path="res://skills/scor/scor_piercing_incursion.tres" id="11_6st87"]
+[ext_resource type="Resource" uid="uid://4qk111x56m0o" path="res://skills/enh/enh_group_incursion.tres" id="12_cl87s"]
+[ext_resource type="Resource" uid="uid://bghrh8xhmr7nk" path="res://skills/enh/enh_piercing_incursion.tres" id="13_wjn46"]
+
+[resource]
+script = ExtResource("1_6yos7")
+skills = Array[Resource("res://skills/blueprints/new_ingress.gd")]([ExtResource("2_w33ih"), ExtResource("3_cyq6i"), ExtResource("4_kwnt6"), ExtResource("5_1reem"), ExtResource("6_8gp8u"), ExtResource("7_f21fm"), ExtResource("8_ui002"), ExtResource("9_syf4h"), ExtResource("10_23v1n"), ExtResource("10_23v1n"), ExtResource("11_6st87"), ExtResource("12_cl87s"), ExtResource("13_wjn46")])

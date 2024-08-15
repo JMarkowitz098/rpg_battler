@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="SkillGroup" load_steps=10 format=3 uid="uid://ty4vum08501n"]
+
+[ext_resource type="Script" path="res://skills/skill_group.gd" id="1_ref33"]
+[ext_resource type="Resource" uid="uid://wkb21nusdwy3" path="res://skills/scor/scor_incursion.tres" id="2_o7gpl"]
+[ext_resource type="Resource" uid="uid://dppsbqbf3wrv1" path="res://skills/scor/scor_refrain.tres" id="3_gfa52"]
+[ext_resource type="Resource" uid="uid://bxcmsx6m0qval" path="res://skills/enh/enh_incursion.tres" id="4_25iqr"]
+[ext_resource type="Resource" uid="uid://cmc7wyr0fl28a" path="res://skills/enh/enh_refrain.tres" id="5_gtydk"]
+[ext_resource type="Resource" uid="uid://67qxy767d8pw" path="res://skills/scor/scor_refrain_block.tres" id="6_188o5"]
+[ext_resource type="Resource" uid="uid://c3wv4k40e52jb" path="res://skills/enh/enh_refrain_block.tres" id="7_el8i7"]
+[ext_resource type="Resource" uid="uid://dookkx7apf06n" path="res://skills/scor/scor_double_incursion.tres" id="8_8ad8u"]
+[ext_resource type="Resource" uid="uid://bgvw7x2v4mgrr" path="res://skills/enh/enh_double_incursion.tres" id="9_m22uo"]
+
+[resource]
+script = ExtResource("1_ref33")
+skills = Array[Resource("res://skills/blueprints/new_ingress.gd")]([ExtResource("2_o7gpl"), ExtResource("3_gfa52"), ExtResource("4_25iqr"), ExtResource("5_gtydk"), ExtResource("6_188o5"), ExtResource("7_el8i7"), ExtResource("8_8ad8u"), ExtResource("9_m22uo")])

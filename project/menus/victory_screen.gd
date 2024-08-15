@@ -20,8 +20,8 @@ func _ready() -> void:
 	Music.play(Music.menu_theme)
 
 func _render_summary() -> void:
-	var defeated: Array[Player.Id] = Utils.get_param("defeated")
-	# var defeated: Array[Player.Id] = [Player.Id.TALON, Player.Id.NASH] # For debugging
+	# var defeated: Array[Player.Id] = Utils.get_param("defeated")
+	var defeated: Array[Player.Id] = [Player.Id.TALON, Player.Id.NASH] # For debugging
 	var summary_data_text := "You defeated "
 	
 	for player_id: Player.Id in defeated:
@@ -49,6 +49,7 @@ func _level_up_player_and_save() -> void:
 			level_up_details.old_skills = loaded_player_data.learned_skills
 
 			var new_stats := _save_and_return_new_stats(loaded_player_data)
+			print("new_stats: ", new_stats)
 			var new_skills := _save_and_return_new_skills(loaded_player_data)
 			level_up_details.new_stats = new_stats
 			level_up_details.new_skills = new_skills

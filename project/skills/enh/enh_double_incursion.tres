@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="DoubleIncursion" load_steps=2 format=3 uid="uid://bgvw7x2v4mgrr"]
+
+[ext_resource type="Script" path="res://skills/blueprints/double_incursion.gd" id="1_w8n1b"]
+
+[resource]
+script = ExtResource("1_w8n1b")
+id = 0
+type = 0
+target = 1
+label = "Enh Double Incursion"
+ingress = 5
+element = 1
+description = "Use two Enh Incursions on the same enemy"

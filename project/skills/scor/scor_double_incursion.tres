@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="DoubleIncursion" load_steps=2 format=3 uid="uid://dookkx7apf06n"]
+
+[ext_resource type="Script" path="res://skills/blueprints/double_incursion.gd" id="1_ps450"]
+
+[resource]
+script = ExtResource("1_ps450")
+id = 0
+type = 0
+target = 1
+label = "Scor Double Incursion"
+ingress = 5
+element = 3
+description = "Use two Scor Incursions on the same enemy"
