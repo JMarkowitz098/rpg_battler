@@ -80,4 +80,7 @@ func _on_slot_two_button_pressed() -> void:
 
 func _on_start_button_pressed() -> void:
 	Sound.play(Sound.confirm)
-	get_tree().change_scene_to_file("res://battle_scene/battle_scene.tscn")
+	# get_tree().change_scene_to_file("res://battle_scene/battle_scene.tscn")
+	var texts: Array[SceneText] = Utils.get_cutscene_texts()
+	Utils.change_scene("res://cutscene/cutscene.tscn", { "cutscene_texts": texts })
+

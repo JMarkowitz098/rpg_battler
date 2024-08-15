@@ -15,6 +15,8 @@ func _ready() -> void:
 		var text_loader := CutsceneTextLoader.new()
 		var test_texts := text_loader.load_chapter("res://cutscene/scene_text_csvs/test.csv")
 		load_scene_texts(test_texts)
+	else:
+		load_scene_texts(Utils._params.cutscene_texts)
 
 
 func load_scene_texts(_scene_texts: Array[SceneText]) -> void:
@@ -26,9 +28,11 @@ func load_scene_texts(_scene_texts: Array[SceneText]) -> void:
 
 func _on_next_button_pressed() -> void:
 	if not Utils.is_test: Sound.play(Sound.focus)
-	text_index += 1
-	_update_assets(text_index)
-	if text_index == scene_texts.size() - 1: next_button.hide()
+	if text_index == scene_texts.size() - 1: 
+		get_tree().change_scene_to_file("res://battle_scene/battle_scene.tscn")
+	else:
+		text_index += 1
+		_update_assets(text_index)
 
 func _update_assets(index: int) -> void:
 	var current_text := scene_texts[index]

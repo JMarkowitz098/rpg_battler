@@ -11,3 +11,14 @@ func load_chapter(file_path: String) -> Array[SceneText]:
     scene_texts.append(new_scene_text)
 
   return scene_texts
+
+static func get_file_path(round_number: Round.Number) -> String:
+  match round_number:
+    Round.Number.ONE:
+      return "res://cutscene/scene_text_csvs/chapter_1.csv"
+    Round.Number.TWO:
+      return "res://cutscene/scene_text_csvs/chapter_2.csv"
+    Round.Number.THREE:
+      return "res://cutscene/scene_text_csvs/chapter_3.csv"
+    _:
+      return ""

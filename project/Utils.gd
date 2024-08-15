@@ -12,11 +12,11 @@ const NASH_PLAYER_DETAILS = preload("res://players/Nash/details/nash_player_deta
 const ESEN_PORTRAIT := preload("res://players/Esen/details/esen_portrait.jpeg")
 const ESEN_PLAYER_DETAILS := preload("res://players/Esen/details/esen_player_details.tres")
 
-const FINAL_ROUND = Round.Number.TWO
+const FINAL_ROUND = Round.Number.THREE
 
 var _params: Dictionary
 var current_round := Round.Number.ONE
-# var current_round := Round.Number.TWO # For testing
+# var current_round := Round.Number.THREE # For testing
 
 var is_test := false
 
@@ -105,3 +105,8 @@ func get_player_details(player_id: Player.Id) -> Resource:
 func connect_signals(signals: Array) -> void:
 	for new_signal: Array in signals:
 		Events[new_signal[0]].connect(new_signal[1])
+
+
+func get_cutscene_texts() -> Array[SceneText]:
+	var file_path := CutsceneTextLoader.get_file_path(Utils.current_round)
+	return CutsceneTextLoader.new().load_chapter(file_path)
