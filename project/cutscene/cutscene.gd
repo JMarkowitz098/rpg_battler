@@ -1,0 +1,40 @@
+extends Control
+
+@onready var text := $TextBackground/Text
+@onready var next_button := $TextBackground/NextButton
+@onready var left_portrait := $LeftPortrait
+
+
+var scene_texts: Array[SceneText] = []
+
+var text_index := 0
+
+func _ready() -> void:
+	# For Testing
+	if Utils.is_test:
+		var text_loader := CutsceneTextLoader.new()
+		var test_texts := text_loader.load_chapter("res://cutscene/scene_text_csvs/test.csv")
+		load_scene_texts(test_texts)
+	else:
+		load_scene_texts(Utils._params.cutscene_texts)
+
+
+func load_scene_texts(_scene_texts: Array[SceneText]) -> void:
+	scene_texts = _scene_texts
+	_update_assets(text_index)
+	next_button.show()
+	next_button.grab_focus()
+
+
+func _on_next_button_pressed() -> void:
+	if not Utils.is_test: Sound.play(Sound.focus)
+	if text_index == scene_texts.size() - 1: 
+		get_tree().change_scene_to_file("res://battle_scene/battle_scene.tscn")
+	else:
+		text_index += 1
+		_update_assets(text_index)
+
+func _update_assets(index: int) -> void:
+	var current_text := scene_texts[index]
+	text.text = current_text.content
+	left_portrait.texture = Utils.get_player_portrait(current_text.speaker)
