@@ -3,7 +3,8 @@ class_name PlayerId
 enum Id {
   TALON, # 0
   NASH, # 1
-  ESEN # 2
+  ESEN, # 2
+  NALTA # 3
 }
 
 static func get_label(player_id: int) -> String:
@@ -14,5 +15,7 @@ static func get_label(player_id: int) -> String:
       return "Nash"
     2:
       return "Esen"
+    3:
+      return "Nalta"
     _:
       return ""

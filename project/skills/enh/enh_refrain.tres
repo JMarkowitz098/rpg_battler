@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="Refrain" load_steps=2 format=3 uid="uid://cmc7wyr0fl28a"]
+
+[ext_resource type="Script" path="res://skills/blueprints/refrain.gd" id="1_lodov"]
+
+[resource]
+script = ExtResource("1_lodov")
+id = 6
+type = 1
+target = 0
+label = "Enh Refrain"
+ingress = 1
+element = 1
+description = "Protect yourself with an Enh Refrain"

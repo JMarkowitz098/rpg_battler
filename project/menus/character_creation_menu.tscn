@@ -61,6 +61,12 @@ layout_mode = 2
 size_flags_horizontal = 4
 text = "Esen"
 
+[node name="NaltaButton" parent="VBoxContainer/HBoxContainer/CharacterButtons" instance=ExtResource("2_ps3th")]
+custom_minimum_size = Vector2(80, 2.08165e-12)
+layout_mode = 2
+size_flags_horizontal = 4
+text = "Nalta"
+
 [node name="CharacterDetails" type="VBoxContainer" parent="VBoxContainer/HBoxContainer"]
 custom_minimum_size = Vector2(120, 150)
 layout_mode = 2
@@ -117,3 +123,5 @@ label_settings = ExtResource("4_wbxnf")
 [connection signal="pressed" from="VBoxContainer/HBoxContainer/CharacterButtons/NashButton" to="." method="_on_nash_button_pressed"]
 [connection signal="focus_entered" from="VBoxContainer/HBoxContainer/CharacterButtons/EsenButton" to="." method="_on_esen_button_focus_entered"]
 [connection signal="pressed" from="VBoxContainer/HBoxContainer/CharacterButtons/EsenButton" to="." method="_on_esen_button_pressed"]
+[connection signal="focus_entered" from="VBoxContainer/HBoxContainer/CharacterButtons/NaltaButton" to="." method="_on_nalta_button_focus_entered"]
+[connection signal="pressed" from="VBoxContainer/HBoxContainer/CharacterButtons/NaltaButton" to="." method="_on_nalta_button_pressed"]

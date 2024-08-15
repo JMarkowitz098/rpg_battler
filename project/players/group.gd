@@ -4,6 +4,7 @@ class_name Group
 var TALON := load("res://players/Talon/talon.tscn")
 var NASH := load("res://players/Nash/nash.tscn")
 var ESEN := load("res://players/Esen/esen.tscn")
+var NALTA := load("res://players/Nalta/nalta.tscn")
 
 @onready var slot_one_location := $SlotOneLocation
 @onready var slot_two_location := $SlotTwoLocation
@@ -87,6 +88,8 @@ func _instantiate_member(data: PlayerData, slot_index: int) -> void:
 			new_member = NASH.instantiate()
 		PlayerId.Id.ESEN:
 			new_member = ESEN.instantiate()
+		PlayerId.Id.NALTA:
+			new_member = NALTA.instantiate()
 
 	add_child(new_member)
 	members.append(new_member)

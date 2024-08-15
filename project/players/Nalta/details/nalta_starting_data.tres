@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="PlayerData" load_steps=7 format=3 uid="uid://c7nxlgge015n"]
+
+[ext_resource type="Script" path="res://players/player_data.gd" id="1_is2c0"]
+[ext_resource type="Resource" uid="uid://s2w8bbmlm1k4" path="res://players/Nalta/levels/nalta_1_skills.tres" id="1_vgme7"]
+[ext_resource type="Resource" uid="uid://72mie8go31k4" path="res://players/Nalta/details/nalta_player_details.tres" id="2_cylb8"]
+[ext_resource type="Resource" uid="uid://cjlstprhqdcul" path="res://players/Nalta/levels/nalta_1_stats.tres" id="4_ltucf"]
+[ext_resource type="Script" path="res://players/unique_id.gd" id="5_qv0qy"]
+
+[sub_resource type="Resource" id="Resource_5c46j"]
+script = ExtResource("5_qv0qy")
+
+[resource]
+script = ExtResource("1_is2c0")
+player_details = ExtResource("2_cylb8")
+stats = ExtResource("4_ltucf")
+unique_id = SubResource("Resource_5c46j")
+learned_skills = ExtResource("1_vgme7")
+type = 0

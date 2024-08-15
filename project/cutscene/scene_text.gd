@@ -19,5 +19,7 @@ func _get_speaker_id(speaker_id: String) -> Player.Id:
       return Player.Id.NASH
     "esen":
       return Player.Id.ESEN
+    "nalta":
+      return Player.Id.NALTA
     _:
       return Player.Id.NONE

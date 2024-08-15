@@ -45,15 +45,17 @@ func _render_player_slots() -> void:
 	
 func _render_slot(player_data: PlayerData) -> void:
 	var player_details := player_data.player_details
-	var player_portrait: Texture2D
+	var player_portrait := Utils.get_player_portrait(player_data.player_details.player_id)
 	
-	match player_data.player_details.player_id:
-		Player.Id.TALON:
-			player_portrait = Utils.get_player_portrait(Player.Id.TALON)
-		Player.Id.NASH:
-			player_portrait = Utils.get_player_portrait(Player.Id.NASH)
-		Player.Id.ESEN:
-			player_portrait = Utils.get_player_portrait(Player.Id.ESEN)
+	# match player_data.player_details.player_id:
+	# 	Player.Id.TALON:
+	# 		player_portrait = Utils.get_player_portrait(Player.Id.TALON)
+	# 	Player.Id.NASH:
+	# 		player_portrait = Utils.get_player_portrait(Player.Id.NASH)
+	# 	Player.Id.ESEN:
+	# 		player_portrait = Utils.get_player_portrait(Player.Id.ESEN)
+	# 	Player.Id.NALTA:
+	# 		player_portrait = Utils.get_player_portrait(Player.Id.NALTA)
 	
 	match player_data.slot:
 		0:
