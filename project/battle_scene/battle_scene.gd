@@ -109,7 +109,6 @@ func _is_game_over() -> bool:
 	return player_group.members.size() == 0
 	
 func _is_victory() -> bool:
-	print("size: ", enemy_group.members.size())
 	return enemy_group.members.size() == 0
 	
 func _process_action(action: Action) -> void:

@@ -49,7 +49,6 @@ func _level_up_player_and_save() -> void:
 			level_up_details.old_skills = loaded_player_data.learned_skills
 
 			var new_stats := _save_and_return_new_stats(loaded_player_data)
-			print("new_stats: ", new_stats)
 			var new_skills := _save_and_return_new_skills(loaded_player_data)
 			level_up_details.new_stats = new_stats
 			level_up_details.new_skills = new_skills
