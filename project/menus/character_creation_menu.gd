@@ -3,6 +3,7 @@ extends ColorRect
 const TALON_STARTING_DATA := preload("res://players/Talon/details/talon_starting_data.tres")
 const NASH_STARTING_DATA := preload("res://players/Nash/details/nash_starting_data.tres")
 const ESEN_STARTING_DATA := preload("res://players/Esen/details/esen_starting_data.tres")
+const NALTA_STARTING_DATA := preload("res://players/Nalta/details/nalta_starting_data.tres")
 
 @onready var agility := $VBoxContainer/HBoxContainer/CharacterDetails/Agility
 @onready var character_name := $VBoxContainer/HBoxContainer/CharacterDetails/CharacterName
@@ -33,16 +34,18 @@ func _process(_delta: float) -> void:
 # -------
 
 func _on_talon_button_pressed() -> void:
-	Sound.play(Sound.confirm)
-	_create_and_save_new_player()
-	Utils.change_scene("res://menus/character_menu.tscn", { "slot": player_slot })
+	_handle_button_press()
 
 func _on_nash_button_pressed() -> void:
-	Sound.play(Sound.confirm)
-	_create_and_save_new_player()
-	Utils.change_scene("res://menus/character_menu.tscn", { "slot": player_slot })
+	_handle_button_press()
 
 func _on_esen_button_pressed() -> void:
+	_handle_button_press()
+
+func _on_nalta_button_pressed() -> void:
+	_handle_button_press()
+
+func _handle_button_press() -> void:
 	Sound.play(Sound.confirm)
 	_create_and_save_new_player()
 	Utils.change_scene("res://menus/character_menu.tscn", { "slot": player_slot })
@@ -68,6 +71,10 @@ func _on_nash_button_focus_entered() -> void:
 func _on_esen_button_focus_entered() -> void:
 	player_data = ESEN_STARTING_DATA
 	_update_display_info(Utils.get_player_portrait(Player.Id.ESEN))
+
+func _on_nalta_button_focus_entered() -> void:
+	player_data = NALTA_STARTING_DATA
+	_update_display_info(Utils.get_player_portrait(Player.Id.NALTA))
 		
 func _update_display_info(player_portrait: Texture2D) -> void:
 	# Ensure nodes have loaded. Focus signals seem to trigger before ready

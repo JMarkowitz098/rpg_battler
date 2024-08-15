@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="PiercingIncursion" load_steps=2 format=3 uid="uid://bghrh8xhmr7nk"]
+
+[ext_resource type="Script" path="res://skills/blueprints/piercing_incursion.gd" id="1_lwpal"]
+
+[resource]
+script = ExtResource("1_lwpal")
+id = 5
+type = 0
+target = 1
+label = "Enh Piercing Incursion"
+ingress = 3
+element = 1
+description = "Attack with a strong Enh incursion that ignores Scor, Shor, and Eth Refrains"

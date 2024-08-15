@@ -1,7 +1,7 @@
 extends Node2D
 class_name Player
 
-enum Id { TALON, NASH, ESEN, NONE }
+enum Id { TALON, NASH, ESEN, NALTA, NONE }
 enum Type { PLAYER, ENEMY }
 
 @onready var animation_player := $AnimationPlayer

@@ -31,6 +31,8 @@ static func get_new_stats(player_id: Player.Id, new_level: int) -> Stats:
 			return Stats._get_nash_stats(new_level)
 		Player.Id.ESEN:
 			return Stats._get_esen_stats(new_level)
+		Player.Id.NALTA:
+			return Stats._get_nalta_stats(new_level)
 		_:
 			return null
 
@@ -64,5 +66,16 @@ static func _get_esen_stats(new_level: int) -> Stats:
 			return load("res://players/Esen/levels/esen_2_stats.tres")
 		3:
 			return load("res://players/Esen/levels/esen_3_stats.tres")
+		_:
+			return null
+
+static func _get_nalta_stats(new_level: int) -> Stats:
+	match(new_level):
+		1:
+			return load("res://players/Nalta/levels/nalta_1_stats.tres")
+		2:
+			return load("res://players/Nalta/levels/nalta_2_stats.tres")
+		3:
+			return load("res://players/Nalta/levels/nalta_3_stats.tres")
 		_:
 			return null

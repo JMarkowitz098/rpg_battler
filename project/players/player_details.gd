@@ -36,5 +36,7 @@ static func get_player_label(incoming_player_id: Player.Id) -> String:
 			return "Nash"
 		Player.Id.ESEN:
 			return "Esen"
+		Player.Id.NALTA:
+			return "Nalta"
 		_:
 			return "No match"

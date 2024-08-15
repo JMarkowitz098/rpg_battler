@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="PlayerDetails" load_steps=3 format=3 uid="uid://72mie8go31k4"]
+
+[ext_resource type="Resource" uid="uid://d15jq186r2rgc" path="res://players/Nalta/details/nalta_learnable_skills.tres" id="1_f63rl"]
+[ext_resource type="Script" path="res://players/player_details.gd" id="1_yl6hx"]
+
+[resource]
+script = ExtResource("1_yl6hx")
+player_id = 3
+label = "Nalta"
+elements = Array[int]([3, 1])
+learnable_skills = ExtResource("1_f63rl")

@@ -11,6 +11,8 @@ const NASH_PORTRAIT := preload("res://players/Nash/details/NashPortrait.jpeg")
 const NASH_PLAYER_DETAILS = preload("res://players/Nash/details/nash_player_details.tres")
 const ESEN_PORTRAIT := preload("res://players/Esen/details/esen_portrait.jpeg")
 const ESEN_PLAYER_DETAILS := preload("res://players/Esen/details/esen_player_details.tres")
+const NALTA_PORTRAIT := preload("res://players/Nalta/details/nalta_portrait.jpeg")
+const NALTA_PLAYER_DETAILS := preload("res://players/Nalta/details/nalta_player_details.tres")
 
 const FINAL_ROUND = Round.Number.THREE
 
@@ -88,6 +90,8 @@ func get_player_portrait(player_id: Player.Id) -> Texture:
 			return NASH_PORTRAIT
 		Player.Id.ESEN:
 			return ESEN_PORTRAIT
+		Player.Id.NALTA:
+			return NALTA_PORTRAIT
 		_:
 			return null
 
@@ -99,6 +103,8 @@ func get_player_details(player_id: Player.Id) -> Resource:
 			return NASH_PLAYER_DETAILS
 		Player.Id.ESEN:
 			return ESEN_PLAYER_DETAILS
+		Player.Id.NALTA:
+			return NALTA_PLAYER_DETAILS
 		_:
 			return null
 
