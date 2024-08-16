@@ -4,11 +4,13 @@ enum Path {
 	GAME,
 	TEST,
 	EMPTY,
-	VICTORY_SCREEN
+	VICTORY_SCREEN,
+	TEAM_SELECT_SCREEN
 }
 
 const SAVE_PATH = "res://save.cfg"
 const TEST_SAVE_PATH = "res://test.cfg"
+const TEAM_SELECT_SCREEN_PATH = "res://test/util/team_select_screen_save.cfg"
 var save_path: String
 # const SAVE_PATH = "user://save.cfg"
 
@@ -18,11 +20,13 @@ const GAME_DATA := "game_data"
 const PLAYER_DATA := "player_data"
 
 func _init(path: Path = Path.GAME) -> void:
-	match(path):
+	match(Utils.save_path):
 		Path.GAME:
 			save_path = SAVE_PATH
 		Path.TEST:
 			save_path = TEST_SAVE_PATH
+		Path.TEAM_SELECT_SCREEN:
+			save_path = TEAM_SELECT_SCREEN_PATH
 
 
 	config.load(save_path)
@@ -45,6 +49,7 @@ func load_data(id: String) -> SaveFileData:
 		print("An error happened while loading data: ", error)
 		return
 	if (config.get_sections().size() == 0): return null
+	if not config.has_section(id + "_game_data"): return null
 
 	var players_data: Array[Dictionary] = _load_player_data(id)
 

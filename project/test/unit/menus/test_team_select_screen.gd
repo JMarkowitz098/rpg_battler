@@ -12,6 +12,7 @@ var screen: Panel
 
 func before_each() -> void:
 	Utils.is_test = true
+	Utils.save_path = SaveAndLoad.Path.TEAM_SELECT_SCREEN
 	screen = TestTeamSelectScreen.instantiate()
 	add_child_autoqfree(screen)
 

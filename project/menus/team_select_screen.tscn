@@ -12,7 +12,7 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_x8qp7")
 
-[node name="HBoxContainer" type="HBoxContainer" parent="."]
+[node name="Top" type="VBoxContainer" parent="."]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -21,78 +21,95 @@ grow_horizontal = 2
 grow_vertical = 2
 alignment = 1
 
-[node name="TeamButtons" type="VBoxContainer" parent="HBoxContainer"]
+[node name="Label" type="Label" parent="Top"]
+layout_mode = 2
+text = "Choose Your Team"
+horizontal_alignment = 1
+
+[node name="Columns" type="HBoxContainer" parent="Top"]
 layout_mode = 2
 alignment = 1
 
-[node name="TeamOneButton" parent="HBoxContainer/TeamButtons" instance=ExtResource("1_qgh5b")]
+[node name="TeamButtons" type="VBoxContainer" parent="Top/Columns"]
+layout_mode = 2
+alignment = 1
+
+[node name="TeamOneButton" parent="Top/Columns/TeamButtons" instance=ExtResource("1_qgh5b")]
 custom_minimum_size = Vector2(60, 0)
 layout_mode = 2
 text = "Talon
 and
 Nash"
 
-[node name="TeamTwoButton" parent="HBoxContainer/TeamButtons" instance=ExtResource("1_qgh5b")]
+[node name="TeamTwoButton" parent="Top/Columns/TeamButtons" instance=ExtResource("1_qgh5b")]
 custom_minimum_size = Vector2(60, 0)
 layout_mode = 2
 text = "Esen
 and 
 Sorah"
 
-[node name="TeamThreeButton" parent="HBoxContainer/TeamButtons" instance=ExtResource("1_qgh5b")]
+[node name="TeamThreeButton" parent="Top/Columns/TeamButtons" instance=ExtResource("1_qgh5b")]
 custom_minimum_size = Vector2(60, 0)
 layout_mode = 2
 text = "Nalta
 and
 Denlin"
 
-[node name="SlotOne" parent="HBoxContainer" instance=ExtResource("2_rvqny")]
+[node name="Done" type="Label" parent="Top/Columns/TeamButtons"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 8
+text = "__% Done"
+
+[node name="SlotOne" parent="Top/Columns" instance=ExtResource("2_rvqny")]
 custom_minimum_size = Vector2(100, 150)
 layout_mode = 2
 alignment = 1
 
-[node name="Ingress" parent="HBoxContainer/SlotOne" index="2"]
+[node name="Ingress" parent="Top/Columns/SlotOne" index="2"]
 horizontal_alignment = 1
 
-[node name="Incursion" parent="HBoxContainer/SlotOne" index="3"]
+[node name="Incursion" parent="Top/Columns/SlotOne" index="3"]
 horizontal_alignment = 1
 
-[node name="Refrain" parent="HBoxContainer/SlotOne" index="4"]
+[node name="Refrain" parent="Top/Columns/SlotOne" index="4"]
 horizontal_alignment = 1
 
-[node name="Agility" parent="HBoxContainer/SlotOne" index="5"]
+[node name="Agility" parent="Top/Columns/SlotOne" index="5"]
 horizontal_alignment = 1
 
-[node name="Elements" parent="HBoxContainer/SlotOne" index="6"]
+[node name="Elements" parent="Top/Columns/SlotOne" index="6"]
 text = "Elements: 
 "
 horizontal_alignment = 1
 
-[node name="SlotTwo" parent="HBoxContainer" instance=ExtResource("2_rvqny")]
+[node name="SlotTwo" parent="Top/Columns" instance=ExtResource("2_rvqny")]
 custom_minimum_size = Vector2(100, 150)
 layout_mode = 2
 alignment = 1
 
-[node name="Ingress" parent="HBoxContainer/SlotTwo" index="2"]
+[node name="Ingress" parent="Top/Columns/SlotTwo" index="2"]
 horizontal_alignment = 1
 
-[node name="Incursion" parent="HBoxContainer/SlotTwo" index="3"]
+[node name="Incursion" parent="Top/Columns/SlotTwo" index="3"]
 horizontal_alignment = 1
 
-[node name="Refrain" parent="HBoxContainer/SlotTwo" index="4"]
+[node name="Refrain" parent="Top/Columns/SlotTwo" index="4"]
 horizontal_alignment = 1
 
-[node name="Agility" parent="HBoxContainer/SlotTwo" index="5"]
+[node name="Agility" parent="Top/Columns/SlotTwo" index="5"]
 horizontal_alignment = 1
 
-[node name="Elements" parent="HBoxContainer/SlotTwo" index="6"]
+[node name="Elements" parent="Top/Columns/SlotTwo" index="6"]
 text = "Elements: 
 "
 horizontal_alignment = 1
 
-[connection signal="focus_entered" from="HBoxContainer/TeamButtons/TeamOneButton" to="." method="_on_team_one_button_focus_entered"]
-[connection signal="focus_entered" from="HBoxContainer/TeamButtons/TeamTwoButton" to="." method="_on_team_two_button_focus_entered"]
-[connection signal="focus_entered" from="HBoxContainer/TeamButtons/TeamThreeButton" to="." method="_on_team_three_button_focus_entered"]
+[connection signal="focus_entered" from="Top/Columns/TeamButtons/TeamOneButton" to="." method="_on_team_one_button_focus_entered"]
+[connection signal="pressed" from="Top/Columns/TeamButtons/TeamOneButton" to="." method="_on_team_one_button_pressed"]
+[connection signal="focus_entered" from="Top/Columns/TeamButtons/TeamTwoButton" to="." method="_on_team_two_button_focus_entered"]
+[connection signal="pressed" from="Top/Columns/TeamButtons/TeamTwoButton" to="." method="_on_team_two_button_pressed"]
+[connection signal="focus_entered" from="Top/Columns/TeamButtons/TeamThreeButton" to="." method="_on_team_three_button_focus_entered"]
+[connection signal="pressed" from="Top/Columns/TeamButtons/TeamThreeButton" to="." method="_on_team_three_button_pressed"]
 
-[editable path="HBoxContainer/SlotOne"]
-[editable path="HBoxContainer/SlotTwo"]
+[editable path="Top/Columns/SlotOne"]
+[editable path="Top/Columns/SlotTwo"]
