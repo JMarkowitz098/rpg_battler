@@ -1,0 +1,98 @@
+[gd_scene load_steps=4 format=3 uid="uid://ccl3yllm4ocvy"]
+
+[ext_resource type="PackedScene" uid="uid://ch51mvl5giece" path="res://menus/default_button.tscn" id="1_qgh5b"]
+[ext_resource type="Script" path="res://menus/team_select_screen.gd" id="1_x8qp7"]
+[ext_resource type="PackedScene" uid="uid://b6b3yrbpnc2fs" path="res://menus/character_menu_details.tscn" id="2_rvqny"]
+
+[node name="TeamSelectScreen" type="Panel"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_x8qp7")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 1
+
+[node name="TeamButtons" type="VBoxContainer" parent="HBoxContainer"]
+layout_mode = 2
+alignment = 1
+
+[node name="TeamOneButton" parent="HBoxContainer/TeamButtons" instance=ExtResource("1_qgh5b")]
+custom_minimum_size = Vector2(60, 0)
+layout_mode = 2
+text = "Talon
+and
+Nash"
+
+[node name="TeamTwoButton" parent="HBoxContainer/TeamButtons" instance=ExtResource("1_qgh5b")]
+custom_minimum_size = Vector2(60, 0)
+layout_mode = 2
+text = "Esen
+and 
+Sorah"
+
+[node name="TeamThreeButton" parent="HBoxContainer/TeamButtons" instance=ExtResource("1_qgh5b")]
+custom_minimum_size = Vector2(60, 0)
+layout_mode = 2
+text = "Nalta
+and
+Denlin"
+
+[node name="SlotOne" parent="HBoxContainer" instance=ExtResource("2_rvqny")]
+custom_minimum_size = Vector2(100, 150)
+layout_mode = 2
+alignment = 1
+
+[node name="Ingress" parent="HBoxContainer/SlotOne" index="2"]
+horizontal_alignment = 1
+
+[node name="Incursion" parent="HBoxContainer/SlotOne" index="3"]
+horizontal_alignment = 1
+
+[node name="Refrain" parent="HBoxContainer/SlotOne" index="4"]
+horizontal_alignment = 1
+
+[node name="Agility" parent="HBoxContainer/SlotOne" index="5"]
+horizontal_alignment = 1
+
+[node name="Elements" parent="HBoxContainer/SlotOne" index="6"]
+text = "Elements: 
+"
+horizontal_alignment = 1
+
+[node name="SlotTwo" parent="HBoxContainer" instance=ExtResource("2_rvqny")]
+custom_minimum_size = Vector2(100, 150)
+layout_mode = 2
+alignment = 1
+
+[node name="Ingress" parent="HBoxContainer/SlotTwo" index="2"]
+horizontal_alignment = 1
+
+[node name="Incursion" parent="HBoxContainer/SlotTwo" index="3"]
+horizontal_alignment = 1
+
+[node name="Refrain" parent="HBoxContainer/SlotTwo" index="4"]
+horizontal_alignment = 1
+
+[node name="Agility" parent="HBoxContainer/SlotTwo" index="5"]
+horizontal_alignment = 1
+
+[node name="Elements" parent="HBoxContainer/SlotTwo" index="6"]
+text = "Elements: 
+"
+horizontal_alignment = 1
+
+[connection signal="focus_entered" from="HBoxContainer/TeamButtons/TeamOneButton" to="." method="_on_team_one_button_focus_entered"]
+[connection signal="focus_entered" from="HBoxContainer/TeamButtons/TeamTwoButton" to="." method="_on_team_two_button_focus_entered"]
+[connection signal="focus_entered" from="HBoxContainer/TeamButtons/TeamThreeButton" to="." method="_on_team_three_button_focus_entered"]
+
+[editable path="HBoxContainer/SlotOne"]
+[editable path="HBoxContainer/SlotTwo"]
