@@ -66,6 +66,12 @@ func clear_data() -> void:
 	config.save(save_path)
 
 
+func clear_team_data(id: String) -> void:
+	config.erase_section(id + "_game_data")
+	config.erase_section(id + "_player_data")
+	config.save(save_path)
+
+
 func _set_game_data(data: SaveFileData) -> void:
 	_set_data(data.id, GAME_DATA, "id", data.id) 
 	_set_data(data.id, GAME_DATA, "save_time", data.save_time) 

@@ -41,6 +41,19 @@ func test_nalta_and_devlin_selected_on_load() -> void:
 	# _assert_slot(screen.slot_two, DEVLIN_STARTING_DATA) # Sorah not created yet
 
 
+func test_can_save_data() -> void:
+	var config := ConfigFile.new()
+	var save_path := "res://test/util/team_select_screen_save.cfg"
+	config.clear()
+	config.save(save_path)
+	screen.team_three_button.focus()
+	screen.team_three_button.pressed.emit()
+	config.load(save_path)
+
+	assert_eq(config.get_sections()[0], "2_game_data")
+	assert_eq(config.get_sections()[1], "2_player_data")
+
+
 func _assert_slot(slot: VBoxContainer, details: PlayerData) -> void:
 	assert_eq(slot.portrait.texture, Utils.get_player_portrait(details.player_details.player_id))
 	assert_eq(slot.character_name.text, details.player_details.label)
