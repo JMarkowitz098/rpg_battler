@@ -1,0 +1,157 @@
+[gd_scene load_steps=4 format=3 uid="uid://ccl3yllm4ocvy"]
+
+[ext_resource type="PackedScene" uid="uid://ch51mvl5giece" path="res://menus/default_button.tscn" id="1_qgh5b"]
+[ext_resource type="Script" path="res://menus/team_select_screen.gd" id="1_x8qp7"]
+[ext_resource type="PackedScene" uid="uid://b6b3yrbpnc2fs" path="res://menus/character_menu_details.tscn" id="2_rvqny"]
+
+[node name="TeamSelectScreen" type="Panel"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_x8qp7")
+
+[node name="Top" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 1
+
+[node name="Label" type="Label" parent="Top"]
+layout_mode = 2
+text = "Choose Your Team"
+horizontal_alignment = 1
+
+[node name="Columns" type="HBoxContainer" parent="Top"]
+layout_mode = 2
+alignment = 1
+
+[node name="TeamButtons" type="VBoxContainer" parent="Top/Columns"]
+layout_mode = 2
+alignment = 1
+
+[node name="TeamOneButton" parent="Top/Columns/TeamButtons" instance=ExtResource("1_qgh5b")]
+custom_minimum_size = Vector2(60, 0)
+layout_mode = 2
+text = "Talon
+and
+Nash"
+
+[node name="TeamTwoButton" parent="Top/Columns/TeamButtons" instance=ExtResource("1_qgh5b")]
+custom_minimum_size = Vector2(60, 0)
+layout_mode = 2
+text = "Esen
+and 
+Sorah"
+
+[node name="TeamThreeButton" parent="Top/Columns/TeamButtons" instance=ExtResource("1_qgh5b")]
+custom_minimum_size = Vector2(60, 0)
+layout_mode = 2
+text = "Nalta
+and
+Denlin"
+
+[node name="Done" type="Label" parent="Top/Columns/TeamButtons"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 8
+text = "__% Done"
+
+[node name="SlotOne" parent="Top/Columns" instance=ExtResource("2_rvqny")]
+custom_minimum_size = Vector2(100, 150)
+layout_mode = 2
+alignment = 1
+
+[node name="Ingress" parent="Top/Columns/SlotOne" index="2"]
+horizontal_alignment = 1
+
+[node name="Incursion" parent="Top/Columns/SlotOne" index="3"]
+horizontal_alignment = 1
+
+[node name="Refrain" parent="Top/Columns/SlotOne" index="4"]
+horizontal_alignment = 1
+
+[node name="Agility" parent="Top/Columns/SlotOne" index="5"]
+horizontal_alignment = 1
+
+[node name="Elements" parent="Top/Columns/SlotOne" index="6"]
+text = "Elements: 
+"
+horizontal_alignment = 1
+
+[node name="SlotTwo" parent="Top/Columns" instance=ExtResource("2_rvqny")]
+custom_minimum_size = Vector2(100, 150)
+layout_mode = 2
+alignment = 1
+
+[node name="Ingress" parent="Top/Columns/SlotTwo" index="2"]
+horizontal_alignment = 1
+
+[node name="Incursion" parent="Top/Columns/SlotTwo" index="3"]
+horizontal_alignment = 1
+
+[node name="Refrain" parent="Top/Columns/SlotTwo" index="4"]
+horizontal_alignment = 1
+
+[node name="Agility" parent="Top/Columns/SlotTwo" index="5"]
+horizontal_alignment = 1
+
+[node name="Elements" parent="Top/Columns/SlotTwo" index="6"]
+text = "Elements: 
+"
+horizontal_alignment = 1
+
+[node name="DeletePopup" type="Panel" parent="."]
+visible = false
+layout_mode = 0
+offset_left = 27.0
+offset_top = 16.0
+offset_right = 291.0
+offset_bottom = 154.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="DeletePopup"]
+custom_minimum_size = Vector2(2.08165e-12, 50)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 1
+
+[node name="Label" type="Label" parent="DeletePopup/VBoxContainer"]
+custom_minimum_size = Vector2(30, 80)
+layout_mode = 2
+theme_override_font_sizes/font_size = 14
+text = "Are you sure you want to delete this data?"
+horizontal_alignment = 1
+autowrap_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="DeletePopup/VBoxContainer"]
+layout_mode = 2
+alignment = 1
+
+[node name="NoButton" parent="DeletePopup/VBoxContainer/HBoxContainer" instance=ExtResource("1_qgh5b")]
+custom_minimum_size = Vector2(50, 0)
+layout_mode = 2
+text = "No"
+
+[node name="YesButton" parent="DeletePopup/VBoxContainer/HBoxContainer" instance=ExtResource("1_qgh5b")]
+custom_minimum_size = Vector2(50, 0)
+layout_mode = 2
+text = "Yes"
+
+[connection signal="focus_entered" from="Top/Columns/TeamButtons/TeamOneButton" to="." method="_on_team_one_button_focus_entered"]
+[connection signal="pressed" from="Top/Columns/TeamButtons/TeamOneButton" to="." method="_on_team_one_button_pressed"]
+[connection signal="focus_entered" from="Top/Columns/TeamButtons/TeamTwoButton" to="." method="_on_team_two_button_focus_entered"]
+[connection signal="pressed" from="Top/Columns/TeamButtons/TeamTwoButton" to="." method="_on_team_two_button_pressed"]
+[connection signal="focus_entered" from="Top/Columns/TeamButtons/TeamThreeButton" to="." method="_on_team_three_button_focus_entered"]
+[connection signal="pressed" from="Top/Columns/TeamButtons/TeamThreeButton" to="." method="_on_team_three_button_pressed"]
+[connection signal="pressed" from="DeletePopup/VBoxContainer/HBoxContainer/NoButton" to="." method="_on_no_button_pressed"]
+[connection signal="pressed" from="DeletePopup/VBoxContainer/HBoxContainer/YesButton" to="." method="_on_yes_button_pressed"]
+
+[editable path="Top/Columns/SlotOne"]
+[editable path="Top/Columns/SlotTwo"]

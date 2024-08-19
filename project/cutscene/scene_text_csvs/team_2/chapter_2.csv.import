@@ -1,0 +1,17 @@
+[remap]
+
+importer="csv_translation"
+type="Translation"
+uid="uid://cc4idmdrho0ey"
+
+[deps]
+
+files=["res://cutscene/scene_text_csvs/team_2/chapter_2.content.translation", "res://cutscene/scene_text_csvs/team_2/chapter_2.speaker.translation", "res://cutscene/scene_text_csvs/team_2/chapter_2.language.translation"]
+
+source_file="res://cutscene/scene_text_csvs/team_2/chapter_2.csv"
+dest_files=["res://cutscene/scene_text_csvs/team_2/chapter_2.content.translation", "res://cutscene/scene_text_csvs/team_2/chapter_2.speaker.translation", "res://cutscene/scene_text_csvs/team_2/chapter_2.language.translation"]
+
+[params]
+
+compress=true
+delimiter=0

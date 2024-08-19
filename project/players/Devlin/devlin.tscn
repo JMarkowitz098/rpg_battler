@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3 uid="uid://bm5lq4ox2kow5"]
+
+[ext_resource type="PackedScene" uid="uid://b5b42noos8pd3" path="res://players/player_info.tscn" id="1_lwfti"]
+
+[node name="devlin" type="Node2D"]
+
+[node name="Info" parent="." instance=ExtResource("1_lwfti")]

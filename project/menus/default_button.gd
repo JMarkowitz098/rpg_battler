@@ -20,7 +20,7 @@ func _process(_delta: float) -> void:
 		unfocus()
 	
 func focus(set_ignore := false) -> void:
-	if set_ignore: ignore_sound = true
+	if set_ignore or Utils.is_test: ignore_sound = true
 	icon_focus.focus()
 	grab_focus()
 
