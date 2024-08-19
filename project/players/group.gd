@@ -1,10 +1,12 @@
 extends Node2D
 class_name Group
 
-var TALON := load("res://players/Talon/talon.tscn")
-var NASH := load("res://players/Nash/nash.tscn")
+var DEVLIN := load("res://players/Devlin/devlin.tscn")
 var ESEN := load("res://players/Esen/esen.tscn")
 var NALTA := load("res://players/Nalta/nalta.tscn")
+var NASH := load("res://players/Nash/nash.tscn")
+var SORAH := load("res://players/Sorah/sorah.tscn")
+var TALON := load("res://players/Talon/talon.tscn")
 
 @onready var slot_one_location := $SlotOneLocation
 @onready var slot_two_location := $SlotTwoLocation
@@ -90,6 +92,10 @@ func _instantiate_member(data: PlayerData, slot_index: int) -> void:
 			new_member = ESEN.instantiate()
 		PlayerId.Id.NALTA:
 			new_member = NALTA.instantiate()
+		PlayerId.Id.SORAH:
+			new_member = SORAH.instantiate()
+		PlayerId.Id.DEVLIN:
+			new_member = DEVLIN.instantiate()
 
 	add_child(new_member)
 	members.append(new_member)

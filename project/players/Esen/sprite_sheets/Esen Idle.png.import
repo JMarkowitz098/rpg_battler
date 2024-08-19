@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://crmev5mjrqlt8"
-path="res://.godot/imported/Nalta Attack.png-561ffddff7d382606f8a775b74f4ab0a.ctex"
+uid="uid://crksnvhvgl201"
+path="res://.godot/imported/Esen Idle.png-b97c592512c0674629765e6631be7d91.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://players/Nalta/Nalta Attack.png"
-dest_files=["res://.godot/imported/Nalta Attack.png-561ffddff7d382606f8a775b74f4ab0a.ctex"]
+source_file="res://players/Esen/sprite_sheets/Esen Idle.png"
+dest_files=["res://.godot/imported/Esen Idle.png-b97c592512c0674629765e6631be7d91.ctex"]
 
 [params]
 

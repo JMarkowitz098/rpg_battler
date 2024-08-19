@@ -1,9 +1,11 @@
 extends Panel
 
-const TALON_STARTING_DATA := preload("res://players/Talon/details/talon_starting_data.tres")
-const NASH_STARTING_DATA := preload("res://players/Nash/details/nash_starting_data.tres")
+const DEVLIN_STARTING_DATA := preload("res://players/Devlin/details/devlin_starting_data.tres")
 const ESEN_STARTING_DATA := preload("res://players/Esen/details/esen_starting_data.tres")
 const NALTA_STARTING_DATA := preload("res://players/Nalta/details/nalta_starting_data.tres")
+const NASH_STARTING_DATA := preload("res://players/Nash/details/nash_starting_data.tres")
+const SORAH_STARTING_DATA := preload("res://players/Sorah/details/sorah_starting_data.tres")
+const TALON_STARTING_DATA := preload("res://players/Talon/details/talon_starting_data.tres")
 
 @onready var team_one_button := $Top/Columns/TeamButtons/TeamOneButton
 @onready var team_two_button := $Top/Columns/TeamButtons/TeamTwoButton
@@ -41,12 +43,12 @@ func _on_team_one_button_focus_entered() -> void:
 
 
 func _on_team_two_button_focus_entered() -> void:
-	_handle_focus(team_two_data, [ESEN_STARTING_DATA, TALON_STARTING_DATA])
+	_handle_focus(team_two_data, [ESEN_STARTING_DATA, SORAH_STARTING_DATA])
 	current = team_two_button
 
 
 func _on_team_three_button_focus_entered() -> void:
-	_handle_focus(team_three_data, [NALTA_STARTING_DATA, TALON_STARTING_DATA])
+	_handle_focus(team_three_data, [NALTA_STARTING_DATA, DEVLIN_STARTING_DATA])
 	current = team_three_button
 
 

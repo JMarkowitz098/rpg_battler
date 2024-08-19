@@ -60,6 +60,11 @@ layout_mode = 2
 theme_override_font_sizes/font_size = 8
 text = "__% Done"
 
+[node name="Label" type="Label" parent="Top/Columns/TeamButtons"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 6
+text = "Press 	Q to delete file"
+
 [node name="SlotOne" parent="Top/Columns" instance=ExtResource("2_rvqny")]
 custom_minimum_size = Vector2(100, 150)
 layout_mode = 2

@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="PlayerData" load_steps=7 format=3 uid="uid://dlms42o0qirgs"]
+
+[ext_resource type="Resource" uid="uid://cv5qu43aoc41m" path="res://players/Devlin/levels/devlin_1_skills.tres" id="1_6lat4"]
+[ext_resource type="Script" path="res://players/player_data.gd" id="1_60hgy"]
+[ext_resource type="Resource" uid="uid://dd36hak0f45kj" path="res://players/Devlin/details/devlin_player_details.tres" id="1_ejpi2"]
+[ext_resource type="Script" path="res://players/unique_id.gd" id="3_wspoy"]
+[ext_resource type="Resource" uid="uid://dq0b0mokjl1rp" path="res://players/Devlin/levels/devlin_1_stats.tres" id="4_cy70q"]
+
+[sub_resource type="Resource" id="Resource_pg2tw"]
+script = ExtResource("3_wspoy")
+
+[resource]
+script = ExtResource("1_60hgy")
+player_details = ExtResource("1_ejpi2")
+stats = ExtResource("4_cy70q")
+unique_id = SubResource("Resource_pg2tw")
+learned_skills = ExtResource("1_6lat4")
+type = 0

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://c120204woffuw"
-path="res://.godot/imported/Nash idle.png-819326aaf9ef12ec228ba6c558561246.ctex"
+uid="uid://o4bgeukn7r71"
+path="res://.godot/imported/sorah_attack.png-d3558c20f61dda1992e8e5c8b691fb7f.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://players/Nash/Nash idle.png"
-dest_files=["res://.godot/imported/Nash idle.png-819326aaf9ef12ec228ba6c558561246.ctex"]
+source_file="res://players/Sorah/sprite_sheets/sorah_attack.png"
+dest_files=["res://.godot/imported/sorah_attack.png-d3558c20f61dda1992e8e5c8b691fb7f.ctex"]
 
 [params]
 

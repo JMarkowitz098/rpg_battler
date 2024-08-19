@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://h0h5kd48hvh1"
-path="res://.godot/imported/Nash attack.png-8907741cfe331352e2c027626fef9188.ctex"
+uid="uid://4etr54fah02d"
+path="res://.godot/imported/devlin_idle.png-6416bd8be71c5a1e9b15c6b75620ac57.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://players/Nash/Nash attack.png"
-dest_files=["res://.godot/imported/Nash attack.png-8907741cfe331352e2c027626fef9188.ctex"]
+source_file="res://players/Devlin/sprite_sheets/devlin_idle.png"
+dest_files=["res://.godot/imported/devlin_idle.png-6416bd8be71c5a1e9b15c6b75620ac57.ctex"]
 
 [params]
 

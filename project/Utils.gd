@@ -5,21 +5,24 @@ enum GameOver {
 	DEFEAT
 }
 
-const TALON_PORTRAIT := preload("res://players/Talon/details/TalonPortrait.jpeg")
-const TALON_PLAYER_DETAILS := preload("res://players/Talon/details/talon_player_details.tres")
-const NASH_PORTRAIT := preload("res://players/Nash/details/NashPortrait.jpeg")
-const NASH_PLAYER_DETAILS = preload("res://players/Nash/details/nash_player_details.tres")
-const ESEN_PORTRAIT := preload("res://players/Esen/details/esen_portrait.jpeg")
+const DEVLIN_PLAYER_DETAILS := preload("res://players/Devlin/details/devlin_player_details.tres")
+const DEVLIN_PORTRAIT := preload("res://players/Devlin/details/devlin_portrait.jpeg")
 const ESEN_PLAYER_DETAILS := preload("res://players/Esen/details/esen_player_details.tres")
-const NALTA_PORTRAIT := preload("res://players/Nalta/details/nalta_portrait.jpeg")
+const ESEN_PORTRAIT := preload("res://players/Esen/details/esen_portrait.jpeg")
 const NALTA_PLAYER_DETAILS := preload("res://players/Nalta/details/nalta_player_details.tres")
+const NALTA_PORTRAIT := preload("res://players/Nalta/details/nalta_portrait.jpeg")
+const NASH_PLAYER_DETAILS = preload("res://players/Nash/details/nash_player_details.tres")
+const NASH_PORTRAIT := preload("res://players/Nash/details/NashPortrait.jpeg")
+const SORAH_PLAYER_DETAILS := preload("res://players/Sorah/details/sorah_player_details.tres")
+const SORAH_PORTRAIT := preload("res://players/Sorah/details/sorah_portrait.jpeg")
+const TALON_PLAYER_DETAILS := preload("res://players/Talon/details/talon_player_details.tres")
+const TALON_PORTRAIT := preload("res://players/Talon/details/TalonPortrait.jpeg")
 
 const FINAL_ROUND = Round.Number.THREE
-
 var _params: Dictionary
 var current_round := Round.Number.ONE
-# var current_round := Round.Number.TWO # For testing
 var current_team: Team.Id
+# var current_round := Round.Number.TWO # For testing
 # var current_team := Team.Id.THREE
 
 var is_test := false
@@ -85,29 +88,37 @@ func next_round() -> void:
 func _clamped_damage(value: int) -> int:
 	return clamp(value, 1, INF)
 
-func get_player_portrait(player_id: Player.Id) -> Texture:
+func get_player_portrait(player_id: PlayerId.Id) -> Texture:
 	match(player_id):
-		Player.Id.TALON:
+		PlayerId.Id.TALON:
 			return TALON_PORTRAIT
-		Player.Id.NASH:
+		PlayerId.Id.NASH:
 			return NASH_PORTRAIT
-		Player.Id.ESEN:
+		PlayerId.Id.ESEN:
 			return ESEN_PORTRAIT
-		Player.Id.NALTA:
+		PlayerId.Id.NALTA:
 			return NALTA_PORTRAIT
+		PlayerId.Id.SORAH:
+			return SORAH_PORTRAIT
+		PlayerId.Id.DEVLIN:
+			return DEVLIN_PORTRAIT
 		_:
 			return null
 
-func get_player_details(player_id: Player.Id) -> Resource:
+func get_player_details(player_id: PlayerId.Id) -> Resource:
 	match(player_id):
-		Player.Id.TALON:
+		PlayerId.Id.TALON:
 			return TALON_PLAYER_DETAILS
-		Player.Id.NASH:
+		PlayerId.Id.NASH:
 			return NASH_PLAYER_DETAILS
-		Player.Id.ESEN:
+		PlayerId.Id.ESEN:
 			return ESEN_PLAYER_DETAILS
-		Player.Id.NALTA:
+		PlayerId.Id.NALTA:
 			return NALTA_PLAYER_DETAILS
+		PlayerId.Id.SORAH:
+			return SORAH_PLAYER_DETAILS
+		PlayerId.Id.DEVLIN:
+			return DEVLIN_PLAYER_DETAILS
 		_:
 			return null
 

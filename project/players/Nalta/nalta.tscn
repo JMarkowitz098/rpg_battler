@@ -4,8 +4,8 @@
 [ext_resource type="Resource" uid="uid://72mie8go31k4" path="res://players/Nalta/details/nalta_player_details.tres" id="2_72vu2"]
 [ext_resource type="PackedScene" uid="uid://b5b42noos8pd3" path="res://players/player_info.tscn" id="2_njsiv"]
 [ext_resource type="PackedScene" uid="uid://bno3iriedun4j" path="res://players/base_character_sprite.tscn" id="3_mk46p"]
-[ext_resource type="Texture2D" uid="uid://bvveh27ar5dfn" path="res://players/Nalta/Nalta Idle.png" id="4_xjalr"]
-[ext_resource type="Texture2D" uid="uid://crmev5mjrqlt8" path="res://players/Nalta/Nalta Attack.png" id="5_r3ub0"]
+[ext_resource type="Texture2D" uid="uid://bvveh27ar5dfn" path="res://players/Nalta/sprite_sheets/Nalta Idle.png" id="4_xjalr"]
+[ext_resource type="Texture2D" uid="uid://crmev5mjrqlt8" path="res://players/Nalta/sprite_sheets/Nalta Attack.png" id="5_r3ub0"]
 [ext_resource type="PackedScene" uid="uid://dl4d2stn4lshh" path="res://players/refrain_aura.tscn" id="6_ruhgj"]
 [ext_resource type="PackedScene" uid="uid://bqyh4pkeog5r5" path="res://ui/triangle_focus.tscn" id="7_3mcxy"]
 [ext_resource type="PackedScene" uid="uid://2evhn0npdxi4" path="res://ui/finger_focus.tscn" id="8_vxj2c"]
@@ -169,5 +169,6 @@ scale = Vector2(0.15, 0.15)
 [node name="RefrainBlock" parent="." instance=ExtResource("10_1qkjx")]
 position = Vector2(18, -1)
 
+[connection signal="visibility_changed" from="FingerFocus" to="." method="_on_finger_focus_visibility_changed"]
 [connection signal="ingress_updated" from="Modifiers" to="." method="_on_modifiers_ingress_updated"]
 [connection signal="no_ingress" from="Modifiers" to="." method="_on_modifiers_no_ingress"]

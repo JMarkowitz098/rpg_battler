@@ -4,7 +4,7 @@ var current_action_item: ActionQueueItem
 var current_skill_button: Button
 var current_skill_type: Ingress.Type
 var current_skill: Ingress
-var defeated: Array[Player.Id]
+var defeated: Array[PlayerId.Id]
 var prev_state: State.Type
 var before_pause_focus: Variant
 var battle_groups: BattleGroups

@@ -23,16 +23,20 @@ func format_for_save() -> Dictionary:
 		"agility": agility
 	}
 
-static func get_new_stats(player_id: Player.Id, new_level: int) -> Stats:
+static func get_new_stats(player_id: PlayerId.Id, new_level: int) -> Stats:
 	match player_id:
-		Player.Id.TALON:
-			return Stats._get_talon_stats(new_level)
-		Player.Id.NASH:
-			return Stats._get_nash_stats(new_level)
-		Player.Id.ESEN:
-			return Stats._get_esen_stats(new_level)
-		Player.Id.NALTA:
-			return Stats._get_nalta_stats(new_level)
+		PlayerId.Id.TALON:
+			return _get_talon_stats(new_level)
+		PlayerId.Id.NASH:
+			return _get_nash_stats(new_level)
+		PlayerId.Id.ESEN:
+			return _get_esen_stats(new_level)
+		PlayerId.Id.NALTA:
+			return _get_nalta_stats(new_level)
+		PlayerId.Id.SORAH:
+			return _get_sorah_stats(new_level)
+		PlayerId.Id.DEVLIN:
+			return _get_devlin_stats(new_level)
 		_:
 			return null
 
@@ -77,5 +81,27 @@ static func _get_nalta_stats(new_level: int) -> Stats:
 			return load("res://players/Nalta/levels/nalta_2_stats.tres")
 		3:
 			return load("res://players/Nalta/levels/nalta_3_stats.tres")
+		_:
+			return null
+
+static func _get_sorah_stats(new_level: int) -> Stats:
+	match(new_level):
+		1:
+			return load("res://players/Sorah/levels/sorah_1_stats.tres")
+		2:
+			return load("res://players/Sorah/levels/sorah_2_stats.tres")
+		3:
+			return load("res://players/Sorah/levels/sorah_3_stats.tres")
+		_:
+			return null
+
+static func _get_devlin_stats(new_level: int) -> Stats:
+	match(new_level):
+		1:
+			return load("res://players/Devlin/levels/devlin_1_stats.tres")
+		2:
+			return load("res://players/Devlin/levels/devlin_2_stats.tres")
+		3:
+			return load("res://players/Devlin/levels/devlin_3_stats.tres")
 		_:
 			return null

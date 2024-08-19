@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="Stats" load_steps=2 format=3 uid="uid://j50moxgde7hn"]
+
+[ext_resource type="Script" path="res://players/stats.gd" id="1_l2sc5"]
+
+[resource]
+script = ExtResource("1_l2sc5")
+level = 2
+max_ingress = 14
+incursion = 3
+refrain = 5
+agility = 4

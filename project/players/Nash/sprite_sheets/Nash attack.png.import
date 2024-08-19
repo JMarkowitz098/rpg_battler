@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dkgv1u2504ud5"
-path="res://.godot/imported/Esen Attack.png-ad038876ad9a580766cba1541fc99500.ctex"
+uid="uid://h0h5kd48hvh1"
+path="res://.godot/imported/Nash attack.png-6fd50b4131449d87a7b99fa0127071bd.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://players/Esen/Esen Attack.png"
-dest_files=["res://.godot/imported/Esen Attack.png-ad038876ad9a580766cba1541fc99500.ctex"]
+source_file="res://players/Nash/sprite_sheets/Nash attack.png"
+dest_files=["res://.godot/imported/Nash attack.png-6fd50b4131449d87a7b99fa0127071bd.ctex"]
 
 [params]
 

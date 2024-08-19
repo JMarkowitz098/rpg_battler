@@ -62,19 +62,19 @@ func _create_and_save_new_player() -> void:
 	
 func _on_talon_button_focus_entered() -> void:
 	player_data = TALON_STARTING_DATA
-	_update_display_info(Utils.get_player_portrait(Player.Id.TALON))
+	_update_display_info(Utils.get_player_portrait(PlayerId.Id.TALON))
 
 func _on_nash_button_focus_entered() -> void:
 	player_data = NASH_STARTING_DATA
-	_update_display_info(Utils.get_player_portrait(Player.Id.NASH))
+	_update_display_info(Utils.get_player_portrait(PlayerId.Id.NASH))
 	
 func _on_esen_button_focus_entered() -> void:
 	player_data = ESEN_STARTING_DATA
-	_update_display_info(Utils.get_player_portrait(Player.Id.ESEN))
+	_update_display_info(Utils.get_player_portrait(PlayerId.Id.ESEN))
 
 func _on_nalta_button_focus_entered() -> void:
 	player_data = NALTA_STARTING_DATA
-	_update_display_info(Utils.get_player_portrait(Player.Id.NALTA))
+	_update_display_info(Utils.get_player_portrait(PlayerId.Id.NALTA))
 		
 func _update_display_info(player_portrait: Texture2D) -> void:
 	# Ensure nodes have loaded. Focus signals seem to trigger before ready

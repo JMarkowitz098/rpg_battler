@@ -1,14 +1,14 @@
 extends Resource
 class_name PlayerDetails
 
-@export var player_id: Player.Id
+@export var player_id: PlayerId.Id
 @export var label: String
 @export var elements: Array[Element.Type]
 @export var learnable_skills: SkillGroup
 
 
 func _init(
-	_player_id: Player.Id = Player.Id.TALON,
+	_player_id: PlayerId.Id = PlayerId.Id.TALON,
 	_label: String = "",
 	_elements: Array[Element.Type] = [],
 	_learnable_skills: SkillGroup = null,
@@ -26,17 +26,3 @@ func format_for_save() -> Dictionary:
 		"elements": elements as Array,
 		"learnable_skills": learnable_skills.format_for_save()
 	}
-
-
-static func get_player_label(incoming_player_id: Player.Id) -> String:
-	match incoming_player_id:
-		Player.Id.TALON:
-			return "Talon"
-		Player.Id.NASH:
-			return "Nash"
-		Player.Id.ESEN:
-			return "Esen"
-		Player.Id.NALTA:
-			return "Nalta"
-		_:
-			return "No match"

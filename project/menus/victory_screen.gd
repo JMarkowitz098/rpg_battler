@@ -27,17 +27,17 @@ func _save_next_round() -> void:
 	save_and_load.save_data(current_data)
 
 func _render_summary() -> void:
-	var defeated: Array[Player.Id] = Utils.get_param("defeated")
-	# var defeated: Array[Player.Id] = [Player.Id.TALON, Player.Id.NASH] # For debugging
+	var defeated: Array[PlayerId.Id] = Utils.get_param("defeated")
+	#var defeated: Array[PlayerId.Id] = [PlayerId.Id.TALON, PlayerId.Id.NASH] # For debugging
 	var summary_data_text := "You defeated "
 	
-	for player_id: Player.Id in defeated:
-		summary_data_text += PlayerDetails.get_player_label(player_id) + " and "
+	for player_id: PlayerId.Id in defeated:
+		summary_data_text += PlayerId.get_label(player_id) + " and "
 		defeated_portraits.add_child(_create_portrait_texture_rec(player_id))
 		
 	summary_data.text = summary_data_text.trim_suffix(" and ")
 
-func _create_portrait_texture_rec(player_id: Player.Id) -> TextureRect:
+func _create_portrait_texture_rec(player_id: PlayerId.Id) -> TextureRect:
 	var new_texture_rect := TextureRect.new()
 	new_texture_rect.texture = Utils.get_player_portrait(player_id)
 	new_texture_rect.expand_mode = TextureRect.EXPAND_FIT_WIDTH
@@ -96,7 +96,7 @@ func _render_level_up_columns() -> void:
 		column.show()
 	
 func _render_column_player_label(column: VBoxContainer, player_details: PlayerDetails) -> void:
-	column.find_child("PlayerLabel").text = PlayerDetails.get_player_label(player_details.player_id)
+	column.find_child("PlayerLabel").text = PlayerId.get_label(player_details.player_id)
 
 func _render_column_portrait(column: VBoxContainer, player_details: PlayerDetails) -> void:
 	var player_portait := Utils.get_player_portrait(player_details.player_id)

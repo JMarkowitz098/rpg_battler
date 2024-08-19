@@ -10,7 +10,7 @@ const LABEL := "Nash"
 
 
 func before_each() -> void:
-	details = TestPlayerDetails.new(Player.Id.NASH, LABEL, elements, skills)
+	details = TestPlayerDetails.new(PlayerId.Id.NASH, LABEL, elements, skills)
 
 
 func test_can_create_player_details() -> void:
@@ -18,7 +18,7 @@ func test_can_create_player_details() -> void:
 
 
 func test_values() -> void:
-	assert_eq(details.player_id, Player.Id.NASH, "player_id")
+	assert_eq(details.player_id, PlayerId.Id.NASH, "player_id")
 	assert_eq(details.label, LABEL, "label")
 	assert_eq(details.elements, elements, "elements")
 	assert_eq(details.learnable_skills, skills, "skills")
