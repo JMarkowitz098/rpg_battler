@@ -10,11 +10,7 @@ func _ready() -> void:
 	Music.play(Music.menu_theme)
 
 func _on_start_game_button_pressed() -> void:
-	var save_and_load := SaveAndLoad.new()
-	save_and_load.clear_data()
-	save_and_load.save_data(SaveFileData.new(
-		"0", [], Time.get_datetime_string_from_system(), Round.Number.ONE))
-	get_tree().change_scene_to_file("res://menus/character_menu.tscn")
+	get_tree().change_scene_to_file("res://menus/team_select_screen.tscn")
 	Sound.play(Sound.confirm)
 
 func _on_exit_game_button_pressed() -> void:

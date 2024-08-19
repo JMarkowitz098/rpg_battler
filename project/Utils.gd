@@ -18,8 +18,9 @@ const FINAL_ROUND = Round.Number.THREE
 
 var _params: Dictionary
 var current_round := Round.Number.ONE
+# var current_round := Round.Number.TWO # For testing
 var current_team: Team.Id
-# var current_round := Round.Number.THREE # For testing
+# var current_team := Team.Id.THREE
 
 var is_test := false
 var save_path := SaveAndLoad.Path.GAME
