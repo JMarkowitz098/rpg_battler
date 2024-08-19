@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://crmev5mjrqlt8"
-path="res://.godot/imported/Nalta Attack.png-561ffddff7d382606f8a775b74f4ab0a.ctex"
+path="res://.godot/imported/Nalta Attack.png-a6f544d3f7a6c1e464edd068f430a7bc.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://players/Nalta/Nalta Attack.png"
-dest_files=["res://.godot/imported/Nalta Attack.png-561ffddff7d382606f8a775b74f4ab0a.ctex"]
+source_file="res://players/Nalta/sprite_sheets/Nalta Attack.png"
+dest_files=["res://.godot/imported/Nalta Attack.png-a6f544d3f7a6c1e464edd068f430a7bc.ctex"]
 
 [params]
 

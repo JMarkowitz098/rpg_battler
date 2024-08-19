@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://bvveh27ar5dfn"
-path="res://.godot/imported/Nalta Idle.png-33559e2b509120b5828daa83194a5965.ctex"
+path="res://.godot/imported/Nalta Idle.png-dd24b41d997ab6d0687cde04a4d30195.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://players/Nalta/Nalta Idle.png"
-dest_files=["res://.godot/imported/Nalta Idle.png-33559e2b509120b5828daa83194a5965.ctex"]
+source_file="res://players/Nalta/sprite_sheets/Nalta Idle.png"
+dest_files=["res://.godot/imported/Nalta Idle.png-dd24b41d997ab6d0687cde04a4d30195.ctex"]
 
 [params]
 
