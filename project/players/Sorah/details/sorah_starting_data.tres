@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="PlayerData" load_steps=7 format=3 uid="uid://yu73qxmnai2h"]
+
+[ext_resource type="Resource" uid="uid://bium0qeno7t5p" path="res://players/Sorah/levels/sorah_1_skills.tres" id="1_0vxif"]
+[ext_resource type="Script" path="res://players/player_data.gd" id="1_fk23r"]
+[ext_resource type="Resource" uid="uid://csh8o5o0t2pq0" path="res://players/Sorah/details/sorah_player_details.tres" id="1_uukfk"]
+[ext_resource type="Script" path="res://players/unique_id.gd" id="3_ln7dc"]
+[ext_resource type="Resource" uid="uid://cttxe2jjn83f8" path="res://players/Sorah/levels/sorah_1_stats.tres" id="4_i3p31"]
+
+[sub_resource type="Resource" id="Resource_nnxyn"]
+script = ExtResource("3_ln7dc")
+
+[resource]
+script = ExtResource("1_fk23r")
+player_details = ExtResource("1_uukfk")
+stats = ExtResource("4_i3p31")
+unique_id = SubResource("Resource_nnxyn")
+learned_skills = ExtResource("1_0vxif")
+type = 0

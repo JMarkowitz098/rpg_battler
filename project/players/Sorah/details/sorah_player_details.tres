@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="PlayerDetails" load_steps=3 format=3 uid="uid://csh8o5o0t2pq0"]
+
+[ext_resource type="Resource" uid="uid://bium0qeno7t5p" path="res://players/Sorah/levels/sorah_1_skills.tres" id="1_es381"]
+[ext_resource type="Script" path="res://players/player_details.gd" id="1_gpktp"]
+
+[resource]
+script = ExtResource("1_gpktp")
+player_id = 4
+label = "Sorah"
+elements = Array[int]([0])
+learnable_skills = ExtResource("1_es381")
