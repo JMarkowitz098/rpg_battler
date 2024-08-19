@@ -68,15 +68,15 @@ func _handle_focus(team_data: SaveFileData, starting_data: Array[PlayerData]) ->
 
 
 func _on_team_one_button_pressed() -> void:
-	_handle_press("0")
+	_handle_press(Team.Id.ONE)
 
 
 func _on_team_two_button_pressed() -> void:
-	_handle_press("1")
+	_handle_press(Team.Id.TWO)
 
 
 func _on_team_three_button_pressed() -> void:
-	_handle_press("2")
+	_handle_press(Team.Id.THREE)
 
 
 func _on_no_button_pressed() -> void:
@@ -84,14 +84,14 @@ func _on_no_button_pressed() -> void:
 
 
 func _on_yes_button_pressed() -> void:
-	var file_id: String
+	var file_id: Team.Id
 	match(current):
 		team_one_button:
-			file_id = "0"
+			file_id = Team.Id.ONE
 		team_two_button:
-			file_id = "1"
+			file_id = Team.Id.TWO
 		team_three_button:
-			file_id = "2"
+			file_id = Team.Id.THREE
 	save_and_load.clear_team_data(file_id)
 	_load_team_data()
 	_return()
@@ -145,14 +145,25 @@ func _elements_text(elements: Array[Element.Type]) -> String:
 	return new_str.trim_suffix(", ")
 
 
-func _handle_press(save_id: String) -> void:
+func _handle_press(save_id: Team.Id) -> void:
+	if !current_data or current_data.round_number == Round.Number.ONE:
+		_create_new_save_data(str(save_id))
+	Sound.play(Sound.confirm)
+	Utils.current_round = current_data.round_number
+	Utils.current_team = save_id
+	var texts: Array[SceneText] = Utils.get_cutscene_texts(save_id, current_data.round_number)
+	Utils.change_scene("res://cutscene/cutscene.tscn", { "cutscene_texts": texts })
+
+func _create_new_save_data(save_id: String) -> void:
 	slot_one_data.slot = 0
 	slot_two_data.slot = 1
 	var players_data: Array[PlayerData] = [slot_one_data, slot_two_data]
 	var save_data := SaveFileData.new(
-		save_id, players_data, 
+		save_id, 
+		players_data, 
 		Time.get_datetime_string_from_system(), 
 		Round.Number.ONE
 	)
 	save_and_load.save_data(save_data)
+	current_data = save_data
 

@@ -19,7 +19,7 @@ var config := ConfigFile.new()
 const GAME_DATA := "game_data"
 const PLAYER_DATA := "player_data"
 
-func _init(path: Path = Path.GAME) -> void:
+func _init() -> void:
 	match(Utils.save_path):
 		Path.GAME:
 			save_path = SAVE_PATH
@@ -66,9 +66,9 @@ func clear_data() -> void:
 	config.save(save_path)
 
 
-func clear_team_data(id: String) -> void:
-	config.erase_section(id + "_game_data")
-	config.erase_section(id + "_player_data")
+func clear_team_data(id: Team.Id) -> void:
+	config.erase_section(str(id) + "_game_data")
+	config.erase_section(str(id) + "_player_data")
 	config.save(save_path)
 
 
