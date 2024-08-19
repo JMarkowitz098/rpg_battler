@@ -51,9 +51,9 @@ func _on_team_three_button_focus_entered() -> void:
 
 
 func _load_team_data() -> void:
-	team_one_data = save_and_load.load_data("0")
-	team_two_data = save_and_load.load_data("1")
-	team_three_data = save_and_load.load_data("2")
+	team_one_data = save_and_load.load_data(str(Team.Id.ONE))
+	team_two_data = save_and_load.load_data(str(Team.Id.TWO))
+	team_three_data = save_and_load.load_data(str(Team.Id.THREE))
 
 
 func _handle_focus(team_data: SaveFileData, starting_data: Array[PlayerData]) -> void:
