@@ -4,8 +4,8 @@
 
 [resource]
 script = ExtResource("1_joaa6")
-level = 0
-max_ingress = 0
-incursion = 0
-refrain = 0
-agility = 0
+level = 1
+max_ingress = 10
+incursion = 3
+refrain = 2
+agility = 2
