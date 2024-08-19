@@ -73,6 +73,10 @@ func get_new_skills(player_id: PlayerId.Id, new_level: int) -> SkillGroup:
 			return _get_esen_skills(new_level)
 		PlayerId.Id.NALTA:
 			return _get_nalta_skills(new_level)
+		PlayerId.Id.SORAH:
+			return _get_sorah_skills(new_level)
+		PlayerId.Id.DEVLIN:
+			return _get_devlin_skills(new_level)
 		_:
 			return null
 
@@ -117,5 +121,27 @@ func _get_nalta_skills(new_level: int) -> SkillGroup:
 			return load("res://players/Nalta/levels/nalta_2_skills.tres")
 		3:
 			return load("res://players/Nalta/levels/nalta_3_skills.tres")
+		_:
+			return null
+
+func _get_sorah_skills(new_level: int) -> SkillGroup:
+	match(new_level):
+		1:
+			return load("res://players/Sorah/levels/sorah_1_skills.tres")
+		2:
+			return load("res://players/Sorah/levels/sorah_2_skills.tres")
+		3:
+			return load("res://players/Sorah/levels/sorah_3_skills.tres")
+		_:
+			return null
+
+func _get_devlin_skills(new_level: int) -> SkillGroup:
+	match(new_level):
+		1:
+			return load("res://players/Devlin/levels/devlin_1_skills.tres")
+		2:
+			return load("res://players/Devlin/levels/devlin_2_skills.tres")
+		3:
+			return load("res://players/Devlin/levels/devlin_3_skills.tres")
 		_:
 			return null

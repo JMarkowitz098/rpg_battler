@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://drr2wti2163ry"
-path="res://.godot/imported/devlin_attack.png-db4ed8278433927ea1be26350e798d6a.ctex"
+uid="uid://o7s2uqvbfffg"
+path="res://.godot/imported/sorah_portrait.jpeg-226f83d94e6af249addd8267212b7433.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://players/Devlin/devlin_attack.png"
-dest_files=["res://.godot/imported/devlin_attack.png-db4ed8278433927ea1be26350e798d6a.ctex"]
+source_file="res://players/Sorah/details/sorah_portrait.jpeg"
+dest_files=["res://.godot/imported/sorah_portrait.jpeg-226f83d94e6af249addd8267212b7433.ctex"]
 
 [params]
 

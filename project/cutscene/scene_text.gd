@@ -21,5 +21,9 @@ func _get_speaker_id(speaker_id: String) -> PlayerId.Id:
       return PlayerId.Id.ESEN
     "nalta":
       return PlayerId.Id.NALTA
+    "sorah":
+      return PlayerId.Id.SORAH
+    "devlin":
+      return PlayerId.Id.DEVLIN
     _:
       return PlayerId.Id.NONE

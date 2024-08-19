@@ -26,17 +26,3 @@ func format_for_save() -> Dictionary:
 		"elements": elements as Array,
 		"learnable_skills": learnable_skills.format_for_save()
 	}
-
-
-static func get_player_label(incoming_player_id: PlayerId.Id) -> String:
-	match incoming_player_id:
-		PlayerId.Id.TALON:
-			return "Talon"
-		PlayerId.Id.NASH:
-			return "Nash"
-		PlayerId.Id.ESEN:
-			return "Esen"
-		PlayerId.Id.NALTA:
-			return "Nalta"
-		_:
-			return "No match"

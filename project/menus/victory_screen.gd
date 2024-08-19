@@ -96,7 +96,7 @@ func _render_level_up_columns() -> void:
 		column.show()
 	
 func _render_column_player_label(column: VBoxContainer, player_details: PlayerDetails) -> void:
-	column.find_child("PlayerLabel").text = PlayerDetails.get_player_label(player_details.player_id)
+	column.find_child("PlayerLabel").text = PlayerId.get_label(player_details.player_id)
 
 func _render_column_portrait(column: VBoxContainer, player_details: PlayerDetails) -> void:
 	var player_portait := Utils.get_player_portrait(player_details.player_id)
