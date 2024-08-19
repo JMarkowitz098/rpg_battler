@@ -4,8 +4,8 @@
 
 [resource]
 script = ExtResource("1_7cbt1")
-level = 1
-max_ingress = 10
-incursion = 3
-refrain = 2
-agility = 2
+level = 2
+max_ingress = 14
+incursion = 4
+refrain = 5
+agility = 3
