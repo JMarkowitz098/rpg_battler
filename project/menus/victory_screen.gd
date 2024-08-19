@@ -14,10 +14,17 @@ var save_and_load := SaveAndLoad.new()
 func _ready() -> void:
 	next_screen_button.focus_no_sound()
 	_render_summary()
+	_save_next_round()
 	_level_up_player_and_save()
 	_render_level_up_columns()
 	await Music.fade()
 	Music.play(Music.menu_theme)
+
+
+func _save_next_round() -> void:
+	var current_data := save_and_load.load_data(str(Utils.current_team))
+	current_data.round_number = Utils.current_round
+	save_and_load.save_data(current_data)
 
 func _render_summary() -> void:
 	var defeated: Array[Player.Id] = Utils.get_param("defeated")
@@ -38,7 +45,7 @@ func _create_portrait_texture_rec(player_id: Player.Id) -> TextureRect:
 	return new_texture_rect
 	
 func _level_up_player_and_save() -> void:
-	var loaded_players := save_and_load.load_data("0").players_data
+	var loaded_players := save_and_load.load_data(str(Utils.current_team)).players_data
 
 	for loaded_player_data in loaded_players:
 		if(loaded_player_data):
@@ -63,7 +70,7 @@ func _save_and_return_new_stats(loaded_player_data: PlayerData) -> Stats:
 	)
 
 	loaded_player_data.stats = new_stats
-	save_and_load.save_player("0", loaded_player_data.slot, loaded_player_data)
+	save_and_load.save_player(str(Utils.current_team), loaded_player_data.slot, loaded_player_data)
 	return new_stats
 
 func _save_and_return_new_skills(loaded_player_data: PlayerData) -> SkillGroup:
@@ -72,7 +79,7 @@ func _save_and_return_new_skills(loaded_player_data: PlayerData) -> SkillGroup:
 		loaded_player_data.stats.level # Level already updated
 	)
 	loaded_player_data.learned_skills = new_skills
-	save_and_load.save_player("0", loaded_player_data.slot, loaded_player_data)
+	save_and_load.save_player(str(Utils.current_team), loaded_player_data.slot, loaded_player_data)
 	return new_skills
 
 func _render_level_up_columns() -> void:
@@ -122,6 +129,5 @@ func _on_next_button_pressed() -> void:
 	
 func _on_next_battle_button_pressed() -> void:
 	Sound.play(Sound.confirm)
-	# get_tree().change_scene_to_file("res://battle_scene/battle_scene.tscn")
-	var texts: Array[SceneText] = Utils.get_cutscene_texts()
+	var texts: Array[SceneText] = Utils.get_cutscene_texts(Utils.current_team, Utils.current_round)
 	Utils.change_scene("res://cutscene/cutscene.tscn", { "cutscene_texts": texts })

@@ -1,0 +1,55 @@
+[gd_scene load_steps=4 format=3 uid="uid://b6b3yrbpnc2fs"]
+
+[ext_resource type="Script" path="res://menus/character_menu_details.gd" id="1_2ihdt"]
+[ext_resource type="Texture2D" uid="uid://8wg3032ohbg6" path="res://players/Talon/details/TalonPortrait.jpeg" id="1_5jd4i"]
+[ext_resource type="LabelSettings" uid="uid://cjxpiibvc0pb" path="res://menus/char_creation_labels.tres" id="2_n5ebp"]
+
+[node name="CharacterDetails" type="VBoxContainer"]
+custom_minimum_size = Vector2(120, 150)
+script = ExtResource("1_2ihdt")
+
+[node name="Control" type="HBoxContainer" parent="."]
+custom_minimum_size = Vector2(2.08165e-12, 50)
+layout_mode = 2
+alignment = 1
+
+[node name="Portrait" type="TextureRect" parent="Control"]
+layout_mode = 2
+texture = ExtResource("1_5jd4i")
+expand_mode = 2
+
+[node name="CharacterName" type="Label" parent="."]
+layout_mode = 2
+text = "Name"
+label_settings = ExtResource("2_n5ebp")
+horizontal_alignment = 1
+
+[node name="Ingress" type="Label" parent="."]
+layout_mode = 2
+text = "Ingress: 0
+"
+label_settings = ExtResource("2_n5ebp")
+
+[node name="Incursion" type="Label" parent="."]
+layout_mode = 2
+text = "Incursion: 0
+"
+label_settings = ExtResource("2_n5ebp")
+
+[node name="Refrain" type="Label" parent="."]
+layout_mode = 2
+text = "Refrain: 0
+"
+label_settings = ExtResource("2_n5ebp")
+
+[node name="Agility" type="Label" parent="."]
+layout_mode = 2
+text = "Agility: 0
+"
+label_settings = ExtResource("2_n5ebp")
+
+[node name="Elements" type="Label" parent="."]
+layout_mode = 2
+text = "Elements: 
+lorem ipsum, lorem ipsum"
+label_settings = ExtResource("2_n5ebp")

@@ -18,9 +18,12 @@ const FINAL_ROUND = Round.Number.THREE
 
 var _params: Dictionary
 var current_round := Round.Number.ONE
-# var current_round := Round.Number.THREE # For testing
+# var current_round := Round.Number.TWO # For testing
+var current_team: Team.Id
+# var current_team := Team.Id.THREE
 
 var is_test := false
+var save_path := SaveAndLoad.Path.GAME
 
 func calucluate_attack_damage(actor_stats: Stats, target_stats: Stats) -> int:
 	return _clamped_damage(actor_stats.level_stats.incursion - target_stats.level_stats.refrain)
@@ -113,6 +116,6 @@ func connect_signals(signals: Array) -> void:
 		Events[new_signal[0]].connect(new_signal[1])
 
 
-func get_cutscene_texts() -> Array[SceneText]:
-	var file_path := CutsceneTextLoader.get_file_path(Utils.current_round)
-	return CutsceneTextLoader.new().load_chapter(file_path)
+func get_cutscene_texts(team_id: Team.Id, round_num: Round.Number) -> Array[SceneText]:
+	var file_path := CutsceneTextLoader.get_file_path(team_id, round_num)
+	return CutsceneTextLoader.load_chapter(file_path)
