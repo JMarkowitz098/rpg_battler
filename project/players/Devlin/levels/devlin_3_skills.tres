@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="SkillGroup" load_steps=10 format=3 uid="uid://dq0cmntc4ntiy"]
+
+[ext_resource type="Script" path="res://skills/skill_group.gd" id="1_50xek"]
+[ext_resource type="Resource" uid="uid://wkb21nusdwy3" path="res://skills/scor/scor_incursion.tres" id="2_b01c3"]
+[ext_resource type="Resource" uid="uid://dppsbqbf3wrv1" path="res://skills/scor/scor_refrain.tres" id="3_b2wr6"]
+[ext_resource type="Resource" uid="uid://dookkx7apf06n" path="res://skills/scor/scor_double_incursion.tres" id="4_o8fjs"]
+[ext_resource type="Resource" uid="uid://c87vexkyllsfm" path="res://skills/scor/scor_ally_refrain.tres" id="5_vhpyf"]
+[ext_resource type="Resource" uid="uid://67qxy767d8pw" path="res://skills/scor/scor_refrain_block.tres" id="6_x74wu"]
+[ext_resource type="Resource" uid="uid://b007ki5jrwryr" path="res://skills/scor/scor_group_incursion.tres" id="7_8akxu"]
+[ext_resource type="Resource" uid="uid://gy8tobcdso2u" path="res://skills/scor/scor_piercing_incursion.tres" id="8_3pld3"]
+[ext_resource type="Resource" uid="uid://b4i1psndb60fq" path="res://skills/scor/scor_group_refrain.tres" id="9_y1hrl"]
+
+[resource]
+script = ExtResource("1_50xek")
+skills = Array[Resource("res://skills/blueprints/new_ingress.gd")]([ExtResource("2_b01c3"), ExtResource("3_b2wr6"), ExtResource("4_o8fjs"), ExtResource("5_vhpyf"), ExtResource("6_x74wu"), ExtResource("7_8akxu"), ExtResource("8_3pld3"), ExtResource("9_y1hrl")])

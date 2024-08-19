@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="SkillGroup" load_steps=4 format=3 uid="uid://d2ve4m4vsalii"]
+
+[ext_resource type="Script" path="res://skills/skill_group.gd" id="1_5ml1y"]
+[ext_resource type="Resource" uid="uid://wkb21nusdwy3" path="res://skills/scor/scor_incursion.tres" id="2_4r3mb"]
+[ext_resource type="Resource" uid="uid://dppsbqbf3wrv1" path="res://skills/scor/scor_refrain.tres" id="3_er4jj"]
+
+[resource]
+script = ExtResource("1_5ml1y")
+skills = Array[Resource("res://skills/blueprints/new_ingress.gd")]([ExtResource("2_4r3mb"), ExtResource("3_er4jj")])

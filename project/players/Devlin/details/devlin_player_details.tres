@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="PlayerDetails" load_steps=2 format=3 uid="uid://dd36hak0f45kj"]
+
+[ext_resource type="Script" path="res://players/player_details.gd" id="1_wifhj"]
+
+[resource]
+script = ExtResource("1_wifhj")
+player_id = 5
+label = "Devlin"
+elements = Array[int]([3])
