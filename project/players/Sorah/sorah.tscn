@@ -1,9 +1,166 @@
-[gd_scene load_steps=3 format=3 uid="uid://f8awjrgt7fh2"]
+[gd_scene load_steps=17 format=3 uid="uid://f8awjrgt7fh2"]
 
 [ext_resource type="Script" path="res://players/player.gd" id="1_2meu3"]
 [ext_resource type="PackedScene" uid="uid://b5b42noos8pd3" path="res://players/player_info.tscn" id="2_m1son"]
+[ext_resource type="PackedScene" uid="uid://bno3iriedun4j" path="res://players/base_character_sprite.tscn" id="3_keoc5"]
+[ext_resource type="Texture2D" uid="uid://bn2yvcxbe3w68" path="res://players/Sorah/sprite_sheets/sorah_idle.png" id="4_2n6s7"]
+[ext_resource type="Texture2D" uid="uid://o4bgeukn7r71" path="res://players/Sorah/sprite_sheets/sorah_attack.png" id="5_qeees"]
+[ext_resource type="PackedScene" uid="uid://dl4d2stn4lshh" path="res://players/refrain_aura.tscn" id="6_6s8wi"]
+[ext_resource type="PackedScene" uid="uid://dqed3mi0gd2mi" path="res://players/refrain_block.tscn" id="7_53x8y"]
+[ext_resource type="PackedScene" uid="uid://bqyh4pkeog5r5" path="res://ui/triangle_focus.tscn" id="8_y2wsy"]
+[ext_resource type="PackedScene" uid="uid://2evhn0npdxi4" path="res://ui/finger_focus.tscn" id="9_xxvlr"]
+[ext_resource type="PackedScene" uid="uid://bseiija1l41li" path="res://players/modifiers.tscn" id="10_wsxat"]
+
+[sub_resource type="Animation" id="Animation_2jfm7"]
+resource_name = "idle"
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("BaseSprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4, 0.6, 0.8, 1),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4, 1]
+}
+
+[sub_resource type="Animation" id="Animation_vg2u5"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("BaseSprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AttackSprite:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("BaseSprite:self_modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_en0g4"]
+resource_name = "attack"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AttackSprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4, 5, 6, 8, 9, 10]
+}
+
+[sub_resource type="Animation" id="Animation_7e87x"]
+resource_name = "hurt"
+length = 0.6
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("BaseSprite:self_modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4, 0.6),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Color(100, 1, 1, 1), Color(1, 1, 1, 1), Color(100, 1, 1, 1), Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_burfw"]
+resource_name = "refrain"
+length = 0.6
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("BaseSprite:self_modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4, 0.6),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Color(1, 100, 1, 1), Color(1, 1, 1, 1), Color(1, 100, 1, 1), Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_sf677"]
+_data = {
+"RESET": SubResource("Animation_vg2u5"),
+"attack": SubResource("Animation_en0g4"),
+"hurt": SubResource("Animation_7e87x"),
+"idle": SubResource("Animation_2jfm7"),
+"refrain": SubResource("Animation_burfw")
+}
 
 [node name="Sorah" type="Node2D"]
 script = ExtResource("1_2meu3")
 
 [node name="Info" parent="." instance=ExtResource("2_m1son")]
+
+[node name="BaseSprite" parent="." instance=ExtResource("3_keoc5")]
+scale = Vector2(0.6, 0.451)
+texture = ExtResource("4_2n6s7")
+hframes = 6
+
+[node name="AttackSprite" type="Sprite2D" parent="."]
+visible = false
+scale = Vector2(0.48, 0.48)
+texture = ExtResource("5_qeees")
+hframes = 11
+
+[node name="RefrainAura" parent="." instance=ExtResource("6_6s8wi")]
+position = Vector2(0, -1)
+scale = Vector2(1.36111, 1.41484)
+
+[node name="RefrainBlock" parent="." instance=ExtResource("7_53x8y")]
+position = Vector2(10, 0)
+scale = Vector2(0.0243654, 0.190619)
+
+[node name="TriangleFocus" parent="." instance=ExtResource("8_y2wsy")]
+position = Vector2(-0.999999, -14)
+
+[node name="FingerFocus" parent="." instance=ExtResource("9_xxvlr")]
+visible = false
+position = Vector2(8, 13)
+scale = Vector2(0.15, 0.15)
+
+[node name="Modifiers" parent="." instance=ExtResource("10_wsxat")]
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_sf677")
+}
+
+[connection signal="visibility_changed" from="FingerFocus" to="." method="_on_finger_focus_visibility_changed"]
+[connection signal="ingress_updated" from="Modifiers" to="." method="_on_modifiers_ingress_updated"]
+[connection signal="no_ingress" from="Modifiers" to="." method="_on_modifiers_no_ingress"]
