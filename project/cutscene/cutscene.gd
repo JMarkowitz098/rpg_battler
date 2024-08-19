@@ -12,7 +12,7 @@ var text_index := 0
 func _ready() -> void:
 	# For Testing
 	if Utils.is_test:
-		var test_texts := CutsceneTextLoader.load_chapter("res://cutscene/scene_text_csvs/test.csv")
+		var test_texts := CutsceneTextLoader.load_chapter("res://cutscene/scene_text_files/team_3/chapter_1.txt")
 		load_scene_texts(test_texts)
 	else:
 		load_scene_texts(Utils._params.cutscene_texts)

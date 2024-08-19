@@ -8,15 +8,15 @@ func test_can_create_cutscene_text_loader() -> void:
 
 
 func test_get_file_path() -> void:
-	var expected := "res://cutscene/scene_text_csvs/team_1/chapter_1.csv"
+	var expected := "res://cutscene/scene_text_files/team_1/chapter_1.txt"
 	var actual := CutsceneTextLoader.get_file_path(Team.Id.ONE, Round.Number.ONE)
 	assert_eq(actual, expected)
 
-	expected = "res://cutscene/scene_text_csvs/team_2/chapter_2.csv"
+	expected = "res://cutscene/scene_text_files/team_2/chapter_2.txt"
 	actual = CutsceneTextLoader.get_file_path(Team.Id.TWO, Round.Number.TWO)
 	assert_eq(actual, expected)
 
-	expected = "res://cutscene/scene_text_csvs/team_3/chapter_3.csv"
+	expected = "res://cutscene/scene_text_files/team_3/chapter_3.txt"
 	actual = CutsceneTextLoader.get_file_path(Team.Id.THREE, Round.Number.THREE)
 	assert_eq(actual, expected)
 
@@ -27,7 +27,7 @@ func test_can_load_chapter() -> void:
 	var text3 := SceneText.new("ch1_3", "Nice to meet you.", "talon")
 	var expected: Array[SceneText] = [text1, text2, text3]
 
-	var actual: Array[SceneText] = TestCutsceneLoader.load_chapter("res://cutscene/scene_text_csvs/test.csv")
+	var actual: Array[SceneText] = TestCutsceneLoader.load_chapter("res://cutscene/scene_text_files/test.txt")
 	for index in actual.size():
 		assert_eq(actual[index].id, expected[index].id)
 		assert_eq(actual[index].content, expected[index].content)

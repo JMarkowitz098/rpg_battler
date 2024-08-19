@@ -8,11 +8,11 @@ enum Path {
 	TEAM_SELECT_SCREEN
 }
 
-const SAVE_PATH = "res://save.cfg"
+# const SAVE_PATH = "res://save.cfg"
 const TEST_SAVE_PATH = "res://test.cfg"
 const TEAM_SELECT_SCREEN_PATH = "res://test/util/team_select_screen_save.cfg"
 var save_path: String
-# const SAVE_PATH = "user://save.cfg"
+const SAVE_PATH = "user://save.cfg"
 
 var config := ConfigFile.new()
 
@@ -30,6 +30,7 @@ func _init() -> void:
 
 
 	config.load(save_path)
+
 
 func save_data(data: SaveFileData) -> void:
 	_set_game_data(data)
