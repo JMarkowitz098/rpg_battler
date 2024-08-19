@@ -23,15 +23,15 @@ func format_for_save() -> Dictionary:
 		"agility": agility
 	}
 
-static func get_new_stats(player_id: Player.Id, new_level: int) -> Stats:
+static func get_new_stats(player_id: PlayerId.Id, new_level: int) -> Stats:
 	match player_id:
-		Player.Id.TALON:
+		PlayerId.Id.TALON:
 			return Stats._get_talon_stats(new_level)
-		Player.Id.NASH:
+		PlayerId.Id.NASH:
 			return Stats._get_nash_stats(new_level)
-		Player.Id.ESEN:
+		PlayerId.Id.ESEN:
 			return Stats._get_esen_stats(new_level)
-		Player.Id.NALTA:
+		PlayerId.Id.NALTA:
 			return Stats._get_nalta_stats(new_level)
 		_:
 			return null

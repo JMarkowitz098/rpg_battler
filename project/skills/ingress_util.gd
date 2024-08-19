@@ -63,15 +63,15 @@ func _load_skill(data_id: Ingress.Id, element_string: String) -> Ingress:
 
 	return load(path)
 
-func get_new_skills(player_id: Player.Id, new_level: int) -> SkillGroup:
+func get_new_skills(player_id: PlayerId.Id, new_level: int) -> SkillGroup:
 	match player_id:
-		Player.Id.TALON:
+		PlayerId.Id.TALON:
 			return _get_talon_skills(new_level)
-		Player.Id.NASH:
+		PlayerId.Id.NASH:
 			return _get_nash_skills(new_level)
-		Player.Id.ESEN:
+		PlayerId.Id.ESEN:
 			return _get_esen_skills(new_level)
-		Player.Id.NALTA:
+		PlayerId.Id.NALTA:
 			return _get_nalta_skills(new_level)
 		_:
 			return null

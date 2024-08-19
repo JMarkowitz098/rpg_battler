@@ -2,7 +2,7 @@ class_name SceneText
 
 var id: String
 var content: String
-var speaker: Player.Id
+var speaker: PlayerId.Id
 var language: String
 
 func _init(_id: String, _content: String, _speaker: String, _language: String = "en") -> void:
@@ -11,15 +11,15 @@ func _init(_id: String, _content: String, _speaker: String, _language: String = 
   speaker = _get_speaker_id(_speaker)
   language = _language
 
-func _get_speaker_id(speaker_id: String) -> Player.Id:
+func _get_speaker_id(speaker_id: String) -> PlayerId.Id:
   match(speaker_id):
     "talon":
-      return Player.Id.TALON
+      return PlayerId.Id.TALON
     "nash":
-      return Player.Id.NASH
+      return PlayerId.Id.NASH
     "esen":
-      return Player.Id.ESEN
+      return PlayerId.Id.ESEN
     "nalta":
-      return Player.Id.NALTA
+      return PlayerId.Id.NALTA
     _:
-      return Player.Id.NONE
+      return PlayerId.Id.NONE

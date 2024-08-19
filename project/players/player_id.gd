@@ -4,18 +4,25 @@ enum Id {
   TALON, # 0
   NASH, # 1
   ESEN, # 2
-  NALTA # 3
+  NALTA, # 3
+  SORAH, # 4
+  DEVLIN, # 5
+  NONE
 }
 
-static func get_label(player_id: int) -> String:
+static func get_label(player_id: PlayerId.Id) -> String:
   match player_id:
-    0:
+    PlayerId.Id.TALON:
       return "Talon"
-    1:
+    PlayerId.Id.NASH:
       return "Nash"
-    2:
+    PlayerId.Id.ESEN:
       return "Esen"
-    3:
+    PlayerId.Id.NALTA:
       return "Nalta"
+    PlayerId.Id.SORAH:
+      return "Sorah"
+    PlayerId.Id.DEVLIN:
+      return "Devlin"
     _:
       return ""
