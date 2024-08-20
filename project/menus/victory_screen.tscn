@@ -80,7 +80,7 @@ layout_mode = 2
 alignment = 1
 
 [node name="Slot1" type="VBoxContainer" parent="Screen2/PlayerColumns"]
-custom_minimum_size = Vector2(60, 100)
+custom_minimum_size = Vector2(90, 100)
 layout_mode = 2
 
 [node name="PlayerLabel" type="Label" parent="Screen2/PlayerColumns/Slot1"]
@@ -92,8 +92,9 @@ horizontal_alignment = 1
 [node name="PlayerPortrait" type="TextureRect" parent="Screen2/PlayerColumns/Slot1"]
 custom_minimum_size = Vector2(2.08165e-12, 50)
 layout_mode = 2
+size_flags_horizontal = 4
 texture = ExtResource("2_3hmeu")
-expand_mode = 2
+expand_mode = 3
 
 [node name="StatIncreases" type="Label" parent="Screen2/PlayerColumns/Slot1"]
 layout_mode = 2
@@ -119,8 +120,7 @@ horizontal_alignment = 1
 autowrap_mode = 3
 
 [node name="Slot2" type="VBoxContainer" parent="Screen2/PlayerColumns"]
-visible = false
-custom_minimum_size = Vector2(60, 100)
+custom_minimum_size = Vector2(90, 100)
 layout_mode = 2
 
 [node name="PlayerLabel" type="Label" parent="Screen2/PlayerColumns/Slot2"]
@@ -132,6 +132,7 @@ horizontal_alignment = 1
 [node name="PlayerPortrait" type="TextureRect" parent="Screen2/PlayerColumns/Slot2"]
 custom_minimum_size = Vector2(2.08165e-12, 50)
 layout_mode = 2
+size_flags_horizontal = 4
 texture = ExtResource("2_3hmeu")
 expand_mode = 2
 
