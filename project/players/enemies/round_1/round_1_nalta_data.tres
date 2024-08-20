@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="EnemyPlayerData" load_steps=5 format=3 uid="uid://dq1isdamktdto"]
+
+[ext_resource type="Resource" uid="uid://72mie8go31k4" path="res://players/Nalta/details/nalta_player_details.tres" id="1_aow7j"]
+[ext_resource type="Script" path="res://players/enemies/enemy_player_data.gd" id="2_taq26"]
+[ext_resource type="Resource" uid="uid://s2w8bbmlm1k4" path="res://players/Nalta/levels/nalta_1_skills.tres" id="3_4u3x3"]
+[ext_resource type="Resource" uid="uid://cjlstprhqdcul" path="res://players/Nalta/levels/nalta_1_stats.tres" id="4_usxbv"]
+
+[resource]
+script = ExtResource("2_taq26")
+details = ExtResource("1_aow7j")
+stats = ExtResource("4_usxbv")
+skills = ExtResource("3_4u3x3")

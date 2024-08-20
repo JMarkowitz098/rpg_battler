@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="EnemyPlayerData" load_steps=5 format=3 uid="uid://dv8o3aqxo6bki"]
+
+[ext_resource type="Resource" uid="uid://dd36hak0f45kj" path="res://players/Devlin/details/devlin_player_details.tres" id="1_7iu5p"]
+[ext_resource type="Script" path="res://players/enemies/enemy_player_data.gd" id="2_xmiet"]
+[ext_resource type="Resource" uid="uid://cv5qu43aoc41m" path="res://players/Devlin/levels/devlin_1_skills.tres" id="3_onthm"]
+[ext_resource type="Resource" uid="uid://dq0b0mokjl1rp" path="res://players/Devlin/levels/devlin_1_stats.tres" id="4_hblss"]
+
+[resource]
+script = ExtResource("2_xmiet")
+details = ExtResource("1_7iu5p")
+stats = ExtResource("4_hblss")
+skills = ExtResource("3_onthm")
