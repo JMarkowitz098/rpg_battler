@@ -1,4 +1,47 @@
 id,content,speaker,language
-t1_ch2_1,Hello Team 1 Chapter 2 world.,talon,en
-t1_ch2_2,Hello world back.,nash,en
-t1_ch2_3,Nice to meet you.,talon,en
+t1_ch2_1,I...I don't believe it. This is preposterous. ,nalta,en
+t1_ch2_2,I didn't think any students could be this strong.,devlin,en
+t1_ch2_3,My father is going to be severely disappointed in me. I've brought more shame to the Erringart family.,nalta,
+t1_ch2_4,Why?,talon,en
+t1_ch2_5,Pardon? Was your question directed at me?,nalta,en
+t1_ch2_6,Yeah. Why is your dad going to be so mad? You made it into the Teseris tournament and you almost won. It's not something anyone can do.,talon,en
+t1_ch2_7,"Well yes but I'm not anyone, I'm an Erringart. Everyone knows what they say about my family because of what my anscetors did during the Elemental War for Justice.",nalta,en
+t1_ch2_8,"We were supposed to win and show the Elementals in Britalia that anyone can succeed if they work hard, regardless of your race.",devlin,en
+t1_ch2_9,But you did do that gaz. Everyone saw how hard you fought. And there's other Elementals in the tournament too.,nash,en
+t1_ch2_10,"Everyone knows fighting an Elemental is like trying to wrestle a Babera one-handed, and you just confirmed it.",nash,
+t1_ch2_11,You really think so?,devlin,en
+t1_ch2_12,"It seems unlikely, but I appreciate your efforts to comfort us. However what if...",nalta,en
+t1_ch2_13,What if what?,talon,en
+t1_ch2_14,"In order for our defeat to be justified, you must win the tournament in our stead.",nalta,en
+t1_ch2_15,WHAT? Win the whole thing?,talon,en
+t1_ch2_16,"Exactly! If everyone sees that we lost to the champions, then they'll understand that we weren't easily defeated. It would demonstrate that only the strongest team in the tournament was able to overcome us.",nalta,en
+t1_ch2_17,"Nash she's crazy! There's no way we could win this whole thing, is there?",talon,en
+t1_ch2_18,"I told you gaz, you have to stop worrying. If they want us to win, let's just do it.",nash,en
+t1_ch2_19,It would really mean a lot. The hopes of Elementals in Britalia are counting on you!,devlin,en
+t1_ch2_20,"I, Naltalanta Vi Erringart do hereby command you to win the tournament in our stead.",nalta,en
+t1_ch2_21,You got it gaz.,nash,en
+t1_ch2_22,How did it end up like this?,talon,en
+t1_ch2_23,...,none,en
+t1_ch2_24,Time passes until it's time for Talon and Nash's second match.,none,
+t1_ch2_25,So who are we facing in our next match?,talon,
+t1_ch2_26,"It says on the board Esen and Sorah, a pair of Eth Elementals. There's a large Eth cheering section over there. Maybe we can find them. ",nash,
+t1_ch2_27,Just look at all these humans Esen! I didn't know there were so many.,sorah,
+t1_ch2_28,"It doesn't matter how many there are, we still need to win.",esen,
+t1_ch2_29,"Is it really so important? We got a free trip to the human country, isn't that enough?",sorah,
+t1_ch2_30,You're the only Elemental I know who could qualify for the Teseris Tournament and not even care.,esen,
+t1_ch2_31,You know I'm just here because you are. I'd follow you anywhere. You're my best friend.,sorah,
+t1_ch2_32,"I appreciate that, but I'm also here to win and show humans that we aren't scared of them anymore.",esen,
+t1_ch2_33,Oh I don't think they're so bad. Just look at all this interesting food they have. Could they really be so evil still?,sorah,
+t1_ch2_34,Don't forget what they did to our grandparents Sorah. My dad watched his father get dragged away to be sold as a slave.,esen,
+t1_ch2_35,"And all because we had Ingress and they didn't, something we now freely give them. I wouldn't be surprised if their government changed their mind and started trying to capture us again. ",esen,
+t1_ch2_36,Well let's just win this silly little tournamnet then so you can be happy and I can enjoy my vacation.,sorah,
+t1_ch2_37,...,talon,
+t1_ch2_38,Talon.,nash,
+t1_ch2_39,...,talon,
+t1_ch2_40,Talon? Are you okay? You haven't said anything since I pointed out our opponents.,nash,
+t1_ch2_41,Nash...THAT IS THE HOTTEST GUY I'VE EVER SEEN.,talon,
+t1_ch2_42,O_O,nash,
+t1_ch2_43,WE HAVE TO WIN SO I CAN ASK HIM ON A DATE!,talon,
+t1_ch2_44,I don't know if that's how it works gaz.,nash,
+t1_ch2_45,DOESN'T MATTER. HOT GUY. CAN'T THINK STRAIGHT. LET'S DO THIS!,talon,
+t1_ch2_46,Now that's some moki I can get behind.,nash,

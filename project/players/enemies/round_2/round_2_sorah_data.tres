@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="EnemyPlayerData" load_steps=5 format=3 uid="uid://by78ggldddvm2"]
+
+[ext_resource type="Script" path="res://players/enemies/enemy_player_data.gd" id="1_03h8k"]
+[ext_resource type="Resource" uid="uid://csh8o5o0t2pq0" path="res://players/Sorah/details/sorah_player_details.tres" id="1_rnuqw"]
+[ext_resource type="Resource" uid="uid://c4y8rtire8arc" path="res://players/Sorah/levels/sorah_2_skills.tres" id="3_ulc24"]
+[ext_resource type="Resource" uid="uid://j50moxgde7hn" path="res://players/Sorah/levels/sorah_2_stats.tres" id="4_hqbsy"]
+
+[resource]
+script = ExtResource("1_03h8k")
+details = ExtResource("1_rnuqw")
+stats = ExtResource("4_hqbsy")
+skills = ExtResource("3_ulc24")
