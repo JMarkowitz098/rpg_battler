@@ -8,11 +8,17 @@ extends Panel
 @onready var screen_one := $VBoxContainer/ScreensAndMenuButtons/ScreenOne
 @onready var screen_two := $VBoxContainer/ScreensAndMenuButtons/ScreenTwo
 @onready var screen_three := $VBoxContainer/ScreensAndMenuButtons/ScreenThree
+@onready var screen_four := $VBoxContainer/ScreensAndMenuButtons/ScreenFour
+@onready var screen_five := $VBoxContainer/ScreensAndMenuButtons/ScreenFive
+@onready var screen_six := $VBoxContainer/ScreensAndMenuButtons/ScreenSix
 
 @onready var screens: Array[VBoxContainer]= [
 	screen_one,
 	screen_two,
-	screen_three
+	screen_three,
+	screen_four,
+	screen_five,
+	screen_six
 ]
 
 var current := 0

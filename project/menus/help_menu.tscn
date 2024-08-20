@@ -45,10 +45,10 @@ text = "Controls"
 layout_mode = 2
 theme_override_font_sizes/font_size = 8
 text = "Arrow Keys: Move Cursor
-Enter: Menu accept
-Z: Menu Back
-Q: Toggle Action Queue
-H: Open help menu"
+Enter: Accept
+Z: Cancel
+Q: Toggle Action Queue (In battle)
+H: Open help menu (In battle)"
 
 [node name="PageNum" type="Label" parent="VBoxContainer/ScreensAndMenuButtons/ScreenOne"]
 layout_mode = 2
@@ -62,19 +62,38 @@ custom_minimum_size = Vector2(185, 130)
 layout_mode = 2
 alignment = 1
 
-[node name="IngressTitle" type="Label" parent="VBoxContainer/ScreensAndMenuButtons/ScreenTwo"]
+[node name="ElementsTitle" type="Label" parent="VBoxContainer/ScreensAndMenuButtons/ScreenTwo"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 10
-text = "Ingress"
+text = "Elements"
 
-[node name="IngressLabel" type="Label" parent="VBoxContainer/ScreensAndMenuButtons/ScreenTwo"]
+[node name="ElementsLabel" type="Label" parent="VBoxContainer/ScreensAndMenuButtons/ScreenTwo"]
 layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.647059, 0, 1)
 theme_override_font_sizes/font_size = 8
-text = "Ingress: Your energy. 
-Run out and it's game over!
-Incursion: Your attack power 
-Refrain: Your defense power
-Agility: Determines turn order"
+text = "Enh: Earth based, Orange
+"
+
+[node name="ElementsLabel2" type="Label" parent="VBoxContainer/ScreensAndMenuButtons/ScreenTwo"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.133, 0.545, 0.133, 1)
+theme_override_font_sizes/font_size = 8
+text = "Eth: Wind based, Green
+"
+
+[node name="ElementsLabel3" type="Label" parent="VBoxContainer/ScreensAndMenuButtons/ScreenTwo"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 1, 1)
+theme_override_font_sizes/font_size = 8
+text = "Shor: Water based, Blue
+"
+
+[node name="ElementsLabel4" type="Label" parent="VBoxContainer/ScreensAndMenuButtons/ScreenTwo"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0, 0, 1)
+theme_override_font_sizes/font_size = 8
+text = "Scor: Fire based, Red
+"
 
 [node name="PageNum" type="Label" parent="VBoxContainer/ScreensAndMenuButtons/ScreenTwo"]
 layout_mode = 2
@@ -88,20 +107,101 @@ custom_minimum_size = Vector2(185, 130)
 layout_mode = 2
 alignment = 1
 
-[node name="ElementsTitle" type="Label" parent="VBoxContainer/ScreensAndMenuButtons/ScreenThree"]
+[node name="IngressTitle" type="Label" parent="VBoxContainer/ScreensAndMenuButtons/ScreenThree"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 10
-text = "Elements"
+text = "Ingress (Team Select)"
 
-[node name="ElementsLabel" type="Label" parent="VBoxContainer/ScreensAndMenuButtons/ScreenThree"]
+[node name="IngressLabel" type="Label" parent="VBoxContainer/ScreensAndMenuButtons/ScreenThree"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 8
-text = "Eth: Wind based, Green
-Enh: Earth based, Orange
-Shor: Water based, Blue
-Scor: Fire based, Red"
+text = "Ingress: Your energy. 
+Run out and it's game over!
+Incursion: Your attack power 
+Refrain: Your defense power
+Agility: Determines turn order"
 
 [node name="PageNum" type="Label" parent="VBoxContainer/ScreensAndMenuButtons/ScreenThree"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 6
+text = "Page X / X"
+horizontal_alignment = 1
+
+[node name="ScreenFour" type="VBoxContainer" parent="VBoxContainer/ScreensAndMenuButtons"]
+visible = false
+custom_minimum_size = Vector2(185, 130)
+layout_mode = 2
+alignment = 1
+
+[node name="IngressTitle" type="Label" parent="VBoxContainer/ScreensAndMenuButtons/ScreenFour"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 10
+text = "Ingress (Battle)"
+
+[node name="IngressLabel" type="Label" parent="VBoxContainer/ScreensAndMenuButtons/ScreenFour"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 8
+text = "Incursion: Skills to attack your 
+enemy
+Refrain: Skills to put up a 
+defensive barrier that blocks or 
+absorbs attacks
+Recover: Gain back one Ingress"
+
+[node name="PageNum" type="Label" parent="VBoxContainer/ScreensAndMenuButtons/ScreenFour"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 6
+text = "Page X / X"
+horizontal_alignment = 1
+
+[node name="ScreenFive" type="VBoxContainer" parent="VBoxContainer/ScreensAndMenuButtons"]
+visible = false
+custom_minimum_size = Vector2(185, 130)
+layout_mode = 2
+alignment = 1
+
+[node name="IngressTitle" type="Label" parent="VBoxContainer/ScreensAndMenuButtons/ScreenFive"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 10
+text = "Action Queue (Battle)"
+
+[node name="IngressLabel" type="Label" parent="VBoxContainer/ScreensAndMenuButtons/ScreenFive"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 8
+text = "Press Q to toggle between vieiwing
+the queue and choosing your skill
+
+Use it to see what the enemy will do
+and react to it"
+
+[node name="PageNum" type="Label" parent="VBoxContainer/ScreensAndMenuButtons/ScreenFive"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 6
+text = "Page X / X"
+horizontal_alignment = 1
+
+[node name="ScreenSix" type="VBoxContainer" parent="VBoxContainer/ScreensAndMenuButtons"]
+visible = false
+custom_minimum_size = Vector2(185, 130)
+layout_mode = 2
+alignment = 1
+
+[node name="IngressTitle" type="Label" parent="VBoxContainer/ScreensAndMenuButtons/ScreenSix"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 10
+text = "Tips (Battle)"
+
+[node name="IngressLabel" type="Label" parent="VBoxContainer/ScreensAndMenuButtons/ScreenSix"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 8
+text = "Make sure you have enough 
+energy to use your attack
+
+If you know you will be attacked,
+block it with a refrain of the same
+element to gain back energy"
+
+[node name="PageNum" type="Label" parent="VBoxContainer/ScreensAndMenuButtons/ScreenSix"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 6
 text = "Page X / X"
