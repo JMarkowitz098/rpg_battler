@@ -4,15 +4,19 @@ extends Control
 @onready var next_button := $TextBackground/NextButton
 @onready var left_portrait := $LeftPortrait
 
-
+@export_file("*.txt") var text_file: String
 var scene_texts: Array[SceneText] = []
 
 var text_index := 0
 
 func _ready() -> void:
 	# For Testing
+	Music.play(Music.cutscene_theme, 1)
 	if Utils.is_test:
 		var test_texts := CutsceneTextLoader.load_chapter("res://cutscene/scene_text_files/team_3/chapter_1.txt")
+		load_scene_texts(test_texts)
+	elif text_file and not Utils._params:
+		var test_texts := CutsceneTextLoader.load_chapter(text_file)
 		load_scene_texts(test_texts)
 	else:
 		load_scene_texts(Utils._params.cutscene_texts)

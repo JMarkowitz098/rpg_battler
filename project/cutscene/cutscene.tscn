@@ -51,6 +51,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_wxuy1")
+text_file = "res://cutscene/scene_text_files/team_1/chapter_1.txt"
 
 [node name="Background" type="TextureRect" parent="."]
 layout_mode = 1

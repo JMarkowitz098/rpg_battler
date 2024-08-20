@@ -1,4 +1,23 @@
 id,content,speaker,language
-t1_ch1_1,Hello Chapter 1 Team 1 world.,talon,en
-t1_ch1_2,Hello world back.,nash,en
-t1_ch1_3,Nice to meet you.,talon,en
+ch1_1,Welcome to Elhume Academy. Home of the best Ronin training program know to Humans and Elementals alike.,none,en
+ch1_2,You're just in time to catch the start of their annual Teseris Tournament!,none,en
+ch1_3,"Today, we're joined by Talon and Nash, two aspiring students who hope to one day become famous Ronin themselves.",none,
+ch1_4,"Nash, are you sure I'm ready to enter this tournament with you? My grades aren't exactly top of the class.",talon,en
+ch1_5,Don't worry gaz. We've been training for this every day. It'll be as easy as catching a blind Babera.,nash,en
+ch1_6,You still haven't told me what a Babera is.,talon,en
+ch1_7,You think too much gaz. Back in Sentai we have a saying: The Babera that thinks too much about dinner never gets a meal.,nash,en
+ch1_8,"Well back in Lensington, not thinking lead to me forgetting to do my chores, which also resulted in no dinner.",talon,en
+ch1_9,Peace gaz. You're Ingress has gotten way more yondu since we first met. You can even use Eth Incursions as well as your Shor ones.,nash,en
+ch1_10,"Between that and my yondu Shor and Scor Refrain skills, we're gonna clean up this tournament like a Babera going into hibernation.",nash,en
+ch1_11,Oh look there's our first opponents now.,nash,en
+ch1_12,"Nalta, put down your book. Don't you want to see what your first Teseris Tournament is like.",devlin,en
+ch1_13,I suppose. Let me just finish this chapter.,nalta,en
+ch1_14,Sigh. You're always like this. What's your dad going to say if you get distracted and lose.,devlin,en
+ch1_15,Nonsense. I am perfectly capable of focusing during battle. My interest in literary fiction doesn't affect that.,nalta,en
+ch1_16,"Besides, it's unlikely anyone has the same level of preparation as us. My father spared no expense in recruiting us the best tutors.",nalta,en
+ch1_17,"I know, I know. I'm just nervous. It would really mean a lot to the Scors of Britalia if we won this tournament.",devlin,en
+ch1_18,And it will mean just as much to the Erringarts if they achieve victory while partnering with an Elemental. I know what the stakes are.,nalta,en
+ch1_19,That's why I chose you as a partner. You're one of the few people I trust enough with this assignment from my father.,nalta,en
+ch1_20,Is that NALTA ERRINGART? Our first match is aginst the unofficial princess of Britalia?,talon,en
+ch1_21,Looks like it. But don't worry. She's the same age as us. We'll definitely out-moki her.,nash,en
+ch1_22,That's not what I'm worried about Nash.,talon,en

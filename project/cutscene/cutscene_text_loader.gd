@@ -7,16 +7,24 @@ static func load_chapter(file_path: String) -> Array[SceneText]:
 
 	while not file.eof_reached():
 		line = file.get_line()
-		var split := line.split(",")
-		var new_scene_text := SceneText.new(split[0], split[1], split[2])
-		scene_texts.append(new_scene_text)
+		if line:
+			var split := line.split(",")
+			var new_scene_text := SceneText.new(split[0], _get_content(split, line), split[-2])
+			scene_texts.append(new_scene_text)
 
 	return scene_texts
+
 
 static func get_file_path(team_id: Team.Id, round_number: Round.Number) -> String:
 	var root_path := "res://cutscene/scene_text_files/"
 	return root_path + _get_team(team_id) + "/" + _get_chapter(round_number) + ".txt"
 
+
+static func _get_content(split: Array[String], line: String) -> String:
+	if split.size() == 4:
+		return split[1]
+	else:
+		return line.split("\"")[1]
 
 static func _get_team(team_id: Team.Id) -> String:
 	match team_id:

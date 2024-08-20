@@ -17,6 +17,7 @@ const SORAH_PLAYER_DETAILS := preload("res://players/Sorah/details/sorah_player_
 const SORAH_PORTRAIT := preload("res://players/Sorah/details/sorah_portrait.jpeg")
 const TALON_PLAYER_DETAILS := preload("res://players/Talon/details/talon_player_details.tres")
 const TALON_PORTRAIT := preload("res://players/Talon/details/TalonPortrait.jpeg")
+const NARRATOR_PORTRAIT := preload("res://icon.svg")
 
 const FINAL_ROUND = Round.Number.THREE
 var _params: Dictionary
@@ -102,6 +103,8 @@ func get_player_portrait(player_id: PlayerId.Id) -> Texture:
 			return SORAH_PORTRAIT
 		PlayerId.Id.DEVLIN:
 			return DEVLIN_PORTRAIT
+		PlayerId.Id.NONE:
+			return NARRATOR_PORTRAIT
 		_:
 			return null
 

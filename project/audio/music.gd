@@ -2,6 +2,7 @@ extends Node
 
 @export var menu_theme: AudioStream
 @export var battle_theme: AudioStream
+@export var cutscene_theme: AudioStream
 
 @onready var audio_stream_player_2d := $AudioStreamPlayer2D
 
