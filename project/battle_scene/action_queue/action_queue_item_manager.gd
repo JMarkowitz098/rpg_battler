@@ -80,7 +80,10 @@ func _compare_by_agility(a: ActionQueueItem, b: ActionQueueItem) -> bool:
 func _fill_enemy_action(action: Action, battle_groups: BattleGroups) -> void:
 	var usable_skills: Array[Ingress] = action.actor.get_usable_skills()
 
+	var use_recover := randi() % 4 == 1
 	if usable_skills.size() == 0:
+		action.set_recover()
+	elif usable_skills.size() <= 2 and use_recover:
 		action.set_recover()
 	else:
 		action.set_enemy_skill(_select_enemy_skill(usable_skills), battle_groups, action.actor)
