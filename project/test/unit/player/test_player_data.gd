@@ -30,7 +30,8 @@ func test_format_for_save() -> void:
 		"player_id": 0,
 		"label": "Mock player label",
 		"elements": [0, 2],
-		"learnable_skills": [[3, 0], [6, 0]]
+		"learnable_skills": [[3, 0], [6, 0]],
+		"description": ""
 	}
 	var e_stats := {"level": 1, "max_ingress": 10, "incursion": 1, "refrain": 1, "agility": 1}
 	var expected := {
@@ -39,7 +40,7 @@ func test_format_for_save() -> void:
 		"unique_id": "1234",
 		"learned_skills": [[3, 0], [6, 0]],
 		"type": 0,
-		"slot": 1
+		"slot": 1,
 	}
 	var actual := data.format_for_save()
 

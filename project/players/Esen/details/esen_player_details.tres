@@ -7,5 +7,6 @@
 script = ExtResource("2_y6ctm")
 player_id = 2
 label = "Esen"
+description = "Esen is a loveable tike!"
 elements = Array[int]([0])
 learnable_skills = ExtResource("1_8q7om")

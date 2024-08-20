@@ -7,5 +7,6 @@
 script = ExtResource("1_gpktp")
 player_id = 4
 label = "Sorah"
+description = "Sorah is a loveable tike!"
 elements = Array[int]([0])
 learnable_skills = ExtResource("1_es381")

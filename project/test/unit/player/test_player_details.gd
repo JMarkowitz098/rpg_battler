@@ -10,7 +10,7 @@ const LABEL := "Nash"
 
 
 func before_each() -> void:
-	details = TestPlayerDetails.new(PlayerId.Id.NASH, LABEL, elements, skills)
+	details = TestPlayerDetails.new(PlayerId.Id.NASH, LABEL, elements, skills, "I am a description")
 
 
 func test_can_create_player_details() -> void:
@@ -22,6 +22,7 @@ func test_values() -> void:
 	assert_eq(details.label, LABEL, "label")
 	assert_eq(details.elements, elements, "elements")
 	assert_eq(details.learnable_skills, skills, "skills")
+	assert_eq(details.description, "I am a description", "description")
 
 
 func test_format_for_save() -> void:
@@ -29,7 +30,8 @@ func test_format_for_save() -> void:
 		"player_id": 1,
 		"label": LABEL,
 		"elements": elements as Array,
-		"learnable_skills": [[3, 0], [6, 0]]
+		"learnable_skills": [[3, 0], [6, 0]],
+		"description": "I am a description"
 	}
 	var actual := details.format_for_save()
 

@@ -1,0 +1,19 @@
+[gd_scene load_steps=3 format=3 uid="uid://b5lt4d13dytk2"]
+
+[ext_resource type="Texture2D" uid="uid://8wg3032ohbg6" path="res://players/Talon/details/TalonPortrait.jpeg" id="1_q2eci"]
+[ext_resource type="Script" path="res://portrait.gd" id="1_rnaiq"]
+
+[node name="PortraitBorder" type="Panel"]
+custom_minimum_size = Vector2(40, 40)
+script = ExtResource("1_rnaiq")
+
+[node name="Portrait" type="TextureRect" parent="."]
+layout_mode = 2
+offset_left = 1.0
+offset_top = 1.0
+offset_right = 39.0
+offset_bottom = 39.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_q2eci")
+expand_mode = 2

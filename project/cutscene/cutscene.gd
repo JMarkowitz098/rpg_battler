@@ -2,7 +2,7 @@ extends Control
 
 @onready var text := $TextBackground/Text
 @onready var next_button := $TextBackground/NextButton
-@onready var left_portrait := $LeftPortrait
+@onready var left_portrait := $PortraitBorder
 
 @export_file("*.txt") var text_file: String
 var scene_texts: Array[SceneText] = []
@@ -40,4 +40,4 @@ func _on_next_button_pressed() -> void:
 func _update_assets(index: int) -> void:
 	var current_text := scene_texts[index]
 	text.text = current_text.content
-	left_portrait.texture = Utils.get_player_portrait(current_text.speaker)
+	left_portrait.portrait.texture = Utils.get_player_portrait(current_text.speaker)

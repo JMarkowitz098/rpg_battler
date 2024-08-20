@@ -125,7 +125,8 @@ func _create_player_data(data: Dictionary) -> PlayerData:
 		data.player_details.player_id, 
 		data.player_details.label, 
 		data.player_details.elements, 
-		_create_skills_array(data.player_details.learnable_skills) 
+		_create_skills_array(data.player_details.learnable_skills),
+		data.player_details.description
 	)
 	var stats := Stats.new(
 		data.stats.level, 

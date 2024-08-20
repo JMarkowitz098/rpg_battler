@@ -15,6 +15,9 @@ const TALON_STARTING_DATA := preload("res://players/Talon/details/talon_starting
 @onready var done := $Top/Columns/TeamButtons/Done
 @onready var delete_popup := $DeletePopup
 @onready var no_button := $DeletePopup/VBoxContainer/HBoxContainer/NoButton
+@onready var slot_one_profile := $Top/Columns/SlotOneProfile
+@onready var slot_two_profile := $Top/Columns/SlotTwoProfile
+
 
 var team_one_data: SaveFileData
 var team_two_data: SaveFileData
@@ -100,12 +103,33 @@ func _on_yes_button_pressed() -> void:
 
 
 func _handle_input() -> void:
-	if Input.is_action_just_pressed("to_action_queue") and current_data:
+	if Input.is_action_just_pressed("menu_delete") and current_data:
 		delete_popup.show()
 		no_button.focus()
 
 	if Input.is_action_just_pressed("menu_back") and delete_popup.visible:
 		_return()
+
+	if Input.is_action_just_pressed("menu_toggle"):
+		_toggle_slots(slot_one.visible)
+			
+
+	if Input.is_action_just_pressed("menu_back") and !delete_popup.visible:
+		Utils.change_scene("res://menus/start_menu.tscn", { })
+
+	
+func _toggle_slots(show_profile: bool) -> void:
+	Sound.play(Sound.confirm)
+	if show_profile:
+		slot_one.hide()
+		slot_two.hide()
+		slot_one_profile.show()
+		slot_two_profile.show()
+	else:
+		slot_one.show()
+		slot_two.show()
+		slot_one_profile.hide()
+		slot_two_profile.hide()
 
 
 func _return() -> void:
@@ -117,9 +141,17 @@ func _update_slot_data(players_data: Array[PlayerData]) -> void:
 	slot_two_data = players_data[1]
 
 
+func _update_slot_profile_data(slot_profile: VBoxContainer, data: PlayerData) -> void:
+	slot_profile.portrait.texture = Utils.get_player_portrait(data.player_details.player_id)
+	slot_profile.description.text = data.player_details.description
+	slot_profile.character_name.text = data.player_details.label
+
+
 func _update_slots(round_num: Round.Number) -> void:
 	_update_slot(slot_one, slot_one_data)
 	_update_slot(slot_two, slot_two_data)
+	_update_slot_profile_data(slot_one_profile, slot_one_data)
+	_update_slot_profile_data(slot_two_profile, slot_two_data)
 	if round_num == Round.Number.ONE:
 		done.text = "New Game"
 	else:	
@@ -155,6 +187,7 @@ func _handle_press(save_id: Team.Id) -> void:
 	Utils.current_team = save_id
 	var texts: Array[SceneText] = Utils.get_cutscene_texts(save_id, current_data.round_number)
 	Utils.change_scene("res://cutscene/cutscene.tscn", { "cutscene_texts": texts })
+
 
 func _create_new_save_data(save_id: String) -> void:
 	slot_one_data.slot = 0

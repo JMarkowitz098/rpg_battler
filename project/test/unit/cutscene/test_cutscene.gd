@@ -40,7 +40,7 @@ func test_can_advance_text() -> void:
 	cutscene.next_button.pressed.emit()
 	assert_eq(cutscene.text_index, 1)
 	assert_eq(cutscene.text.text, scene_texts[1].content)
-	assert_eq(cutscene.left_portrait.texture, Utils.get_player_portrait(PlayerId.Id.NASH))
+	assert_eq(cutscene.left_portrait.portrait.texture, Utils.get_player_portrait(PlayerId.Id.NASH))
 
 # Causing it to change scenes fails because battle scene
 # func test_scene_changes_at_end_of_text() -> void:

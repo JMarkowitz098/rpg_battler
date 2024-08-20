@@ -1,0 +1,46 @@
+[gd_scene load_steps=4 format=3 uid="uid://cn2tb0a147u0s"]
+
+[ext_resource type="Script" path="res://menus/character_menu_profile.gd" id="1_kmomk"]
+[ext_resource type="PackedScene" uid="uid://b5lt4d13dytk2" path="res://portrait.tscn" id="2_mabj3"]
+[ext_resource type="LabelSettings" uid="uid://cjxpiibvc0pb" path="res://menus/char_creation_labels.tres" id="3_j4yip"]
+
+[node name="CharacterProfile" type="VBoxContainer"]
+custom_minimum_size = Vector2(100, 150)
+script = ExtResource("1_kmomk")
+
+[node name="Control" type="HBoxContainer" parent="."]
+custom_minimum_size = Vector2(30, 30)
+layout_mode = 2
+alignment = 1
+
+[node name="PortraitBorder" parent="Control" instance=ExtResource("2_mabj3")]
+layout_mode = 2
+
+[node name="StatsBorder" type="Panel" parent="."]
+custom_minimum_size = Vector2(2.08165e-12, 100)
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="StatsBorder"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 5.0
+offset_bottom = 5.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="CharacterName" type="Label" parent="StatsBorder/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 8
+text = "Background"
+horizontal_alignment = 1
+
+[node name="Description" type="Label" parent="StatsBorder/VBoxContainer"]
+custom_minimum_size = Vector2(2.08165e-12, 80)
+layout_mode = 2
+size_flags_vertical = 1
+text = "Lorepm ipsum solimLorepm ipsum solimLorepm ipsum solim Lorepm ipsum solimLorepm ipsum solim"
+label_settings = ExtResource("3_j4yip")
+horizontal_alignment = 1
+autowrap_mode = 2

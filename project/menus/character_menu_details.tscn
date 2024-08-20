@@ -1,55 +1,71 @@
 [gd_scene load_steps=4 format=3 uid="uid://b6b3yrbpnc2fs"]
 
 [ext_resource type="Script" path="res://menus/character_menu_details.gd" id="1_2ihdt"]
-[ext_resource type="Texture2D" uid="uid://8wg3032ohbg6" path="res://players/Talon/details/TalonPortrait.jpeg" id="1_5jd4i"]
 [ext_resource type="LabelSettings" uid="uid://cjxpiibvc0pb" path="res://menus/char_creation_labels.tres" id="2_n5ebp"]
+[ext_resource type="PackedScene" uid="uid://b5lt4d13dytk2" path="res://portrait.tscn" id="2_vgpi6"]
 
 [node name="CharacterDetails" type="VBoxContainer"]
 custom_minimum_size = Vector2(120, 150)
 script = ExtResource("1_2ihdt")
 
 [node name="Control" type="HBoxContainer" parent="."]
-custom_minimum_size = Vector2(2.08165e-12, 50)
+custom_minimum_size = Vector2(30, 30)
 layout_mode = 2
 alignment = 1
 
-[node name="Portrait" type="TextureRect" parent="Control"]
+[node name="PortraitBorder" parent="Control" instance=ExtResource("2_vgpi6")]
 layout_mode = 2
-texture = ExtResource("1_5jd4i")
-expand_mode = 2
 
-[node name="CharacterName" type="Label" parent="."]
+[node name="StatsBorder" type="Panel" parent="."]
+custom_minimum_size = Vector2(2.08165e-12, 100)
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="StatsBorder"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 1
+
+[node name="CharacterName" type="Label" parent="StatsBorder/VBoxContainer"]
 layout_mode = 2
 text = "Name"
 label_settings = ExtResource("2_n5ebp")
 horizontal_alignment = 1
 
-[node name="Ingress" type="Label" parent="."]
+[node name="Ingress" type="Label" parent="StatsBorder/VBoxContainer"]
 layout_mode = 2
 text = "Ingress: 0
 "
 label_settings = ExtResource("2_n5ebp")
+horizontal_alignment = 1
 
-[node name="Incursion" type="Label" parent="."]
+[node name="Incursion" type="Label" parent="StatsBorder/VBoxContainer"]
 layout_mode = 2
 text = "Incursion: 0
 "
 label_settings = ExtResource("2_n5ebp")
+horizontal_alignment = 1
 
-[node name="Refrain" type="Label" parent="."]
+[node name="Refrain" type="Label" parent="StatsBorder/VBoxContainer"]
 layout_mode = 2
 text = "Refrain: 0
 "
 label_settings = ExtResource("2_n5ebp")
+horizontal_alignment = 1
 
-[node name="Agility" type="Label" parent="."]
+[node name="Agility" type="Label" parent="StatsBorder/VBoxContainer"]
 layout_mode = 2
 text = "Agility: 0
 "
 label_settings = ExtResource("2_n5ebp")
+horizontal_alignment = 1
 
-[node name="Elements" type="Label" parent="."]
+[node name="Elements" type="Label" parent="StatsBorder/VBoxContainer"]
 layout_mode = 2
 text = "Elements: 
-lorem ipsum, lorem ipsum"
+lorem ipsum"
 label_settings = ExtResource("2_n5ebp")
+horizontal_alignment = 1

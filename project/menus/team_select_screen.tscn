@@ -1,8 +1,9 @@
-[gd_scene load_steps=4 format=3 uid="uid://ccl3yllm4ocvy"]
+[gd_scene load_steps=5 format=3 uid="uid://ccl3yllm4ocvy"]
 
 [ext_resource type="PackedScene" uid="uid://ch51mvl5giece" path="res://menus/default_button.tscn" id="1_qgh5b"]
 [ext_resource type="Script" path="res://menus/team_select_screen.gd" id="1_x8qp7"]
 [ext_resource type="PackedScene" uid="uid://b6b3yrbpnc2fs" path="res://menus/character_menu_details.tscn" id="2_rvqny"]
+[ext_resource type="PackedScene" uid="uid://cn2tb0a147u0s" path="res://menus/character_menu_profile.tscn" id="4_y8dti"]
 
 [node name="TeamSelectScreen" type="Panel"]
 anchors_preset = 15
@@ -37,23 +38,17 @@ alignment = 1
 [node name="TeamOneButton" parent="Top/Columns/TeamButtons" instance=ExtResource("1_qgh5b")]
 custom_minimum_size = Vector2(60, 0)
 layout_mode = 2
-text = "Talon
-and
-Nash"
+text = "Talon / Nash"
 
 [node name="TeamTwoButton" parent="Top/Columns/TeamButtons" instance=ExtResource("1_qgh5b")]
 custom_minimum_size = Vector2(60, 0)
 layout_mode = 2
-text = "Esen
-and 
-Sorah"
+text = "Esen / Sorah"
 
 [node name="TeamThreeButton" parent="Top/Columns/TeamButtons" instance=ExtResource("1_qgh5b")]
 custom_minimum_size = Vector2(60, 0)
 layout_mode = 2
-text = "Nalta
-and
-Denlin"
+text = "Nalta / Denlin"
 
 [node name="Done" type="Label" parent="Top/Columns/TeamButtons"]
 layout_mode = 2
@@ -63,51 +58,32 @@ text = "__% Done"
 [node name="Label" type="Label" parent="Top/Columns/TeamButtons"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 6
-text = "Press 	Q to delete file"
+text = "Press 	Q to toggle info"
+
+[node name="Label2" type="Label" parent="Top/Columns/TeamButtons"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 6
+text = "Press 	D to delete file"
 
 [node name="SlotOne" parent="Top/Columns" instance=ExtResource("2_rvqny")]
+visible = false
 custom_minimum_size = Vector2(100, 150)
 layout_mode = 2
 alignment = 1
 
-[node name="Ingress" parent="Top/Columns/SlotOne" index="2"]
-horizontal_alignment = 1
-
-[node name="Incursion" parent="Top/Columns/SlotOne" index="3"]
-horizontal_alignment = 1
-
-[node name="Refrain" parent="Top/Columns/SlotOne" index="4"]
-horizontal_alignment = 1
-
-[node name="Agility" parent="Top/Columns/SlotOne" index="5"]
-horizontal_alignment = 1
-
-[node name="Elements" parent="Top/Columns/SlotOne" index="6"]
-text = "Elements: 
-"
-horizontal_alignment = 1
+[node name="SlotOneProfile" parent="Top/Columns" instance=ExtResource("4_y8dti")]
+layout_mode = 2
+alignment = 1
 
 [node name="SlotTwo" parent="Top/Columns" instance=ExtResource("2_rvqny")]
+visible = false
 custom_minimum_size = Vector2(100, 150)
 layout_mode = 2
 alignment = 1
 
-[node name="Ingress" parent="Top/Columns/SlotTwo" index="2"]
-horizontal_alignment = 1
-
-[node name="Incursion" parent="Top/Columns/SlotTwo" index="3"]
-horizontal_alignment = 1
-
-[node name="Refrain" parent="Top/Columns/SlotTwo" index="4"]
-horizontal_alignment = 1
-
-[node name="Agility" parent="Top/Columns/SlotTwo" index="5"]
-horizontal_alignment = 1
-
-[node name="Elements" parent="Top/Columns/SlotTwo" index="6"]
-text = "Elements: 
-"
-horizontal_alignment = 1
+[node name="SlotTwoProfile" parent="Top/Columns" instance=ExtResource("4_y8dti")]
+layout_mode = 2
+alignment = 1
 
 [node name="DeletePopup" type="Panel" parent="."]
 visible = false
@@ -157,6 +133,3 @@ text = "Yes"
 [connection signal="pressed" from="Top/Columns/TeamButtons/TeamThreeButton" to="." method="_on_team_three_button_pressed"]
 [connection signal="pressed" from="DeletePopup/VBoxContainer/HBoxContainer/NoButton" to="." method="_on_no_button_pressed"]
 [connection signal="pressed" from="DeletePopup/VBoxContainer/HBoxContainer/YesButton" to="." method="_on_yes_button_pressed"]
-
-[editable path="Top/Columns/SlotOne"]
-[editable path="Top/Columns/SlotTwo"]

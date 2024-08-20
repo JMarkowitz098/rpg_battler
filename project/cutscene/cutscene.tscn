@@ -1,9 +1,10 @@
-[gd_scene load_steps=8 format=3 uid="uid://b1yg47s3e4gl7"]
+[gd_scene load_steps=9 format=3 uid="uid://b1yg47s3e4gl7"]
 
 [ext_resource type="Texture2D" uid="uid://pqy83qhc22bq" path="res://cutscene/ddxditr-ec227bb3-7589-4803-849e-9cddcb3ec29f-2102251416.jpg" id="1_jpytd"]
 [ext_resource type="Script" path="res://cutscene/cutscene.gd" id="1_wxuy1"]
 [ext_resource type="Texture2D" uid="uid://co5l2spc3mmoi" path="res://players/Talon/details/Designer-1.png.png" id="2_6xgib"]
 [ext_resource type="Texture2D" uid="uid://7e6lt7cu3jjh" path="res://cutscene/triangle.png" id="4_0yo2r"]
+[ext_resource type="PackedScene" uid="uid://b5lt4d13dytk2" path="res://portrait.tscn" id="4_63j5y"]
 
 [sub_resource type="Animation" id="Animation_ojo1l"]
 length = 0.001
@@ -64,6 +65,7 @@ texture = ExtResource("1_jpytd")
 expand_mode = 2
 
 [node name="LeftPortrait" type="TextureRect" parent="."]
+visible = false
 layout_mode = 0
 offset_left = 1.0
 offset_top = 104.0
@@ -71,6 +73,13 @@ offset_right = 58.0
 offset_bottom = 154.0
 texture = ExtResource("2_6xgib")
 expand_mode = 2
+
+[node name="PortraitBorder" parent="." instance=ExtResource("4_63j5y")]
+layout_mode = 0
+offset_left = 2.0
+offset_top = 97.0
+offset_right = 58.0
+offset_bottom = 153.0
 
 [node name="TextBackground" type="Panel" parent="."]
 layout_mode = 0
