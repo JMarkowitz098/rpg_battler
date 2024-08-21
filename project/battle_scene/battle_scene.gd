@@ -136,7 +136,10 @@ func _check_for_round_end() -> void:
 
 func _handle_victory() -> void:
 	if Utils.current_round == Utils.FINAL_ROUND:
-			Utils.change_scene("res://menus/game_completion_screen.tscn", { "status": Utils.GameOver.VICTORY })
+		Utils.next_round()
+		var texts: Array[SceneText] = Utils.get_cutscene_texts(Utils.current_team, Utils.current_round)
+		Utils.change_scene("res://cutscene/cutscene.tscn", { "cutscene_texts": texts })
+			# Utils.change_scene("res://menus/game_completion_screen.tscn", { "status": Utils.GameOver.VICTORY })
 	else:
 		Utils.next_round()
 		Utils.change_scene("res://menus/victory_screen.tscn", { "defeated": defeated })

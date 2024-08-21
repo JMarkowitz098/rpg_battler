@@ -32,7 +32,10 @@ func load_scene_texts(_scene_texts: Array[SceneText]) -> void:
 func _on_next_button_pressed() -> void:
 	if not Utils.is_test: Sound.play(Sound.focus)
 	if text_index == scene_texts.size() - 1: 
-		get_tree().change_scene_to_file("res://battle_scene/battle_scene.tscn")
+		if Utils.current_round == Utils.FINAL_ROUND:
+			Utils.change_scene("res://menus/game_completion_screen.tscn", { "status": Utils.GameOver.VICTORY })
+		else:
+			get_tree().change_scene_to_file("res://battle_scene/battle_scene.tscn")
 	else:
 		text_index += 1
 		_update_assets(text_index)
